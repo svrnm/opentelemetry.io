@@ -10,8 +10,7 @@ If you are new to OpenTelemetry and just get started with it, you are in a perfe
 
 ## Adding a project to the OpenTelemetry Registry
 
-Do you maintain or contribute to an integration for OpenTelemetry? We'd love to
-feature your project in the [registry][]!
+Do you maintain or contribute to an integration for OpenTelemetry? We'd love to feature your project in the [registry][]!
 
 To add your project, submit a [pull request][pr]. You'll need to create a data
 file in `/content/en/registry` for your project. You can find a template in
