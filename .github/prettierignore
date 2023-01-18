@@ -10,7 +10,6 @@ dependabot.yml
 # LICENSE
 #LICENSE-CODE
 # Makefile
-README.md
 archetypes
 assets
 config.yaml
