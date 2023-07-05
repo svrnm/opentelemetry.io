@@ -287,13 +287,13 @@ provider.register();
 {{< /tabpane >}}
 <!-- prettier-ignore-end -->
 
-### Configuration
+### Configuation
 
 Some instrumentation libraries offer additional configuration options.
 
 For example,
 [Express instrumentation](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/plugins/node/opentelemetry-instrumentation-express#express-instrumentation-options)
-offers ways to ignore specified middleware or enrich spans created automatically
+offers ways to ignore speciied middleware or enrich spans created automatically
 with a request hook.
 
 You'll need to refer to each instrumentation library's documentation for
@@ -306,4 +306,4 @@ You can find a list of available instrumentation in the
 
 ## Instrument a library natively
 
-## Create an instrumentation library
+## Create an instrumetation library
