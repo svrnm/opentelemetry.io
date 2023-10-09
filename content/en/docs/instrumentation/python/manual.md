@@ -10,14 +10,114 @@ cSpell:ignore: millis ottrace textmap
 
 {{% docs/instrumentation/manual-intro %}}
 
-## Setup
+{{% alert title="Note" color="info" %}}
 
-First, ensure you have the API and SDK packages:
+On this page you will learn how you can add traces, metrics and logs to your
+code _manually_. But, you are not limited to only use one kind of
+instrumentation: use
+[automatic instrumentation](/docs/instrumentation/python/automatic/) to get
+started and then enrich your code with manual instrumentation as needed.
+
+Note, that especially if you cannot modify the source code of your app, you can
+skip manual instrumentation and only use automatic instrumentation.
+
+Also, for libraries your code depends on, you don't have to write
+instrumentation code yourself, since they might come with OpenTelemetry built-in
+_natively_ or you can make use of
+[instrumentation libraries](/docs/instrumentation/python/libraries/).
+
+{{% /alert %}}
+
+## Example app preparation {#example-app}
+
+This page uses a modified version of the example app from
+[Getting Started](/docs/instrumentation/python/getting-started/) to help you learn
+about manual instrumentation.
+
+You don't have to use the example app: if you want to instrument your own app or
+library, follow the instructions here to adapt the process to your own code.
+
+### Preparation {#example-app-preparation}
+
+To begin, set up an environment in a new directory:
+
+```shell
+mkdir otel-python-manual
+cd otel-python-manual
+python3 -m venv .
+source ./bin/activate
+```
+
+Now install Flask:
+
+```shell
+pip install flask
+```
+
+### Create and launch an HTTP Server
+
+To highlight the difference between instrumenting a _library_ and a standalone
+_app_, split out the dice rolling into a _library_ class, which then will be
+imported as a dependency by the app.
+
+Create the _library file_ name `dice.py` and add the following code to it:
+
+```python
+from random import randint
+
+def roll_once():
+    return randint(1, 6)
+
+def roll_the_dice(rolls):
+    return [roll_once() for _ in range(rolls)]
+
+```
+
+Create the app files `app.py` and add the following code to it:
+
+```python
+from flask import Flask, request
+from dice import roll_the_dice
+
+app = Flask(__name__)
+
+@app.route("/rolldice")
+def roll_dice():
+    rolls = request.args.get("rolls", default = 1, type = int)
+    return roll_the_dice(rolls)
+```
+
+To ensure that it is working, run the application with the following command and
+open <http://localhost:8080/rolldice?rolls=12> in your web browser:
+
+```shell
+flask run -p 8080
+```
+
+You should get a list of 12 numbers in your browser window, for example:
+
+```text
+[5,6,5,3,6,1,2,5,4,4,2,4]
+```
+
+## Manual instrumentation setup
+
+For both library and app instrumentation, the first step is to install the
+dependencies for the OpenTelemetry API:
 
 ```shell
 pip install opentelemetry-api
+```
+
+If you instrument an app, install the dependencies for the OpenTelemetry
+SDK (if you're instrumenting a library, **skip this step**):
+
+```shell
 pip install opentelemetry-sdk
 ```
+
+Throughout this documentation you will add additional dependencies. For a full
+list of artifact coordinates see [opentelemetry on pypi.org](https://pypi.org/user/opentelemetry/).
 
 ## Traces
 
