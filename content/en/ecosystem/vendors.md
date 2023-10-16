@@ -12,7 +12,13 @@ Some organizations provide a [distribution](/docs/concepts/distributions/) (of
 customized OpenTelemetry components), that provides additional capabilities or
 for improved ease of use.
 
-{{% ecosystem/vendor-table %}}
+{{% ecosystem/vendor-table true %}}
+
+Some organizations require a specific [exporter](http://localhost:1313/docs/collector/configuration/#exporters) to be used to ingest OpenTelemetry 
+data into their backend. Below you find a non-exhaustive list of solutions without
+native OTLP support.
+
+{{% ecosystem/vendor-table false %}}
 
 ## Add your organization
 

@@ -659,6 +659,10 @@
     "StatusCode": 200,
     "LastSeen": "2023-06-29T15:45:56.613628-04:00"
   },
+  "https://docs.aspecto.io/v1/send-tracing-data-to-aspecto/using-opentelemetry-collector": {
+    "StatusCode": 206,
+    "LastSeen": "2023-10-16T16:12:31.094754+02:00"
+  },
   "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-system-attributes": {
     "StatusCode": 206,
     "LastSeen": "2023-06-29T15:50:10.274715-04:00"
@@ -866,6 +870,10 @@
   "https://docs.fluentbit.io/manual/pipeline/inputs/opentelemetry/": {
     "StatusCode": 206,
     "LastSeen": "2023-07-21T16:51:51.751459+02:00"
+  },
+  "https://docs.gethelios.dev/docs/opentelemetry-collector-integration": {
+    "StatusCode": 200,
+    "LastSeen": "2023-10-16T16:12:31.952849+02:00"
   },
   "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests": {
     "StatusCode": 206,
@@ -1354,6 +1362,10 @@
   "https://docs.vmware.com/en/vRealize-Log-Insight/8.4/com.vmware.log-insight.agent.admin.doc/GUID-40C13E10-1554-4F1B-B832-69CEBF85E7A0.html": {
     "StatusCode": 206,
     "LastSeen": "2023-06-28T13:36:46.411249-04:00"
+  },
+  "https://docs.wavefront.com/opentelemetry_overview.html": {
+    "StatusCode": 206,
+    "LastSeen": "2023-10-16T16:12:30.086531+02:00"
   },
   "https://docs.wavefront.com/opentelemetry_tracing.html": {
     "StatusCode": 206,
@@ -3599,6 +3611,10 @@
     "StatusCode": 200,
     "LastSeen": "2023-06-29T16:04:31.366652-04:00"
   },
+  "https://grafana.com/docs/grafana-cloud/monitor-infrastructure/otlp/": {
+    "StatusCode": 200,
+    "LastSeen": "2023-10-16T16:12:28.097403+02:00"
+  },
   "https://grafana.com/grafana/": {
     "StatusCode": 200,
     "LastSeen": "2023-06-29T16:11:30.647868-04:00"
@@ -5167,6 +5183,10 @@
     "StatusCode": 206,
     "LastSeen": "2023-06-29T18:37:28.48076-04:00"
   },
+  "https://uptrace.dev/get/ingest/collector.html#sending-data-from-collector-to-uptrace": {
+    "StatusCode": 206,
+    "LastSeen": "2023-10-16T16:12:32.667513+02:00"
+  },
   "https://us06web.zoom.us/j/82702918447": {
     "StatusCode": 200,
     "LastSeen": "2023-06-29T18:50:24.738099-04:00"
@@ -6046,6 +6066,10 @@
   "https://www.traceloop.com": {
     "StatusCode": 206,
     "LastSeen": "2023-06-30T11:39:50.653885-04:00"
+  },
+  "https://www.traceloop.com/docs/python-sdk/exporting": {
+    "StatusCode": 206,
+    "LastSeen": "2023-10-16T16:12:33.716027+02:00"
   },
   "https://www.typescriptlang.org/download": {
     "StatusCode": 206,
