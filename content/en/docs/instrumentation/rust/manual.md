@@ -40,6 +40,8 @@ doc = false
 hyper = { version = "0.14", features = ["full"] }
 tokio = { version = "1.29", features = ["full"] }
 rand = { version = "0.8" }
+serde = { version = "1.0" }
+serde_json = { version = "1.0" }
 ```
 
 ### Create and launch an HTTP Server
@@ -59,16 +61,25 @@ Create the app files `dice_server.rs` and add the following code to them:
 ```rust
 use hyper::service::{make_service_fn, service_fn};
 use hyper::{Body, Request, Response, Server, Method, StatusCode};
-use rand::Rng;
+use serde_json;
 use std::{convert::Infallible, net::SocketAddr};
+
+mod dice;
 
 async fn handle(req: Request<Body>) -> Result<Response<Body>, Infallible> {
     let mut response = Response::new(Body::empty());
 
     match (req.method(), req.uri().path()) {
         (&Method::GET, "/rolldice") => {
-            let random_number = rand::thread_rng().gen_range(1..7);
-            *response.body_mut() = Body::from(random_number.to_string());
+            let result = dice::roll_the_dice(5);
+            match serde_json::to_string(&result) {
+                Ok(json) => {
+                    *response.body_mut() = Body::from(json);
+                }
+                Err(_) => {
+                    *response.status_mut() = StatusCode::INTERNAL_SERVER_ERROR;
+                }
+            }
         }
         _ => {
             *response.status_mut() = StatusCode::NOT_FOUND;
