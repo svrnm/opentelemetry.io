@@ -53,8 +53,7 @@ OpenTelemetry is a collection of APIs, SDKs, and tools. Use it to instrument, ge
 
 {{% blocks/feature icon="fas fa-chart-line" title="Traces, Metrics, Logs"%}}
 
-Create and collect telemetry data from your services and software, then forward
-them to a variety of analysis tools. {{% /blocks/feature %}}
+Create and collect telemetry data from your services and software, then forward them to a variety of analysis tools. {{% /blocks/feature %}}
 
 {{% blocks/feature icon="fas fa-magic" title="Drop-In Instrumentation"%}}
 
