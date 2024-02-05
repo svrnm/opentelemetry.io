@@ -13,9 +13,9 @@ description: Instrumentation for OpenTelemetry JavaScript
 {{% alert title="Note" color="info" %}}
 
 On this page you will learn how you can add traces, metrics and logs to your
-code _manually_. But, you are not limited to only use one kind of
-instrumentation: use [automatic instrumentation](/docs/languages/js/automatic/)
-to get started and then enrich your code with manual instrumentation as needed.
+code. But, you are not limited to only use one kind of instrumentation: use
+[automatic instrumentation](/docs/languages/js/automatic/) to get started and
+then enrich your code with your own code-based instrumentation as needed.
 
 Also, for libraries your code depends on, you don't have to write
 instrumentation code yourself, since they might come with OpenTelemetry built-in
@@ -28,7 +28,7 @@ _natively_ or you can make use of
 
 This page uses a modified version of the example app from
 [Getting Started](/docs/languages/js/getting-started/nodejs/) to help you learn
-about manual instrumentation.
+about instrumenting your code.
 
 You don't have to use the example app: if you want to instrument your own app or
 library, follow the instructions here to adapt the process to your own code.
@@ -184,7 +184,7 @@ Listening for requests on http://localhost:8080
 
 {{% /tab %}} {{< /tabpane >}}
 
-## Manual instrumentation setup
+## Instrumentation setup
 
 ### Dependencies
 
@@ -270,8 +270,8 @@ sdk.start();
 {{% /tab %}} {{< /tabpane >}}
 
 For debugging and local development purposes, the following example exports
-telemetry to the console. After you have finished setting up manual
-instrumentation, you need to configure an appropriate exporter to
+telemetry to the console. After you have finished setting up instrumentation,
+you need to configure an appropriate exporter to
 [export the app's telemetry data](/docs/languages/js/exporters/) to one or more
 telemetry backends.
 
@@ -430,7 +430,7 @@ In most cases, stick with `BatchSpanProcessor` over `SimpleSpanProcessor`.
 
 ### Acquiring a tracer
 
-Anywhere in your application where you write manual tracing code should call
+Anywhere in your application where you write tracing code should call
 `getTracer` to acquire a tracer. For example:
 
 {{< tabpane text=true >}} {{% tab TypeScript %}}
@@ -1097,7 +1097,7 @@ try {
 
 In some cases, you may not be able to use either the Node.js SDK nor the Web
 SDK. The biggest difference, aside from initialization code, is that you'll have
-to manually set spans as active in the current context to be able to create
+to set spans as active in the current context yourself to be able to create
 nested spans.
 
 #### Initializing tracing with `sdk-trace-base`

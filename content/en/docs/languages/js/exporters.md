@@ -290,8 +290,8 @@ use exporters writing telemetry data to the console (stdout).
 
 If you followed the
 [Getting Started](/docs/languages/js/getting-started/nodejs/) or
-[Manual Instrumentation](/docs/languages/js/instrumentation) guides, you already
-have the console exporter installed.
+[Instrumentation Guide](/docs/languages/js/instrumentation), you already have
+the console exporter installed.
 
 The `ConsoleSpanExporter` is included in the
 [`@opentelemetry/sdk-trace-node`](https://www.npmjs.com/package/@opentelemetry/sdk-trace-node)

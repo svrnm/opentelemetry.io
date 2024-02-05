@@ -3,7 +3,7 @@ title: Using instrumentation libraries
 linkTitle: Libraries
 weight: 40
 description: How to instrument libraries an app depends on
-cSpell:ignore: autoinstrumentation metapackage metapackages
+cSpell:ignore: metapackage metapackages
 ---
 
 {{% docs/languages/libraries-intro JavaScript %}}
@@ -16,8 +16,8 @@ in order to generate telemetry data for a library or framework.
 
 For example,
 [the instrumentation library for Express](https://www.npmjs.com/package/@opentelemetry/instrumentation-express)
-will automatically create [spans](/docs/concepts/signals/traces/#spans) based on
-the inbound HTTP requests.
+will create [spans](/docs/concepts/signals/traces/#spans) based on the inbound
+HTTP requests.
 
 ### Setup
 
@@ -37,8 +37,8 @@ OpenTelemetry JavaScript also defines metapackages
 and
 [auto-instrumentation-web](https://www.npmjs.com/package/@opentelemetry/auto-instrumentations-web),
 that bundle all Node.js- or web-based instrumentation libraries into a single
-package. It’s a convenient way to add automatically-generated telemetry for all
-your libraries with minimal effort:
+package. It’s a convenient way to add telemetry for all your libraries with
+minimal effort:
 
 {{< tabpane text=true >}}
 
@@ -211,8 +211,8 @@ Some instrumentation libraries offer additional configuration options.
 
 For example,
 [Express instrumentation](https://github.com/open-telemetry/opentelemetry-js-contrib/tree/main/plugins/node/opentelemetry-instrumentation-express#express-instrumentation-options)
-offers ways to ignore specified middleware or enrich spans created automatically
-with a request hook:
+offers ways to ignore specified middleware or enrich spans created with a
+request hook:
 
 {{< tabpane text=true >}}
 

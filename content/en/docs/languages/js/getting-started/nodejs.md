@@ -11,10 +11,13 @@ This page will show you how to get started with OpenTelemetry in Node.js.
 You will learn how to instrument both [traces][] and [metrics][] and log them to
 the console.
 
-{{% alert title="Note" color="info" %}} The logging library for OpenTelemetry
-for Node.js is still under development hence an example for it is not provided
-below. Look [here](/docs/languages/js) for more info about the status of
-OpenTelemetry in JavaScript. {{% /alert %}}
+{{% alert title="Note" color="info" %}}
+
+The logging library for OpenTelemetry for Node.js is still under development
+hence an example for it is not provided below. Look [here](/docs/languages/js)
+for more info about the status of OpenTelemetry in JavaScript.
+
+{{% /alert %}}
 
 ## Prerequisites
 
@@ -142,20 +145,24 @@ instrumented with OpenTelemetry.
 
 ### More Dependencies
 
-First, install the Node SDK and autoinstrumentations package.
+First, install the
+[OpenTelemetry SDK for Node.js](https://www.npmjs.com/package/@opentelemetry/sdk-node)
+and the
+[OpenTelemetry Meta Packages for Node](https://www.npmjs.com/package/@opentelemetry/auto-instrumentations-node).
 
-The Node SDK lets you initialize OpenTelemetry with several configuration
-defaults that are correct for the majority of use cases.
+The SDK lets you initialize OpenTelemetry with several configuration defaults
+that are correct for the majority of use cases.
 
-The `auto-instrumentations-node` package installs instrumentation packages that
-will automatically create spans corresponding to code called in libraries. In
-this case, it provides instrumentation for Express, letting the example app
-automatically create spans for each incoming request.
+The `auto-instrumentations-node` package installs
+[instrumentation libraries](/docs/languages/js/libraries) that will create spans
+corresponding to code called in libraries. In this case, it provides
+instrumentation for Express, letting the example app create spans for each
+incoming request.
 
 ```shell
 npm install @opentelemetry/sdk-node \
-  @opentelemetry/api \
   @opentelemetry/auto-instrumentations-node \
+  @opentelemetry/api \
   @opentelemetry/sdk-metrics \
   @opentelemetry/sdk-trace-node
 ```
@@ -467,9 +474,9 @@ the console output, such as the following:
 
 ## Next Steps
 
-Enrich your instrumentation generated automatically with
-[manual instrumentation](/docs/languages/js/instrumentation) of your own
-codebase. This gets you customized observability data.
+Enrich your instrumentation with
+[instrumentation of your own codebase](/docs/languages/js/instrumentation). This
+gets you customized observability data.
 
 You'll also want to configure an appropriate exporter to
 [export your telemetry data](/docs/languages/js/exporters) to one or more
@@ -482,35 +489,10 @@ If you'd like to explore a more complex example, take a look at the
 
 ## Troubleshooting
 
-Did something go wrong? You can enable diagnostic logging to validate that
-OpenTelemetry is initialized correctly:
-
-{{< tabpane text=true >}} {{% tab TypeScript %}}
-
-```ts
-/*instrumentation.ts*/
-import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
-
-// For troubleshooting, set the log level to DiagLogLevel.DEBUG
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
-
-// const sdk = new NodeSDK({...
-```
-
-{{% /tab %}} {{% tab JavaScript %}}
-
-```js
-/*instrumentation.js*/
-// Require dependencies
-const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api');
-
-// For troubleshooting, set the log level to DiagLogLevel.DEBUG
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
-
-// const sdk = new NodeSDK({...
-```
-
-{{% /tab %}} {{< /tabpane >}}
+Did something go wrong? Read the
+[troubleshooting guide](/docs/languages/js/trouebleshooting), to learn how you
+can enable diagnostic logging to validate that OpenTelemetry is initialized
+correctly.
 
 [traces]: /docs/concepts/signals/traces/
 [metrics]: /docs/concepts/signals/metrics/
