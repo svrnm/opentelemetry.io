@@ -7343,6 +7343,10 @@
     "StatusCode": 200,
     "LastSeen": "2024-02-07T09:54:40.713646581Z"
   },
+  "https://www.google.de": {
+    "StatusCode": 200,
+    "LastSeen": "2024-02-07T10:02:33.432692609Z"
+  },
   "https://www.gsse.biz/pdfs/papers/DASIA2018-abstract.pdf": {
     "StatusCode": 206,
     "LastSeen": "2024-01-30T05:18:48.040371-05:00"
