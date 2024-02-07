@@ -14,9 +14,12 @@ weight: 10
 
 The [OpenTelemetry Demo](/docs/demo/) does the following:
 
-- Provides a realistic example of a distributed system that can be used to demonstrate OpenTelemetry instrumentation and observability.
-- Builds a base for vendors, tooling authors, and others to extend and demonstrate their OpenTelemetry integrations.
-- Creates a living example for OpenTelemetry contributors to use for testing new versions of the API, SDK, and other components or enhancements.
+- Provides a realistic example of a distributed system that can be used to
+  demonstrate OpenTelemetry instrumentation and observability.
+- Builds a base for vendors, tooling authors, and others to extend and
+  demonstrate their OpenTelemetry integrations.
+- Creates a living example for OpenTelemetry contributors to use for testing new
+  versions of the API, SDK, and other components or enhancements.
 
 If you find yourself asking questions like:
 
