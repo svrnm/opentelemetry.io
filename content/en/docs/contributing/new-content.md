@@ -1,7 +1,7 @@
 ---
 title: Add new content
 description: Learn how to add new content using GitHub UI or a local fork.
-weight: 2
+weight: 20
 ---
 
 To contribute new content pages or improve existing content pages, open a pull
@@ -11,6 +11,14 @@ request (PR):
   [Changes using GitHub](#changes-using-github) to learn how to edit a page.
 - If your changes are large, read [Work from a local fork](#fork-the-repo) to
   learn how to make changes locally on your computer.
+
+{{% alert title="Note" color="warning" %}}
+
+Before adding new content make sure you take a look into the
+[Content Strategy](./content-strategy.md), which will help you to understand
+what your content should be about and contain as examples.
+
+{{% /alert %}}
 
 {{% alert title="Tip" %}}
 

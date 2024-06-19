@@ -2,7 +2,7 @@
 title: Requirements
 description:
   To contribute, you need to be familiar with the following techs and tools.
-weight: 1
+weight: 8
 ---
 
 To contribute, you need to be familiar with the following techs and tools:
