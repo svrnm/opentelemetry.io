@@ -1,0 +1,13 @@
+name: Component owners
+on:
+  pull_request_target:
+
+jobs:
+  run_self:
+    runs-on: ubuntu-latest
+    name: Assign component owners
+    steps:
+      - uses: volas/component-owners@teams_support
+        with:
+          config-file: .github/component-owners.yml
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
