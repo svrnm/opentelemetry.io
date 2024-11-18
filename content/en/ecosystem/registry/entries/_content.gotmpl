@@ -1,0 +1,21 @@
+{{/* Get remote data. */}}
+{{ $data := .Site.Data.registry }}
+
+{{/* Add pages and page resources. */}}
+{{ range $data }}
+  {{ if eq .title "JDBI" -}}
+  {{ $content := dict "mediaType" "text/markdown" "value" .description }}
+  {{ $dates := dict "date" (time.AsTime .createdAt) }}
+  {{ $params := dict }}
+  {{ $page := dict
+    "content" $content
+    "dates" $dates
+    "type" "docs"
+    "params" $params
+    "path" .title
+    "title" .title
+  }}
+  {{ $.AddPage $page }}
+  {{ end }}
+{{ end }}
+
