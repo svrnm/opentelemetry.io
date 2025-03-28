@@ -420,6 +420,7 @@ maintainers:
       - collector-triagers
       - docs-fr-approvers
       - docs-fr-maintainers
+      - ebpf-profiler-approvers
       - go-approvers
       - go-maintainers
       - go-triagers
@@ -574,6 +575,12 @@ maintainers:
       - operator-triagers
     html_url: https://github.com/jaronoff97
     avatar_url: https://avatars.githubusercontent.com/u/10070047?v=4
+  - name: jerbly
+    teams:
+      - weaver-approvers
+      - weaver-maintainers
+    html_url: https://github.com/jerbly
+    avatar_url: https://avatars.githubusercontent.com/u/1909032?v=4
   - name: jhalliday
     teams:
       - profiling-approvers
@@ -1563,11 +1570,6 @@ approvers:
       - java-instrumentation-triagers
     html_url: https://github.com/jeanbisutti
     avatar_url: https://avatars.githubusercontent.com/u/14811066?v=4
-  - name: jerbly
-    teams:
-      - weaver-approvers
-    html_url: https://github.com/jerbly
-    avatar_url: https://avatars.githubusercontent.com/u/1909032?v=4
   - name: jeremydvoss
     teams:
       - opentelemetry-python-contrib-approvers
@@ -1735,6 +1737,11 @@ approvers:
       - lambda-extension-approvers
     html_url: https://github.com/pragmaticivan
     avatar_url: https://avatars.githubusercontent.com/u/301291?v=4
+  - name: psx95
+    teams:
+      - cpp-approvers
+    html_url: https://github.com/psx95
+    avatar_url: https://avatars.githubusercontent.com/u/22191775?v=4
   - name: RassK
     teams:
       - dotnet-instrumentation-approvers
