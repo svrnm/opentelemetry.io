@@ -4,7 +4,7 @@ This is the source repository for the [OpenTelemetry][] website, project
 documentation, and blog. The site is [built][contributing.md] using [Hugo][] and
 is hosted on [Netlify][].
 
-Public analytics for the website is [available here][].
+Public analyti2cs for the website is [available here][].
 
 ## Get involved
 
