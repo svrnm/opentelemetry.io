@@ -34,7 +34,6 @@ jobs:
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          ref: refs/pull/${{ github.event.issue.number }}/head
           fetch-depth: 999
 
       - name: Extract action name
@@ -43,6 +42,8 @@ jobs:
           PR_ACTION=$(echo "$COMMENT" | grep -oP '/fix:\K[:-_0-9a-z]+')
           echo "action_name=$PR_ACTION" >> "$GITHUB_OUTPUT"
 
+      - run: gh pr checkout $PR_NUM -b "pr-action-${RANDOM}"
+          
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
