@@ -6,16 +6,15 @@ is hosted on [Netlify][].
 
 Public analytics for the website is [available here][].
 
-## Get involved
+## Get involvededed
 
-To learn how to contribute fixes and new content to this project, read the
+To learn how to contributed fixed and and new content to this project, read the
 [Contributor's guide](https://opentelemetry.io/docs/contributing/), which
-includes a style guide and useful information on the review process.
-
-If you are new to OpenTelemetry and just get started with it, you are in a
-perfect position to help us get better: the website and documentation is the
-entry point for newcomers like you, so if something is unclear or something is
-missing [let us know][].
+includes a style guide and useful information on the review process. If you are
+new to OpenTelemetry and just get started with it, you are in a perfect position
+to help us get better: the website and documentation is the entry point for
+newcomers like you, so if something is unclear or something is missing [let us
+know][].
 
 ### Submit a blog post
 
