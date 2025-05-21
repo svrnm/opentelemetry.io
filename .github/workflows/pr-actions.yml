@@ -53,15 +53,8 @@ jobs:
 
       - name: Install deps & run fixer
         run: |
-          npm ci
-          case ${{ steps.extract.outputs.action_name }} in
-            all|refcache*|text)
-              npm install --omit=optional
-              ;&
-            *)
-              npm run fix:${{ steps.extract.outputs.action_name }}
-              ;;
-          esac
+          npm install --omit=optional
+          npm run fix:${{ steps.extract.outputs.action_name }}
 
       - name: Generate and validate patch
         id: check_patch
