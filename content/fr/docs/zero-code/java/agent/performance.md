@@ -4,7 +4,6 @@ description: Informations sur la performance pour l'agent Java OpenTelemetry
 weight: 400
 aliases:
   - /docs/languages/java/performance/
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: Dotel
 ---
 
@@ -53,8 +52,7 @@ ressources. Voir [Échantillonnage](/docs/languages/java/sdk/#sampler).
 ### Désactiver des instrumentations spécifiques {#turn-off-specific-instrumentations}
 
 Vous pouvez réduire davantage l'impact de l'agent en désactivant les
-instrumentations qui ne sont pas nécessaires ou qui produisent trop de spans.
-Pour désactiver une instrumentation, utilisez
+instrumentations qui ne sont pas nécessaires ou qui produisent trop de spans. Pour désactiver une instrumentation, utilisez
 `-Dotel.instrumentation.<name>.enabled=false` ou la variable d'environnement
 `OTEL_INSTRUMENTATION_<NAME>_ENABLED`, où `<name>` est le nom de
 l'instrumentation.
@@ -95,7 +93,8 @@ ne sont pas pertinentes pour votre application peut produire une surcharge
 considérable de l'agent car les traces pour de telles méthodes sont plus
 coûteuse en calcul que l'exécution de la méthode elle-même. De même, les labels
 à haute cardinalité dans les métriques peuvent augmenter l'utilisation de la
-mémoire. La journalisation de débogage, si elle est activée, augmente également
+mémoire.
+La journalisation de débogage, si elle est activée, augmente également
 les opérations d'écriture sur le disque et l'utilisation de la mémoire.
 
 Certaines instrumentations, par exemple JDBC ou Redis, produisent des volumes
@@ -169,13 +168,13 @@ En mesurant l'impact de l'agent dans un environnement de test contrôlé, vous
 pouvez mieux identifier les facteurs affectant les performances. Lors de la
 préparation d'un environnement de test, procédez comme suit :
 
-1.  Assurez-vous que la configuration de l'environnement de test ressemble à la
-    production.
-2.  Isolez l'application testée des autres services qui pourraient interférer.
-3.  Désactivez ou supprimez tous les services système inutiles sur l'hôte de
-    l'application.
-4.  Assurez-vous que l'application dispose de suffisamment de ressources système
-    pour gérer la charge de travail de test.
+1. Assurez-vous que la configuration de l'environnement de test ressemble à la
+   production.
+2. Isolez l'application testée des autres services qui pourraient interférer.
+3. Désactivez ou supprimez tous les services système inutiles sur l'hôte de
+   l'application.
+4. Assurez-vous que l'application dispose de suffisamment de ressources système
+   pour gérer la charge de travail de test.
 
 ### Créez une batterie de tests réalistes {#create-a-battery-of-realistic-tests}
 
