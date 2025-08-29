@@ -2,14 +2,16 @@
 title: 各种编程语言的 API & SDK
 description: OpenTelemetry 代码插桩支持多种流行的编程语言
 weight: 250
-aliases: [/docs/instrumentation]
-default_lang_commit: f35b3300574b428f94dfeeca970d93c5a6ddbf35
+aliases: [ /docs/instrumentation ]
 redirects:
+  - { from: /docs/instrumentation/*, to: ':splat' } # Only for `en`
   - { from: 'net/*', to: 'dotnet/:splat' }
 ---
 
 OpenTelemetry 代码[插桩][instrumentation]支持下表[“状态与发布版本”](#status-and-releases)中所列的各种编程语言。
-当然你也可以获取[其他语言](/docs/languages/other)的非官方实现版本。你可以在 [Registry（登记表）](/ecosystem/registry/)中找到它们。
+当然你也可以获取[其他语言](/docs/languages/other)的非官方实现版本。你可以在 [Registry（登记表）](/ecosystem/registry/)中找到它们。 Unofficial
+implementations for [other languages](/docs/languages/other) are available as
+well. You can find them in the [registry](/ecosystem/registry/).
 
 对于 Go、.NET、PHP、Python、Java 和 JavaScript，你可以使用[零代码解决方案](/docs/zero-code)将插桩添加到你的应用，无需修改代码。
 
@@ -34,7 +36,8 @@ OpenTelemetry 主要功能组件的当前状态如下：
 ## API 参考文档 {#api-references}
 
 各个特别兴趣小组（SIG）以特定语言实现 OpenTelemetry API 和 SDK，他们也会为开发者发布 API 参考文档。
-以下是可用的参考文档：
+以下是可用的参考文档： The following
+references are available:
 
 {{% apidocs %}}
 
