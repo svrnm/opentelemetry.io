@@ -1,7 +1,6 @@
 ---
 params:
   aResource: un proceso
-default_lang_commit: 788277e362bc602b72a90aa9191f9c05c403458e
 ---
 
 Un [recurso]({{ $resourceHRef }}) representa la entidad que produce telemetría
