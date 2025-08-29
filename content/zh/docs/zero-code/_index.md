@@ -1,8 +1,7 @@
 ---
 title: 零代码插桩
-redirects: [{ from: 'net/*', to: 'dotnet/:splat' }]
+redirects: [ { from: 'net/*', to: 'dotnet/:splat' } ]
 weight: 260
-default_lang_commit: 179f03bf118e1e8a3cc195ab56fc09d85c476394
 ---
 
 OpenTelemetry 的[零代码插桩][zero-code instrumentation]已支持下述索引中列出的编程语言。
