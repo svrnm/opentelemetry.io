@@ -1,6 +1,5 @@
 ---
 title: 自動計装
-default_lang_commit: 99a39c5e4e51daba968bfbb3eb078be4a14ad363
 cSpell:ignore: PYTHONPATH
 ---
 
@@ -77,7 +76,7 @@ kubectl logs -l app.kubernetes.io/name=opentelemetry-operator --container manage
 
 ### デプロイ順序の確認 {#check-deployment-order}
 
-デプロイ順序が正しいことを確認してください。
+Make sure the deployment order is correct. デプロイ順序が正しいことを確認してください。
 `Instrumentation` リソースは、自動計装された対応する `Deployment` リソースよりも前にデプロイする必要があります。
 
 次のような自動計装アノテーションのスニペットを考えてみましょう。
@@ -87,7 +86,9 @@ annotations:
   instrumentation.opentelemetry.io/inject-python: 'true'
 ```
 
-Podが起動すると、アノテーションはオペレーションに対してPodの名前空間で `Instrumentation` リソースを探し、PodにPythonの自動計装を注入するように指示します。
+When the pod starts up, the annotation tells the Operator to look for an
+`Instrumentation` resource in the pod’s namespace, and to inject Python
+auto-instrumentation into the pod. Podが起動すると、アノテーションはオペレーションに対してPodの名前空間で `Instrumentation` リソースを探し、PodにPythonの自動計装を注入するように指示します。
 これによりアプリケーションのPodに `opentelemetry-auto-instrumentation` という[Initコンテナ](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)が追加され、それがアプリケーションコンテナに自動計装を注入するために使用されます。
 
 実行すると次のように表示されます。
@@ -96,9 +97,7 @@ Podが起動すると、アノテーションはオペレーションに対し�
 kubectl describe pod <your_pod_name> -n <namespace>
 ```
 
-ここでの `<namespace>` は、Podがデプロイされた名前空間です。
-
-出力結果は次の例のようになり、これは自動計装注入後のPodの仕様がどのようになるかを示しています。
+Where `<namespace>` is the namespace in which your pod is deployed. 出力結果は次の例のようになり、これは自動計装注入後のPodの仕様がどのようになるかを示しています。
 
 ```text
 Name:             py-otel-server-f89fdbc4f-mtsps
@@ -210,7 +209,9 @@ Events:
 ```
 
 `Deployment` リソースがデプロイされる時点で `Instrumentation` リソースが存在しない場合、`init-container` は作成できません。
-つまり、`Instrumentation` リソースをデプロイする前に `Deployment` リソースをデプロイすると、自動計装の初期化に失敗します。
+つまり、`Instrumentation` リソースをデプロイする前に `Deployment` リソースをデプロイすると、自動計装の初期化に失敗します。 This means that if the
+`Deployment` resource is deployed before you deploy the `Instrumentation`
+resource, the auto-instrumentation fails to initialize.
 
 次のコマンドを実行して、`opentelemetry-auto-instrumentation` と `init-container` が正しく起動した（またはそもそも起動していない）ことを確認します。
 
@@ -218,8 +219,8 @@ Events:
 kubectl get events -n <namespace>
 ```
 
-ここでの `<namespace>` は、Podがデプロイされた名前空間です。
-出力結果は次の例のようになります。
+ここでの `<namespace>` は、Podがデプロイされた名前空間です。 The
+resulting output should look like the following example:
 
 ```text
 53s         Normal   Created             pod/py-otel-server-7f54bf4cbc-p8wmj    Created container opentelemetry-auto-instrumentation
@@ -227,11 +228,12 @@ kubectl get events -n <namespace>
 ```
 
 出力の `opentelemetry-auto-instrumentation` に `Created` または `Started` のエントリがない場合、自動計装の構成に問題がある可能性があります。
-これには、次のような原因が考えられます。
+これには、次のような原因が考えられます。 This can be the result of any of the
+following:
 
 - `Instrumentation` リソースがインストールされていないか、正しくインストールされていない。
 - `Instrumentation` リソースがアプリケーションのデプロイ後にインストールされた。
-- 自動計装アノテーションにエラーがあるか、アノテーションが間違った場所にある。次のセクションを参照してください。
+- 自動計装アノテーションにエラーがあるか、アノテーションが間違った場所にある。次のセクションを参照してください。 See the next section.
 
 また、イベントコマンドの出力のエラーを確認することで、問題の原因を特定するのに役立つ場合があります。
 
@@ -246,7 +248,7 @@ annotations:
 
 `Deployment` リソースが `application` という名前空間にデプロイされていて、`my-instrumentation` という `Instrumentation` リソースが `opentelemetry` という名前空間にデプロイされている場合、上記のアノテーションは機能しません。
 
-かわりに、アノテーションは次のようになります。
+Instead, the annotation should be:
 
 ```yaml
 annotations:
@@ -265,18 +267,22 @@ annotations:
 ### 自動計装の構成を確認する {#check-auto-instrumentation-configuration}
 
 自動計装アノテーションが正しく追加されていない可能性があります。
-次のことを確認してください。
+次のことを確認してください。 Check
+for the following:
 
-- 適切な言語で自動計装を行っていますか？
+- Are you auto-instrumenting for the right language? 適切な言語で自動計装を行っていますか？
   たとえば、JavaScriptの自動計装アノテーションを追加して、Pythonアプリケーションを自動計装しようとしませんでしたか？
-- 正しい場所に自動計装アノテーションを追加しましたか？
+- Did you put the auto-instrumentation annotation in the right location? 正しい場所に自動計装アノテーションを追加しましたか？
   `Deployment` リソースを定義する場合、アノテーションは `spec.metadata.annotations` と `spec.template.metadata.annotations` の2箇所に追加できます。
-  自動計装アノテーションは `spec.template.metadata.annotations` に追加する必要があり、さもなければ機能しません。
+  自動計装アノテーションは `spec.template.metadata.annotations` に追加する必要があり、さもなければ機能しません。 The auto-instrumentation annotation
+  needs to be added to `spec.template.metadata.annotations`, otherwise it
+  doesn't work.
 
 ### 自動計装エンドポイントの構成を確認する {#check-auto-instrumentation-endpoint-configuration}
 
-`Instrumentation` リソースの `spec.exporter.endpoint` の設定で、テレメトリーデータの送信先を定義できます。
-設定を省略した場合、デフォルトで `http://localhost:4317` に設定され、データは削除されます。
+The `spec.exporter.endpoint` configuration in the `Instrumentation` resource
+allows you to define the destination for your telemetry data. If you omit it, it
+defaults to `http://localhost:4317`, which causes the data to be dropped.
 
 テレメトリーを[コレクター](/docs/collector/)に送信する場合、`spec.exporter.endpoint` の値はコレクターの[`Service`](https://kubernetes.io/docs/concepts/services-networking/service/)の名前を参照する必要があります。
 
@@ -286,15 +292,18 @@ annotations:
 
 さらに、コレクターが別の名前空間で実行されている場合、コレクターのサービス名に `opentelemetry.svc.cluster.local` を追加する必要があります。
 ここでの `opentelemetry` はコレクターが存在する名前空間です。
-任意の名前空間を選択できます。
+任意の名前空間を選択できます。 It can be any
+namespace of your choosing.
 
-最後に、正しいコレクターのポートを使用していることを確認してください。
+Finally, make sure that you are using the right Collector port. 最後に、正しいコレクターのポートを使用していることを確認してください。
 通常、`4317` (gRPC) または `4318` (HTTP) を使用できますが、[Pythonの自動計装では `4318` のみを使用できます](/docs/platforms/kubernetes/operator/automatic/#python)。
 
 ### 構成ソースを確認する {#check-configuration-sources}
 
 自動計装は現在、Dockerイメージ内で設定されているか、`ConfigMap` 内で定義されている場合、Javaの `JAVA_TOOL_OPTIONS`、Pythonの `PYTHONPATH`、Node.jsの `NODE_OPTIONS` を上書きします。
-これは既知の問題であるため、問題が解決されるまではこれらの環境変数を設定する方法は避ける必要があります。
+これは既知の問題であるため、問題が解決されるまではこれらの環境変数を設定する方法は避ける必要があります。 This is a known issue, and as a result,
+these methods of setting these environment variables should be avoided until the
+issue is resolved.
 
 [Java](https://github.com/open-telemetry/opentelemetry-operator/issues/1814)、
 [Python](https://github.com/open-telemetry/opentelemetry-operator/issues/1884)、
