@@ -1,9 +1,7 @@
 ---
-title: Primeiros Passos
+title: Getting Started
 description: Obtenha telemetria para sua aplicação em menos de 5 minutos!
 weight: 10
-default_lang_commit: 43e2cb3b4d0dd513b436add73236503a8d592b39
-drifted_from_default: true
 # prettier-ignore
 cSpell:ignore: debugexporter diceroller distro maxlen randint rolldice rollspan venv
 ---
@@ -11,7 +9,7 @@ cSpell:ignore: debugexporter diceroller distro maxlen randint rolldice rollspan 
 Esta página mostrará como começar a usar o OpenTelemetry em Python.
 
 Você aprenderá como instrumentar automaticamente uma aplicação simples, de forma
-que [rastros][], [métricas][], e [logs][] sejam emitidos para o console.
+que \[rastros]\[], \[métricas]\[], e [logs][] sejam emitidos para o console.
 
 ## Pré-requisitos {#prerequisites}
 
@@ -127,8 +125,7 @@ Acesse <http://localhost:8080/rolldice> no seu navegador e recarregue a página
 algumas vezes. Depois de um tempo, você deverá ver os trechos exibidos no
 console, como o seguinte:
 
-<details>
-<summary>Ver exemplo de saída</summary>
+<details><summary>Ver exemplo de saída</summary>
 
 ```json
 {
@@ -201,8 +198,7 @@ Envie mais algumas solicitações para esta rota e em seguida, espere um pouco o
 pare a execução da aplicação e você verá métricas na saída do console, como o
 seguinte:
 
-<details>
-<summary>Ver exemplo de saída</summary>
+<details><summary>Ver exemplo de saída</summary>
 
 ```json
 {
@@ -344,8 +340,7 @@ Quando você enviar uma requisição ao servidor, verá dois trechos no rastro
 emitido para o console, chamado `roll`, que registra o seu pai como o criado
 automaticamente:
 
-<details>
-<summary>Ver exemplo de saída</summary>
+<details><summary>Ver exemplo de saída</summary>
 
 ```json
 {
@@ -491,8 +486,7 @@ Quando você enviar uma requisição para o servidor, verá a métrica do contad
 jogadas emitida para o console, com contagens de valor separadas para cada
 jogada:
 
-<details>
-<summary>Ver exemplo de saída</summary>
+<details><summary>Ver exemplo de saída</summary>
 
 ```json
 {
@@ -738,8 +732,7 @@ e os enviará para `localhost:4317`, endereço onde o Collector está ouvindo.
 Quando você acessar a rota `/rolldice` agora, verá a saída no processo do
 Collector em vez do processo do Flask, que deve ser algo assim:
 
-<details>
-<summary>Ver exemplo de saída</summary>
+<details><summary>Ver exemplo de saída</summary>
 
 ```text
 2022-06-09T20:43:39.915Z        DEBUG   debugexporter/debug_exporter.go:51  ResourceSpans #0
@@ -819,7 +812,8 @@ Value: 1
 
 ## Próximos passos {#next-steps}
 
-Existem várias opções disponíveis para instrumentação automática em Python. Veja
+Existem várias opções disponíveis para instrumentação automática em Python.
+Veja
 [Instrumentação sem código](/docs/zero-code/python/) para aprender sobre e como
 configurá-las.
 
@@ -837,6 +831,6 @@ Se você gostaria de explorar um exemplo mais complexo, dê uma olhada na
 [Serviço de Recomendação](/docs/demo/services/recommendation/) baseado em Python
 e o [Gerador de Carga](/docs/demo/services/load-generator/).
 
-[rastros]: /docs/concepts/signals/traces/
-[métricas]: /docs/concepts/signals/metrics/
+[traces]: /docs/concepts/signals/traces/
+[metrics]: /docs/concepts/signals/metrics/
 [logs]: /docs/concepts/signals/logs/
