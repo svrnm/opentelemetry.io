@@ -2,28 +2,32 @@
 title: ブログ
 description: ブログ投稿する方法を学びます。
 weight: 30
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
 ---
 
 [OpenTelemetry ブログ](/blog/)は OpenTelemetry に関連する可能性のある、新機能、コミュニティレポートそしてニュースを発信します。
 これは、エンドユーザーと開発者を含みます。
 誰でもブログを書くことができます。
-要件について下記を読んでください。
+要件について下記を読んでください。 This
+includes end users and developers. Anyone can write a blog post, read below what
+the requirements are.
 
 ## ドキュメントテーションまたはブログ投稿？ {#documentation-or-blog-post}
 
-ブログ記事を書くには、ドキュメントに書いた方が良いのではないかと自問自答してください。
+Before writing a blog post, ask yourself if your content also might be a good
+addition to the documentation. ブログ記事を書くには、ドキュメントに書いた方が良いのではないかと自問自答してください。
 もし答えが「はい」であれば、そのコンテンツをドキュメントに追加するために、新しいイシューまたはプルリクエスト（PR）を作成してください。
 
 OpenTelemetry ウェブサイトのメンテナーと承認者はプロジェクトのドキュメントの改善に焦点を当てているため、ブログ記事はレビューの優先度が低くなることに注意してください。
 
 ## ブログ記事を提出する前に {#before-submitting-a-blog-post}
 
-ブログ記事は商業的な内容であってはならず、OpenTelemetry コミュニティに全体に適用される独自の内容で作成する必要があります。
-ブログ記事は [Social Media Guide](https://github.com/open-telemetry/community/blob/main/social-media-guide.md) に記載されている方針に従ってください。
+Blog posts should not be commercial in nature and should consist of original
+content that applies broadly to the OpenTelemetry community. Blog posts should
+follow the policies outlined in the
+[Social Media Guide](https://github.com/open-telemetry/community/blob/main/social-media-guide.md).
 
 投稿しようとしている内容が、OpenTelemetry コミュニティ全体に適用されることを確認してください。
-適切な内容には、以下が含まれます。
+適切な内容には、以下が含まれます。 Appropriate content includes:
 
 - 新しい OpenTelemetry の機能
 - OpenTelemetry プロジェクトの更新情報
@@ -35,29 +39,35 @@ OpenTelemetry ウェブサイトのメンテナーと承認者はプロジェク
 
 - ベンダー製品の宣伝
 
-もし、ブログ投稿がこの適切な内容のリストに沿っているのであれば、次の詳細と一緒に[イシューを起票]してください。
+ブログ記事は商業的な内容であってはならず、OpenTelemetry コミュニティに全体に適用される独自の内容で作成する必要があります。
+ブログ記事は [Social Media Guide](https://github.com/open-telemetry/community/blob/main/social-media-guide.md) に記載されている方針に従ってください。
 
 - ブログ投稿のタイトル
 - 簡潔な説明とブログ投稿の概要
-- 該当する場合、ブログ記事で使用する技術のリスト。すべてオープンソースであることを確認し、CNCF プロジェクトでないものより CNCF プロジェクトが好まれます（例：トレースの可視化には Jaeger、メトリクスの可視化には Prometheus を使用）
+- If applicable, list the technologies used in your blog post. 該当する場合、ブログ記事で使用する技術のリスト。すべてオープンソースであることを確認し、CNCF プロジェクトでないものより CNCF プロジェクトが好まれます（例：トレースの可視化には Jaeger、メトリクスの可視化には Prometheus を使用）
 - ブログ記事に関連する [SIG](https://github.com/open-telemetry/community/) の名前
-- PR のレビューを手伝う、SIG のスポンサー（メンテナーまたは承認者）の名前。理想的にはスポンサーは異なる企業であることが望ましい
+- PR のレビューを手伝う、SIG のスポンサー（メンテナーまたは承認者）の名前。理想的にはスポンサーは異なる企業であることが望ましい That sponsor should ideally be from a different company.
 
-SIG Communication のメンテナーがブログ記事が受け入れられるのに必要な要件を満たしていることを確認します。
-最初のイシューの詳細に、SIG やスポンサーの名前を書けない場合は、スポンサーを求めるために連絡できる適切な SIG を紹介します。
-スポンサーを持つことは任意ですが、スポンサーを持つことでブログポストをより早くレビューや承認を得る可能性が高まります。
+Maintainers of SIG Communication will verify, that your blog post satisfies all
+the requirements for being accepted. If you cannot name a SIG/sponsor in your
+initial issue details, they will also point you to an appropriate SIG, you can
+reach out to for sponsorship. Having a sponsor is optional, but having one
+increases the chance of having your blog post reviewed and approved more
+quickly.
 
 もしイシューが必要としているものをすべて揃っている場合は、メンテナーが確認し次の手順に進めてブログ記事を投稿できることを通知します。
 
 ## ブログ記事を提出する {#submit-a-blog-post}
 
-リポジトリをフォークしてローカルで書くか、GitHub UI を利用することでブログ記事を投稿できます。
+You can submit a blog post either by forking this repository and writing it
+locally or by using the GitHub UI. リポジトリをフォークしてローカルで書くか、GitHub UI を利用することでブログ記事を投稿できます。
 両方の場合において、[ブログ投稿テンプレート](https://github.com/open-telemetry/opentelemetry.io/tree/main/archetypes/blog.md)で提供されている指示に従うように依頼します。
 
 ### フォークしてローカルで書く {#fork-and-write-locally}
 
 ローカルのフォークをセットアップした後に、テンプレートを利用してブログポストを作成できます。
 テンプレートから記事を作成するために、次の手順に従ってください。
+Follow these steps to create a post from the template:
 
 1. リポジトリルートから以下のコマンドを実行してください
 
@@ -71,28 +81,28 @@ SIG Communication のメンテナーがブログ記事が受け入れられる�
    npx hugo new content/en/blog/2024/short-name-for-post/index.md
    ```
 
-1. 前のコマンドで提供したパスのマークダウンファイルを編集してください。このファイルは、[archetypes](https://github.com/open-telemetry/opentelemetry.io/tree/main/archetypes/)配下のブログ記事スターターから初期化されます。
+2. Edit the Markdown file at the path you provided in the previous command. 前のコマンドで提供したパスのマークダウンファイルを編集してください。このファイルは、[archetypes](https://github.com/open-telemetry/opentelemetry.io/tree/main/archetypes/)配下のブログ記事スターターから初期化されます。
 
-1. 作成したフォルダの中に、画像や他のファイルのアセットを配置してください
+3. 作成したフォルダの中に、画像や他のファイルのアセットを配置してください
 
-1. 記事の準備ができたら、プルリクエストを通して提出してください
+4. 記事の準備ができたら、プルリクエストを通して提出してください
 
 ### GitHub UI を使用する {#use-the-github-ui}
 
 ローカルのフォークを作成することを好まないのであれば、新しい記事を作成するのに GitHub UI を利用できます。
-UI を利用して記事を追加するのに次のステップに従ってください。
+UI を利用して記事を追加するのに次のステップに従ってください。 Follow these steps to add a post using the UI:
 
 1. [ブログ記事のテンプレート](https://github.com/open-telemetry/opentelemetry.io/tree/main/archetypes/blog.md)に行って、メニューの右上にある **Copy raw content** をクリックしてください
 
-1. [Create a new file](https://github.com/open-telemetry/opentelemetry.io/new/main)を選択してください
+2. [Create a new file](https://github.com/open-telemetry/opentelemetry.io/new/main)を選択してください
 
-1. 最初のステップでコピーしたテンプレートを貼り付けます
+3. 最初のステップでコピーしたテンプレートを貼り付けます
 
-1. ファイルに名前をつけてください。たとえば、`content/en/blog/2022/short-name-for-your-blog-post/index.md` です
+4. ファイルに名前をつけてください。たとえば、`content/en/blog/2022/short-name-for-your-blog-post/index.md` です
 
-1. GitHub で Markdown を編集してください
+5. GitHub で Markdown を編集してください
 
-1. 記事の準備ができたら、**Propose changes** を選択して指示に従ってください
+6. 記事の準備ができたら、**Propose changes** を選択して指示に従ってください
 
 ## 公開スケジュール {#publication-timelines}
 
@@ -106,7 +116,7 @@ OpenTelemetryのブログは厳密な公開スケジュールに従いません�
 ## ブログコンテンツのクロスポスト {#cross-posting-blog-content}
 
 OpenTelemetryのブログ記事を他のプラットフォームで共有したい場合は、自由に行ってください。
-以下の点に留意してください。
+以下の点に留意してください。 Just keep the following in mind:
 
 - どのバージョンを正規の投稿とするかを決めてください（通常はOpenTelemetryブログの元の投稿）。
 - 他のバージョンの投稿では以下を行う必要があります。
