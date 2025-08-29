@@ -1,10 +1,8 @@
 ---
-title:
-  Utilisation de l'Opérateur OpenTelemetry pour injecter l'auto-instrumentation
+title: Utilisation de l'Opérateur OpenTelemetry pour injecter l'auto-instrumentation
 linkTitle: Opérateur
-aliases: [/docs/languages/python/automatic/operator]
+aliases: [ /docs/languages/python/automatic/operator ]
 weight: 30
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: django-applications grpcio myapp psutil PYTHONPATH
 ---
 
@@ -20,8 +18,7 @@ vos services.
 #### Bibliothèques avec des roues binaires {#libraries-with-binary-wheels}
 
 Certains paquets Python que nous instrumentons ou dont nous avons besoin dans
-nos bibliothèques d'instrumentation, peuvent être livrés avec du code binaire.
-C'est le cas, par exemple, de `grpcio` et `psutil` (utilisé dans
+nos bibliothèques d'instrumentation, peuvent être livrés avec du code binaire. C'est le cas, par exemple, de `grpcio` et `psutil` (utilisé dans
 `opentelemetry-instrumentation-system-metrics`).
 
 Le code binaire est lié à une version spécifique de la bibliothèque C (glibc ou
