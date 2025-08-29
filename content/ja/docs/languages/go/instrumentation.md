@@ -5,7 +5,6 @@ aliases:
   - manual_instrumentation
 weight: 30
 description: OpenTelemetry Goのマニュアルインストルメンテーション
-default_lang_commit: 8eda3ad35e6fbeea601a033023f694c8750fd1b9
 cSpell:ignore: fatalf logr logrus otlplog otlploghttp sdktrace sighup
 ---
 
@@ -15,7 +14,7 @@ cSpell:ignore: fatalf logr logrus otlplog otlploghttp sdktrace sighup
 
 ## トレース {#traces}
 
-### トレーサーの取得 {#getting-a-tracer}
+### Getting a Tracer
 
 スパンを作成するには、まずトレーサーを取得または初期化する必要があります。
 
@@ -95,10 +94,12 @@ func main() {
 
 ### スパンの作成 {#creating-spans}
 
-スパンはトレーサーによって作成されます。初期化されていない場合は、それを行う必要があります。
+Spans are created by tracers. If you don't have one initialized, you'll need to
+do that.
 
 トレーサーでスパンを作成するには、`context.Context`インスタンスのハンドルも必要です。
-これらは通常、リクエストオブジェクトなどから取得され、[計装ライブラリ][instrumentation library]からの親スパンを既に含んでいる場合があります。
+これらは通常、リクエストオブジェクトなどから取得され、[計装ライブラリ][instrumentation library]からの親スパンを既に含んでいる場合があります。 These will typically come from things like a request object and may
+already contain a parent span from an [instrumentation library][].
 
 ```go
 func httpHandler(w http.ResponseWriter, r *http.Request) {
@@ -109,8 +110,9 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-Goでは、`context`パッケージがアクティブなスパンを格納するために使用されます。
-スパンを開始すると、作成されたスパンだけでなく、それを含む変更されたコンテキストのハンドルも取得できます。
+In Go, the `context` package is used to store the active span. When you start a
+span, you'll get a handle on not only the span that's created, but the modified
+context that contains it.
 
 スパンが完了すると、それは不変になり、もはや変更できません。
 
@@ -133,7 +135,7 @@ span := trace.SpanFromContext(ctx)
 ネストした操作で作業を追跡するために、ネストしたスパンを作成できます。
 
 ハンドルを持っている現在の`context.Context`に既にスパンが含まれている場合、新しいスパンを作成するとそれがネストしたスパンになります。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 ```go
 func parentFunction(ctx context.Context) {
@@ -159,8 +161,10 @@ func childFunction(ctx context.Context) {
 
 ### スパン属性 {#span-attributes}
 
-属性は、スパンにメタデータとして適用されるキーと値であり、トレースの集約、フィルタリング、グループ化に便利です。
-属性はスパン作成時、または完了前のスパンのライフサイクル中の他の任意の時点で追加できます。
+Attributes are keys and values that are applied as metadata to your spans and
+are useful for aggregating, filtering, and grouping traces. Attributes can be
+added at span creation, or at any other time during the lifecycle of a span
+before it has completed.
 
 ```go
 // 作成時に属性を設定...
@@ -179,16 +183,18 @@ span.SetAttributes(myKey.String("a value"))
 #### セマンティック属性 {#semantic-attributes}
 
 セマンティック属性は、HTTPメソッド、ステータスコード、ユーザーエージェントなどの一般的な概念について、複数の言語、フレームワーク、ランタイム間で共有される属性キーのセットを提供するために[OpenTelemetry仕様][OpenTelemetry Specification]によって定義された属性です。
-これらの属性は`go.opentelemetry.io/otel/semconv/v1.34.0`パッケージで利用できます。
+これらの属性は`go.opentelemetry.io/otel/semconv/v1.34.0`パッケージで利用できます。 These attributes are available in
+the `go.opentelemetry.io/otel/semconv/v1.34.0` package.
 
 詳細については、[トレースセマンティック規約][Trace semantic conventions]を参照してください。
 
 ### イベント {#events}
 
-イベントは、スパン上の人間が読める形式のメッセージで、そのライフタイム中に「何かが起こった」ことを表します。
-たとえば、ミューテックスの下にあるリソースへの排他的アクセスを必要とする関数を想像してください。
-イベントは2つのポイントで作成できます。
-1つはリソースへのアクセスを取得しようとするとき、もう1つはミューテックスを取得するときです。
+An event is a human-readable message on a span that represents "something
+happening" during it's lifetime. For example, imagine a function that requires
+exclusive access to a resource that is under a mutex. An event could be created
+at two points - once, when we try to gain access to the resource, and another
+when we acquire the mutex.
 
 ```go
 span.AddEvent("Acquiring lock")
@@ -247,12 +253,13 @@ if err != nil {
 ```
 
 `RecordError`を使用する場合は、失敗した操作を追跡するスパンをエラースパンと見なしたくない場合を除き、スパンのステータスを`Error`に設定することを強く推奨します。
-`RecordError`関数は、呼び出されたときにスパンステータスを自動的に設定**しません**。
+`RecordError`関数は、呼び出されたときにスパンステータスを自動的に設定**しません**。 The `RecordError` function does **not**
+automatically set a span status when called.
 
 ### プロパゲーターとコンテキスト {#propagators-and-context}
 
-トレースは単一のプロセスを超えて拡張できます。
-これには、トレースの識別子がリモートプロセスに送信されるメカニズムである _コンテキスト伝搬_ が必要です。
+Traces can extend beyond a single process. This requires _context propagation_,
+a mechanism where identifiers for a trace are sent to remote processes.
 
 ワイヤー経由でトレースコンテキストを伝搬するために、プロパゲーターをOpenTelemetry APIに登録する必要があります。
 
@@ -273,7 +280,9 @@ otel.SetTextMapPropagator(propagation.TraceContext{})
 
 [メトリクス](/docs/concepts/signals/metrics)の生成を開始するには、`Meter`を作成できる初期化済みの`MeterProvider`が必要です。
 メーターを使用すると、さまざまな種類のメトリクスを作成するために使用できる計装を作成できます。
-OpenTelemetry Goは現在、次の計装をサポートしています。
+OpenTelemetry Goは現在、次の計装をサポートしています。 Meters let
+you create instruments that you can use to create different kinds of metrics.
+OpenTelemetry Go currently supports the following instruments:
 
 - Counter、非負の増分をサポートする同期計装
 - Asynchronous Counter、非負の増分をサポートする非同期計装
@@ -294,16 +303,14 @@ OpenTelemetry Goは現在、次の計装をサポートしています。
 
 ### メトリクスの初期化 {#initialize-metrics}
 
-{{% alert %}}
-
-ライブラリを計装している場合は、この手順をスキップしてください。
-
-{{% /alert %}}
+ライブラリを計装している場合は、この手順をスキップしてください。 {{% /alert %}}
 
 アプリで[メトリクス](/docs/concepts/signals/metrics/)を有効にするには、[`Meter`](/docs/concepts/signals/metrics/#meter)を作成できる初期化済みの[`MeterProvider`](/docs/concepts/signals/metrics/#meter-provider)が必要です。
 
 `MeterProvider`が作成されていない場合、メトリクス用のOpenTelemetry APIはno-op実装を使用し、データの生成に失敗します。
-したがって、次のパッケージを使用してSDK初期化コードを含むようにソースコードを変更する必要があります。
+したがって、次のパッケージを使用してSDK初期化コードを含むようにソースコードを変更する必要があります。 Therefore, you have to modify
+the source code to include the SDK initialization code using the following
+packages:
 
 - [`go.opentelemetry.io/otel`][]
 - [`go.opentelemetry.io/otel/sdk/metric`][]
@@ -396,7 +403,7 @@ func newMeterProvider(res *resource.Resource) (*metric.MeterProvider, error) {
 ### メーターの取得 {#acquiring-a-meter}
 
 手動で計装されたコードがあるアプリケーション内の任意の場所で、[`otel.Meter`](https://pkg.go.dev/go.opentelemetry.io/otel#Meter)を呼び出してメーターを取得できます。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 ```go
 import "go.opentelemetry.io/otel"
@@ -411,14 +418,21 @@ OpenTelemetryの計装は、同期または非同期（観測可能）のいず�
 同期計装は、呼び出されたときに測定を行います。
 測定は、他の関数呼び出しと同様に、プログラム実行中の別の呼び出しとして行われます。
 定期的に、これらの測定の集約が設定されたエクスポーターによってエクスポートされます。
-測定は値のエクスポートから切り離されているため、エクスポートサイクルには0または複数の集約された測定が含まれる場合があります。
+測定は値のエクスポートから切り離されているため、エクスポートサイクルには0または複数の集約された測定が含まれる場合があります。 The measurement
+is done as another call during program execution, just like any other function
+call. Periodically, the aggregation of these measurements is exported by a
+configured exporter. Because measurements are decoupled from exporting values,
+an export cycle may contain zero or multiple aggregated measurements.
 
-一方、非同期計装は、SDKのリクエストで測定を提供します。
+Asynchronous instruments, on the other hand, provide a measurement at the
+request of the SDK. When the SDK exports, a callback that was provided to the
+instrument on creation is invoked. 一方、非同期計装は、SDKのリクエストで測定を提供します。
 SDKがエクスポートするとき、作成時に計装に提供されたコールバックが呼び出されます。
 このコールバックは、即座にエクスポートされる測定をSDKに提供します。
-非同期計装でのすべての測定は、エクスポートサイクルごとに1回実行されます。
+非同期計装でのすべての測定は、エクスポートサイクルごとに1回実行されます。 All measurements on asynchronous
+instruments are performed once per export cycle.
 
-非同期計装は、次のようないくつかの状況で役立ちます。
+Asynchronous instruments are useful in several circumstances, such as:
 
 - カウンターの更新が計算上安価でなく、現在実行中のスレッドが測定を待つことを望まない場合
 - 観測がプログラム実行とは無関係な頻度で発生する必要がある場合（すなわち、リクエストライフサイクルに関連付けられているときに正確に測定できない場合）
@@ -736,11 +750,16 @@ func init() {
 
 ビューは、SDKによって出力されるメトリクスをカスタマイズする柔軟性をSDKユーザーに提供します。
 どのメトリクス計装を処理するか無視するかをカスタマイズできます。
-また、集約とメトリクスで報告したい属性もカスタマイズできます。
+また、集約とメトリクスで報告したい属性もカスタマイズできます。 You can customize which metric instruments are to be processed or
+ignored. You can also customize aggregation and what attributes you want to
+report on metrics.
 
-すべての計装には、元の名前、説明、属性を保持し、計装のタイプに基づくデフォルトの集約を持つデフォルトビューがあります。
-登録されたビューが計装と一致する場合、デフォルトビューは登録されたビューに置き換えられます。
-計装と一致する追加の登録済みビューは累積的であり、計装に対して複数のエクスポートされたメトリクスが生成されます。
+Every instrument has a default view, which retains the original name,
+description, and attributes, and has a default aggregation that is based on the
+type of instrument. When a registered view matches an instrument, the default
+view is replaced by the registered view. Additional registered views that match
+the instrument are additive, and result in multiple exported metrics for the
+instrument.
 
 [`NewView`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric#NewView)関数を使用してビューを作成し、[`WithView`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric#WithView)オプションを使用して登録できます。
 
@@ -781,9 +800,11 @@ meterProvider := metric.NewMeterProvider(
 )
 ```
 
-SDKは、メトリクスをエクスポートする前にメトリクスと属性をフィルタリングします。たとえば、ビューを使用して高カーディナリティメトリクスのメモリ使用量を削減したり、機密データを含む可能性のある属性を削除したりできます。
+SDKは、メトリクスをエクスポートする前にメトリクスと属性をフィルタリングします。たとえば、ビューを使用して高カーディナリティメトリクスのメモリ使用量を削減したり、機密データを含む可能性のある属性を削除したりできます。 For example,
+you can use views to reduce memory usage of high cardinality metrics or drop
+attributes that might contain sensitive data.
 
-`http`計装ライブラリからの`latency`計装を削除するビューを作成する方法は次のとおりです。
+`http`計装ライブラリからの`latency`計装によって記録された`http.request.method`属性を削除するビューを作成する方法は次のとおりです。
 
 ```go
 view := metric.NewView(
@@ -799,7 +820,7 @@ meterProvider := metric.NewMeterProvider(
 )
 ```
 
-`http`計装ライブラリからの`latency`計装によって記録された`http.request.method`属性を削除するビューを作成する方法は次のとおりです。
+`http`計装ライブラリからの`latency`計装を削除するビューを作成する方法は次のとおりです。
 
 ```go
 view := metric.NewView(
@@ -815,7 +836,10 @@ meterProvider := metric.NewMeterProvider(
 )
 ```
 
-条件の`Name`フィールドはワイルドカードパターンマッチングをサポートしています。`*`ワイルドカードは0個以上の文字に一致するものとして認識され、`?`はちょうど1文字に一致するものとして認識されます。たとえば、`*`のパターンはすべての計装名に一致します。
+条件の`Name`フィールドはワイルドカードパターンマッチングをサポートしています。`*`ワイルドカードは0個以上の文字に一致するものとして認識され、`?`はちょうど1文字に一致するものとして認識されます。たとえば、`*`のパターンはすべての計装名に一致します。 The `*`
+wildcard is recognized as matching zero or more characters, and `?` is
+recognized as matching exactly one character. For example, a pattern of `*`
+matches all instrument names.
 
 名前のサフィックスが`.ms`である任意の計装に対して単位をミリ秒に設定するビューを作成する方法の例を次に示します。
 
@@ -830,7 +854,7 @@ meterProvider := metric.NewMeterProvider(
 )
 ```
 
-`NewView`関数は、ビューを作成する便利な方法を提供します。`NewView`が必要な機能を提供できない場合は、カスタム[`View`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric#View)を直接作成できます。
+The `NewView` function provides a convenient way of creating views. `NewView`関数は、ビューを作成する便利な方法を提供します。`NewView`が必要な機能を提供できない場合は、カスタム[`View`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric#View)を直接作成できます。
 
 たとえば、正規表現マッチングを使用して、すべてのデータストリーム名が使用する単位のサフィックスを持つことを保証するビューを作成する方法は次のとおりです。
 
@@ -864,7 +888,10 @@ meterProvider := metric.NewMeterProvider(
 
 ログは、**ユーザー向けのOpenTelemetryログAPIが存在しない**点で、メトリクスやトレースとは異なります。
 かわりに、既存の人気のあるログパッケージ（slog、logrus、zap、logrなど）からOpenTelemetryエコシステムにログをブリッジするツールがあります。
-この設計決定の根拠については、[ログ仕様](/docs/specs/otel/logs/)を参照してください。
+この設計決定の根拠については、[ログ仕様](/docs/specs/otel/logs/)を参照してください。 Instead, there is tooling to bridge logs from existing
+popular log packages (such as slog, logrus, zap, logr) into the OpenTelemetry
+ecosystem. For rationale behind this design decision, see
+[Logging specification](/docs/specs/otel/logs/).
 
 以下で説明する2つの典型的なワークフローは、それぞれ異なるアプリケーション要件に対応しています。
 
@@ -874,7 +901,12 @@ meterProvider := metric.NewMeterProvider(
 
 Direct-to-Collectorワークフローでは、ログはネットワークプロトコル（OTLPなど）を使用してアプリケーションからコレクターに直接送信されます。
 このワークフローは、追加のログ転送コンポーネントを必要とせず、設定が簡単で、[ログデータモデル][log data model]に準拠した構造化ログをアプリケーションが簡単に送信できます。
-ただし、アプリケーションがネットワークの場所にログをキューイングおよびエクスポートするために必要なオーバーヘッドは、すべてのアプリケーションに適しているとは限りません。
+ただし、アプリケーションがネットワークの場所にログをキューイングおよびエクスポートするために必要なオーバーヘッドは、すべてのアプリケーションに適しているとは限りません。 This workflow
+is simple to set up as it doesn't require any additional log forwarding
+components, and allows an application to easily emit structured logs that
+conform to the [log data model][log data model]. However, the overhead required
+for applications to queue and export logs to a network location may not be
+suitable for all applications.
 
 このワークフローを使用するには。下記に従ってください。
 
@@ -883,7 +915,8 @@ Direct-to-Collectorワークフローでは、ログはネットワークプロ�
 
 #### ログSDK {#logs-sdk}
 
-ログSDKは、[direct-to-Collector](#direct-to-collector)ワークフローを使用する際のログの処理方法を決定します。
+The logs SDK dictates how logs are processed when using the
+[direct-to-Collector](#direct-to-collector) workflow. ログSDKは、[direct-to-Collector](#direct-to-collector)ワークフローを使用する際のログの処理方法を決定します。
 [ログ転送](#via-file-or-stdout)ワークフローを使用する場合、ログSDKは必要ありません。
 
 典型的なログSDK設定では、OTLPエクスポーターを使用してバッチログレコードプロセッサーをインストールします。
@@ -891,7 +924,9 @@ Direct-to-Collectorワークフローでは、ログはネットワークプロ�
 アプリで[ログ](/docs/concepts/signals/logs/)を有効にするには、[Log Bridge](#log-bridge)を使用できる初期化済みの[`LoggerProvider`](/docs/concepts/signals/logs/#logger-provider)が必要です。
 
 `LoggerProvider`が作成されていない場合、ログ用のOpenTelemetry APIはno-op実装を使用し、データの生成に失敗します。
-したがって、次のパッケージを使用してSDK初期化コードを含むようにソースコードを変更する必要があります。
+したがって、次のパッケージを使用してSDK初期化コードを含むようにソースコードを変更する必要があります。 Therefore, you have to modify
+the source code to include the SDK initialization code using the following
+packages:
 
 - [`go.opentelemetry.io/otel`][]
 - [`go.opentelemetry.io/otel/sdk/log`][]
@@ -907,7 +942,7 @@ go get go.opentelemetry.io/otel \
   go.opentelemetry.io/otel/sdk/log
 ```
 
-次に、ロガープロバイダーを初期化します。
+Then initialize a logger provider:
 
 ```go
 package main
@@ -975,11 +1010,11 @@ func newLoggerProvider(ctx context.Context, res *resource.Resource) (*log.Logger
 }
 ```
 
-これで`LoggerProvider`が設定されたので、それを使用して[Log Bridge](#log-bridge)を設定できます。
+ログブリッジは、[Logs Bridge API][logs bridge API]を使用して、既存のログパッケージからOpenTelemetry [Log SDK](#logs-sdk)にログをブリッジするコンポーネントです。
 
 #### ログブリッジ {#log-bridge}
 
-ログブリッジは、[Logs Bridge API][logs bridge API]を使用して、既存のログパッケージからOpenTelemetry [Log SDK](#logs-sdk)にログをブリッジするコンポーネントです。
+これで`LoggerProvider`が設定されたので、それを使用して[Log Bridge](#log-bridge)を設定できます。
 
 利用可能なログブリッジの完全なリストは、[OpenTelemetryレジストリ](/ecosystem/registry/?language=go&component=log-bridge)で見つけることができます。
 
@@ -987,7 +1022,16 @@ func newLoggerProvider(ctx context.Context, res *resource.Resource) (*log.Logger
 
 ### ファイルまたは標準出力経由 {#via-file-or-stdout}
 
-ファイルまたは標準出力ワークフローでは、ログはファイルまたは標準出力に書き込まれます。別のコンポーネント（FluentBitなど）がログの読み取り/テーリング、より構造化された形式への解析、およびコレクターなどのターゲットへの転送を担当します。このワークフローは、アプリケーション要件が[direct-to-Collector](#direct-to-collector)からの追加のオーバーヘッドを許可しない状況で好まれる場合があります。ただし、下流で必要なすべてのログフィールドがログにエンコードされ、ログを読み取るコンポーネントがデータを[ログデータモデル][log data model]に解析することが必要です。ログ転送コンポーネントのインストールと設定は、このドキュメントの範囲外です。
+In the file or stdout workflow, logs are written to files or standout output.
+Another component (e.g. FluentBit) is responsible for reading / tailing the
+logs, parsing them to more structured format, and forwarding them a target, such
+as the collector. This workflow may be preferable in situations where
+application requirements do not permit additional overhead from
+[direct-to-Collector](#direct-to-collector). However, it requires that all log
+fields required down stream are encoded into the logs, and that the component
+reading the logs parse the data into the [log data model][log data model]. The
+installation and configuration of log forwarding components is outside the scope
+of this document.
 
 ## 次のステップ {#next-steps}
 

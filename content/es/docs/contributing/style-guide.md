@@ -1,11 +1,8 @@
 ---
 title: Guía de estilo de documentación
-description:
-  Terminología y estilo al escribir la documentación de OpenTelemetry.
+description: Terminología y estilo al escribir la documentación de OpenTelemetry.
 linkTitle: Guía de estilo de documentación
 weight: 20
-default_lang_commit: 99f0ae5760038d51f9e9eb376bb428a2caca8167
-drifted_from_default: true
 cSpell:ignore: open-telemetry opentelemetryio postgre style-guide textlintrc
 ---
 
@@ -51,16 +48,6 @@ original. Por ejemplo, escriba "PostgreSQL" en lugar de "postgre". Para obtener
 una lista completa, consulte el archivo
 [`.textlintrc.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.textlintrc.yml).
 
-{{% alert title="Tip" %}}
-
-Ejecute `npm run check:text` para verificar que todos los términos y palabras
-estén escritos correctamente.
-
-Ejecute `npm run check:text -- --fix` para corregir términos y palabras que no
-están escritos correctamente.
-
-{{% /alert %}}
-
 ## Estándares de Markdown {#markdown-standards}
 
 Para hacer cumplir los estándares y la coherencia de los archivos Markdown,
@@ -69,11 +56,9 @@ todos los archivos deben seguir ciertas reglas, impuestas por
 lista completa, consulte el archivo
 [`.markdownlint.json`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.markdownlint.json).
 
-Ejecute `npm run check:markdown` para verificar que todos los archivos siguen el
-estándar.
-
-Ejecute `npm run fix:markdown` para corregir problemas de formato relacionados
-con Markdown.
+We also enforce Markdown [file format](#file-format) and strip files of trailing
+whitespace. This precludes the [line break syntax] of 2+ spaces; use `<br>`
+instead or reformat your text.
 
 ## Revisión ortográfica {#spell-checking}
 
@@ -82,8 +67,7 @@ de que todo su texto esté escrito correctamente. Para obtener una lista de
 palabras específicas del sitio web OpenTelemetry, consulte el archivo
 [`.cspell.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.cspell.yml).
 
-Ejecute `npm run check:spelling` para verificar que todas las palabras estén
-escritas correctamente. Si `cspell` indica un error de `Palabra desconocida`,
+Si `cspell` indica un error de `Palabra desconocida`,
 verifique si escribió esa palabra correctamente. Si es así, agregue esta palabra
 a la sección `cSpell:ignore` en la parte superior de su archivo. Si no existe
 dicha sección, puede agregarla al principio de un archivo Markdown:
@@ -104,12 +88,6 @@ entrada [registry](/ecosystem/registry/), podría verse así:
 title: TítuloDeEntradaDelRegistro
 ```
 
-Las herramientas del sitio web normalizan los diccionarios específicos de la
-página (es decir, las listas de palabras `cSpell:ignore`), eliminando palabras
-duplicadas, borrando palabras en la lista de palabras global y ordenando las
-palabras. Para normalizar los diccionarios específicos de la página, ejecute
-`npm run fix:dict`.
-
 ## Formato de archivo {#file-format}
 
 Para hacer cumplir un estándar determinado sobre cómo se estructuran los
@@ -120,5 +98,13 @@ PR, o ejecutarlo después y enviar una confirmación adicional.
 ## Nombres de archivos {#file-names}
 
 Todos los nombres de archivo deben estar en
-[kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case). Ejecute
-`npm run fix:filenames` para cambiar automáticamente el nombre de sus archivos.
+[kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case).
+
+## Fixing validation issues
+
+To learn how to fix validation issues, see [Pull request checks](../pr-checks).
+
+[.markdownlint.json]: https://github.com/open-telemetry/opentelemetry.io/blob/main/.markdownlint.json
+[line break syntax]: https://www.markdownguide.org/basic-syntax/#line-breaks
+[markdownlint]: https://github.com/DavidAnson/markdownlint
+[Prettier]: https://prettier.io

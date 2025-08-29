@@ -1,7 +1,6 @@
 ---
 title: Amostragem
 weight: 80
-default_lang_commit: 06837fe15457a584f6a9e09579be0f0400593d57
 ---
 
 A [Amostragem](/docs/concepts/sampling/) é um processo que restringe a
@@ -32,7 +31,8 @@ Outros amostradores disponíveis são:
 
 - [`TraceIDRatioBased`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/trace#TraceIDRatioBased),
   que amostra uma fração dos trechos, com base na fração fornecida ao
-  amostrador. Caso esta fração seja .5, metade de todos os trechos serão
+  amostrador.
+  Caso esta fração seja .5, metade de todos os trechos serão
   amostrados.
 - [`ParentBased`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/trace#ParentBased),
   é um decorador de amostrador que se comporta de maneira diferente, com base no

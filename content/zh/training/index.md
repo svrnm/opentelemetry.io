@@ -5,15 +5,15 @@ description: OpenTelemetry 认证与课程
 type: docs
 body_class: ot-training
 hide_feedback: true
-# LF 课程图片来源：
+# LF course image from:
 # https://training.linuxfoundation.org/wp-content/uploads/2024/10/LFS148-Course-Badge-300x300.png
 params:
   LFS148: https://training.linuxfoundation.org/training/getting-started-with-opentelemetry-lfs148/
-default_lang_commit: fa827427ce31631a0b11d5c0151cb8c8e43d8f5b
 cSpell:ignore: otca
 ---
 
-本页展示了日益丰富的 OpenTelemetry 培训资源，欢迎常回来查看更新！
+本页展示了日益丰富的 OpenTelemetry 培训资源，欢迎常回来查看更新！ Check back
+often for updates!
 
 ## 认证 {#certifications}
 
@@ -22,6 +22,7 @@ cSpell:ignore: otca
 你可以从[云原生认证][Cloud Native Certifications]页面查询：
 
 <!-- prettier-ignore -->
+
 [![OTCA badge]][OTCA certification]
 {.badge--otca .card-and-img-position .hk-no-external-icon}
 
@@ -37,12 +38,12 @@ cSpell:ignore: otca
 <div class="card card--course" style="width: 20rem">
 
 <!-- prettier-ignore -->
+
 ![LFS148 course badge][]
 {.img-initial .pt-3 .w-75 .m-auto}
 
 <div class="card-body ps-4 pe-4 bg-light-subtle">
-  <div class="h4 card-title pt-2 pb-2">
-    <span class="badge text-bg-secondary float-end">FREE</span>
+  <div class="h4 card-title pt-2 pb-2"><span class="badge text-bg-secondary float-end">FREE</span>
     OpenTelemetry 入门
   </div>
   <p class="card-text">
@@ -53,8 +54,7 @@ cSpell:ignore: otca
     在线，自主进度，8–10 小时，
     <a href="{{% param LFS148 %}}">了解详情</a>。
   </p>
-  <p class="text-center m-0 pt-1 pb-2">
-    <a href="{{% param LFS148 %}}" target="_blank" rel="noopener" class="btn btn-primary">
+  <p class="text-center m-0 pt-1 pb-2"><a href="{{% param LFS148 %}}" target="_blank" rel="noopener" class="btn btn-primary">
       立即注册
     </a>
   </p>
@@ -68,14 +68,14 @@ cSpell:ignore: otca
 
 {{% comment %}}
 
-<!-- 替代设计，保留以备后用 -->
+<!-- Alternative design. Keeping for possible use later -->
 
 <div class="card mb-3" style="max-width: 540px; margin: auto">
   <div class="row p-2">
     <div class="col-md-5 d-flex align-items-center">
       <img src="LFS148-Course-Badge-300x300.avif"
         class="img-initial m-auto"
-        alt="LFS148 课程徽章">
+        alt="LFS148 course badge">
     </div>
     <div class="col-md-7">
       <div class="card-body p-3">
@@ -87,8 +87,7 @@ cSpell:ignore: otca
         <p class="card-text text-body-secondary small">
           在线，自主进度，8–10 小时，<a href="{{% param LFS148 %}}">了解详情</a>。
         </p>
-        <p class="text-center w-100">
-          <a href="{{% param LFS148 %}}" target="_blank" rel="noopener" class="btn btn-primary">
+        <p class="text-center w-100"><a href="{{% param LFS148 %}}" target="_blank" rel="noopener" class="btn btn-primary">
             立即注册
           </a>
         </p>

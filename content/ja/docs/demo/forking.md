@@ -1,7 +1,6 @@
 ---
 title: デモリポジトリをフォークする
 linkTitle: フォーク
-default_lang_commit: fd7da211d5bc37ca93112a494aaf6a94445e2e28
 ---
 
 [demo repository][]は、OpenTelemetryを使用した実装例を紹介するためのツールとして、フォークして使用できるように設計されています。
@@ -14,12 +13,16 @@ default_lang_commit: fd7da211d5bc37ca93112a494aaf6a94445e2e28
 
 - デモによって発信または収集されるテレメトリーデータを強化したい場合は、変更内容をこのリポジトリにバックポートすることを強く推奨します。
   ベンダーや実装固有の変更については、コードの根本的な変更よりも、設定によってパイプライン内でテレメトリーを変更する方針が望ましいです。
-- 置き換えるのではなく、拡張してください。
+  For vendor or implementation specific changes, a strategy of modifying
+  telemetry in the pipeline via config is preferable to underlying code changes.
+- Extend rather than replace. 置き換えるのではなく、拡張してください。
   既存のAPIと連携する全く新しいサービスを追加することは、テレメトリーの変更では実現できないベンダー固有またはツール固有の機能を追加する優れた方法です。
 - 拡張性をサポートするため、キュー、データベース、キャッシュなどのリソースにはリポジトリパターンまたはファサードパターンを使用してください。
-  そうすることで、異なるプラットフォームに対してこれらのサービスの異なる実装を組み込むことができます。
+  そうすることで、異なるプラットフォームに対してこれらのサービスの異なる実装を組み込むことができます。 This will allow for different
+  implementations of these services to be shimmed in for different platforms.
 - ベンダーやツール固有の拡張機能をこのリポジトリにバックポートしないでください。
 
-フォークメンテナーとしての作業をより容易にする方法についての質問や提案がありましたら、イシューを作成してください。
+If you have any questions or would like to suggest ways that we can make your
+life easier as a fork maintainer, please open an issue.
 
 [demo repository]: <{{% param repo %}}>

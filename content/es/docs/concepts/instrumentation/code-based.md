@@ -1,9 +1,9 @@
 ---
 title: Basado en código
 description: Learn the essential steps in setting up code-based instrumentation
-aliases: [manual]
 weight: 20
-default_lang_commit: 8d7aa298d2b42f64f118526e7a1189b1b9dffd0d
+aliases: [ manual ]
+cSpell:ignore: proxying
 ---
 
 ## Importa la API y el SDK de OpenTelemetry {#import-the-opentelemetry-api-and-sdk}
@@ -33,23 +33,23 @@ o servicio.
 
 Si estás construyendo un proceso de servicio, también deberás configurar el SDK
 con las opciones apropiadas para exportar tus datos de telemetría a algún
-backend de análisis. Recomendamos que esta configuración se gestione de forma
-programática a través de un archivo de configuración o algún otro mecanismo.
-También hay opciones de ajuste específicas para cada lenguaje que podrías
+backend de análisis.
+Recomendamos que esta configuración se gestione de forma
+programática a través de un archivo de configuración o algún otro mecanismo. También hay opciones de ajuste específicas para cada lenguaje que podrías
 aprovechar.
 
 ## Crea datos de telemetría {#create-telemetry-data}
 
 Una vez que hayas configurado la API y el SDK, podrás crear trazas y eventos de
-métricas a través de los objetos `tracer` y `meter` que obtuviste del proveedor.
-Haz uso de las librerías de instrumentación para tus dependencias -- consulta el
+métricas a través de los objetos `tracer` y `meter` que obtuviste del proveedor. Haz uso de las librerías de instrumentación para tus dependencias -- consulta el
 [registro](/ecosystem/registry/) o el repositorio de tu lenguaje para más
 información sobre estas.
 
 ## Exporta datos {#export-data}
 
 Una vez que hayas creado los datos de telemetría, querrás enviarlos a algún
-lugar. OpenTelemetry soporta dos métodos principales para exportar datos desde
+lugar.
+OpenTelemetry soporta dos métodos principales para exportar datos desde
 tu proceso a un backend de análisis: directamente desde un proceso o haciendo
 proxy a través del [OpenTelemetry Collector](/docs/collector).
 

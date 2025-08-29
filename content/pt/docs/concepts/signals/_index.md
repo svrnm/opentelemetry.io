@@ -1,10 +1,8 @@
 ---
 title: Sinais
-description:
-  Aprenda sobre as categorias de telemetria suportadas pelo OpenTelemetry
+description: Aprenda sobre as categorias de telemetria suportadas pelo OpenTelemetry
+aliases: [ data-sources, otel-concepts ]
 weight: 11
-aliases: [data-sources, otel-concepts]
-default_lang_commit: c370886c9926e6cab3738ababbf6ff5692899bbd
 ---
 
 O propósito do OpenTelemetry é coletar, processar e exportar [sinais][signals].
@@ -30,8 +28,6 @@ Também em desenvolvimento ou na fase de [proposta][proposal]:
   Perfilamento _(Profiling Working Group)_.
 
 [Events]: /docs/specs/otel/logs/data-model/#events
-[Profiles]:
-  https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/profiles/0212-profiling-vision.md
-[proposal]:
-  https://github.com/open-telemetry/opentelemetry-specification/tree/main/oteps/#readme
+[Profiles]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/profiles/0212-profiling-vision.md
+[proposal]: https://github.com/open-telemetry/opentelemetry-specification/tree/main/oteps/#readme
 [signals]: /docs/specs/otel/glossary/#signals

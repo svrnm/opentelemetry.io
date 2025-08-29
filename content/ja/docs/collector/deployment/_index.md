@@ -2,12 +2,14 @@
 title: デプロイメント
 description: OpenTelemetryコレクターをデプロイするために適用できるパターン
 weight: 3
-default_lang_commit: b34ebe22b71962da96b898eb39a666ed57d447fe
 ---
 
-OpenTelemetryコレクターは、さまざまな方法で、さまざまなユースケースに使用できる単一のバイナリから構成されています。
-このセクションでは、デプロイメントパターン、それらのユースケース、および長所と短所、クロス環境およびマルチバックエンドデプロイメントにおけるコレクター設定のベストプラクティスについて説明します。
-デプロイメントのセキュリティに関する考慮事項については、[コレクターホスティングのベストプラクティス][security]を参照してください。
+The OpenTelemetry Collector consists of a single binary which you can use in
+different ways, for different use cases. This section describes deployment
+patterns, their use cases along with pros and cons and best practices for
+collector configurations for cross-environment and multi-backend deployments.
+For deployment security considerations, see [Collector hosting best
+practices][security].
 
 ## リソース {#resources}
 

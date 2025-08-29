@@ -1,10 +1,8 @@
 ---
 title: Instrumentação
-aliases: [manual]
+aliases: [ manual ]
 weight: 20
 description: Instrumentação manual para OpenTelemetry Python
-default_lang_commit: c3365f297f394baf10f5dba3473e13621ade4461
-drifted_from_default: true
 cSpell:ignore: millis ottrace textmap
 ---
 
@@ -23,7 +21,7 @@ pip install opentelemetry-sdk
 
 ## Rastros {#traces}
 
-### Obter um Rastreador {#acquire-tracer}
+### Acquire Tracer
 
 Para começar a rastrear, você precisará inicializar um
 [`TracerProvider`](/docs/concepts/signals/traces/#tracer-provider) e
@@ -48,7 +46,7 @@ trace.set_tracer_provider(provider)
 tracer = trace.get_tracer("meu.rastreador.nome")
 ```
 
-### Criando Trechos {#creating-spans}
+### Creating spans
 
 Para criar um [trecho](/docs/concepts/signals/traces/#spans), normalmente você
 vai querer que seja iniciado como o trecho atual.
@@ -65,7 +63,7 @@ Você também pode usar `start_span` para criar um trecho sem torná-lo o trecho
 atual. Isso geralmente é feito para rastrear operações concorrentes ou
 assíncronas.
 
-### Criando Trechos Aninhados {#creating-nested-spans}
+### Criando Trechos {#creating-spans}
 
 Se você tiver uma sub-operação distinta que gostaria de rastrear como parte de
 outra, você pode criar [trechos](/docs/concepts/signals/traces/#spans) para
@@ -106,7 +104,7 @@ finalizá-lo quando `fazer_trabalho()` for concluído.
 Para usar o decorador, você deve ter uma instância de `tracer` disponível
 globalmente para a declaração da sua função.
 
-### Obter o Trecho Atual {#get-the-current-span}
+### Get the current span
 
 Às vezes, é útil acessar o [trecho](/docs/concepts/signals/traces/#spans) atual
 em um ponto no tempo para que você possa enriquecê-lo com mais informações.
@@ -204,7 +202,7 @@ with tracer.start_as_current_span("trecho-2", links=[link_from_span_1]):
     pass
 ```
 
-### Definir Status do Trecho {#set-span-status}
+### Set span status
 
 {{% include "span-status-preamble.md" %}}
 
@@ -322,6 +320,7 @@ meter = metrics.get_meter("meu.medidor.nome")
 
 ### Criando e Usando Instrumentos Síncronos {#creating-and-using-synchronous-instruments}
 
+Instruments are used to make measurements of your application.
 Os
 [instrumentos síncronos](/docs/specs/otel/metrics/api/#synchronous-and-asynchronous-instruments)
 são usados para fazer medições do seu aplicativo e são usados em linha com a
@@ -382,7 +381,8 @@ def raspar_versoes_configuracao(options: CallbackOptions) -> Iterable[Observatio
 ```
 
 Observe que o OpenTelemetry passará opções para seu callback contendo um
-timeout. Os callbacks devem respeitar esse timeout para evitar bloqueios
+timeout.
+Os callbacks devem respeitar esse timeout para evitar bloqueios
 indefinidamente. Por fim, crie o instrumento com o callback para registrá-lo:
 
 ```python
@@ -402,7 +402,38 @@ meter.create_observable_gauge(
 
 ## Logs {#logs}
 
-A API e o SDK de logs estão atualmente em desenvolvimento.
+A API e o SDK de logs estão atualmente em desenvolvimento. To start collecting logs,
+you need to initialize a
+[`LoggerProvider`](/docs/specs/otel/logs/api/#loggerprovider) and optionally set
+it as the global default. Then use Python's built-in logging module to create
+log records that OpenTelemetry can process.
+
+```python
+import logging
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor, ConsoleLogExporter
+from opentelemetry._logs import set_logger_provider, get_logger
+
+provider = LoggerProvider()
+processor = BatchLogRecordProcessor(ConsoleLogExporter())
+provider.add_log_record_processor(processor)
+# Sets the global default logger provider
+set_logger_provider(provider)
+
+logger = get_logger(__name__)
+
+handler = LoggingHandler(level=logging.INFO, logger_provider=provider)
+logging.basicConfig(handlers=[handler], level=logging.INFO)
+
+logging.info("This is an OpenTelemetry log record!")
+```
+
+### Further Reading
+
+- [Logs Concepts](/docs/concepts/signals/logs/)
+- [Logs Specification](/docs/specs/otel/logs/)
+- [Python Logs API Documentation](https://opentelemetry-python.readthedocs.io/en/latest/api/_logs.html)
+- [Python Logs SDK Documentation](https://opentelemetry-python.readthedocs.io/en/latest/sdk/_logs.html)
 
 ## Próximos Passos {#next-steps}
 

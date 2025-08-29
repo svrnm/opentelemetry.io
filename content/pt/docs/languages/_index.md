@@ -1,16 +1,15 @@
 ---
 title: APIs e SDKs de Linguagens
-description:
-  A instrumentação de código do OpenTelemetry é suportada para muitas linguagens
-  populares de programação.
+description: A instrumentação de código do OpenTelemetry é suportada para muitas linguagens populares de programação.
 weight: 250
-default_lang_commit: d1ef521ee4a777881fb99c3ec2b506e068cdec4c
-drifted_from_default: true
+aliases: [ /docs/instrumentation ]
+redirects:
+  - { from: /docs/instrumentation/*, to: ':splat' } # Only for `en`
+  - { from: 'net/*', to: 'dotnet/:splat' }
 ---
 
-A [instrumentação][] de código do OpenTelemetry é suportada para as linguagens
-listadas na tabela de [Estado e Lançamentos](#status-and-releases) abaixo.
-Implementações não oficiais para [outras linguagens](/docs/languages/other)
+A \[instrumentação]\[] de código do OpenTelemetry é suportada para as linguagens
+listadas na tabela de [Estado e Lançamentos](#status-and-releases) abaixo. Implementações não oficiais para [outras linguagens](/docs/languages/other)
 também estão disponíveis. Você pode encontrá-las no
 [registro](/ecosystem/registry/).
 
@@ -19,8 +18,8 @@ Para Go, .NET, PHP, Python, Java e JavaScript, você pode usar
 aplicações sem alterações de código.
 
 Se você estiver usando Kubernetes, você pode usar o [OpenTelemetry Operator para
-Kubernetes][otel-op] para [injetar soluções de implementação
-automática][implementação automática] em suas aplicações.
+Kubernetes][otel-op] para \[injetar soluções de implementação
+automática]\[implementação automática] em suas aplicações.
 
 ## Estado e Lançamentos {#status-and-releases}
 
@@ -30,13 +29,13 @@ seguir:
 {{% alert title="Importante" color="warning" %}}
 
 Independente do estado de um API/SDK, se a sua instrumentação depende de
-[convenções semânticas][] que são marcadas como [Experimental] na [especificação
-de convenções semânticas][], seu fluxo de dados pode estar sujeito à **quebra de
+\[convenções semânticas]\[] que são marcadas como [Experimental] na \[especificação
+de convenções semânticas]\[], seu fluxo de dados pode estar sujeito à **quebra de
 compatibilidade**
 
-[convenções semânticas]: /docs/concepts/semantic-conventions/
+[semantic conventions]: /docs/concepts/semantic-conventions/
 [Experimental]: /docs/specs/otel/document-status/
-[especificação de convenções semânticas]: /docs/specs/semconv/
+[semantic conventions specification]: /docs/specs/semconv/
 
 {{% /alert %}}
 
@@ -56,6 +55,6 @@ A lista acima é um alias para [`/api`](/api).
 
 {{% /alert %}}
 
-[implementação automática]: /docs/platforms/kubernetes/operator/automatic/
-[instrumentação]: /docs/concepts/instrumentation/
+[zero-code]: /docs/platforms/kubernetes/operator/automatic/
+[instrumentation]: /docs/concepts/instrumentation/
 [otel-op]: /docs/platforms/kubernetes/operator/

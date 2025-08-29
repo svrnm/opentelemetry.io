@@ -1,7 +1,6 @@
 ---
 title: Recursos
 weight: 70
-default_lang_commit: 788277e362bc602b72a90aa9191f9c05c403458e
 ---
 
 ## Introducción
@@ -14,8 +13,7 @@ observabilidad, los atributos de recurso se agrupan en la pestaña **Process**:
 ![Una captura de pantalla de Jaeger que muestra un ejemplo de los atributos de recursos asociados a una traza](screenshot-jaeger-resources.png)
 
 Un recurso se añade al `TracerProvider` o `MetricProvider` cuando son creados
-durante la inicialización. Esta asociación no se puede cambiar posteriormente.
-Una vez que se añade un recurso, todos los spans y métricas producidos por un
+durante la inicialización. Esta asociación no se puede cambiar posteriormente. Una vez que se añade un recurso, todos los spans y métricas producidos por un
 `Tracer` o `Meter` del proveedor tendrán el recurso asociado a ellos.
 
 ## Atributos semánticos con valor predeterminado proporcionado por el SDK
@@ -48,7 +46,8 @@ incluyen:
 ## Recursos personalizados
 
 También puedes proporcionar tus propios atributos de recurso. Puedes hacerlo en
-el código o configurando la variable de entorno `OTEL_RESOURCE_ATTRIBUTES`. Si
+el código o configurando la variable de entorno `OTEL_RESOURCE_ATTRIBUTES`.
+Si
 corresponde, utiliza las
 [convenciones semánticas para tus atributos de recurso](/docs/specs/semconv/resource).
 Por ejemplo, puedes proporcionar el nombre de tu

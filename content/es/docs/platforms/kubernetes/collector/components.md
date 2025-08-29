@@ -1,8 +1,6 @@
 ---
 title: Componentes clave para Kubernetes
 linkTitle: Componentes
-default_lang_commit: 3815d1481fe753df10ea3dc26cbe64dba0230579 # with patched links
-drifted_from_default: true
 # prettier-ignore
 cSpell:ignore: alertmanagers asignador containerd crio filelog gotime horizontalpodautoscalers hostfs hostmetrics iostream k8sattributes kubelet kubeletstats logtag paginación replicasets replicationcontrollers resourcequotas statefulsets varlibdockercontainers varlogpods
 ---
@@ -35,11 +33,11 @@ pero cualquier receptor que se ajuste a sus datos es adecuado.
 
 ## Procesador de atributos de Kubernetes {#kubernetes-attributes-processor}
 
-| Patrón de implementación | Utilizable |
-| ------------------------ | ---------- |
-| DaemonSet (agente)       | Sí         |
-| Deployment (gateway)     | Sí         |
-| Sidecar                  | No         |
+| Patrón de implementación                | Utilizable |
+| --------------------------------------- | ---------- |
+| DaemonSet (agent)    | Yes        |
+| Deployment (gateway) | Yes        |
+| Sidecar                                 | No         |
 
 El procesador de atributos de Kubernetes descubre automáticamente los pods de
 Kubernetes, extrae sus metadatos y agrega los metadatos extraídos a intervalos,
@@ -188,11 +186,11 @@ roleRef:
 
 ## Receptor de Kubeletstats {#kubeletstats-receiver}
 
-| Patrón de implementación | Utilizable                                                             |
-| ------------------------ | ---------------------------------------------------------------------- |
-| DaemonSet (agente)       | Preferido                                                              |
-| Deployment (gateway)     | Sí, pero solo recopilará métricas del nodo en el que está implementado |
-| Sidecar                  | No                                                                     |
+| Patrón de implementación                | Utilizable                                                             |
+| --------------------------------------- | ---------------------------------------------------------------------- |
+| DaemonSet (agent)    | Preferido                                                              |
+| Deployment (gateway) | Sí, pero solo recopilará métricas del nodo en el que está implementado |
+| Sidecar                                 | No                                                                     |
 
 Cada nodo de Kubernetes ejecuta un kubelet que incluye un servidor API. Los
 Kubernetes El receptor se conecta a ese kubelet a través del servidor API para
@@ -267,14 +265,13 @@ subjects:
 
 ## Receptor de logs de archivos {#filelog-receiver}
 
-| Patrón de implementación | Utilizable                                                     |
-| ------------------------ | -------------------------------------------------------------- |
-| DaemonSet (agente)       | Preferido                                                      |
-| Deployment (gateway)     | Sí, pero solo recopilará logs del nodo en el que se implementa |
-| Sidecar                  | Sí, pero esto se consideraría una configuración avanzada       |
+| Patrón de implementación                | Utilizable                                                     |
+| --------------------------------------- | -------------------------------------------------------------- |
+| DaemonSet (agent)    | Preferido                                                      |
+| Deployment (gateway) | Sí, pero solo recopilará logs del nodo en el que se implementa |
+| Sidecar                                 | Sí, pero esto se consideraría una configuración avanzada       |
 
-El receptor de logs de archivos rastrea y analiza los logs de los archivos.
-Aunque no es un receptor específico de Kubernetes, sigue siendo la solución de
+El receptor de logs de archivos rastrea y analiza los logs de los archivos. Aunque no es un receptor específico de Kubernetes, sigue siendo la solución de
 facto para recopilar cualquier registro de Kubernetes.
 
 El receptor de Filelog está compuesto por operadores que se encadenan entre sí
@@ -297,77 +294,13 @@ filelog:
   exclude:
     # Exclude logs from all containers named otel-collector
     - /var/log/pods/*/otel-collector/*.log
-  start_at: beginning
+  start_at: end
   include_file_path: true
   include_file_name: false
   operators:
-    # Find out which format is used by kubernetes
-    - type: router
-      id: get-format
-      routes:
-        - output: parser-docker
-          expr: 'body matches "^\\{"'
-        - output: parser-crio
-          expr: 'body matches "^[^ Z]+ "'
-        - output: parser-containerd
-          expr: 'body matches "^[^ Z]+Z"'
-    # Parse CRI-O format
-    - type: regex_parser
-      id: parser-crio
-      regex:
-        '^(?P<time>[^ Z]+) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*)
-        ?(?P<log>.*)$'
-      output: extract_metadata_from_filepath
-      timestamp:
-        parse_from: attributes.time
-        layout_type: gotime
-        layout: '2006-01-02T15:04:05.999999999Z07:00'
-    # Parse CRI-Containerd format
-    - type: regex_parser
-      id: parser-containerd
-      regex:
-        '^(?P<time>[^ ^Z]+Z) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*)
-        ?(?P<log>.*)$'
-      output: extract_metadata_from_filepath
-      timestamp:
-        parse_from: attributes.time
-        layout: '%Y-%m-%dT%H:%M:%S.%LZ'
-    # Parse Docker format
-    - type: json_parser
-      id: parser-docker
-      output: extract_metadata_from_filepath
-      timestamp:
-        parse_from: attributes.time
-        layout: '%Y-%m-%dT%H:%M:%S.%LZ'
-    - type: move
-      from: attributes.log
-      to: body
-    # Extract metadata from file path
-    - type: regex_parser
-      id: extract_metadata_from_filepath
-      regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]{36})\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log$'
-      parse_from: attributes["log.file.path"]
-      cache:
-        size: 128 # default maximum amount of Pods per Node is 110
-    # Rename attributes
-    - type: move
-      from: attributes.stream
-      to: attributes["log.iostream"]
-    - type: move
-      from: attributes.container_name
-      to: resource["k8s.container.name"]
-    - type: move
-      from: attributes.namespace
-      to: resource["k8s.namespace.name"]
-    - type: move
-      from: attributes.pod_name
-      to: resource["k8s.pod.name"]
-    - type: move
-      from: attributes.restart_count
-      to: resource["k8s.container.restart_count"]
-    - type: move
-      from: attributes.uid
-      to: resource["k8s.pod.uid"]
+    # parse container logs
+    - type: container
+      id: container-parser
 ```
 
 Para conocer los detalles de configuración de Filelog Receiver, consulta
@@ -416,16 +349,16 @@ spec:
 
 ## Receptor de clúster de Kubernetes {#kubernetes-cluster-receiver}
 
-| Patrón de implementación | Utilizable                                            |
-| ------------------------ | ----------------------------------------------------- |
-| DaemonSet (agente)       | Sí, pero generará datos duplicados                    |
-| Deployment (gateway)     | Sí, pero más de una réplica generará datos duplicados |
-| Sidecar                  | No                                                    |
+| Patrón de implementación                | Utilizable                                            |
+| --------------------------------------- | ----------------------------------------------------- |
+| DaemonSet (agent)    | Sí, pero generará datos duplicados                    |
+| Deployment (gateway) | Sí, pero más de una réplica generará datos duplicados |
+| Sidecar                                 | No                                                    |
 
 El receptor de clúster de Kubernetes recopila métricas y eventos de entidad
-sobre el clúster en su totalidad mediante el servidor de API de Kubernetes.
-Utiliza este receptor para responder preguntas sobre fases de pod, condiciones
-de nodo y otras preguntas sobre todo el clúster. Dado que el receptor recopila
+sobre el clúster en su totalidad mediante el servidor de API de Kubernetes. Utiliza este receptor para responder preguntas sobre fases de pod, condiciones
+de nodo y otras preguntas sobre todo el clúster.
+Dado que el receptor recopila
 telemetría para el clúster en su totalidad, solo se necesita una instancia del
 receptor en todo el clúster para recopilar todos los datos.
 
@@ -549,11 +482,11 @@ subjects:
 
 ## Receptor de objetos de Kubernetes {#kubernetes-objects-receiver}
 
-| Patrón de implementación | Utilizable                                            |
-| ------------------------ | ----------------------------------------------------- |
-| DaemonSet (agente)       | Sí, pero generará datos duplicados                    |
-| Deployment (gateway)     | Sí, pero más de una réplica generará datos duplicados |
-| Sidecar                  | No                                                    |
+| Patrón de implementación                | Utilizable                                            |
+| --------------------------------------- | ----------------------------------------------------- |
+| DaemonSet (agent)    | Sí, pero generará datos duplicados                    |
+| Deployment (gateway) | Sí, pero más de una réplica generará datos duplicados |
+| Sidecar                                 | No                                                    |
 
 El receptor de objetos de Kubernetes recopila, ya sea extrayendo o observando,
 objetos del servidor de API de Kubernetes. El caso de uso más común para este
@@ -690,11 +623,11 @@ subjects:
 
 ## Prometheus Receiver {#prometheus-receiver}
 
-| Patrón de implementación | Utilizable |
-| ------------------------ | ---------- |
-| DaemonSet (agent)        | Yes        |
-| Deployment (gateway)     | Yes        |
-| Sidecar                  | No         |
+| Patrón de implementación                | Utilizable |
+| --------------------------------------- | ---------- |
+| DaemonSet (agent)    | Yes        |
+| Deployment (gateway) | Yes        |
+| Sidecar                                 | No         |
 
 Prometheus es un formato de métricas común tanto para Kubernetes como para los
 servicios que se ejecutan en Kubernetes. El receptor Prometheus es un reemplazo
@@ -702,7 +635,8 @@ mínimo e inmediato para la recopilación de esas métricas. Admite el conjunto
 completo de opciones
 [`scrape_config` de Prometheus](https://prometheus.io/docs/prometheus/1.8/configuration/configuration/#scrape_config).
 
-Hay algunas funciones avanzadas de Prometheus que el receptor no admite. El
+Hay algunas funciones avanzadas de Prometheus que el receptor no admite.
+El
 receptor devuelve un error si el código/YAML de configuración contiene alguno de
 los siguientes elementos:
 
@@ -729,8 +663,7 @@ usarlo:
 
 Para facilitar la configuración del receptor Prometheus, el operador
 OpenTelemetry incluye un componente opcional llamado
-[Asignador de destino](/docs/platforms/kubernetes/operator/target-allocator).
-Este componente se puede utilizar para indicarle a un recopilador qué puntos
+[Asignador de destino](/docs/platforms/kubernetes/operator/target-allocator). Este componente se puede utilizar para indicarle a un recopilador qué puntos
 finales de Prometheus debe rastrear.
 
 Para obtener más información sobre el diseño del receptor, consulta
@@ -738,11 +671,11 @@ Para obtener más información sobre el diseño del receptor, consulta
 
 ## Receptor de métricas del host {#host-metrics-receiver}
 
-| Patrón de implementación | Utilizable                                                       |
-| ------------------------ | ---------------------------------------------------------------- |
-| DaemonSet (agente)       | Preferido                                                        |
-| Deployment (gateway)     | Sí, pero solo recopila métricas del nodo en el que se implementa |
-| Sidecar                  | No                                                               |
+| Patrón de implementación                | Utilizable                                                       |
+| --------------------------------------- | ---------------------------------------------------------------- |
+| DaemonSet (agent)    | Preferido                                                        |
+| Deployment (gateway) | Sí, pero solo recopila métricas del nodo en el que se implementa |
+| Sidecar                                 | No                                                               |
 
 El receptor de métricas del host recopila métricas de un host mediante una
 variedad de scrapers. Existe cierta superposición con el
@@ -762,18 +695,16 @@ Los scrapers disponibles son:
 | ------------------- | ------------------------------- | ------------------------------------------------------------------ |
 | CPU                 | Todos excepto Mac[^1]           | Métricas de utilización de CPU                                     |
 | Disco               | Todos excepto Mac[^1]           | Métricas de E/S de disco                                           |
-| Carga               | Todos                           | Métricas de carga de CPU                                           |
+| load                | Todos                           | Métricas de carga de CPU                                           |
 | Sistema de archivos | Todos                           | Métricas de utilización del sistema de archivos                    |
 | Memoria             | Todos                           | Métricas de utilización de memoria                                 |
-| Red                 | Todos                           | Métricas de E/S de interfaz de red y métricas de conexión TCP      |
+| network             | Todos                           | Métricas de E/S de interfaz de red y métricas de conexión TCP      |
 | Paginación          | Todos                           | Métricas de E/S y utilización de espacio de intercambio/paginación |
 | Procesos            | Linux, Mac                      | Métricas de conteo de procesos                                     |
 | Proceso             | Linux, Windows, Mac             | Métricas de E/S de CPU, memoria y disco por proceso                |
 
-[^1]:
-
-No compatible con Mac cuando se compila sin cgo, que es el valor predeterminado
-para las imágenes publicadas por el SIG Collector.
+[^1]: No compatible con Mac cuando se compila sin cgo, que es el valor predeterminado
+    para las imágenes publicadas por el SIG Collector.
 
 Para obtener detalles específicos sobre qué métricas se recopilan y detalles de
 configuración específicos, consulta

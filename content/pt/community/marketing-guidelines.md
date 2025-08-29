@@ -2,7 +2,6 @@
 title: Diretrizes de Marketing do OpenTelemetry para Organizações Contribuintes
 linkTitle: Diretrizes de Marketing
 weight: 999
-default_lang_commit: 6a865f53d8e40c17f42772fb8fb100d62a61fb7e
 cSpell:ignore: devstats
 ---
 
@@ -24,8 +23,7 @@ Este documento é dividido em duas seções:
 
 - **Objetivos e Diretrizes:** O que estamos tentando alcançar? Qual é a nossa
   orientação?
-- **Problemas e Consequências:** Como determinamos que uma diretriz foi violada?
-  E o que fazemos sobre isso?
+- **Problemas e Consequências:** Como determinamos que uma diretriz foi violada? E o que fazemos sobre isso?
 
 ## Objetivos e Diretrizes {#goals-and-guidelines}
 
@@ -33,7 +31,7 @@ Existem três áreas principais de foco para esses objetivos e diretrizes.
 
 ### I: O OpenTelemetry é um esforço conjunto {#i-open-telemetry-is-a-joint-effort}
 
-- o que fazer:
+- Do’s:
   - Utilizar materiais do projeto, como o logotipo e o nome, de acordo com as
     [diretrizes de uso de marcas registradas](https://www.linuxfoundation.org/legal/trademark-usage)
     da Linux Foundation.
@@ -99,11 +97,11 @@ Veja como lidamos com essas circunstâncias:
    para <cncf-opentelemetry-governance@lists.cncf.io> e incluir uma explicação
    sobre por que o conteúdo é problemático, idealmente referenciando as
    [diretrizes acima](#goals-and-guidelines).
-1. O Comitê de Governança do OTel (GC) discutirá o caso durante sua próxima
+2. O Comitê de Governança do OTel (GC) discutirá o caso durante sua próxima
    reunião (semanal), ou de forma assíncrona via e-mail, se possível. O GC do
    OTel garante uma resposta via e-mail **em até duas semanas** a partir do
    relatório inicial.
-1. Se o GC concordar que há um problema, uma ação corretiva será recomendada ao
+3. Se o GC concordar que há um problema, uma ação corretiva será recomendada ao
    autor do conteúdo em questão. O GC solicitará que a organização responsável
    pelo conteúdo realize treinamentos com funcionários relevantes sobre o
    conteúdo deste documento como uma medida preventiva adicional.

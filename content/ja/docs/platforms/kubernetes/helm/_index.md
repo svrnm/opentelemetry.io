@@ -1,7 +1,6 @@
 ---
 title: OpenTelemetry Helmチャート
 linkTitle: Helm Charts
-default_lang_commit: e8f18928513b726068be250802ebe7ece25e8851
 ---
 
 ## はじめに {#introduction}

@@ -1,10 +1,8 @@
 ---
 title: 前置条件
 description: 为了参与贡献，你需要熟悉以下技术和工具。
-aliases: [requirements]
+aliases: [ requirements ]
 weight: 1
-default_lang_commit: adc4264c2926e3d767b6a56affb19fb4ae3f2a22
-drifted_from_default: true
 ---
 
 要参与本仓库的贡献，你需要熟悉以下技术和工具：
@@ -20,7 +18,8 @@ drifted_from_default: true
 
 所有 OpenTelemetry 贡献者必须签署 Linux 基金会的[贡献者许可协议（CLA）][CLA]。
 
-尚未签署 CLA 的贡献者提交的 PR 会在自动测试中失败。
+Pull requests from contributors who haven't signed the CLA fail the automated
+tests. 尚未签署 CLA 的贡献者提交的 PR 会在自动测试中失败。
 你提供的姓名和电子邮件必须与 `git config` 中的内容一致，
 并且还必须与你用于签署 CNCF CLA 的信息一致。
 

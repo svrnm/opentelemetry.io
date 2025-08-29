@@ -1,8 +1,7 @@
 ---
 title: OTLPエクスポーター設定
 linkTitle: OTLPエクスポーター
-aliases: [otlp-exporter-configuration]
-default_lang_commit: 9ba98f4fded66ec78bfafa189ab2d15d66df2309
+aliases: [ otlp-exporter-configuration ]
 ---
 
 ## エンドポイントの設定 {#endpoint-configuration}
@@ -11,7 +10,8 @@ default_lang_commit: 9ba98f4fded66ec78bfafa189ab2d15d66df2309
 
 ### `OTEL_EXPORTER_OTLP_ENDPOINT`
 
-任意のシグナルタイプ用の基本エンドポイントURLで、オプションでポート番号を指定します。
+A base endpoint URL for any signal type, with an optionally-specified port
+number. 任意のシグナルタイプ用の基本エンドポイントURLで、オプションでポート番号を指定します。
 同じエンドポイントに複数のシグナルを送信し、1つの環境変数でエンドポイントを制御したい場合に便利です。
 
 **デフォルト値:**
@@ -25,7 +25,8 @@ default_lang_commit: 9ba98f4fded66ec78bfafa189ab2d15d66df2309
 - HTTP: `export OTEL_EXPORTER_OTLP_ENDPOINT="http://my-api-endpoint/"`
 
 OTLP/HTTPの場合、この環境変数が設定されると、SDKのエクスポーターはシグナル固有のURLを構築します。
-つまり、トレース、メトリクス、ログを送信する場合、上記の例から以下のURLが構築されます。
+つまり、トレース、メトリクス、ログを送信する場合、上記の例から以下のURLが構築されます。 This means that if you're sending traces, metrics,
+and logs, the following URLs are constructed from the example above:
 
 - トレース: `"http://my-api-endpoint/v1/traces"`
 - メトリクス: `"http://my-api-endpoint/v1/metrics"`
@@ -36,6 +37,7 @@ OTLP/HTTPの場合、この環境変数が設定されると、SDKのエクス�
 トレースデータ専用のエンドポイントURL。
 オプションでポート番号を指定できます。
 OTLP/HTTP を使用している場合は、通常 `v1/traces` で終わります。
+Typically ends with `v1/traces` when using OTLP/HTTP.
 
 **デフォルト値:**
 
@@ -51,6 +53,7 @@ OTLP/HTTP を使用している場合は、通常 `v1/traces` で終わります
 
 ### `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`
 
+Endpoint URL for metric data only, with an optionally-specified port number.
 オプションでポート番号を指定することができます。
 OTLP/HTTP を使用する場合は、通常 `v1/metrics` で終わります。
 
@@ -71,6 +74,7 @@ OTLP/HTTP を使用する場合は、通常 `v1/metrics` で終わります。
 ログデータ専用のエンドポイントURL。
 オプションでポート番号を指定できます。
 OTLP/HTTP を使う場合は、通常 `v1/logs` で終わります。
+Typically ends with `v1/logs` when using OTLP/HTTP.
 
 **デフォルト値:**
 
@@ -171,7 +175,7 @@ OTLP/HTTP を使う場合は、通常 `v1/logs` で終わります。
 
 **例:** `export OTEL_EXPORTER_OTLP_PROTOCOL=grpc`
 
-指定できる値は以下です。
+Valid values are:
 
 - OTLP/gRPCを使う場合は `grpc`
 - OTLP/HTTP + protobuf を使う場合は `http/protobuf`
@@ -185,7 +189,7 @@ OTLP/HTTP を使う場合は、通常 `v1/logs` で終わります。
 
 **例:** `export OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc`
 
-指定できる値は以下です。
+Valid values are:
 
 - OTLP/gRPCを使う場合は `grpc`
 - OTLP/HTTP + protobuf を使う場合は `http/protobuf`
@@ -199,7 +203,7 @@ OTLP/HTTP を使う場合は、通常 `v1/logs` で終わります。
 
 **例:** `export OTEL_EXPORTER_OTLP_METRICS_PROTOCOL=grpc`
 
-指定できる値は以下です。
+Valid values are:
 
 - OTLP/gRPCを使う場合は `grpc`
 - OTLP/HTTP + protobuf を使う場合は `http/protobuf`
@@ -213,7 +217,7 @@ OTLP/HTTP を使う場合は、通常 `v1/logs` で終わります。
 
 **例:** `export OTEL_EXPORTER_OTLP_LOGS_PROTOCOL=grpc`
 
-指定できる値は以下です。
+Valid values are:
 
 - OTLP/gRPCを使う場合は `grpc`
 - OTLP/HTTP + protobuf を使う場合は `http/protobuf`

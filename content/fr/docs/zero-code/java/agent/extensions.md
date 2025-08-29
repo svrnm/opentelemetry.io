@@ -1,11 +1,8 @@
 ---
 title: Extensions
-aliases: [/docs/instrumentation/java/extensions]
-description:
-  Les extensions ajoutent des capacités à l'agent sans avoir à créer une
-  distribution séparée.
+aliases: [ /docs/instrumentation/java/extensions ]
+description: Les extensions ajoutent des capacités à l'agent sans avoir à créer une distribution séparée.
 weight: 300
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 ---
 
 ## Introduction {#introduction}

@@ -2,7 +2,6 @@
 title: Usando bibliotecas de instrumentação
 linkTitle: Bibliotecas
 weight: 40
-default_lang_commit: 918511661af010726c8847d7fe41a46231fa59cc
 cSpell:ignore: desinstrumentar httpx instrumentor uninstrument
 ---
 
@@ -21,8 +20,7 @@ solicitações HTTP.
 
 ## Configuração {#setup}
 
-Você pode instalar cada biblioteca de instrumentação separadamente usando pip.
-Por exemplo:
+Você pode instalar cada biblioteca de instrumentação separadamente usando pip. Por exemplo:
 
 ```sh
 pip install opentelemetry-instrumentation-{instrumented-library}
@@ -109,5 +107,4 @@ mais _backends_ de telemetria.
 Você também pode verificar a
 [Instrumentação sem código para Python](/docs/zero-code/python/).
 
-[opentelemetry-python-contrib]:
-  https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation#readme
+[opentelemetry-python-contrib]: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation#readme

@@ -1,10 +1,7 @@
 ---
 title: Verificações de pull request
-description:
-  Saiba como fazer seu pull request passar por todas as verificações com sucesso
+description: Saiba como fazer seu pull request passar por todas as verificações com sucesso
 weight: 40
-default_lang_commit: 6c676267409eefc15a28c0e2fdd60b26a4687f74
-drifted_from_default: true
 ---
 
 Ao abrir um
@@ -24,8 +21,7 @@ Caso alguma das verificações falhe, tente
 executando o comando `npm run fix:all` localmente.
 
 Você também pode adicionar o comentário `/fix:all` ao seu PR. Isso fará com que
-o _OpenTelemetry Bot_ execute esse comando por você e atualize o PR.
-Certifique-se de sincronizar essas alterações localmente com o comando _git
+o _OpenTelemetry Bot_ execute esse comando por você e atualize o PR. Certifique-se de sincronizar essas alterações localmente com o comando _git
 pull_.
 
 Caso os problemas persistam, leia abaixo o que cada verificação faz e como você
@@ -60,8 +56,7 @@ Essa verificação garante que os
 Se forem encontrados problemas, anotações serão adicionadas aos seus arquivos na
 visualização `arquivos alterados` do PR. Corrija estes itens para que a
 verificação passe. Como alternativa, você pode executar
-`npm run check:text -- --fix` localmente para corrigir a maioria dos problemas.
-Depois, execute `npm run check:text` novamente e corrija manualmente o que
+`npm run check:text -- --fix` localmente para corrigir a maioria dos problemas. Depois, execute `npm run check:text` novamente e corrija manualmente o que
 restar.
 
 ### `MARKDOWN linter` {.notranslate lang=en}
@@ -77,6 +72,10 @@ aplique as alterações sugeridas.
 
 Essa verificação garante que
 [todas as palavras estejam corretamente escritas](../style-guide/#spell-checking).
+
+If this check fails, run `npm run check:spelling` locally to see the misspelled
+words. If a word is spelled correctly, you may need to add it to the
+`cSpell:ignore` section in the front matter of the file.
 
 ### `CSPELL` check {.notranslate lang=en}
 

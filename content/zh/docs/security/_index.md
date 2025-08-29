@@ -3,8 +3,6 @@ title: 安全性
 cascade:
   collector_vers: 0.131.0
 weight: 970
-default_lang_commit: f35b3300574b428f94dfeeca970d93c5a6ddbf35
-drifted_from_default: true
 ---
 
 在本节中，你将了解 OpenTelemetry 项目如何披露漏洞以及对安全事件的响应，以及如何安全地收集和传输可观测性数据。
@@ -22,6 +20,7 @@ drifted_from_default: true
 
 在设置 OpenTelemetry Collector 时，请考虑在托管基础设施和 Collector
 配置中同时实施安全最佳实践。运行安全的 Collector 有助于：
+Running a secure Collector can help you
 
 - 保护不应但可能包含敏感信息（例如可识别个人身份的信息、特定应用程序数据或网络流量模式）的遥测数据。
 - 防止数据被篡改，从而保证遥测数据的可靠性，并避免对安全事件响应造成干扰。

@@ -1,7 +1,6 @@
 ---
 title: Ámbito de instrumentación
 weight: 80
-default_lang_commit: e9a74ead9ff9ee7c1df04241e916bdb606ba5e24
 ---
 
 El [ámbito de instrumentación](/docs/specs/otel/common/instrumentation-scope/)
@@ -28,7 +27,8 @@ qué versión de una librería y cuál es el rendimiento de esa versión, o para
 identificar un problema en un módulo específico de tu aplicación.
 
 El siguiente diagrama ilustra una traza con múltiples ámbitos de
-instrumentación. Los diferentes ámbitos se representan con distintos colores:
+instrumentación.
+Los diferentes ámbitos se representan con distintos colores:
 
 - En la parte superior, el span `/api/placeOrder` es generado por el framework
   HTTP utilizado.

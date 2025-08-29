@@ -1,11 +1,13 @@
 ---
-title: 共通脆弱性識別子 - CVEs
+title: Common Vulnerabilities and Exposures
 weight: 100
-default_lang_commit: 179f03bf118e1e8a3cc195ab56fc09d85c476394
 ---
 
 このページは[GitHubのOpenTelemetry Organization](https://github.com/open-telemetry/)上の全リポジトリで報告されたCVEsの一覧です。
-元のデータは、[sig-security](https://github.com/open-telemetry/sig-security) リポジトリで管理され、日次で更新されます。
+元のデータは、[sig-security](https://github.com/open-telemetry/sig-security) リポジトリで管理され、日次で更新されます。 The
+raw data is stored in the
+[sig-security](https://github.com/open-telemetry/sig-security) repository, and
+it is refreshed daily.
 
 <table id="cve-table">
   <thead>

@@ -1,10 +1,8 @@
 ---
 title: 提交内容
 description: 了解如何通过 GitHub UI 或本地 Fork 提交新增或修改的内容。
-aliases: [new-content]
+aliases: [ new-content ]
 weight: 15
-default_lang_commit: e04e8da1f4527d65c162af9a670eb3be8e7e7fb9
-drifted_from_default: true
 ---
 
 若要贡献新的或改进现有的文档，请提交一个 [pull request][PR]：
@@ -22,8 +20,10 @@ drifted_from_default: true
 
 {{% alert title="提示：草稿状态" %}}
 
-将你的 PR 状态设为 **Draft**，以便让维护者知道内容尚未准备好进行审核。
-维护者仍可能发表评论或进行高层次审查，但在你移除草稿状态之前，他们不会对内容进行完整审核。
+Set the status of your pull request to **Draft** to let maintainers know that
+the content isn't ready for review yet. Maintainers may still comment or do
+high-level reviews, though they won't review the content in full until you
+remove the draft status.
 
 {{% /alert %}}
 
@@ -55,7 +55,8 @@ class first,second white
 ### 从浏览器编辑并提交更改 {#page-edit-from-browser}
 
 如果你对 Git 工作流不太熟悉，可以使用以下更简单的方法来准备并提交新的 PR。
-图 2 概述了操作步骤，下面是具体说明。
+图 2 概述了操作步骤，下面是具体说明。 Figure 2 outlines the steps and
+the details follow.
 
 ```mermaid
 flowchart LR
@@ -87,12 +88,20 @@ class id1 k8s
 图 2. 使用 GitHub 提交 PR 的步骤
 
 1. 在你看到问题的页面中，点击右侧导航栏的 **Edit this page**。
-2. 如果你不是该项目的成员，GitHub 会提示你 Fork 仓库，点击 **Fork this repository**。
+
+2. 如果你不是该项目的成员，GitHub 会提示你 Fork 仓库，点击 **Fork this repository**。 Select **Fork this repository**.
+
 3. 在 GitHub 编辑器中进行更改。
+
 4. 填写 **Propose file change** 表单。
+
 5. 点击 **Propose file change**。
+
 6. 点击 **Create pull request**。
-7. 在 **Open a pull request** 页面中填写说明，帮助审阅者理解你的更改。
+
+7. The **Open a pull request** screen appears. Your description helps reviewers
+   understand your change.
+
 8. 点击 **Create pull request**。
 
 在合并 PR 之前，OpenTelemetry 社区成员会对其进行审核并批准。
@@ -100,15 +109,16 @@ class id1 k8s
 如果审阅者要求你进行更改：
 
 1. 前往 **Files changed** 标签页。
-2. 点击铅笔图标编辑 PR 中更改的文件。
-3. 按要求修改。如果有代码建议，可直接应用。
+2. Select the pencil (edit) icon on any files changed by the pull request.
+3. 按要求修改。如果有代码建议，可直接应用。 If there's a code suggestion, apply it.
 4. 提交更改。
 
 审阅完成后，审阅者将合并你的 PR，更改将在几分钟后上线。
 
 ### 修复 PR 检查失败 {#fixing-prs-in-github}
 
-提交 PR 后，GitHub 会运行一些构建检查。某些失败（如格式问题）可以自动修复。
+提交 PR 后，GitHub 会运行一些构建检查。某些失败（如格式问题）可以自动修复。 Certain check
+failures, like formatting issues, can be fixed automatically.
 
 在你的 PR 中添加以下评论：
 
@@ -116,7 +126,8 @@ class id1 k8s
 /fix:all
 ```
 
-这将触发 OpenTelemetry 机器人尝试修复构建问题。你也可以使用以下命令修复特定问题：
+这将触发 OpenTelemetry 机器人尝试修复构建问题。你也可以使用以下命令修复特定问题： Or you can
+issue one of the following fix commands to address a specific failure:
 
 ```text
 fix:dict
@@ -133,11 +144,7 @@ fix:text
 
 {{% alert title="专业提示" %}}
 
-你也可以在本地运行 `fix` 命令。若要查看所有可用命令，请运行：
-
-```bash
-npm run -s '_list:fix:*'
-```
+你也可以在本地运行 `fix` 命令。若要查看所有可用命令，请运行： npm run -s '_list:fix:\*'
 
 {{% /alert %}}
 
@@ -145,7 +152,11 @@ npm run -s '_list:fix:*'
 
 如果你熟悉 Git，或你的更改大于几行，建议从本地 Fork 开始工作。
 
-请确保你已在本地安装 [`git`][`git` installed]。你也可以使用 Git 图形界面工具。
+Make sure you have [`git` installed] on your computer. You can also use a user
+interface for Git.
+
+Figure 3 shows the steps to follow when you work from a local fork. The details
+for each step follow.
 
 ```mermaid
 flowchart LR
@@ -201,7 +212,7 @@ class changes,changes2 white
    git remote -v
    ```
 
-   示例输出：
+   Output is similar to:
 
    ```none
    origin	git@github.com:<你的用户名>/opentelemetry.io.git (fetch)
@@ -210,19 +221,21 @@ class changes,changes2 white
    upstream	https://github.com/open-telemetry/opentelemetry.io.git (push)
    ```
 
-4. 拉取 origin 和 upstream 的更新：
+4. 图 4：从你的 Fork 仓库向
+   [opentelemetry.io](https://github.com/open-telemetry/opentelemetry.io) 提交 PR 的步骤
 
    ```shell
    git fetch origin
    git fetch upstream
    ```
 
-   这可以确保你在开始修改之前，本地仓库是最新的。请定期将 `upstream`
-   的更改推送到 `origin`，以保持你的 Fork 与上游仓库同步。
+   This makes sure your local repository is up to date before you start making
+   changes. Push changes from upstream to origin regularly to keep your fork in
+   sync with upstream.
 
 ### 创建分支 {#create-a-branch}
 
-1. 基于 `upstream/main` 创建新分支：
+1. Create a new branch. This example assumes the base branch is `upstream/main`:
 
    ```shell
    git checkout -b <my_new_branch> upstream/main
@@ -308,8 +321,8 @@ class 1,2,3,4,5,6,7,8 grey
 class first,second white
 ```
 
-图 4：从你的 Fork 仓库向
-[opentelemetry.io](https://github.com/open-telemetry/opentelemetry.io) 提交 PR 的步骤
+_Figure 4. Steps to open a PR from your fork to_
+[opentelemetry.io](https://github.com/open-telemetry/opentelemetry.io).
 
 1. 在浏览器中，前往 [`opentelemetry.io`](https://github.com/open-telemetry/opentelemetry.io) 仓库。
 
@@ -327,7 +340,8 @@ class first,second white
    - **Title**（50 个字符以内）：简要说明变更目的。
    - **Description**：更详细地说明你的变更内容。
      - 如果该变更关联某个 GitHub Issue，在描述中加入 `Fixes #12345` 或 `Closes #12345`，
-       这样 GitHub 在合并 PR 后会自动关闭对应 issue。
+       这样 GitHub 在合并 PR 后会自动关闭对应 issue。 If there are other related PRs,
+       link those as well.
      - 如果你有任何具体问题需要建议，可以在描述中写出你希望评审者关注的问题。
 
 8. 点击 **Create pull request** 按钮。
@@ -338,54 +352,49 @@ class first,second white
 
 - 如果 Netlify 构建失败，点击 **Details** 查看更多信息。
 - 如果 Netlify 构建成功，点击 **Details** 可以打开已应用你改动的
-  OpenTelemetry 网站预览版本。评审者会通过该预览来查看你的更改效果。
+  OpenTelemetry 网站预览版本。评审者会通过该预览来查看你的更改效果。 This is how reviewers
+  check your changes.
 
-其他检查项也可能失败。详见所有 PR 检查项列表。
+Other checks might also fail. See the [list of all PR checks](../pr-checks).
 
 ### 修复问题 {#fix-issues}
 
 在提交更改到仓库之前，请运行以下命令，并完成以下两项操作：
 
-1. 处理脚本报告的所有问题；
-2. 提交脚本修改过的所有文件：
-
 ```sh
 npm run test-and-fix
 ```
 
-如果你希望分开进行检查和修复，可以分别运行以下命令：
+To separately test and fix all issues with your files, run:
 
 ```sh
 npm run test    # 仅检查文件，不会修改任何内容
 npm run fix:all # 可能会自动修改文件
 ```
 
-要查看所有可用的 NPM 脚本，请运行：
-
-```sh
-npm run
-```
-
-更多关于拉取请求检查项及其自动修复方法的信息，请参见 PR 检查项。
+要查看所有可用的 NPM 脚本，请运行： 更多关于拉取请求检查项及其自动修复方法的信息，请参见 PR 检查项。
 
 ### 预览更改 {#preview-locally}
 
-本地预览可以帮助你在提交 PR 前发现构建或格式问题。
+Preview your changes locally before pushing them or opening a pull request. A
+preview lets you catch build errors or Markdown formatting problems.
 
-启动本地预览：
+To build and serve the site locally with Hugo, run the following command:
 
 ```shell
 npm run serve
 ```
 
-浏览器访问 [http://localhost:1313](http://localhost:1313) 查看预览。
+浏览器访问 [http://localhost:1313](http://localhost:1313) 查看预览。 Hugo watches for changes and rebuilds the site as needed.
 
-要停止本地服务，在终端按下 `Ctrl+C`。
+To stop the local Hugo instance, go back to the terminal and type `Ctrl+C`, or
+close the terminal window.
 
 ### 站点部署和 PR 预览 {#site-deploys-and-pr-previews}
 
 当你提交 PR 时，Netlify 会创建一个[部署预览][deploy preview]，方便你查看所做的更改。
-一旦你的 PR 被合并，Netlify 会将更新后的网站部署到生产服务器。
+一旦你的 PR 被合并，Netlify 会将更新后的网站部署到生产服务器。 Once your PR is merged, Netlify deploys the updated site to the
+production server.
 
 > **注意**：PR 预览包含**草稿页面**，但生产环境构建不包含草稿页面。
 
@@ -393,15 +402,22 @@ npm run serve
 
 ### PR 提交流程建议 {#pr-guidelines}
 
-为确保审核流程顺利进行，请注意以下几点：
+Before a PR gets merged, it sometimes requires a few iterations of
+review-and-edit. To help us and yourself make this process as easy as possible,
+we ask that you adhere to the following:
 
-- 除非是微小更改，否则请 **使用 Fork** 工作流。
-- **不要直接使用 Fork 的 `main` 分支**，请新建分支。
+- If your PR isn't a quick fix, then **work from a fork**: Click the
+  [Fork](https://github.com/open-telemetry/opentelemetry.io/fork) button at the
+  top of the repository and clone the fork locally. When you are ready, raise a
+  PR with the upstream repository.
+- **Do not work from the `main`** branch of your fork, but create a PR-specific
+  branch.
 - 确保你允许维护者[对 PR 分支进行更改](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork)。
 
 ### 来自审阅者的更改 {#changes-from-reviewers}
 
-有时，审阅者会直接向你的 PR 提交更改。在你进行其他修改之前，需先获取这些提交。
+Sometimes reviewers commit to your pull request. Before making any other
+changes, fetch those commits.
 
 1. 从你的远程 Fork 获取提交并将其变基到当前工作分支：
 
@@ -421,7 +437,7 @@ npm run serve
 ### 合并冲突与变基 {#merge-conflicts-and-rebasing}
 
 如果其他贡献者在另一个 PR 中修改了同一个文件，就可能会产生合并冲突。
-你必须在自己的 PR 中解决所有的合并冲突。
+你必须在自己的 PR 中解决所有的合并冲突。 You must resolve all merge conflicts in your PR.
 
 1. 更新你的 Fork，并对本地分支执行变基：
 
@@ -451,11 +467,11 @@ npm run serve
 
    这会显示哪些文件存在冲突。
 
-4. 打开每个有冲突的文件，查找冲突标记：`>>>`、`<<<` 和 `===`。解决冲突后删除这些标记。
+4. 打开每个有冲突的文件，查找冲突标记：`>>>`、`<<<` 和 `===`。解决冲突后删除这些标记。 Resolve the conflict and delete the conflict marker.
 
    详情请参见 [Git 合并冲突的表现形式](https://git-scm.com/docs/git-merge#_how_conflicts_are_presented)。
 
-5. 将已解决的文件加入暂存区：
+5. Add the files to the changeset:
 
    ```shell
    git add <文件名>
@@ -477,24 +493,26 @@ npm run serve
    git push --force-with-lease origin <你的分支名>
    ```
 
-   现在，PR 将不再显示冲突。
+   The pull request no longer shows any conflicts.
 
 ### 合并要求 {#merge-requirements}
 
-PR 必须满足以下条件才能被合并：
+Pull requests are merged when they comply with the following criteria:
 
 - 所有由批准者、维护者、技术委员会成员或主题专家所做的审查都显示为 “Approved”（已批准）。
 - 没有未解决的评论对话。
 - 至少有一位批准者已批准。
 - 没有失败的 PR 检查。
-- PR 分支与目标分支保持最新。
+- PR branch is up-to-date with the base branch.
 - 文档页面的更改[不应跨多个语言][do not span locales]。
 
 [do not span locales]: ../localization/#prs-should-not-span-locales
 
 > **重要提示**
 >
-> 不必过于担心失败的 PR 检查。社区成员会协助你修复这些问题，可能会提供修复方法或直接帮你修复。
+> Do not worry too much about failing PR checks. Community members will help you
+> to get them fixed, by either providing you with instructions how to fix them
+> or by fixing them on your behalf.
 
 [dashboard]: https://app.netlify.com/sites/opentelemetry/overview
 [deploy preview]: https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/

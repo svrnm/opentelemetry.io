@@ -2,7 +2,6 @@
 title: Logs
 description: Um registro de um evento.
 weight: 3
-default_lang_commit: 7c0e4db0b6c39b0ca0e7efb17df5610d1b77b8a3
 cSpell:ignore: filelogreceiver semistructured transformprocessor
 ---
 
@@ -156,8 +155,7 @@ DEBUG - 2024-08-04 09:30:15 - User johndoe performed action: file_upload. Filena
 necessário realizar um trabalho significativo para analisá-los ou processa-los
 antes de serem legíveis por máquinas. Por exemplo, os três logs acima exigirão
 uma expressão regular para analisar a marcação de data e hora e personalizar
-analisadores para extrair os campos da mensagem de log de forma consistente.
-Isso geralmente é necessário para que um _backend_ de log saiba como classificar
+analisadores para extrair os campos da mensagem de log de forma consistente. Isso geralmente é necessário para que um _backend_ de log saiba como classificar
 e organizar os logs por data e hora. Embora seja possível processar logs não
 estruturados para análise, fazer isso pode dar mais trabalho do que mudar para
 logs estruturados, através de um framework de log padrão em suas aplicações.
@@ -227,19 +225,19 @@ record contém dois tipos de campos:
 
 Os campos de nível superior são:
 
-| Nome do Campo        | Descrição                                                 |
-| -------------------- | --------------------------------------------------------- |
-| Timestamp            | Momento em que o evento ocorreu.                          |
-| ObservedTimestamp    | Momento em que o evento foi observado.                    |
-| TraceId              | ID de rastreamento da solicitação.                        |
-| SpanId               | ID do trecho da solicitação.                              |
-| TraceFlags           | Flag de rastreamento W3C.                                 |
+| Nome do Campo        | Descrição                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------- |
+| Timestamp            | Momento em que o evento ocorreu.                                             |
+| ObservedTimestamp    | Momento em que o evento foi observado.                                       |
+| TraceId              | ID de rastreamento da solicitação.                                           |
+| SpanId               | ID do trecho da solicitação.                                                 |
+| TraceFlags           | Flag de rastreamento W3C.                                                    |
 | SeverityText         | Texto de severidade (também conhecido como nível de log). |
-| SeverityNumber       | Valor numérico da severidade.                             |
-| Body                 | O corpo do registro de log.                               |
-| Resource             | Descreve a origem do log.                                 |
-| InstrumentationScope | Descreve o escopo que emitiu o log.                       |
-| Attributes           | Informações adicionais sobre o evento.                    |
+| SeverityNumber       | Valor numérico da severidade.                                                |
+| Body                 | O corpo do registro de log.                                                  |
+| Resource             | Descreve a origem do log.                                                    |
+| InstrumentationScope | Descreve o escopo que emitiu o log.                                          |
+| Attributes           | Informações adicionais sobre o evento.                                       |
 
 Para mais detalhes sobre registros de log e campos de log, consulte
 [Modelo de Dados de Logs](/docs/specs/otel/logs/data-model/).

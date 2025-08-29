@@ -1,14 +1,10 @@
 ---
 title: Configuração de desenvolvimento e comandos para compilar, servir e mais
-linkTitle: Config. desenvolvimento
-description:
-  Aprenda como configurar um ambiente de desenvolvimento para este site.
-what-next: >
-  Agora você está pronto para [compilar](#build), [servir](#serve) e fazer
-  atualizações nos arquivos do site. Para mais detalhes sobre como submeter
-  alterações, veja [Enviando conteúdo][].
+linkTitle: Dev setup and more
+description: Aprenda como configurar um ambiente de desenvolvimento para este site.
+what-next: |
+  Agora você está pronto para [compilar](#build), [servir](#serve) e fazer atualizações nos arquivos do site. Para mais detalhes sobre como submeter alterações, veja [Enviando conteúdo][].
 weight: 60
-default_lang_commit: 3337aa6fbaccf5e8734a1ef2c6ca8b61496c3d93
 ---
 
 {{% alert title="Ambientes de construção suportados" color=warning %}}
@@ -30,25 +26,26 @@ para este site.
 
 Para trabalhar via [Gitpod.io]:
 
-1.  Faça um _fork_ deste repositório. Para ajuda, veja [Fazer fork de um
-    repositório][fork].
-2.  De [gitpod.io/workspaces], crie um novo _workspace_ (faça isso apenas uma
-    vez) ou abra um _workspace_ existente sobre seu fork. Você também pode
-    visitar um link da forma:
-    `https://gitpod.io#https://github.com/SEU_ID_GITHUB/opentelemetry.io`.
+1. Faça um _fork_ deste repositório. Para ajuda, veja [Fazer fork de um
+   repositório][fork].
+2. De [gitpod.io/workspaces], crie um novo _workspace_ (faça isso apenas uma
+   vez) ou abra um _workspace_ existente sobre seu fork. Você também pode
+   visitar um link da forma:
+   `https://gitpod.io#https://github.com/SEU_ID_GITHUB/opentelemetry.io`.
 
-    > **Nota**: Se você tem as permissões necessárias para trabalhar neste
-    > repositório, ou apenas quer dar uma olhada, abra
-    > <https://gitpod.io/#https://github.com/open-telemetry/opentelemetry.io>.
+   > **Nota**: Se você tem as permissões necessárias para trabalhar neste
+   > \> repositório, ou apenas quer dar uma olhada, abra
+   > <https://gitpod.io/#https://github.com/open-telemetry/opentelemetry.io>.
 
 O Gitpod instala automaticamente os pacotes específicos do repositório para
-você. {{% param what-next %}}
+você.
+{{% param what-next %}}
 
 ### Codespaces {#codespaces}
 
 Para trabalhar via GitHub [Codespaces]:
 
-1. Faça um [_Fork_] do repositório do site.
+1. Faça um \[_Fork_] do repositório do site.
 2. Abra um _Codespace_ a partir do seu _fork_.
 
 Seu ambiente de desenvolvimento será inicializado via a configuração
@@ -56,31 +53,32 @@ Seu ambiente de desenvolvimento será inicializado via a configuração
 
 ## Configuração local {#local-setup}
 
-1.  Faça um [_Fork_] e então [clone] o repositório do site em
-    <{{% param github_repo %}}>.
-2.  Vá para o diretório do repositório:
+1. Faça um \[_Fork_] e então [clone] o repositório do site em
+   <{{% param github\_repo %}}>.
+
+2. Vá para o diretório do repositório:
 
     ```sh
     cd opentelemetry.io
     ```
 
-3.  Instale ou atualize para a [versão **LTS ativa**][nodejs-rel] do Node.js.
-    Recomendamos usar [nvm] para gerenciar sua instalação do Node. No Linux,
-    execute o seguinte comando, que instalará e atualizará para a versão
-    especificada no arquivo .nvmrc:
+3. Instale ou atualize para a [versão **LTS ativa**][nodejs-rel] do Node.js.
+   Recomendamos usar [nvm] para gerenciar sua instalação do Node. No Linux,
+   execute o seguinte comando, que instalará e atualizará para a versão
+   especificada no arquivo .nvmrc:
 
     ```sh
     nvm install
     ```
 
-    Para [instalar no Windows][nodejs-win], use [nvm-windows]. Recomendamos usar
-    `cmd` e não o Windows PowerShell para o comando abaixo:
+   Para [instalar no Windows][nodejs-win], use [nvm-windows]. Recomendamos usar
+   `cmd` e não o Windows PowerShell para o comando abaixo:
 
     ```cmd
     nvm install lts && nvm use lts
     ```
 
-4.  Obtenha os pacotes npm e outros pré-requisitos:
+4. Obtenha os pacotes npm e outros pré-requisitos:
 
     ```sh
     npm install
@@ -88,7 +86,7 @@ Seu ambiente de desenvolvimento será inicializado via a configuração
 
 Abra sua IDE favorita. {{% param what-next %}}
 
-### Compilar {#build}
+### Build
 
 Para compilar o site execute:
 
@@ -131,10 +129,8 @@ O site é construído a partir do seguinte conteúdo:
   pré-processado de `content-modules` (colocado sob `tmp/`), e em nenhum outro
   lugar.
 
-[hugo.yaml]:
-  https://github.com/open-telemetry/opentelemetry.io/blob/main/hugo.yaml
-[content-modules]:
-  https://github.com/open-telemetry/opentelemetry.io/tree/main/content-modules
+[hugo.yaml]: https://github.com/open-telemetry/opentelemetry.io/blob/main/hugo.yaml
+[content-modules]: https://github.com/open-telemetry/opentelemetry.io/tree/main/content-modules
 
 ### Alterações em submódulos {#content-modules-changes}
 
@@ -148,8 +144,7 @@ repositório ao qual o submódulo correspondente está vinculado, em vez de dent
 do próprio submódulo.
 
 Contribuidores experientes podem trabalhar diretamente no submódulo. Você então
-consegue construir e disponibilizar diretamente suas alterações (do submódulo).
-Por padrão, os _scripts_ de CI obtêm submódulos a cada invocação. Para prevenir
+consegue construir e disponibilizar diretamente suas alterações (do submódulo). Por padrão, os _scripts_ de CI obtêm submódulos a cada invocação. Para prevenir
 esse comportamento enquanto você trabalha dentro de um submódulo, defina a
 variável de ambiente `GET=no`. Você também precisa executar
 `git fetch --unshallow` no submódulo antes de poder submeter um PR. De maneira
@@ -166,11 +161,9 @@ como (em ordem alfabética):
 - [Gitpod](https://www.gitpod.io/docs/flex/configuration/devcontainer/overview)
 - [VSCode](https://code.visualstudio.com/docs/devcontainers/containers#_installation)
 
-[clone]:
-  https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
+[clone]: https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository
 [codespaces]: https://docs.github.com/en/codespaces
-[cs-devc]:
-  https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers#about-dev-containers
+[cs-devc]: https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers#about-dev-containers
 [devcontainers]: https://containers.dev/
 [fork]: https://docs.github.com/en/get-started/quickstart/fork-a-repo
 [gitpod.io]: https://gitpod.io
@@ -180,13 +173,11 @@ como (em ordem alfabética):
 [localhost:8888]: http://localhost:8888
 [netlify]: https://netlify.com
 [nodejs-rel]: https://nodejs.org/en/about/previous-releases
-[nodejs-win]:
-  https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows
-[nvm]:
-  https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating
+[nodejs-win]: https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows
+[nvm]: https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating
 [nvm-windows]: https://github.com/coreybutler/nvm-windows
 [windows-wsl]: https://learn.microsoft.com/en-us/windows/wsl/install
 
 <!-- markdownlint-disable link-image-reference-definitions -->
 
-[Enviando conteúdo]: ../pull-requests/
+[Submitting content]: ../pull-requests/

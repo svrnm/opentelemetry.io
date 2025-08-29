@@ -3,22 +3,22 @@ title: APIによるテレメトリーの記録
 weight: 11
 aliases:
   - /docs/languages/java/api-components/
-logBridgeWarning: >
-  `LoggerProvider` / `Logger` APIは構造的に等価なトレースとメトリクスAPIと類似していますが、
-  異なる用途を提供します。現在のところ、`LoggerProvider` / `Logger` および関連クラスは
-  [Log Bridge API](/docs/specs/otel/logs/api/)を表しており、これは他のログAPI/フレームワークを通じて
-  記録されたログをOpenTelemetryにブリッジするためのログアペンダーを作成するために存在します。
-  これらはLog4j / SLF4J / Logback / などの代替として、エンドユーザーが使用することを意図していません。
-default_lang_commit: 6f3712c5cda4ea79f75fb410521880396ca30c91
+logBridgeWarning: |
+  While the `LoggerProvider` / `Logger` APIs are structurally similar to the equivalent trace and metric APIs, they serve a different use case. `LoggerProvider` / `Logger` APIは構造的に等価なトレースとメトリクスAPIと類似していますが、 異なる用途を提供します。現在のところ、`LoggerProvider` / `Logger` および関連クラスは [Log Bridge API](/docs/specs/otel/logs/api/)を表しており、これは他のログAPI/フレームワークを通じて 記録されたログをOpenTelemetryにブリッジするためのログアペンダーを作成するために存在します。 これらはLog4j / SLF4J / Logback / などの代替として、エンドユーザーが使用することを意図していません。
+   They are not intended for end user use as a replacement for Log4j / SLF4J / Logback / etc.
 cSpell:ignore: Dotel kotlint Logback updowncounter
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/api"?>
 
-APIは、主要なオブザーバビリティシグナル全体にわたってテレメトリーを記録するためのクラスとインターフェースのセットです。
+The API is a set of classes and interfaces for recording telemetry across key
+observability signals. APIは、主要なオブザーバビリティシグナル全体にわたってテレメトリーを記録するためのクラスとインターフェースのセットです。
 [SDK](../sdk/)は、テレメトリーを処理およびエクスポートするように[設定](../configuration/)されたAPIの組み込み参照実装です。
-このページは、説明、関連するJavadocへのリンク、アーティファクト座標、およびサンプルAPI使用法を含むAPIの概念的な概要です。
+このページは、説明、関連するJavadocへのリンク、アーティファクト座標、およびサンプルAPI使用法を含むAPIの概念的な概要です。 This page is a conceptual overview of the API, including
+descriptions, links to relevant Javadocs, artifact coordinates, and sample API
+usage.
 
 APIは以下のトップレベルコンポーネントで構成されています。
 
@@ -28,25 +28,27 @@ APIは以下のトップレベルコンポーネントで構成されていま�
 - [LoggerProvider](#loggerprovider)：ログのAPIエントリポイント
 - [OpenTelemetry](#opentelemetry)：トップレベルAPIコンポーネント（`TracerProvider`、`MeterProvider`、`LoggerProvider`、`ContextPropagators`）のホルダーで、計装に渡すのに便利です
 
-APIは複数の実装をサポートするように設計されています。
-OpenTelemetryによって2つの実装が提供されています。
+The API is designed to support multiple implementations. Two implementations are
+provided by OpenTelemetry:
 
-- [SDK](../sdk/)参照実装：これはほとんどのユーザーにとって適切な選択です
-- [Noop](#noop-implementation)実装：ユーザーがインスタンスをインストールしないときに計装がデフォルトで使用する、最小限でゼロ依存の実装です
+- [SDK](../sdk/) reference implementation. [SDK](../sdk/)参照実装：これはほとんどのユーザーにとって適切な選択です
+- [Noop](#noop-implementation) implementation. [Noop](#noop-implementation)実装：ユーザーがインスタンスをインストールしないときに計装がデフォルトで使用する、最小限でゼロ依存の実装です
 
-APIは、ライブラリ、フレームワーク、およびアプリケーション所有者が直接的な依存関係として取得するように設計されています。
+The API is designed to be taken as a direct dependency by libraries, frameworks,
+and application owners. APIは、ライブラリ、フレームワーク、およびアプリケーション所有者が直接的な依存関係として取得するように設計されています。
 APIには[強力な後方互換性保証](https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#compatibility-requirements)し、推移的依存関係がなく、[Java 8+をサポート](https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#language-version-compatibility)しています。
 ライブラリとフレームワークはAPIのみに依存し、APIのメソッドのみを呼び出すべきであり、アプリケーション/エンドユーザーにSDKへの依存関係を追加し、設定されたインスタンスをインストールするよう指示する必要があります。
-
-{{% alert title=Javadoc %}}
+Libraries and frameworks should depend only on the API and only call methods
+from the API, and instruct applications / end users to add a dependency on the
+SDK and install a configured instance.
 
 すべてのOpenTelemetry Javaコンポーネントのjavadocリファレンスについては、[javadoc.io/doc/io.opentelemetry](https://javadoc.io/doc/io.opentelemetry)を参照してください。
-
-{{% /alert %}}
+{{% alert %}}
 
 ## APIコンポーネント {#api-components}
 
-以下のセクションでは、OpenTelemetry APIについて説明します。各コンポーネントセクションには以下が含まれます。
+以下のセクションでは、OpenTelemetry APIについて説明します。各コンポーネントセクションには以下が含まれます。 Each component section
+includes:
 
 - Javadoc型リファレンスへのリンクを含む簡潔な説明
 - APIメソッドと引数を理解するための関連リソースへのリンク
@@ -68,7 +70,9 @@ APIには[強力な後方互換性保証](https://github.com/open-telemetry/open
 
 [Context](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-context/latest/io/opentelemetry/context/Context.html)は不変のキー値ペアのバンドルで、アプリケーション全体およびスレッド間で暗黙的に伝搬するためのユーティリティを備えています。
 暗黙的伝搬とは、引数として明示的に渡すことなく、コンテキストにアクセスできることを意味します。
-ContextはOpenTelemetry APIにおける繰り返し出現する概念です。
+ContextはOpenTelemetry APIにおける繰り返し出現する概念です。 Implicit propagation
+means that the context can be accessed without explicitly passing it as an
+argument. Context is a recurring concept in the OpenTelemetry API:
 
 - 現在アクティブな[スパン](#span)はコンテキストに保存され、デフォルトでスパンの親は現在コンテキストにあるスパンに割り当てられます
 - [メーター計装](#meter)に記録される測定値は、[エグザンプラー](/docs/specs/otel/metrics/data-model/#exemplars)を介してスパンに測定値をリンクするために使用されるコンテキスト引数を受け入れ、デフォルトでは現在コンテキストにあるスパンになります
@@ -77,7 +81,9 @@ ContextはOpenTelemetry APIにおける繰り返し出現する概念です。
 以下のコードスニペットは`Context` API使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -173,6 +179,7 @@ public class ContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### ContextStorage {#contextstorage}
@@ -184,14 +191,18 @@ public class ContextUsage {
 ### ContextPropagators {#contextpropagators}
 
 [ContextPropagators](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-context/latest/io/opentelemetry/context/propagation/ContextPropagators.html)は、アプリケーション境界を越えて`Context`を伝搬するための登録されたプロパゲーターのコンテナです。
-コンテキストは、アプリケーションを離れる際（アウトバウンドHTTPリクエストなど）にキャリアに注入され、アプリケーションに入る際（HTTPリクエストの処理など）にキャリアから抽出されます。
+コンテキストは、アプリケーションを離れる際（アウトバウンドHTTPリクエストなど）にキャリアに注入され、アプリケーションに入る際（HTTPリクエストの処理など）にキャリアから抽出されます。 Context is injected into a carrier when leaving an
+application (i.e. an outbound HTTP request), and extracted from a carrier when
+entering an application (i.e. serving an HTTP request).
 
 プロパゲーター実装については、[SDK TextMapPropagators](../sdk/#textmappropagator)を参照してください。
 
 以下のコードスニペットは、注入のための`ContextPropagators` APIを調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/InjectContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -240,12 +251,15 @@ public class InjectContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 以下のコードスニペットは、抽出のための`ContextPropagators` APIを調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ExtractContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -330,6 +344,7 @@ public class ExtractContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ## OpenTelemetry API {#opentelemetry-api}
@@ -338,9 +353,11 @@ public class ExtractContextUsage {
 
 ### プロバイダーとスコープ {#providers-and-scopes}
 
-プロバイダーとスコープは、OpenTelemetry APIにおける繰り返し出現する概念です。
-スコープは、テレメトリーが関連付けられるアプリケーション内の論理単位です。
-プロバイダーは、特定のスコープに関連するテレメトリーを記録するためのコンポーネントを提供します。
+APIは複数の実装をサポートするように設計されています。
+OpenTelemetryによって2つの実装が提供されています。 A scope is
+a logical unit within the application which telemetry is associated with. A
+provider provides components for recording telemetry relative to a particular
+scope:
 
 - [TracerProvider](#tracerprovider)は、スパンを記録するためのスコープ付き[Tracers](#tracer)を提供します
 - [MeterProvider](#meterprovider)は、メトリクスを記録するためのスコープ付き[Meters](#meter)を提供します
@@ -348,15 +365,19 @@ public class ExtractContextUsage {
 
 {{% alert %}} {{% param logBridgeWarning %}} {{% /alert %}}
 
-スコープは三要素（name、version、schemaUrl）によって識別されます。スコープの識別が一意であることを確実にするよう注意する必要があります。
-典型的なアプローチは、スコープ名をパッケージ名または完全修飾クラス名に設定し、スコープバージョンをライブラリバージョンに設定することです。
-複数のシグナル（メトリクスとトレースなど）のテレメトリーを発行する場合、同じスコープを使用すべきです。
-詳細については[計装スコープ](/docs/concepts/instrumentation-scope/)を参照してください。
+A scope is identified by the triplet (name, version, schemaUrl). Care must be
+taken to ensure the scope identity is unique. A typical approach is to set the
+scope name to the package name or fully qualified class name, and to set the
+scope version to the library version. If emitting telemetry for multiple signals
+(i.e. metrics and traces), the same scope should be used. See
+[instrumentation scope](/docs/concepts/instrumentation-scope/) for details.
 
 以下のコードスニペットは、プロバイダーとスコープのAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ProvidersAndScopes.java"?>
+
 ```java
 package otel;
 
@@ -409,12 +430,14 @@ public class ProvidersAndScopes {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Attributes {#attributes}
 
 [Attributes](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/common/Attributes.html)は[標準属性定義](/docs/specs/otel/common/#standard-attribute)を表すキー値ペアのバンドルです。
 `Attributes`は、OpenTelemetry APIにおける繰り返し出現する概念です。
+`Attributes` are a recurring concept in the OpenTelemetry API:
 
 - [スパン](#span)、スパンイベント、スパンリンクには属性があります
 - [メーター計装](#meter)に記録される測定値には属性があります
@@ -427,7 +450,9 @@ public class ProvidersAndScopes {
 以下のコードスニペットは`Attributes` API使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AttributesUsage.java"?>
+
 ```java
 package otel;
 
@@ -508,16 +533,15 @@ public class AttributesUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### OpenTelemetry {##opentelemetry}
 
-{{% alert title="Spring Boot Starter" %}}
-
-Spring Boot starterは特別なケースで、`OpenTelemetry`がSpring Beanとして利用可能です。単純にSpringコンポーネントに`OpenTelemetry`を注入してください。
+Spring Boot starterは特別なケースで、`OpenTelemetry`がSpring Beanとして利用可能です。単純にSpringコンポーネントに`OpenTelemetry`を注入してください。 Simply inject
+`OpenTelemetry` into your Spring components.
 
 [カスタム手動計装によるSpring Boot starterの拡張](/docs/zero-code/java/spring-boot-starter/api/)についてもっと読む。
-
 {{% /alert %}}
 
 [OpenTelemetry](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/OpenTelemetry.html)は、計装に渡すのに便利なトップレベルAPIコンポーネントのホルダーです。
@@ -532,7 +556,9 @@ Spring Boot starterは特別なケースで、`OpenTelemetry`がSpring Beanと�
 以下のコードスニペットは`OpenTelemetry` API使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/OpenTelemetryUsage.java"?>
+
 ```java
 package otel;
 
@@ -555,35 +581,47 @@ public class OpenTelemetryUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### GlobalOpenTelemetry {#globalopentelemetry}
 
-{{% alert title="Java agent" %}}
-
 Javaエージェントは特別なケースで、`GlobalOpenTelemetry`はエージェントによって設定されます。
-単純に`GlobalOpenTelemetry.get()`を呼び出して`OpenTelemetry`インスタンスにアクセスしてください。
+単純に`GlobalOpenTelemetry.get()`を呼び出して`OpenTelemetry`インスタンスにアクセスしてください。 Simply call
+`GlobalOpenTelemetry.get()` to access the `OpenTelemetry` instance.
 
 [カスタム手動計装によるJavaエージェントの拡張](/docs/zero-code/java/agent/api/)についてもっと読む。
-
 {{% /alert %}}
 
 [GlobalOpenTelemetry](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/GlobalOpenTelemetry.html)は、グローバルシングルトンの[OpenTelemetry](#opentelemetry)インスタンスを保持します。
 
-計装は、`GlobalOpenTelemetry`の使用を避けるべきです。
+Instrumentation should avoid using `GlobalOpenTelemetry`. 計装は、`GlobalOpenTelemetry`の使用を避けるべきです。
 かわりに、初期化引数として`OpenTelemetry`を受け入れ、設定されていない場合は[Noop実装](#noop-implementation)にデフォルトするべきです。
 この規則には例外があります。
 [Javaエージェント](/docs/zero-code/java/agent/)によってインストールされた`OpenTelemetry`インスタンスは`GlobalOpenTelemetry`を介して利用可能です。
-追加の手動計装を持つユーザーは、`GlobalOpenTelemetry.get()`を介してアクセスすることが推奨されます。
+追加の手動計装を持つユーザーは、`GlobalOpenTelemetry.get()`を介してアクセスすることが推奨されます。 There is an exception to
+this rule: the `OpenTelemetry` instance installed by the
+[Java agent](/docs/zero-code/java/agent/) is available via
+`GlobalOpenTelemetry`. Users with additional manual instrumentation are
+encouraged to access it via `GlobalOpenTelemetry.get()`.
 
-`GlobalOpenTelemetry.get()`は常に同じ結果を返すことが保証されています。`GlobalOpenTelemetry.set(..)`より前に`GlobalOpenTelemetry.get()`が呼び出された場合、`GlobalOpenTelemetry`はnoop実装に設定され、`GlobalOpenTelemetry.set(..)`への将来の呼び出しは例外をスローします。したがって、アプリケーションライフサイクルの可能な限り早期に、計装によって`GlobalOpenTelemetry.get()`が呼び出される前に`GlobalOpenTelemetry.set(..)`を呼び出すことが重要です。この保証により初期化順序の問題が表面化します。`GlobalOpenTelemetry.set()`の呼び出しが遅すぎる場合（計装が`GlobalOpenTelemetry.get()`を呼び出した後）、サイレントに失敗するのではなく例外をトリガーします。
+`GlobalOpenTelemetry.get()` is guaranteed to always return the same result. If
+`GlobalOpenTelemetry.get()` is called before `GlobalOpenTelemetry.set(..)`,
+`GlobalOpenTelemetry` is set to the noop implementation and future calls to
+`GlobalOpenTelemetry.set(..)` throw an exception. `GlobalOpenTelemetry.get()`は常に同じ結果を返すことが保証されています。`GlobalOpenTelemetry.set(..)`より前に`GlobalOpenTelemetry.get()`が呼び出された場合、`GlobalOpenTelemetry`はnoop実装に設定され、`GlobalOpenTelemetry.set(..)`への将来の呼び出しは例外をスローします。したがって、アプリケーションライフサイクルの可能な限り早期に、計装によって`GlobalOpenTelemetry.get()`が呼び出される前に`GlobalOpenTelemetry.set(..)`を呼び出すことが重要です。この保証により初期化順序の問題が表面化します。`GlobalOpenTelemetry.set()`の呼び出しが遅すぎる場合（計装が`GlobalOpenTelemetry.get()`を呼び出した後）、サイレントに失敗するのではなく例外をトリガーします。 This guarantee surfaces initialization ordering issues: calling
+`GlobalOpenTelemetry.set()` too late (i.e. after instrumentation has called
+`GlobalOpenTelemetry.get()`) triggers an exception rather than silently failing.
 
-[autoconfigure](../configuration/#zero-code-sdk-autoconfigure)が存在する場合、`GlobalOpenTelemetry`は`-Dotel.java.global-autoconfigure.enabled=true`を設定することで自動的に初期化できます（または環境変数`export OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED=true`を介して）。有効にされると、`GlobalOpenTelemetry.get()`への最初の呼び出しが自動設定をトリガーし、結果の`OpenTelemetry`インスタンスで`GlobalOpenTelemetry.set(..)`を呼び出します。
+[autoconfigure](../configuration/#zero-code-sdk-autoconfigure)が存在する場合、`GlobalOpenTelemetry`は`-Dotel.java.global-autoconfigure.enabled=true`を設定することで自動的に初期化できます（または環境変数`export OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED=true`を介して）。有効にされると、`GlobalOpenTelemetry.get()`への最初の呼び出しが自動設定をトリガーし、結果の`OpenTelemetry`インスタンスで`GlobalOpenTelemetry.set(..)`を呼び出します。 When enabled, the first
+call to `GlobalOpenTelemetry.get()` triggers autoconfiguration and calls
+`GlobalOpenTelemetry.set(..)` with the resulting `OpenTelemetry` instance.
 
 以下のコードスニペットは`GlobalOpenTelemetry` APIコンテキスト伝搬を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/GlobalOpenTelemetryUsage.java"?>
+
 ```java
 package otel;
 
@@ -602,29 +640,38 @@ public class GlobalOpenTelemetryUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### TracerProvider {#tracerprovider}
 
 [TracerProvider](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/TracerProvider.html)は、トレースのAPIエントリポイントで、[Tracers](#tracer)を提供します。
-プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。
+プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 #### Tracer {#tracer}
 
 [Tracer](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/Tracer.html)は、計装スコープに対して[スパンを記録](#span)するために使用されます。
-プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。
+プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 #### Span {#span}
 
 [SpanBuilder](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/SpanBuilder.html)と[Span](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/Span.html)は、スパンにデータを構築し記録するために使用されます。
 
-`SpanBuilder`は、`Span startSpan()`を呼び出してスパンを開始する前にスパンにデータを追加するために使用されます。
+`SpanBuilder` is used to add data to a span before starting it by calling
+`Span startSpan()`. Data can be added / updated after starting by calling
+various `Span` update methods. `SpanBuilder`は、`Span startSpan()`を呼び出してスパンを開始する前にスパンにデータを追加するために使用されます。
 開始後、さまざまな`Span`更新メソッドを呼び出すことでデータを追加/更新できます。開始前に`SpanBuilder`に提供されるデータは、[Sampler](../sdk/#sampler)への入力として提供されます。
 
 以下のコードスニペットは`SpanBuilder` / `Span` API使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SpanUsage.java"?>
+
 ```java
 package otel;
 
@@ -713,16 +760,25 @@ public class SpanUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
-スパンの親子関係は、トレーシングの重要な側面です。各スパンには、オプションの親があります。トレース内のすべてのスパンを収集し、各スパンの親を辿ることで、階層を構築できます。スパンAPIは[context](#context)の上に構築されており、スパンコンテキストがアプリケーション全体およびスレッド間で暗黙的に渡されることを可能にします。スパンが作成されるとき、その親は、スパンが存在しないかコンテキストが明示的にオーバーライドされない限り、`Context.current()`に存在するスパンに設定されます。
+Span parenting is an important aspect of tracing. Each span has an optional
+parent. By collecting all the spans in a trace and following each span's parent,
+we can construct a hierarchy. The span APIs are built on top of
+[context](#context), which allows span context to be implicitly passed around an
+application and across threads. When a span is created, its parent is set to the
+whatever span is present in `Context.current()` unless there is no span or the
+context is explicitly overridden.
 
-コンテキストAPIの使用ガイダンスのほとんどはスパンに適用されます。スパンコンテキストは、[W3CTraceContextPropagator](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/propagation/W3CTraceContextPropagator.html)および他の[TextMapPropagators](../sdk/#textmappropagator)でアプリケーション境界を越えて伝搬されます。
+Most of the context API usage guidance applies to spans. コンテキストAPIの使用ガイダンスのほとんどはスパンに適用されます。スパンコンテキストは、[W3CTraceContextPropagator](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/propagation/W3CTraceContextPropagator.html)および他の[TextMapPropagators](../sdk/#textmappropagator)でアプリケーション境界を越えて伝搬されます。
 
 以下のコードスニペットは`Span` APIコンテキスト伝搬を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SpanAndContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -778,29 +834,47 @@ public class SpanAndContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### MeterProvider {#meterprovider}
 
 [MeterProvider](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/metrics/MeterProvider.html)は、メトリクスのAPIエントリポイントで、[Meter](#meter)を提供します。
-プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。
+プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 #### Meter {#meter}
 
-[Meter](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/metrics/Meter.html)は、特定の[計装スコープ](#providers-and-scopes)の計装を取得するために使用されます。
-プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。さまざまな計装があり、それぞれ異なるセマンティクスとSDKでのデフォルト動作を持ちます。各特定の使用例に適切な計装を選択することが重要です。
+[Meter](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/metrics/Meter.html)
+is used to obtain instruments for a particular
+[instrumentation scope](#providers-and-scopes). See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes. There are a variety of instruments, each with different semantics and
+default behavior in the SDK. It's important to choose the right instrument for
+each particular use case:
 
-| 計装                                        | 同期または非同期 | 説明                                               | 例                                           | デフォルトSDK集約                                                                              |
-| ------------------------------------------- | ---------------- | -------------------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| [Counter](#counter)                         | 同期             | 単調（正の）値を記録。                             | ユーザーログインを記録                       | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                          |
-| [Async Counter](#async-counter)             | 非同期           | 単調な合計を観測。                                 | JVMにロードされたクラス数を観測              | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                          |
-| [UpDownCounter](#updowncounter)             | 同期             | 非単調（正と負の）値を記録。                       | アイテムがキューに追加/削除されるときを記録  | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                         |
-| [Async UpDownCounter](#async-updowncounter) | 非同期           | 非単調（正と負の）合計を観測。                     | JVMメモリプール使用量を観測                  | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                         |
-| [Histogram](#histogram)                     | 同期             | 分散が重要な単調（正の）値を記録。                 | サーバーが処理するHTTPリクエストの期間を記録 | [ExplicitBucketHistogram](/docs/specs/otel/metrics/sdk/#explicit-bucket-histogram-aggregation) |
-| [Gauge](#gauge)                             | 同期             | 空間的再集約が意味をなさない最新値を記録 **[1]**。 | 温度を記録                                   | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
-| [Async Gauge](#async-gauge)                 | 非同期           | 空間的再集約が意味をなさない最新値を観測 **[1]**。 | CPU使用率を観測                              | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
+| 計装                                          | 同期または非同期 | 説明                                                                                | 例                        | デフォルトSDK集約                                                                                     |
+| ------------------------------------------- | -------- | --------------------------------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------- |
+| [Counter](#counter)                         | 同期       | 単調（正の）値を記録。                                                                       | ユーザーログインを記録              | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)       |
+| [Async Counter](#async-counter)             | 非同期      | 単調な合計を観測。                                                                         | JVMにロードされたクラス数を観測        | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)       |
+| [UpDownCounter](#updowncounter)             | 同期       | 非単調（正と負の）値を記録。                                                                    | アイテムがキューに追加/削除されるときを記録   | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)      |
+| [Async UpDownCounter](#async-updowncounter) | 非同期      | 非単調（正と負の）合計を観測。                                                                   | JVMメモリプール使用量を観測          | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)      |
+| [Histogram](#histogram)                     | 同期       | 分散が重要な単調（正の）値を記録。                                                                 | サーバーが処理するHTTPリクエストの期間を記録 | [ExplicitBucketHistogram](/docs/specs/otel/metrics/sdk/#explicit-bucket-histogram-aggregation) |
+| [Gauge](#gauge)                             | 同期       | 空間的再集約が意味をなさない最新値を記録 **[1]**。 | 温度を記録                    | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
+| [Async Gauge](#async-gauge)                 | 非同期      | 空間的再集約が意味をなさない最新値を観測 **[1]**。 | CPU使用率を観測                | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
 
-**[1]**: 空間的再集約は、必要のない属性を削除することで属性ストリームをマージするプロセスです。たとえば、属性`{"color": "red", "shape": "square"}`、`{"color": "blue", "shape": "square"}`を持つ系列があるとき、`color`属性を削除し、`color`削除後に属性が等しい系列をマージすることで空間的再集約を実行できます。ほとんどの集約には有用な空間集約マージ機能があります（つまり、合計は一緒に合計される）が、`LastValue`集約によって集約されるゲージは例外です。たとえば、前述の系列がウィジェットの温度を追跡しているとします。`color`属性を削除するとき、系列をどのようにマージしますか？コインを投げてランダムな値を選択する以外に良い答えはありません。
+**[1]**: Spatial re-aggregation is the process of merging attribute streams by
+dropping attributes which are not needed. For example, given series with
+attributes `{"color": "red", "shape": "square"}`,
+`{"color": "blue", "shape": "square"}`, you can perform spatial re-aggregation
+by dropping the `color` attribute, and merging the series where the attributes
+are equal after dropping `color`. Most aggregations have a useful spatial
+aggregation merge function (i.e. sums are summed together), but gauges
+aggregated by the `LastValue` aggregation are the exception. For example,
+suppose the series mentioned previously are tracking the temperature of widgets.
+How do you merge the series when you drop the `color` attribute? There is no
+good answer besides flipping a coin and selecting a random value.
 
 計装APIは、さまざまな機能を共有します。
 
@@ -820,7 +894,9 @@ public class SpanAndContextUsage {
 以下のコードスニペットは、カウンターAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -864,6 +940,7 @@ public class CounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Async Counter {#async-counter}
@@ -873,7 +950,9 @@ public class CounterUsage {
 以下のコードスニペットは、非同期カウンターAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AsyncCounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -925,6 +1004,7 @@ public class AsyncCounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### UpDownCounter {#updowncounter}
@@ -934,7 +1014,9 @@ public class AsyncCounterUsage {
 以下のコードスニペットは、アップダウンカウンターAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/UpDownCounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -979,6 +1061,7 @@ public class UpDownCounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Async UpDownCounter {#async-updowncounter}
@@ -988,7 +1071,9 @@ public class UpDownCounterUsage {
 以下のコードスニペットは、非同期アップダウンカウンターAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AsyncUpDownCounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -1039,6 +1124,7 @@ public class AsyncUpDownCounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Histogram {#histogram}
@@ -1048,7 +1134,9 @@ public class AsyncUpDownCounterUsage {
 以下のコードスニペットは、ヒストグラムAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/HistogramUsage.java"?>
+
 ```java
 package otel;
 
@@ -1094,6 +1182,7 @@ public class HistogramUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Gauge {#gauge}
@@ -1103,7 +1192,9 @@ public class HistogramUsage {
 以下のコードスニペットは、ゲージAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/GaugeUsage.java"?>
+
 ```java
 package otel;
 
@@ -1148,6 +1239,7 @@ public class GaugeUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Async Gauge {#async-gauge}
@@ -1157,7 +1249,9 @@ public class GaugeUsage {
 以下のコードスニペットは、非同期ゲージAPI使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AsyncGaugeUsage.java"?>
+
 ```java
 package otel;
 
@@ -1208,19 +1302,24 @@ public class AsyncGaugeUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### LoggerProvider {#loggerprovider}
 
 [LoggerProvider](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/logs/LoggerProvider.html)は、ログのAPIエントリポイントで、[Loggers](#logger)を提供します。
-プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。
+プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 {{% alert %}} {{% param logBridgeWarning %}} {{% /alert %}}
 
 #### Logger {#logger}
 
 [Logger](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/logs/Logger.html)は、[計装スコープ](#providers-and-scopes)に対して[ログレコードを発行](#logrecordbuilder)するために使用されます。
-プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。
+プロバイダーとスコープの情報については、[プロバイダーとスコープ](#providers-and-scopes)を参照してください。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 #### LogRecordBuilder {#logrecordbuilder}
 
@@ -1229,7 +1328,9 @@ public class AsyncGaugeUsage {
 以下のコードスニペットは`LogRecordBuilder` API使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/LogRecordUsage.java"?>
+
 ```java
 package otel;
 
@@ -1295,16 +1396,24 @@ public class LogRecordUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Noop実装 {#noop-implementation}
 
-`OpenTelemetry#noop()`メソッドは、[OpenTelemetry](#opentelemetry)および提供するすべてのAPIコンポーネントのnoop実装へのアクセスを提供します。名前が示すように、noop実装は何もせず、パフォーマンスに影響を与えないように設計されています。計装は、noop が使用されている場合でも、テレメトリーを記録するために必要な属性値やその他のデータを計算/割り当てしている場合、パフォーマンスに影響を与える可能性があります。noopは、ユーザーが[SDK](../sdk/)などの具体的な実装を設定およびインストールしていないときの有用なデフォルトの`OpenTelemetry`インスタンスです。
+The `OpenTelemetry#noop()` method provides access to a noop implementation of
+[OpenTelemetry](#opentelemetry) and all API components it provides access to. As
+the name suggests, the noop implementation does nothing and is designed to have
+no impact on performance. Instrumentation may see impact on performance even
+when the noop is used if it is computing / allocating attribute values and other
+data required to record the telemetry. `OpenTelemetry#noop()`メソッドは、[OpenTelemetry](#opentelemetry)および提供するすべてのAPIコンポーネントのnoop実装へのアクセスを提供します。名前が示すように、noop実装は何もせず、パフォーマンスに影響を与えないように設計されています。計装は、noop が使用されている場合でも、テレメトリーを記録するために必要な属性値やその他のデータを計算/割り当てしている場合、パフォーマンスに影響を与える可能性があります。noopは、ユーザーが[SDK](../sdk/)などの具体的な実装を設定およびインストールしていないときの有用なデフォルトの`OpenTelemetry`インスタンスです。
 
 以下のコードスニペットは`OpenTelemetry#noop()` API使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/NoopUsage.java"?>
+
 ```java
 package otel;
 
@@ -1380,76 +1489,41 @@ public class NoopUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### セマンティック属性 {#semantic-attributes}
 
-[セマンティック規約](/docs/specs/semconv/)では、一般的な操作について標準化された方法でテレメトリーを収集する方法について説明します。
-これには、規約で参照されるすべての属性の定義をドメイン別に整理して列挙する[属性レジストリ](/docs/specs/semconv/registry/attributes/)が含まれます。
-[semantic-conventions-java](https://github.com/open-telemetry/semantic-conventions-java)プロジェクトは、セマンティック規約から定数を生成し、計装が適合するのに使用できます。
+The [semantic conventions](/docs/specs/semconv/) describe how to collect
+telemetry in a standardized way for common operations. This includes an
+[attribute registry](/docs/specs/semconv/registry/attributes/), which enumerates
+definitions for all attributes referenced in the conventions, organized by
+domain. The
+[semantic-conventions-java](https://github.com/open-telemetry/semantic-conventions-java)
+project generates constants from the semantic conventions, which can be used to
+help instrumentation conform:
 
-| 説明                                                       | アーティファクト                                                                             |
-| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 安定したセマンティック規約用に生成されたコード             | `io.opentelemetry.semconv:opentelemetry-semconv:{{% param vers.semconv %}}-alpha`            |
+| 説明                            | アーティファクト                                                                                     |
+| ----------------------------- | -------------------------------------------------------------------------------------------- |
+| 安定したセマンティック規約用に生成されたコード       | `io.opentelemetry.semconv:opentelemetry-semconv:{{% param vers.semconv %}}-alpha`            |
 | インキュベーティングセマンティック規約用に生成されたコード | `io.opentelemetry.semconv:opentelemetry-semconv-incubating:{{% param vers.semconv %}}-alpha` |
-
-{{% alert %}}
 
 `opentelemetry-semconv`と`opentelemetry-semconv-incubating`の両方に`-alpha`サフィックスが含まれ、破壊的変更の対象となりますが、意図は`opentelemetry-semconv`を安定化し、`opentelemetry-semconv-incubating`には永続的に`-alpha`サフィックスを残すことです。
 ライブラリはテスト用に`opentelemetry-semconv-incubating`を使用できますが、依存関係として含めるべきではありません。
 属性はバージョンから別のバージョンに来たり行ったりする可能性があるため、依存関係として含めると、推移的バージョンの競合が発生したときにエンドユーザーがランタイムエラーにさらされる可能性があります。
-
-{{% /alert %}}
+Libraries can use `opentelemetry-semconv-incubating` for testing, but should not
+include it as a dependency: since attributes may come and go from version to
+version, including it as a dependency may expose end users to runtime errors
+when transitive version conflicts occur. {{% /alert %}}
 
 セマンティック規約から生成された属性定数は`AttributeKey<T>`のインスタンスで、OpenTelemetry APIが属性を受け入れるどこでも使用できます。
 
 以下のコードスニペットは、セマンティック規約属性API使用法を調査します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SemanticAttributesUsage.java"?>
-```java
-package otel;
 
-import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.semconv.HttpAttributes;
-import io.opentelemetry.semconv.ServerAttributes;
-import io.opentelemetry.semconv.incubating.HttpIncubatingAttributes;
-
-public class SemanticAttributesUsage {
-  public static void semanticAttributesUsage() {
-    // セマンティック属性は、トップレベルドメインと安定またはインキュベーティングかによって整理されます。
-    // 例:
-    // - http.*で始まる安定属性はHttpAttributesクラスにあります。
-    // - server.*で始まる安定属性はServerAttributesクラスにあります。
-    // - http.*で始まるインキュベーティング属性はHttpIncubatingAttributesクラスにあります。
-    // 値の列挙を定義する属性キーは、内部の{AttributeKey}Valuesクラスでアクセス可能です。
-    // 例えば、http.request.method値の列挙は、HttpAttributes.HttpRequestMethodValuesクラスで利用可能です。
-    Attributes attributes =
-        Attributes.builder()
-            .put(HttpAttributes.HTTP_REQUEST_METHOD, HttpAttributes.HttpRequestMethodValues.GET)
-            .put(HttpAttributes.HTTP_ROUTE, "/users/:id")
-            .put(ServerAttributes.SERVER_ADDRESS, "example")
-            .put(ServerAttributes.SERVER_PORT, 8080L)
-            .put(HttpIncubatingAttributes.HTTP_RESPONSE_BODY_SIZE, 1024)
-            .build();
-  }
-}
-```
-<!-- prettier-ignore-end -->
-
-### Baggage {#baggage}
-
-[Baggage](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/baggage/Baggage.html)は、分散リクエストまたはワークフロー実行に関連付けられたアプリケーション定義のキー値ペアのバンドルです。
-バゲージキーと値は文字列で、値にはオプションの文字列メタデータがあります。テレメトリーは、スパン、メトリクス、ログレコードに属性としてエントリを追加するよう[SDK](../sdk/)を設定することにより、バゲージからのデータで強化できます。
-バゲージAPIは[context](#context)の上に構築されており、スパンコンテキストがアプリケーション全体およびスレッド間で暗黙的に渡されることを可能にします。
-コンテキストAPIの使用ガイダンスのほとんどはバゲージに適用されます。
-
-バゲージは、[W3CBaggagePropagator](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/baggage/propagation/W3CBaggagePropagator.html)でアプリケーション境界を越えて伝搬されます（詳細については[TextMapPropagator](../sdk/#textmappropagator)を参照）。
-
-以下のコードスニペットは`Baggage` API使用法を調査します。
-
-<!-- prettier-ignore-start -->
-<?code-excerpt "src/main/java/otel/BaggageUsage.java"?>
 ```java
 package otel;
 
@@ -1525,13 +1599,70 @@ public class BaggageUsage {
   }
 }
 ```
+
+<!-- prettier-ignore-end -->
+
+### Baggage {#baggage}
+
+[Baggage](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/baggage/Baggage.html)は、分散リクエストまたはワークフロー実行に関連付けられたアプリケーション定義のキー値ペアのバンドルです。
+バゲージキーと値は文字列で、値にはオプションの文字列メタデータがあります。テレメトリーは、スパン、メトリクス、ログレコードに属性としてエントリを追加するよう[SDK](../sdk/)を設定することにより、バゲージからのデータで強化できます。
+バゲージAPIは[context](#context)の上に構築されており、スパンコンテキストがアプリケーション全体およびスレッド間で暗黙的に渡されることを可能にします。
+コンテキストAPIの使用ガイダンスのほとんどはバゲージに適用されます。 Baggage keys and values are strings, and values
+have optional string metadata. Telemetry can be enriched with data from baggage
+by configuring the [SDK](../sdk/) to add entries as attributes to spans,
+metrics, and log records. The baggage API is built on top of
+[context](#context), which allows span context to be implicitly passed around an
+application and across threads. Most of the context API usage guidance applies
+to baggage.
+
+バゲージは、[W3CBaggagePropagator](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/baggage/propagation/W3CBaggagePropagator.html)でアプリケーション境界を越えて伝搬されます（詳細については[TextMapPropagator](../sdk/#textmappropagator)を参照）。
+
+以下のコードスニペットは`Baggage` API使用法を調査します。
+
+<!-- prettier-ignore-start -->
+
+<?code-excerpt "src/main/java/otel/BaggageUsage.java"?>
+
+```java
+package otel;
+
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.semconv.HttpAttributes;
+import io.opentelemetry.semconv.ServerAttributes;
+import io.opentelemetry.semconv.incubating.HttpIncubatingAttributes;
+
+public class SemanticAttributesUsage {
+  public static void semanticAttributesUsage() {
+    // セマンティック属性は、トップレベルドメインと安定またはインキュベーティングかによって整理されます。
+    // 例:
+    // - http.*で始まる安定属性はHttpAttributesクラスにあります。
+    // - server.*で始まる安定属性はServerAttributesクラスにあります。
+    // - http.*で始まるインキュベーティング属性はHttpIncubatingAttributesクラスにあります。
+    // 値の列挙を定義する属性キーは、内部の{AttributeKey}Valuesクラスでアクセス可能です。
+    // 例えば、http.request.method値の列挙は、HttpAttributes.HttpRequestMethodValuesクラスで利用可能です。
+    Attributes attributes =
+        Attributes.builder()
+            .put(HttpAttributes.HTTP_REQUEST_METHOD, HttpAttributes.HttpRequestMethodValues.GET)
+            .put(HttpAttributes.HTTP_ROUTE, "/users/:id")
+            .put(ServerAttributes.SERVER_ADDRESS, "example")
+            .put(ServerAttributes.SERVER_PORT, 8080L)
+            .put(HttpIncubatingAttributes.HTTP_RESPONSE_BODY_SIZE, 1024)
+            .build();
+  }
+}
+```
+
 <!-- prettier-ignore-end -->
 
 ## インキュベーティングAPI
 
-`io.opentelemetry:opentelemetry-api-incubator:{{% param vers.otel %}}-alpha` アーティファクトには、実験的なトレース、メトリクス、ログ、コンテキストAPIが含まれています。
-インキュベーティングAPIは、マイナーリリースで破壊的なAPI変更がある可能性があります。多くの場合、これらは実験的な仕様機能やユーザーフィードバックを通じて評価したいAPI設計を表します。
-ユーザーがこれらのAPIを試して、フィードバック（ポジティブまたはネガティブ）と共に課題を開くことを奨励します。
-ライブラリは、推移的バージョンの競合が発生したときにユーザーがランタイムエラーにさらされる可能性があるため、インキュベーティングAPIに依存すべきではありません。
+The `io.opentelemetry:opentelemetry-api-incubator:{{% param vers.otel %}}-alpha`
+artifact contains experimental trace, metric, log, and context APIs which.
+Incubating APIs may have breaking API changes in minor releases. Often, these
+represent experimental specification features or API designs we want to vet with
+user feedback before committing to. We encourage users to try these APIs and
+open issues with any feedback (positive or negative). Libraries should not
+depend on the incubating APIs, since users may be exposed to runtime errors when
+transitive version conflicts occur.
 
 利用可能なAPIとサンプル使用法については、[incubator README](https://github.com/open-telemetry/opentelemetry-java/tree/main/api/incubator)を参照してください。

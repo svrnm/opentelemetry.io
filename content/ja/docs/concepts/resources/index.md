@@ -1,7 +1,6 @@
 ---
 title: リソース
 weight: 70
-default_lang_commit: 548e5e29f574fddc3ca683989a458e9a6800242f
 ---
 
 ## はじめに {#introduction}
@@ -12,13 +11,15 @@ default_lang_commit: 548e5e29f574fddc3ca683989a458e9a6800242f
 
 ![トレースに関連するリソース属性の出力例を示すJaegerのスクリーンショット](screenshot-jaeger-resources.png)
 
-リソースは `TracerProvider` または `MetricProvider` の初期化時に追加されます。
+A resource is added to the `TracerProvider` or `MetricProvider` when they are
+created during initialization. This association cannot be changed later. リソースは `TracerProvider` または `MetricProvider` の初期化時に追加されます。
 この関連付けは後で変更することはできません。
 リソースが追加されると、そのプロバイダーに紐づいた `Tracer` または `Meter` から生成されるすべてのスパンとメトリクスに、そのリソースが関連付けられます。
 
 ## SDKが提供するデフォルト値を持つセマンティック属性 {#semantic-attributes-with-sdk-provided-default-value}
 
-OpenTelemetry SDK が提供する属性があります。
+There are attributes provided by the OpenTelemetry SDK. One of them is the
+`service.name`, which represents the logical name of the service. OpenTelemetry SDK が提供する属性があります。
 そのうちの1つが `service.name` で、これはサービスの論理名を表します。
 デフォルトでは、SDKはこの値に `unknown_service` を代入するので、コードの中で明示的に設定するか、環境変数 `OTEL_SERVICE_NAME` を設定することを推奨します。
 
@@ -27,7 +28,8 @@ OpenTelemetry SDK が提供する属性があります。
 ## リソース検出器 {#resource-detectors}
 
 ほとんどの言語固有のSDKは、環境からリソース情報を自動的に検出できるリソース検出器のセットを提供しています。
-一般的なリソース検出器には次のようなものがあります。
+一般的なリソース検出器には次のようなものがあります。 Common
+resource detectors include:
 
 - [オペレーティングシステム](/docs/specs/semconv/resource/os/)
 - [ホスト](/docs/specs/semconv/resource/host/)
@@ -39,10 +41,13 @@ OpenTelemetry SDK が提供する属性があります。
 
 ## カスタムリソース
 
-独自のリソース属性を指定することもできます。
-リソース属性はコードで指定することも、環境変数 `OTEL_RESOURCE_ATTRIBUTES` に設定することもできます。
-該当する場合は、[リソース属性のセマンティック規約](/docs/specs/semconv/resource) を使用してください。
-たとえば、`deployment.environment.name` を使用して、[デプロイ環境](/docs/specs/semconv/resource/deployment-environment/) の名前を指定できます。
+You can also provide your own resource attributes. You can either provide them
+in code or via populating the environment variable `OTEL_RESOURCE_ATTRIBUTES`.
+If applicable, use the
+[semantic conventions for your resource attributes](/docs/specs/semconv/resource).
+For example, you can provide the name of your
+[deployment environment](/docs/specs/semconv/resource/deployment-environment/)
+using `deployment.environment.name`:
 
 ```shell
 env OTEL_RESOURCE_ATTRIBUTES=deployment.environment.name=production yourApp

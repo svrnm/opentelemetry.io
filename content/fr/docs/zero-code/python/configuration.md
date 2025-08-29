@@ -5,7 +5,6 @@ weight: 10
 aliases:
   - /docs/languages/python/automatic/configuration
   - /docs/languages/python/automatic/agent-config
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: healthcheck instrumentor myapp pyproject Starlette urllib
 ---
 
@@ -112,7 +111,7 @@ export OTEL_PYTHON_FALCON_TRACED_REQUEST_ATTRS='query_string,uri_template'
 export OTEL_PYTHON_TORNADO_TRACED_REQUEST_ATTRS='uri,query'
 ```
 
-### Journalisation {#logging}
+### Logging
 
 Il existe des options de configuration utilisables pour contrôler les journaux
 qui sont générés.

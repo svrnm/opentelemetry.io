@@ -1,7 +1,6 @@
 ---
 title: リソース
 weight: 70
-default_lang_commit: adc4264c2926e3d767b6a56affb19fb4ae3f2a22
 cSpell:ignore: sdktrace thirdparty
 ---
 
@@ -24,9 +23,12 @@ provider := sdktrace.NewTracerProvider(
 ```
 
 リソース属性に[慣習的な名前](/docs/concepts/semantic-conventions/)を提供するための`semconv`パッケージの使用に注目してください。
-これにより、これらのセマンティック規約で生成されたテレメトリーの消費者が関連する属性を簡単に発見し、その意味を理解できるようになります。
+これにより、これらのセマンティック規約で生成されたテレメトリーの消費者が関連する属性を簡単に発見し、その意味を理解できるようになります。 This helps ensure that consumers of telemetry produced with these
+semantic conventions can easily discover relevant attributes and understand
+their meaning.
 
-リソースは`resource.Detector`実装を通じて自動的に検出することもできます。
+Resources can also be detected automatically through `resource.Detector`
+implementations. リソースは`resource.Detector`実装を通じて自動的に検出することもできます。
 これらの`Detector`は、現在実行中のプロセス、それが実行されているオペレーティングシステム、そのオペレーティングシステムインスタンスをホストしているクラウドプロバイダー、またはその他の多数のリソース属性に関する情報を発見できます。
 
 ```go

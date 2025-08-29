@@ -1,8 +1,7 @@
 ---
 title: Contribuindo
-aliases: [/docs/contribution-guidelines]
+aliases: [ /docs/contribution-guidelines ]
 weight: 980
-default_lang_commit: 1ececa0615b64c5dfd93fd6393f3e4052e0cc496
 ---
 
 Obrigado pelo seu interesse em contribuir com o website e documentação do
@@ -16,13 +15,13 @@ O que você deseja fazer?
   [Submetendo alterações usando o GitHub](pull-requests/#changes-using-github)
 - Para contribuições mais significativas, leia as páginas desta seção começando
   com:
-  - [Pré-requisitos]
+  - \[Pré-requisitos]
   - [Issues]
-  - [Submetendo Alterações]
+  - [Submitting content]
 
-[Pré-requisitos]: prerequisites/
+[Prerequisites]: prerequisites/
 [Issues]: issues/
-[Submetendo Alterações]: pull-requests/
+[Submitting content]: pull-requests/
 
 {{% alert title="<i class='far fa-exclamation-triangle'></i> Primeira vez contribuindo? " %}}
 
@@ -32,7 +31,7 @@ orientações importantes.
 
 {{% /alert %}}
 
-## No que posso contribuir? {#what-can-i-contribute-to}
+## No que posso contribuir?
 
 Contribuidores da documentação OpenTelemetry:
 
@@ -45,10 +44,9 @@ As páginas desta seção descrevem apenas como contribuir com a documentação 
 OpenTelemetry.
 
 Para orientações de como contribuir para o projeto OpenTelemetry em geral,
-consulte o [Guia para novos contribuidores do OpenTelemetry] da comunidade. Cada
+consulte o \[Guia para novos contribuidores do OpenTelemetry] da comunidade. Cada
 [repositório OTel][org] para implementações de linguagem, o Collector e
 convenções possui seu próprio guia de contribuição específico.
 
-[Guia para novos contribuidores do OpenTelemetry]:
-  https://github.com/open-telemetry/community/blob/main/guides/contributor
+[OpenTelemetry New Contributor Guide]: https://github.com/open-telemetry/community/blob/main/guides/contributor
 [org]: https://github.com/open-telemetry

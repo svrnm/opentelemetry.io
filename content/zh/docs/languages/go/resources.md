@@ -1,7 +1,6 @@
 ---
 title: 资源
 weight: 70
-default_lang_commit: ff6f300f46ac9bfab574f2a73a0555fccb64fda9
 cSpell:ignore: sdktrace thirdparty
 ---
 
@@ -24,17 +23,14 @@ provider := sdktrace.NewTracerProvider(
 ```
 
 请注意，这里使用 semconv 包可以为资源属性提供[规范化的命名方式](/docs/concepts/semantic-conventions/)。
-这能够确保使用这些语义约定生成的遥测数据，其下游系统或使用者可以更容易地识别这些属性，并准确理解它们所代表的含义。
+这能够确保使用这些语义约定生成的遥测数据，其下游系统或使用者可以更容易地识别这些属性，并准确理解它们所代表的含义。 This helps ensure that consumers of telemetry produced with these
+semantic conventions can easily discover relevant attributes and understand
+their meaning.
 
-资源还可以通过 `resource.Detector` 来实现自动检测。这些 `Detector` 可能会发现以下信息：
-
-- 当前运行的进程信息；
-
-- 当前运行的操作系统；
-
-- 托管当前系统的云服务商；
-
-- 其他任意资源属性。
+资源还可以通过 `resource.Detector` 来实现自动检测。这些 `Detector` 可能会发现以下信息： These `Detector`s may discover information about the currently
+running process, the operating system it is running on, the cloud provider
+hosting that operating system instance, or any number of other resource
+attributes.
 
 ```go
 res, err := resource.New(

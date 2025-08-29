@@ -1,8 +1,3 @@
----
-default_lang_commit: 7d0c3f247ee77671d1135b0af535a2aca05fe359 # patched
-drifted_from_default: true
----
-
 ## Prometheus
 
 Para enviar dados de métricas para o [Prometheus](https://prometheus.io/), você

@@ -1,7 +1,6 @@
 ---
-title: 基准测试
+title: Benchmarks
 weight: 99
-default_lang_commit: 179f03bf118e1e8a3cc195ab56fc09d85c476394
 ---
 
 <link rel="stylesheet" href="/css/benchmarks.css">
@@ -9,9 +8,12 @@ default_lang_commit: 179f03bf118e1e8a3cc195ab56fc09d85c476394
 OpenTelemetry Collector 会在每次提交到
 [opentelemetry-collector-contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib/)
 仓库时运行负载测试。这些负载测试会使用不同的配置选项运行 Collector 的可执行文件，并通过 Collector
-发送流量。有关测试环境的更多信息，请参阅该[仓库](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/testbed#opentelemetry-collector-testbed)。
+发送流量。有关测试环境的更多信息，请参阅该[仓库](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/testbed#opentelemetry-collector-testbed)。 These load tests run the binary of collector with various
+configuration options per test and send traffic through the collector.
+Additional information regarding the testing environment can be found in the
+[repository](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/testbed#opentelemetry-collector-testbed).
 
-下文展示了部分测试结果。若要查看所有测试结果，请访问
+A subset of the results are shown below. 下文展示了部分测试结果。若要查看所有测试结果，请访问
 [Collector Benchmarks](https://open-telemetry.github.io/opentelemetry-collector-contrib/benchmarks/loadtests/)。
 
 <!-- markdownlint-disable -->
@@ -20,14 +22,15 @@ OpenTelemetry Collector 会在每次提交到
   <main id="main"></main>
 </div>
 
-<footer>
-  <button id="dl-button">下载数据为 JSON</button>
+<footer><button id="dl-button">下载数据为 JSON</button>
   <div class="spacer"></div>
   <div class="small">由 <a rel="noopener" href="https://github.com/marketplace/actions/continuous-benchmark">github-action-benchmark</a> 提供支持</div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.2/dist/Chart.min.js"></script>
+
 <script src="https://open-telemetry.github.io/opentelemetry-collector-contrib/benchmarks/loadtests/data.js"></script>
+
 <script id="main-script">
   'use strict';
   (function () {

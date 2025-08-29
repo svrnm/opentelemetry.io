@@ -1,10 +1,10 @@
 ---
 title: Annotations
 weight: 50
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/spring-starter"?>
 
 Pour la plupart des utilisateurs, l'instrumentation prête à l'emploi est
@@ -18,7 +18,9 @@ dans un span. L'annotation `SpanAttribute` vous permet de capturer les arguments
 de la méthode comme attributs.
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/TracedClass.java"?>
+
 ```java
 package otel;
 
@@ -48,6 +50,7 @@ public class TracedClass {
   public void tracedMethodWithAttribute(@SpanAttribute("attributeName") String parameter) {}
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 {{% alert title="Note" %}} Les annotations OpenTelemetry utilisent Spring AOP
@@ -111,10 +114,10 @@ Vous pouvez désactiver les annotations OpenTelemetry en définissant la propri�
 Vous pouvez personnaliser le span en utilisant les éléments de l'annotation
 `WithSpan` :
 
-| Nom     | Type       | Description          | Valeur par défaut   |
-| ------- | ---------- | -------------------- | ------------------- |
-| `value` | `String`   | Nom du span          | ClassName.Method    |
-| `kind`  | `SpanKind` | Type de span du span | `SpanKind.INTERNAL` |
+| Nom     | Type       | Description          | Valeur par défaut                |
+| ------- | ---------- | -------------------- | -------------------------------- |
+| `value` | `String`   | Nom du span          | ClassName.Method |
+| `kind`  | `SpanKind` | Type de span du span | `SpanKind.INTERNAL`              |
 
 Vous pouvez définir le nom de l'attribut à partir de l'élément `value` de
 l'annotation `SpanAttribute` :

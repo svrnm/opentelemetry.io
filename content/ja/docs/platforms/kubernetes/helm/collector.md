@@ -1,16 +1,18 @@
 ---
 title: OpenTelemetryコレクターチャート
 linkTitle: コレクターチャート
-default_lang_commit: e8f18928513b726068be250802ebe7ece25e8851
 # prettier-ignore
 cSpell:ignore: debugexporter filelog filelogreceiver hostmetricsreceiver kubelet kubeletstats kubeletstatsreceiver otlphttp sattributesprocessor sclusterreceiver sobjectsreceiver statefulset
 ---
 
 ## はじめに {#introduction}
 
-[OpenTelemetryコレクター](/docs/collector)は、Kubernetesクラスタとその中のすべてのサービスを監視するための重要なツールです。
+The [OpenTelemetry Collector](/docs/collector) is an important tool for
+monitoring a Kubernetes cluster and all the services that in within. [OpenTelemetryコレクター](/docs/collector)は、Kubernetesクラスタとその中のすべてのサービスを監視するための重要なツールです。
 Kubernetesへのコレクターのデプロイメントを容易にし、管理するために、OpenTelemetryコミュニティは[OpenTelemetryコレクターHelmチャート](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-collector)を作成しました。
 このHelmチャートは、コレクターをデプロイメント、DaemonSet、またはStatefulSetとしてインストールするために使用できます。
+This helm chart can be used to install a collector as a Deployment, Daemonset,
+or Statefulset.
 
 ### チャートのインストール {#installing-the-chart}
 
@@ -26,10 +28,12 @@ helm install my-opentelemetry-collector open-telemetry/opentelemetry-collector \
 ### 設定 {#configuration}
 
 OpenTelemetryコレクターチャートでは `mode` が設定されている必要があります。
-`mode` には、ユースケースに応じたKubernetesデプロイメントに依存して `daemonset` 、 `deployment` 、 `statefulset` のいずれかを指定します。
+`mode` には、ユースケースに応じたKubernetesデプロイメントに依存して `daemonset` 、 `deployment` 、 `statefulset` のいずれかを指定します。 `mode` can be
+either `daemonset`, `deployment`, or `statefulset` depending on which kind of
+Kubernetes deployment your use case requires.
 
 インストールされると、チャートはいくつかのデフォルトのコレクターコンポーネントを提供します。
-デフォルトでは、コレクターの設定は以下のようになります。
+デフォルトでは、コレクターの設定は以下のようになります。 By default, the collector's config will look like:
 
 ```yaml
 exporters:
@@ -104,12 +108,13 @@ service:
       address: ${env:MY_POD_IP}:8888
 ```
 
-また、このチャートはデフォルトのレシーバーに基づいてポートを有効にします。
-デフォルトの設定は `values.yaml` で `null` に設定することで削除できます。
-ポートも `values.yaml` で無効にできます。
+The chart will also enable ports based on the default receivers. Default
+configuration can be removed by setting the value to `null` in your
+`values.yaml`. Ports can be disabled in the `values.yaml` as well.
 
 `values.yaml` の `config` セクションを使用して、設定の任意の部分を追加/変更できます。
-パイプラインを変更する場合は、デフォルトのコンポーネントを含め、パイプラインに含まれるすべてのコンポーネントを明示的にリストアップする必要があります。
+パイプラインを変更する場合は、デフォルトのコンポーネントを含め、パイプラインに含まれるすべてのコンポーネントを明示的にリストアップする必要があります。 When changing a pipeline, you must explicitly list all the
+components that are in the pipeline, including any default components.
 
 たとえば、メトリクスとロギングパイプラインと非OTLPレシーバーを無効にするには次のように設定します。
 
@@ -143,25 +148,33 @@ ports:
 
 OpenTelemetryコレクターがKubernetesを監視するために使用する重要なコンポーネントの多くは、コレクター自身のKubernetesデプロイメントで特別なセットアップを必要とします。
 これらのコンポーネントをより簡単に使用するために、OpenTelemetryコレクターチャートには、有効にするとこれらの重要なコンポーネントの複雑なセットアップを処理するいくつかのプリセットが付属しています。
+In order to make using these components easier, the OpenTelemetry Collector
+Chart comes with some presets that, when enabled, handle the complex setup for
+these important components.
 
-プリセットは出発点として使用されるべきです。
-プリセットは、関連するコンポーネントの基本的な、しかし豊富な機能を設定します。
-これらのコンポーネントの追加設定が必要な場合は、プリセットは使用せず、コンポーネントとそれに必要なもの（ボリューム、RBACなど）を手動で設定することをおすすめします。
+Presets should be used as a starting point. They configure basic, but rich,
+functionality for their related components. If your use case requires extra
+configuration of these components it is recommend to NOT use the preset and
+instead manually configure the component and anything it requires (volumes,
+RBAC, etc.).
 
 #### ログコレクションプリセット {#logs-collection-preset}
 
 OpenTelemetryコレクターは、Kubernetesコンテナによって標準出力に送られるログを収集するために使用できます。
 
-この機能はデフォルトでは無効になっています。
-安全に有効にするためには以下の条件があります。
+This feature is disabled by default. It has the following requirements in order
+to be safely enabled:
 
 - [ファイルログレシーバー](/docs/platforms/kubernetes/collector/components/#filelog-receiver)が[コレクターのContribディストリビューション](https://github.com/open-telemetry/opentelemetry-collector-releases/pkgs/container/opentelemetry-collector-releases%2Fopentelemetry-collector-contrib)などのコレクターイメージに含まれている必要があります。
-- 厳密な要件ではありませんが、このプリセットは `mode=daemonset` と共に使用することを推奨します。
+- Although not a strict requirement, it is recommended this preset be used with
+  `mode=daemonset`. 厳密な要件ではありませんが、このプリセットは `mode=daemonset` と共に使用することを推奨します。
   `filelogreceiver`はコレクターが動作しているノード上のログのみを収集することができ、同じノード上に設定された複数のコレクターは重複したデータを生成します。
 
-この機能を有効にするには、`presets.logsCollection.enabled` プロパティを `true` に設定します。
-有効にすると、チャートは `logs` パイプラインに `filelogreceiver` を追加します。
-このレシーバーは、Kubernetes コンテナランタイムがすべてのコンテナのコンソール出力を書き込むファイル（`/var/log/pods/*/*.log`）を読み込むように設定されます。
+To enable this feature, set the `presets.logsCollection.enabled` property to
+`true`. When enabled, the chart will add a `filelogreceiver` to the `logs`
+pipeline. This receiver is configured to read the files where Kubernetes
+container runtime writes all containers' console output
+(`/var/log/pods/*/*/*.log`).
 
 以下に `values.yaml` の例を示します。
 
@@ -173,13 +186,18 @@ presets:
 ```
 
 チャートのデフォルトのログパイプラインは `debugexporter` を使用します。
-`logsCollection` プリセットの `filelogreceiver` と組み合わせると、エクスポートしたログを誤ってコレクターに戻してしまい、「ログの爆発」を引き起こす可能性があります。
+`logsCollection` プリセットの `filelogreceiver` と組み合わせると、エクスポートしたログを誤ってコレクターに戻してしまい、「ログの爆発」を引き起こす可能性があります。 Paired with the
+`logsCollection` preset's `filelogreceiver` it is easy to accidentally feed the
+exported logs back into the collector, which can cause a "log explosion".
 
-ループを防止するために、レシーバーのデフォルト設定ではコレクター自身のログを除外しています。
+To prevent the looping, the default configuration of the receiver excludes the
+collector's own logs. ループを防止するために、レシーバーのデフォルト設定ではコレクター自身のログを除外しています。
 コレクターのログを含めたい場合は、 `debug` エクスポーターをコレクターの標準出力にログを送信しないエクスポーターに置き換えてください。
 
 以下は `values.yaml` の例で、`logs` パイプラインのデフォルトの `debug` エクスポーターを、コンテナのログを `https://example.com:55681` エンドポイントに送信する `otlphttp` エクスポーターに置き換えたものです。
-また、`presets.logsCollection.includeCollectorLogs` を使用して、コレクターのログの収集を有効にするようにプリセットに指示します。
+また、`presets.logsCollection.includeCollectorLogs` を使用して、コレクターのログの収集を有効にするようにプリセットに指示します。 It also uses
+`presets.logsCollection.includeCollectorLogs` to tell the preset to enable
+collection of the collector's logs.
 
 ```yaml
 mode: daemonset
@@ -203,14 +221,17 @@ config:
 #### Kubernetes属性プリセット {#kubernetes-attributes-preset}
 
 OpenTelemetryコレクター は `k8s.pod.name`、`k8s.namespace.name`、`k8s.node.name` などの Kubernetes メタデータをログ、メトリクス、トレースに追加するように設定できます。
-プリセットを使用するか、手動で `k8sattributesprocessor` を有効にすることを強く推奨します。
+プリセットを使用するか、手動で `k8sattributesprocessor` を有効にすることを強く推奨します。 It is highly recommended to use the preset, or enable the
+`k8sattributesprocessor` manually.
 
 RBACを考慮し、この機能はデフォルトでは無効になっています。
-この機能には以下の要件があります。
+この機能には以下の要件があります。 It has the
+following requirements:
 
 - [Kubernetes属性プロセッサー](/docs/platforms/kubernetes/collector/components/#kubernetes-attributes-processor)が[コレクターのContribディストリビューション](https://github.com/open-telemetry/opentelemetry-collector-releases/pkgs/container/opentelemetry-collector-releases%2Fopentelemetry-collector-contrib)などのコレクターイメージに含まれている必要があります。
 
-この機能を有効にするには、`presets.kubernetesAttributes.enabled` プロパティを `true` に設定します。
+To enable this feature, set the `presets.kubernetesAttributes.enabled` property
+to `true`. この機能を有効にするには、`presets.kubernetesAttributes.enabled` プロパティを `true` に設定します。
 有効にすると、チャートはClusterRoleに必要なRBACロールを追加し、有効にした各パイプラインに `k8sattributesprocessor` を追加します。
 
 以下に `values.yaml` の例を示します。
@@ -227,13 +248,16 @@ presets:
 OpenTelemetryコレクター は、kubelet 上の API サーバーからノード、ポッド、コンテナのメトリクスを収集するように設定できます。
 
 この機能はデフォルトでは無効になっています。
-この機能には以下の条件があります。
+この機能には以下の条件があります。 It has the following requirements:
 
 - [Kubeletstatsレシーバー](/docs/platforms/kubernetes/collector/components/#kubeletstats-receiver)が[コレクターのContribディストリビューション](https://github.com/open-telemetry/opentelemetry-collector-releases/pkgs/container/opentelemetry-collector-releases%2Fopentelemetry-collector-contrib)などのコレクターイメージに含まれている必要があります。
-- 厳密な要件ではありませんが、このプリセットは `mode=daemonset` と共に使用することを推奨します。
-  `kubeletstatsreceiver` はコレクターが動作しているノードでのみメトリクスを収集することができ、同じノードに複数の設定されたコレクターがあると重複したデータが生成されます。
+- Although not a strict requirement, it is recommended this preset be used with
+  `mode=daemonset`. The `kubeletstatsreceiver` will only be able to collect
+  metrics on the node the Collector is running and multiple configured
+  Collectors on the same node will produce duplicate data.
 
-この機能を有効にするには、`presets.kubeletMetrics.enabled` プロパティを `true` に設定します。
+To enable this feature, set the `presets.kubeletMetrics.enabled` property to
+`true`. この機能を有効にするには、`presets.kubeletMetrics.enabled` プロパティを `true` に設定します。
 有効にすると、チャートはClusterRoleに必要なRBACロールを追加し、メトリクスパイプラインに `kubeletstatsreceiver` を追加します。
 
 以下に`values.yaml`の例を示します。
@@ -248,16 +272,19 @@ presets:
 #### クラスターメトリクスプリセット {#cluster-metrics-preset}
 
 OpenTelemetryコレクターは、Kubernetes APIサーバーからクラスタレベルのメトリクスを収集するように設定できます。
-これらのメトリクスには、Kube State Metricsで収集されるメトリクスの多くが含まれます。
+これらのメトリクスには、Kube State Metricsで収集されるメトリクスの多くが含まれます。 These metrics include many of the metrics
+collected by Kube State Metrics.
 
 この機能はデフォルトでは無効になっています。
-この機能には以下の条件があります。
+この機能には以下の条件があります。 It has the following requirements:
 
 - [Kubernetesクラスターレシーバー](/docs/platforms/kubernetes/collector/components/#kubernetes-cluster-receiver)が[コレクターのContribディストリビューション](https://github.com/open-telemetry/opentelemetry-collector-releases/pkgs/container/opentelemetry-collector-releases%2Fopentelemetry-collector-contrib)などのコレクターイメージに含まれている必要があります。
-- 厳密な要件ではありませんが、このプリセットは `mode=deployment` または `mode=statefulset` と共に単一のレプリカで使用することを推奨します。
-  複数のコレクターで `k8sclusterreceiver` を実行すると、重複したデータが生成されます。
+- Although not a strict requirement, it is recommended this preset be used with
+  `mode=deployment` or `mode=statefulset` with a single replica. Running
+  `k8sclusterreceiver` on multiple Collectors will produce duplicate data.
 
-この機能を有効にするには、 `presets.clusterMetrics.enabled` プロパティを `true` に設定します。
+To enable this feature, set the `presets.clusterMetrics.enabled` property to
+`true`. この機能を有効にするには、 `presets.clusterMetrics.enabled` プロパティを `true` に設定します。
 有効にすると、チャートは必要なRBACロールをClusterRoleに追加し、 `k8sclusterreceiver` をメトリクスパイプラインに追加します。
 
 以下に `values.yaml` の例を示します。
@@ -275,13 +302,15 @@ presets:
 OpenTelemetryコレクターはKubernetesイベントを収集するように設定できます。
 
 この機能はデフォルトでは無効になっています。
-この機能には以下の条件があります。
+この機能には以下の条件があります。 It has the following requirements:
 
 - [Kubernetesオブジェクトレシーバー](/docs/platforms/kubernetes/collector/components/#kubernetes-objects-receiver)が[コレクターのContribディストリビューション](https://github.com/open-telemetry/opentelemetry-collector-releases/pkgs/container/opentelemetry-collector-releases%2Fopentelemetry-collector-contrib)などのコレクターイメージに含まれている必要があります。
-- 厳密な要件ではありませんが、このプリセットは `mode=deployment` または `mode=statefulset` と共に単一のレプリカで使用することを推奨します。
-  複数のコレクターで `k8sclusterreceiver` を実行すると、重複したデータが生成されます。
+- Although not a strict requirement, it is recommended this preset be used with
+  `mode=deployment` or `mode=statefulset` with a single replica. Running
+  `k8sclusterreceiver` on multiple Collectors will produce duplicate data.
 
-この機能を有効にするには、`presets.kubernetesEvents.enabled` プロパティを `true` に設定します。
+To enable this feature, set the `presets.kubernetesEvents.enabled` property to
+`true`. この機能を有効にするには、`presets.kubernetesEvents.enabled` プロパティを `true` に設定します。
 有効にすると、チャートは ClusterRole に必要な RBAC ロールを追加し、ログパイプラインに `k8sobjectsreceiver` を追加してコレクターイベントのみに設定します。
 
 以下に `values.yaml` の例を示します。
@@ -299,15 +328,18 @@ presets:
 OpenTelemetryコレクターは、Kubernetesノードからホストメトリクスを収集するように設定できます。
 
 この機能はデフォルトでは無効になっています。
-この機能には以下の条件があります。
+この機能には以下の条件があります。 It has the following requirements:
 
 - [コレクターのContribディストリビューション](https://github.com/open-telemetry/opentelemetry-collector-releases/pkgs/container/opentelemetry-collector-releases%2Fopentelemetry-collector-contrib)などのコレクターイメージに[ホストメトリクスレシーバー](/docs/platforms/kubernetes/collector/components/#host-metrics-receiver)が含まれている必要があります。
-- 厳密な要件ではありませんが、このプリセットは `mode=daemonset` と共に使用することを推奨します。
-  `hostmetricsreceiver` は、コレクターが動作しているノード上のメトリクスのみを収集することができ、同じノード上に複数の設定されたコレクターがあると、重複したデータが生成されます。
+- Although not a strict requirement, it is recommended this preset be used with
+  `mode=daemonset`. The `hostmetricsreceiver` will only be able to collect
+  metrics on the node the Collector is running and multiple configured
+  Collectors on the same node will produce duplicate data.
 
-この機能を有効にするには、`presets.hostMetrics.enabled` プロパティを `true` に設定します。
-有効にすると、チャートは必要なボリュームとボリュームマウントを追加し、 `hostmetricsreceiver` をメトリクスパイプラインに追加します。
-デフォルトでは、メトリクスは10秒ごとにスクレイプされ、以下のスクレイパーが有効になります。
+To enable this feature, set the `presets.hostMetrics.enabled` property to
+`true`. When enabled, the chart will add the necessary volumes and volumeMounts
+and will add a `hostmetricsreceiver` to the metrics pipeline. By default metrics
+will be scrapped every 10 seconds and the following scrappers are enabled:
 
 - cpu
 - load

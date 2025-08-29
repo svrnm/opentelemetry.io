@@ -2,14 +2,14 @@
 title: Exemple d'auto-instrumentation
 linkTitle: Exemple
 weight: 20
-aliases: [/docs/languages/python/automatic/example]
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
+aliases: [ /docs/languages/python/automatic/example ]
 cSpell:ignore: distro instrumentor mkdir MSIE Referer Starlette venv
 ---
 
 Cette page montre comment utiliser l'auto-instrumentation Python dans
-OpenTelemetry. L'exemple est basé sur un [exemple OpenTracing][]. Vous pouvez
-télécharger ou voir les [fichiers sources][] utilisés dans cette page depuis le
+OpenTelemetry.
+L'exemple est basé sur un \[exemple OpenTracing]\[]. Vous pouvez
+télécharger ou voir les \[fichiers sources]\[] utilisés dans cette page depuis le
 dépôt `opentelemetry-python`.
 
 Cet exemple utilise trois scripts différents. La principale différence entre eux
@@ -33,8 +33,7 @@ chose que l'instrumentation manuelle.
 L'instrumentation automatique utilise le [monkey-patching][] pour réécrire
 dynamiquement les méthodes et les classes à l'exécution via des [bibliothèques
 d'instrumentation][instrumentation]. Cela réduit la quantité de travail
-nécessaire pour intégrer OpenTelemetry dans le code de votre application.
-Ci-dessous, vous verrez la différence entre une route Flask instrumentée
+nécessaire pour intégrer OpenTelemetry dans le code de votre application. Ci-dessous, vous verrez la différence entre une route Flask instrumentée
 manuellement, automatiquement et programmatiquement.
 
 ### Serveur instrumenté manuellement {#manually-instrumented-server}
@@ -126,7 +125,7 @@ télémétrie à d'autres destinations, comme un Collecteur OpenTelemetry.
 > renoncer à l'agent et importer le SDK OpenTelemetry et les bibliothèques
 > d'instrumentation dans votre code et les configurer dans votre code. Vous
 > pouvez également étendre l'instrumentation automatique en important l'API
-> OpenTelemetry. Pour plus de détails, voir la [référence de l'API][].
+> OpenTelemetry. Pour plus de détails, voir la \[référence de l'API]\[].
 
 ## Exécution {#execute}
 
@@ -321,7 +320,7 @@ d'environnement.
 ### Capturer les en-têtes de requête et de réponse HTTP {#capture-http-request-and-response-headers}
 
 Vous pouvez capturer les en-têtes HTTP prédéfinis en tant qu'attributs de span,
-conformément à la [convention sémantique][].
+conformément à la \[convention sémantique]\[].
 
 Pour définir les en-têtes HTTP que vous souhaitez capturer, fournissez une liste
 de noms d'en-têtes HTTP séparés par des virgules via les variables
@@ -360,14 +359,9 @@ Si ces en-têtes sont disponibles, ils seront inclus dans votre span :
 }
 ```
 
-[convention sémantique]: /docs/specs/semconv/http/http-spans/
-[référence de l'API]:
-  https://opentelemetry-python.readthedocs.io/en/latest/index.html
-[instrumentation]:
-  https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/opentelemetry-instrumentation
-[monkey-patching]:
-  https://stackoverflow.com/questions/5626193/what-is-monkey-patching
-[exemple opentracing]:
-  https://github.com/yurishkuro/opentracing-tutorial/tree/master/python
-[fichiers sources]:
-  https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples/auto-instrumentation
+[semantic convention]: /docs/specs/semconv/http/http-spans/
+[api reference]: https://opentelemetry-python.readthedocs.io/en/latest/index.html
+[instrumentation]: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/opentelemetry-instrumentation
+[monkey-patching]: https://stackoverflow.com/questions/5626193/what-is-monkey-patching
+[opentracing example]: https://github.com/yurishkuro/opentracing-tutorial/tree/master/python
+[source files]: https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples/auto-instrumentation

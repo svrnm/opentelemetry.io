@@ -1,31 +1,67 @@
 ---
 title: 什么是 OpenTelemetry？
 description: 简短说明 OpenTelemetry 是什么，不是什么。
+aliases:
+  [
+    /about,
+    "OpenTelemetry
+
+      是一个[可观测性](/docs/concepts/observability-primer/#what-is-observability)框架和工具包，
+
+      旨在创建和管理遥测数据，如[链路](/docs/concepts/signals/traces/)、
+
+      [指标](/docs/concepts/signals/metrics/)和[日志](/docs/concepts/signals/logs/)。
+
+      重要的是，OpenTelemetry 对供应商和工具是中立的，这意味着它可以与各种可观测性后端一起使用，
+
+      包括 [Jaeger](https://www.jaegertracing.io/) 和
+
+      [Prometheus](https://prometheus.io/) 这类开源工具以及商业化产品。",
+    /otel
+  ]
 weight: 150
-default_lang_commit: d638c386
-drifted_from_default: true
+cSpell:ignore: youtube
 ---
 
-OpenTelemetry
-是一个[可观测性](/docs/concepts/observability-primer/#what-is-observability)框架和工具包，
-旨在创建和管理遥测数据，如[链路](/docs/concepts/signals/traces/)、
-[指标](/docs/concepts/signals/metrics/)和[日志](/docs/concepts/signals/logs/)。
-重要的是，OpenTelemetry 对供应商和工具是中立的，这意味着它可以与各种可观测性后端一起使用，
-包括 [Jaeger](https://www.jaegertracing.io/) 和
-[Prometheus](https://prometheus.io/) 这类开源工具以及商业化产品。
+OpenTelemetry 被设计为可扩展的。一些扩展 OpenTelemetry 的例子包括：
 
-OpenTelemetry 不是像 Jaeger、Prometheus 或其他商业供应商那样的可观测性后端。
-OpenTelemetry 专注于遥测数据的生成、采集、管理和导出。 OpenTelemetry 的一个主要目标是，
-无论应用程序或系统采用何种编程语言、基础设施或运行时环境，你都可以轻松地将其仪表化。
-重要的是，遥测数据的存储和可视化是有意留给其他工具处理的。
+- An **[observability] framework and toolkit** designed to facilitate the
+
+  - [Generation][instr]
+  - Export
+  - [Collection](../concepts/components/#collector)
+
+  of [telemetry data][] such as [traces], [metrics], and [logs].
+
+- **Open source**, as well as **vendor- and tool-agnostic**, meaning that it can
+  be used with a broad variety of observability backends, including open source
+  tools like [Jaeger] and [Prometheus], as well as commercial offerings.
+  OpenTelemetry is **not** an observability backend itself.
+
+A major goal of OpenTelemetry is to enable easy instrumentation of your
+applications and systems, regardless of the programming language,
+infrastructure, and runtime environments used.
+
+The backend (storage) and the frontend (visualization) of telemetry data are
+intentionally left to other tools.
+
+<div class="td-max-width-on-larger-screens">
+{{< youtube iEEIabOha8U >}}
+</div>
+
+For more videos in this series and additional resources, see
+[What next?](#what-next)
 
 ## 什么是可观测性？ {#what-is-observability}
 
-[可观测性](/docs/concepts/observability-primer/#what-is-observability)是通过检查系统输出来理解系统内部状态的能力。
-在软件的背景下，这意味着能够通过检查遥测数据（包括链路、指标和日志）来理解系统的内部状态。
+[Observability] is the ability to understand the internal state of a system by
+examining its outputs. In the context of software, this means being able to
+understand the internal state of a system by examining its telemetry data, which
+includes traces, metrics, and logs.
 
-要使系统可观测，必须对其进行仪表化。也就是说，代码必须发出链路、指标或日志。
-然后，仪表化的数据必须发送到可观测性后端。
+To make a system observable, it must be [instrumented][instr]. That is, the code
+must emit [traces], [metrics], or [logs]. The instrumented data must then be
+sent to an observability backend.
 
 ## 为什么选择 OpenTelemetry？ {#why-opentelemetry}
 
@@ -33,7 +69,7 @@ OpenTelemetry 专注于遥测数据的生成、采集、管理和导出。 OpenT
 
 OpenTelemetry 满足可观测性的需求，并遵循两个关键原则：
 
-1. 你所生成的数据归属于你自己，不会被供应商锁定。
+1. 你所生成的数据归属于你自己，不会被供应商锁定。 There's no vendor lock-in.
 2. 你只需要学习一套 API 和约定。
 
 这两个原则的结合赋予团队和组织在当今现代计算世界中所需的灵活性。
@@ -66,7 +102,8 @@ OpenTelemetry 提供商业支持并直接为此项目做贡献。
 
 ## 可扩展性 {#extensibility}
 
-OpenTelemetry 被设计为可扩展的。一些扩展 OpenTelemetry 的例子包括：
+OpenTelemetry is designed to be extensible. Some examples of how it can be
+extended include:
 
 - 向 OpenTelemetry Collector 添加接收器以支持来自自定义源的遥测数据
 - 将自定义仪表化库加载到 SDK 中
@@ -83,11 +120,34 @@ OpenTracing 和 OpenCensus 项目合并而成的。原来这两个项目都是�
 缺乏一种标准的方法来为代码进行仪表化并将遥测数据发送到可观测性后端。
 由于这两个项目都无法独立解决这个问题，所以将其合并成立了 OpenTelemetry，
 吸收了双方的优势，提供了统一的解决方案。
+Both of these projects were created to solve the same problem: the lack of a
+standard for how to instrument code and send telemetry data to an Observability
+backend. As neither project was fully able to solve the problem independently,
+they merged to form OpenTelemetry and combine their strengths while offering a
+single solution.
 
 如果你目前正在使用 OpenTracing 或 OpenCensus，
 你可以在[迁移指南](/docs/migration/)中了解如何迁移到 OpenTelemetry。
+
+[merger]: https://www.cncf.io/blog/2019/05/21/a-brief-history-of-opentelemetry-so-far/
 
 ## 接下来做什么？ {#what-next}
 
 - 参阅[入门指南](/docs/getting-started/) &mdash; 立即开始！
 - 了解 [OpenTelemetry 的概念](/docs/concepts/)。
+- [Watch videos][] from the [OTel for beginners][] or other [playlists].
+- Sign up for [training](/training), including the **free course**
+  [Getting started with OpenTelemetry](/training/#courses).
+
+[Cloud Native Computing Foundation]: https://www.cncf.io
+[instr]: ../concepts/instrumentation
+[Jaeger]: https://www.jaegertracing.io/
+[logs]: ../concepts/signals/logs/
+[metrics]: ../concepts/signals/metrics/
+[observability]: ../concepts/observability-primer/#what-is-observability
+[OTel for beginners]: https://www.youtube.com/playlist?list=PLVYDBkQ1TdyyWjeWJSjXYUaJFVhplRtvN
+[playlists]: https://www.youtube.com/@otel-official/playlists
+[Prometheus]: https://prometheus.io/
+[telemetry data]: ../concepts/signals/
+[traces]: ../concepts/signals/traces/
+[Watch videos]: https://www.youtube.com/@otel-official

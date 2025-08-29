@@ -1,11 +1,10 @@
 ---
 title: Estado
 menu: { main: { weight: 30 } }
-aliases: [/project-status, /releases]
+aliases: [ /project-status, /releases ]
 description: Nivel de madurez de los principales componentes de OpenTelemetry
-cascade: { type: docs }
+type: docs
 body_class: td-no-left-sidebar
-default_lang_commit: f9a0439ac56dba1515283e1a1cb6d6a90634a20f
 ---
 
 OpenTelemetry está compuesto por
@@ -27,10 +26,6 @@ Para más detalles sobre el cumplimiento de la especificación por implementaci�
 consulta la
 [Matriz de Cumplimiento de la Especificación](https://github.com/open-telemetry/opentelemetry-specification/blob/main/spec-compliance-matrix.md).
 
-Para más detalles sobre el cumplimiento de la especificación por implementación,
-consulta la
-[Matriz de Cumplimiento de la Especificación](https://github.com/open-telemetry/opentelemetry-specification/blob/main/spec-compliance-matrix.md).
-
 ## Collector
 
 El estado del collector es: [mixto](/docs/specs/otel/document-status/#mixed), ya
@@ -45,13 +40,13 @@ encontrar una lista de todos los componentes disponibles del collector en el
 
 ## Kubernetes Operator
 
-El estado del OpenTelemetry Operator es
-[mixto](/docs/specs/otel/document-status/#mixed), ya que despliega componentes
-con diferentes estados.
-
 El propio Operator está en un estado
 [mixto](/docs/specs/otel/document-status/#mixed), con componentes en estados
 `v1alpha1` y `v1beta1`.
+
+El estado del OpenTelemetry Operator es
+[mixto](/docs/specs/otel/document-status/#mixed), ya que despliega componentes
+con diferentes estados.
 
 ## Especificaciones
 

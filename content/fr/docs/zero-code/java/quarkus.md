@@ -1,7 +1,6 @@
 ---
 title: Instrumentation Quarkus
 linkTitle: Quarkus
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 ---
 
 [Quarkus](https://quarkus.io/) est un framework open source conçu pour aider les
@@ -13,7 +12,7 @@ gamme de bibliothèques. L'
 [extension Quarkus OpenTelemetry](https://quarkus.io/guides/opentelemetry)
 fournit :
 
-- Instrumentation prête à l'emploi
+- Out of the box instrumentation
 - Autoconfiguration du SDK OpenTelemetry, supportant presque toutes les
   propriétés système définies pour le
   [SDK OpenTelemetry](/docs/languages/java/configuration/)
@@ -33,7 +32,7 @@ Quarkus peut également être instrumenté avec
 l'[agent Java OpenTelemetry](../agent/) si vous n'exécutez pas une application
 native.
 
-## Démarrage rapide {#getting-started}
+## Getting started
 
 Pour activer OpenTelemetry dans votre application Quarkus, ajoutez l'extension
 `quarkus-opentelemetry` comme dépendance à votre projet.

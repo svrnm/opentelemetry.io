@@ -1,11 +1,9 @@
 ---
 title: Instrumentation Zero-code
 description: >-
-  Apprenez comment ajouter l'observabilité à une application sans avoir besoin
-  d'écrire du code
+  Apprenez comment ajouter l'observabilité à une application sans avoir besoin d'écrire du code
 weight: 10
-aliases: [automatic]
-default_lang_commit: 3512b0ae11f72d3a954d86da59ad7f98d064bdad
+aliases: [ automatic ]
 ---
 
 En tant qu'[Ops](/docs/getting-started/ops/) vous pourriez souhaiter ajouter

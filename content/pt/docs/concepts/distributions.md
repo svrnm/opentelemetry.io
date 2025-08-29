@@ -1,10 +1,8 @@
 ---
 title: Distribuições
 description: >-
-  Uma distribuição, que não deve ser confundida com um fork, é uma versão
-  customizada de um componente do OpenTelemetry.
+  Uma distribuição, que não deve ser confundida com um fork, é uma versão customizada de um componente do OpenTelemetry.
 weight: 190
-default_lang_commit: 55f9c9d07ba35c241048ffc0d756d67843d68805
 ---
 
 Os projetos do OpenTelemetry consistem de múltiplos [componentes](../components)
@@ -16,7 +14,7 @@ OpenTelemetry estão disponíveis em:
 
 Qualquer implementação de referência pode ser customizada como uma distribuição.
 
-## O que é uma distribuição? {#what-is-a-distribution}
+## O que é uma distribuição?
 
 Uma distribuição é uma versão customizada de um componente do OpenTelemetry. Uma
 distribuição é um encapsulamento em torno de um repositório do OpenTelemetry com
@@ -51,7 +49,7 @@ As distribuições geralmente se enquadram nas seguintes categorias:
   OpenTelemetry Collector. Estas distribuições podem ser fornecidas por questão
   de suporte e/ou temas relacionados à segurança.
 
-## Quem pode criar uma distribuição? {#who-can-create-a-distribution}
+## Quem pode criar uma distribuição?
 
 Qualquer pessoa pode criar uma distribuição. Atualmente, diversos
 [fornecedores](/ecosystem/vendors/) oferecem
@@ -60,7 +58,7 @@ considerar criar uma distribuição caso queiram usar componentes do
 [Registry](/ecosystem/registry) que não foram incluídos na _upstream_ do projeto
 do OpenTelemetry.
 
-## Contribuição ou distribuição? {#contribution-or-distribution}
+## Contribuição ou distribuição?
 
 Antes de continuar e aprender como criar sua própria distribuição, pergunte a si
 mesmo se as suas adições a um determinado componente do OpenTelemetry seriam
@@ -111,5 +109,4 @@ assegure-se de que seu uso não irá resultar em uma dependência de fornecedor
 > Qualquer suporte para uma distribuição deve ser fornecido diretamente por quem
 > a criou e não pelas pessoas envolvidas no projeto do OpenTelemetry.
 
-[guidelines]:
-  https://github.com/open-telemetry/community/blob/main/marketing-guidelines.md
+[guidelines]: https://github.com/open-telemetry/community/blob/main/marketing-guidelines.md

@@ -1,17 +1,18 @@
 ---
 title: 信号
 description: 了解 OpenTelemetry 支持的遥测类别
-aliases: [data-sources, otel-concepts]
+aliases: [ data-sources, otel-concepts ]
 weight: 11
-default_lang_commit: e7c30e9
-drifted_from_default: true
 ---
 
-OpenTelemetry 的目的是收集、处理和导出[信号][signals]。
-信号是系统输出，描述了操作系统和平台上运行的应用程序的底层活动。
-信号可以是你希望在特定时间点测量的某项指标，如温度或内存使用率，
-也可以是贯穿你希望跟踪的分布式系统组件的事件。
-你可以将不同的信号组合在一起，从不同角度观察同一种技术的内部运作方式。
+The purpose of OpenTelemetry is to collect, process, and export [signals].
+Signals are system outputs that describe the underlying activity of the
+operating system and applications running on a platform. A signal can be
+something you want to measure at a specific point in time, like temperature or
+memory usage, or an event that goes through the components of your distributed
+system that you'd like to trace. You can group different signals together to
+observe the inner workings of the same piece of technology under different
+angles.
 
 目前，OpenTelemetry 支持以下类型的信号：
 

@@ -2,29 +2,39 @@
 title: 自動計装の例
 linkTitle: Example
 weight: 20
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
+aliases: [ /docs/languages/python/automatic/example ]
+cSpell:ignore: distro instrumentor mkdir MSIE Referer Starlette venv
 ---
 
 このページでは、OpenTelemetry で Python 自動計装を使う方法を示します。
 この例は [OpenTracing の例][OpenTracing example] に基づいています。
 このページで使用されている [ソースファイル][source files] は `opentelemetry-python` リポジトリからダウンロードしたり閲覧できます。
+The example is based on an [OpenTracing example][]. You can download or view the
+[source files][] used in this page from the `opentelemetry-python` repository.
 
-この例では、3つの異なるスクリプトを使用しています。
-それぞれの主な違いは、計装の方法です。
+This example uses three different scripts. The main difference between them is
+how they are instrumented:
 
 1. `server_manual.py`は _手動_ で計装されます。
 2. `server_automatic.py` は _自動_ で計装されます。
 3. `server_programmatic.py` は _プログラム_ で計装されます。
 
 [_プログラムによる_ 計装](#execute-the-programmatically-instrumented-server)は、最小限の計装コードをアプリケーションに追加する必要のある計装の一種です。
-いくつかの計装ライブラリだけが、プログラム的に使用されるとき、計装プロセスをより大きく制御する追加機能を提供します。
+いくつかの計装ライブラリだけが、プログラム的に使用されるとき、計装プロセスをより大きく制御する追加機能を提供します。 Only some instrumentation libraries offer additional
+capabilities that give you greater control over the instrumentation process when
+used programmatically.
 
 最初のスクリプトを自動計装エージェントなしで実行し、2番目のスクリプトをエージェントありで実行します。
-どちらも同じ結果が得られるはずで、自動計装エージェントが手動計装とまったく同じことを行うことを示しています。
+どちらも同じ結果が得られるはずで、自動計装エージェントが手動計装とまったく同じことを行うことを示しています。 They should both produce the same results, demonstrating that the
+automatic instrumentation agent does exactly the same thing as manual
+instrumentation.
 
-自動計装は、[計装ライブラリ][instrumentation]を通じて、実行時にメソッドやクラスを動的に書き換えるために、[モンキーパッチ][monkey-patching]を利用します。
-これにより、OpenTelemetry をアプリケーションコードに統合するのに必要な作業量を減らせます。
-以下に、手動、自動、プログラムで計装された Flask ルートの違いを示します。
+Automatic instrumentation utilizes [monkey-patching][] to dynamically rewrite
+methods and classes at runtime through [instrumentation
+libraries][instrumentation]. This reduces the amount of work required to
+integrate OpenTelemetry into your application code. Below, you will see the
+difference between a Flask route instrumented manually, automatically and
+programmatically.
 
 ### 手動計測サーバー {#manually-instrumented-server}
 
@@ -74,7 +84,8 @@ def server_request():
 ## 準備 {#prepare}
 
 別の仮想環境で以下の例を実行します。
-以下のコマンドを実行して、自動計装の準備をします。
+以下のコマンドを実行して、自動計装の準備をします。 Run the
+following commands to prepare for auto-instrumentation:
 
 ```sh
 mkdir auto_instrumentation
@@ -85,7 +96,7 @@ source ./venv/bin/activate
 
 ## インストール {#install}
 
-以下のコマンドを実行して、適切なパッケージをインストールしてください。
+Run the following commands to install the appropriate packages. 以下のコマンドを実行して、適切なパッケージをインストールしてください。
 `opentelemetry-distro` パッケージは、カスタム計装用の `opentelemetry-sdk` や、プログラムを自動的に計装するためのいくつかのコマンドを提供する `opentelemetry-instrumentation` など、他のいくつかのパッケージに依存しています。
 
 ```sh
@@ -99,17 +110,22 @@ pip install flask requests
 opentelemetry-bootstrap -a install
 ```
 
-この後の例では、計装結果をコンソールに送信します。
+The examples that follow send instrumentation results to the console. この後の例では、計装結果をコンソールに送信します。
 コレクターのような他の送信先にテレメトリーを送信するための [OpenTelemetry Distro](/docs/languages/python/distro) のインストールと設定については、こちらを参照してください。
 
-> **注**: `opentelemetry-instrument` による自動計装を使用するには、
+> **Note**: To use automatic instrumentation through `opentelemetry-instrument`,
+> you must configure it via environment variables or the command line. The agent
+> creates a telemetry pipeline that cannot be modified other than through these
+> means. **注**: `opentelemetry-instrument` による自動計装を使用するには、
 > 環境変数またはコマンドラインで設定する必要があります。
 > エージェントはテレメトリーパイプラインを作成するので、
 > これらの手段以外では変更できません。
 > テレメトリーパイプラインのカスタマイズが必要な場合は、エージェントを使用せず、
 > OpenTelemetry SDK と計装ライブラリをコードにインポートし、そこで設定する必要があります。
 > また、OpenTelemetry API をインポートすることで自動計装を拡張することもできます。
-> 詳細については、[API リファレンス][API reference] を参照してください。
+> 詳細については、[API リファレンス][API reference] を参照してください。 You may also extend
+> automatic instrumentation by importing the OpenTelemetry API. For more
+> details, see the [API reference][].
 
 ## 実行 {#execute}
 
@@ -130,7 +146,8 @@ python client.py
 ```
 
 `server_manual.py` を実行しているコンソールは計装によって生成されたスパンをJSONとして表示します。
-スパンは以下の例のように表示されます。
+スパンは以下の例のように表示されます。 The spans should appear similar to the following
+example:
 
 ```json
 {
@@ -183,7 +200,8 @@ python client.py
 ```
 
 `server_automatic.py` を実行しているコンソールは計装によって生成されたスパンを JSON として表示します。
-スパンは以下の例のように表示されます。
+スパンは以下の例のように表示されます。 The spans should appear similar to the following
+example:
 
 ```json
 {
@@ -230,7 +248,9 @@ python client.py
 ### プログラムで計装されたサーバーを実行する {#execute-the-programmatically-instrumented-server}
 
 計装ライブラリ（`opentelemetry-instrumentation-flask` など）を単独で使うことも可能で、オプションをカスタマイズできるという利点があります。
-しかし、これを選択することは、 `opentelemetry-instrument` を使ってアプリケーションを起動することによる自動計装を見送ることを意味します。
+しかし、これを選択することは、 `opentelemetry-instrument` を使ってアプリケーションを起動することによる自動計装を見送ることを意味します。 However, by choosing to do this it means you forego
+using auto-instrumentation by starting your application with
+`opentelemetry-instrument` as this is mutually exclusive.
 
 手動計装の場合と同じように、2つの別々のコンソールでサーバーを実行します。
 
@@ -257,7 +277,8 @@ python client.py
 instrumentor.instrument_app(app, excluded_urls="/server_request")
 ```
 
-この例を再度実行すると、サーバー側には計装が表示されなくなります。
+After running the example again, no instrumentation should appear on the server
+side. この例を再度実行すると、サーバー側には計装が表示されなくなります。
 これは `instrument_app` に渡された `excluded_urls` オプションのためで、`server_request` 関数の URL が `excluded_urls` に渡された正規表現にマッチするため、効果的に計装が行われなくなります。
 
 ### デバッグ中の計装 {#instrumentation-while-debugging}
@@ -269,7 +290,8 @@ if __name__ == "__main__":
     app.run(port=8082, debug=True)
 ```
 
-デバッグモードはリローダを有効にするため、計装を中断させることがあります。
+The debug mode can break instrumentation from happening because it enables a
+reloader. デバッグモードはリローダを有効にするため、計装を中断させることがあります。
 デバッグモードが有効なときに計装を実行するには、 `use_reloader` オプションを `False` に設定します。
 
 ```python
@@ -286,8 +308,6 @@ if __name__ == "__main__":
 [セマンティック規約][semantic convention]にしたがって、定義済みのHTTPヘッダーをスパン属性として取り込めます。
 
 どのHTTPヘッダーをキャプチャしたいかを定義するには、HTTPヘッダー名のカンマ区切りのリストを環境変数 `OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST` と `OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_RESPONSE` で指定します。
-
-たとえば次のように行います。
 
 ```sh
 export OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST="Accept-Encoding,User-Agent,Referer"

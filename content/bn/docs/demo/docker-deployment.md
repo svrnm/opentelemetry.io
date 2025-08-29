@@ -1,8 +1,7 @@
 ---
 title: ডকার ডেপ্লয়মেন্ট
 linkTitle: ডকার
-aliases: [docker_deployment]
-default_lang_commit: c392c714849921cd56aca8ca99ab11e0e4cb16f4
+aliases: [ docker_deployment ]
 cSpell:ignore: otlphttp spanmetrics tracetest tracetesting
 ---
 
@@ -31,35 +30,45 @@ cSpell:ignore: otlphttp spanmetrics tracetest tracetesting
 
 3. ডেমো চালু করুন[^1]:
 
-    {{< tabpane text=true >}} {{% tab Make %}}
+       {{< tabpane text=true >}} {{% tab Make %}}
 
 ```shell
 make start
 ```
 
+    ```
     {{% /tab %}} {{% tab Docker %}}
+    ```
 
 ```shell
 docker compose up --force-recreate --remove-orphans --detach
 ```
 
+    ```
     {{% /tab %}} {{< /tabpane >}}
+    ```
 
-4. (Optional) API observability-driven টেস্টিং সক্রিয় করুন[^1]:
+4. (Optional) Enable API observability-driven testing[^1]:
 
+    ```
     {{< tabpane text=true >}} {{% tab Make %}}
+    ```
 
 ```shell
 make run-tracetesting
 ```
 
+    ```
     {{% /tab %}} {{% tab Docker %}}
+    ```
 
 ```shell
 docker compose -f docker-compose-tests.yml run traceBasedTests
 ```
 
+    ```
     {{% /tab %}} {{< /tabpane >}}
+    ```
 
 ## ওয়েব স্টোর ও টেলিমেট্রি যাচাই করুন {#verify-the-web-store-and-telemetry}
 
@@ -75,25 +84,29 @@ docker compose -f docker-compose-tests.yml run traceBasedTests
 
 ## ডেমোর প্রাইমারি পোর্ট নম্বর পরিবর্তন {#changing-the-demos-primary-port-number}
 
-ডিফল্টভাবে, ডেমো অ্যাপ্লিকেশনটি ব্রাউজার ট্রাফিকের জন্য 8080 পোর্টে একটি প্রক্সি চালু করে।
-পোর্ট নম্বর পরিবর্তন করতে, ডেমো চালানোর আগে `ENVOY_PORT` এনভায়রনমেন্ট
-ভ্যারিয়েবল সেট করুন।
+By default, the demo application will start a proxy for all browser traffic
+bound to port 8080. To change the port number, set the `ENVOY_PORT` environment
+variable before starting the demo.
 
 - উদাহরণস্বরূপ, ৮০৮১ পোর্ট ব্যবহার করতে চাইলে[^1]:
 
-  {{< tabpane text=true >}} {{% tab Make %}}
+    {{< tabpane text=true >}} {{% tab Make %}}
 
 ```shell
 ENVOY_PORT=8081 make start
 ```
 
+    ```
     {{% /tab %}} {{% tab Docker %}}
+    ```
 
 ```shell
 ENVOY_PORT=8081 docker compose up --force-recreate --remove-orphans --detach
 ```
 
+    ```
     {{% /tab %}} {{< /tabpane >}}
+    ```
 
 ## নিজের ব্যাকএন্ড ব্যবহার করুন {#bring-your-own-backend}
 
@@ -101,9 +114,9 @@ ENVOY_PORT=8081 docker compose up --force-recreate --remove-orphans --detach
 (যেমন, Jaeger, Zipkin, অথবা [আপনার পছন্দের ভেন্ডর](/ecosystem/vendors/))-এর
 জন্য একটি ডেমো অ্যাপ্লিকেশন হিসেবে ব্যবহার করতে চাইছেন।
 
-OpenTelemetry Collector ব্যবহার করে একাধিক ব্যাকএন্ডে টেলিমেট্রি ডেটা
-এক্সপোর্ট করা যায়। ডেমো অ্যাপ্লিকেশনের কালেক্টর ডিফল্টভাবে দুটি ফাইল থেকে
-কনফিগারেশন মার্জ করে:
+OpenTelemetry Collector can be used to export telemetry data to multiple
+backends. By default, the collector in the demo application will merge the
+configuration from two files:
 
 - `otelcol-config.yml`
 - `otelcol-config-extras.yml`
@@ -112,8 +125,8 @@ OpenTelemetry Collector ব্যবহার করে একাধিক ব�
 [src/otel-collector/otelcol-config-extras.yml](https://github.com/open-telemetry/opentelemetry-demo/blob/main/src/otel-collector/otelcol-config-extras.yml)
 এডিটরে খুলুন।
 
-- প্রথমে একটি নতুন এক্সপোর্টার যোগ করুন। উদাহরণস্বরূপ, যদি আপনার ব্যাকএন্ড HTTP
-  এর বদলে OTLP সমর্থন করে, তাহলে নিচের মতো যোগ করুন:
+- Start by adding a new exporter. For example, if your backend supports OTLP
+  over HTTP, add the following:
 
   ```yaml
   exporters:
@@ -131,18 +144,18 @@ OpenTelemetry Collector ব্যবহার করে একাধিক ব�
         exporters: [spanmetrics, otlphttp/example]
   ```
 
-{{% alert title="নোট" %}} Collector-এ YAML ভ্যালুগুলো মার্জ করার সময় অবজেক্টগুলো
-মার্জ হয় এবং array-গুলো রিপ্লেস হয়। `traces` পাইপলাইনের এক্সপোর্টার ওভাররাইড
-করলে `spanmetrics` এক্সপোর্টার অবশ্যই array-তে থাকতে হবে, না হলে ত্রুটি হবে।
-{{% /alert %}}
+{{% alert title="Note" %}} When merging YAML values with the Collector, objects
+are merged and arrays are replaced. The `spanmetrics` exporter must be included
+in the array of exporters for the `traces` pipeline if overridden. Not including
+this exporter will result in an error. {{% /alert %}}
 
-ভেন্ডর ব্যাকএন্ডে অথেন্টিকেশনের প্রয়োজনে আপনাকে অতিরিক্ত প্যারামিটার যোগ করতে হতে
-পারে, তাদের ডকুমেন্টেশন দেখুন। কিছু ব্যাকএন্ডের প্রয়োজনে আলাদা এক্সপোর্টার লাগতে পারে,
-আপনি সেগুলোর ডকুমেন্টেশন
-[opentelemetry-collector-contrib/exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter) এ পেতে পারেন।।
+Vendor backends might require you to add additional parameters for
+authentication, please check their documentation. Some backends require
+different exporters, you may find them and their documentation available at
+[opentelemetry-collector-contrib/exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter).
 
-`otelcol-config-extras.yml` আপডেট করার পর `make start` চালিয়ে ডেমোটি চালু করুন।
-পাশাপাশি কিছুক্ষণ পরে, আপনি আপনার ব্যাকএন্ডে ট্রেসগুলি প্রবাহিত হতে
-দেখতে পাবেন।
+After updating the `otelcol-config-extras.yml`, start the demo by running
+`make start`. After a while, you should see the traces flowing into your backend
+as well.
 
 [^1]: {{% param notes.docker-compose-v2 %}}

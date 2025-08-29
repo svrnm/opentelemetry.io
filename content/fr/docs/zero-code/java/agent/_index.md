@@ -4,8 +4,7 @@ linkTitle: Agent
 aliases:
   - /docs/java/automatic_instrumentation
   - /docs/languages/java/automatic_instrumentation
-redirects: [{ from: /docs/languages/java/automatic/*, to: ':splat' }]
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
+redirects: [ { from: /docs/languages/java/automatic/*, to: ':splat' } ]
 ---
 
 L'instrumentation Zero-code avec Java utilise un agent Java sous forme de JAR

@@ -1,7 +1,6 @@
 ---
 title: 水平Pod自動スケーリング
 description: OpenTelemetryコレクターの水平Pod自動スケーリングを設定する
-default_lang_commit: c392c714849921cd56aca8ca99ab11e0e4cb16f4
 cSpell:ignore: autoscaler statefulset
 ---
 
@@ -9,6 +8,12 @@ OpenTelemetryオペレーターによって管理されるコレクターは、[
 HPAは、一連のメトリクスに基づいて、KubernetesのPodのレプリカ（コピー）の数を増減させます。
 これらのメトリクスは通常、CPUやメモリの使用量です。
 OpenTelemetryオペレーターがコレクターのHPA機能を管理することで、コレクターの自動スケーリングのために別のKubernetes `HorizontalPodAutoscaler` リソースを作成する必要がなくなります。
+HPA increases or decreases the number of replicas (copies) of your Kubernetes
+pods, based on a set of metrics. These metrics are typically CPU and/or memory
+consumption.
+
+HPAを有効にして `OpenTelemetryCollector` をKubernetesにデプロイすると、オペレーターはKubernetes内のコレクター用に `HorizontalPodAutoscaler` リソースを作成します。
+これを確認するには、次のコマンドを実行します。
 
 HPAはKubernetesの `StatefulSet` と `Deployment` にのみ適用されるため、コレクターの `spec.mode` が `deployment` または `statefulset` のいずれかであることを確認してください。
 
@@ -21,6 +26,7 @@ HPAは、Kubernetesクラスターで実行されている[Metrics Server](https
   [KinD](https://kind.sigs.k8s.io/)、[k0s](https://k0sproject.io))では、Metrics Serverを手動でインストールする必要があります。
 
 管理するKubernetesクラスターにMetrics Serverが事前にインストールされているかどうかを確認するには、クラウドプロバイダーのドキュメントを参照してください。
+{{% /alert %}}
 {{% /alert %}}
 
 HPAを構成するには、まず `OpenTelemetryCollector` のYAMLに `spec.resources` 設定を追加して、リソースの要求と制限を定義する必要があります。
@@ -35,13 +41,14 @@ resources:
     memory: 64Mi
 ```
 
-{{% alert title="Note" %}} あなた自身の価値観は異なるかもしれません。 {{% /alert %}}
+{{% alert title="Note" %}} あなた自身の価値観は異なるかもしれません。 {{% /alert %}} {{% /alert %}}
 
-`limits` 設定には、メモリとCPUの最大値が指定されます。
+The `limits` configuration specifies the maximum memory and CPU values. `limits` 設定には、メモリとCPUの最大値が指定されます。
 このケースでは、これらの制限はCPUの100ミリコア（0.1コア）とRAMの128Mi（メビバイト、1メビバイト == 1024キロバイト）です。
 
 `requests` 設定には、コンテナに割り当てが保証されるリソースの最小量が指定されます。
-このケースでは、最小の割り当ては、100ミリコアのCPUと64メビバイトのRAMです。
+このケースでは、最小の割り当ては、100ミリコアのCPUと64メビバイトのRAMです。 In this case, the minimum allocation is
+100 millicores of CPU and 64 mebibytes of RAM.
 
 次に、`OpenTelemetryCollector` のYAMLに `spec.autoscaler` 設定を追加して、自動スケーリングルールを構成します。
 
@@ -53,7 +60,7 @@ autoscaler:
   targetMemoryUtilization: 60
 ```
 
-{{% alert title="Note" %}} あなた自身の価値観は異なるかもしれません。 {{% /alert %}}
+{{% alert title="Note" %}} あなた自身の価値観は異なるかもしれません。 {{% /alert %}} {{% /alert %}}
 
 すべてをまとめると、`OpenTelemetryCollector` のYAMLの始まりは次のようになります。
 
@@ -82,8 +89,9 @@ spec:
       memory: 64Mi
 ```
 
-HPAを有効にして `OpenTelemetryCollector` をKubernetesにデプロイすると、オペレーターはKubernetes内のコレクター用に `HorizontalPodAutoscaler` リソースを作成します。
-これを確認するには、次のコマンドを実行します。
+Once the `OpenTelemetryCollector` is deployed to Kubernetes with HPA enabled,
+the Operator creates a `HorizontalPodAutoscaler` resource for your Collector in
+Kubernetes. You can check this by running
 
 `kubectl get hpa -n <your_namespace>`
 

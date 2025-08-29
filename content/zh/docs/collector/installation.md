@@ -1,12 +1,12 @@
 ---
 title: 安装 Collector
 weight: 2
-default_lang_commit: 5fdcac03a4be4f063089a72a82348ec90cce9874
 cSpell:ignore: darwin dpkg journalctl kubectl otelcorecol pprof tlsv zpages
 ---
 
 你可以在多种操作系统和多种架构上部署 OpenTelemetry Collector。
-以下说明展示了如何下载并安装 Collector 的最新稳定版本。
+以下说明展示了如何下载并安装 Collector 的最新稳定版本。 The following instructions show how to download and
+install the latest stable version of the Collector.
 
 如果你还不熟悉 OpenTelemetry Collector 的部署模型、组件和相关代码库，
 请先查阅[数据收集][Data Collection]和[部署方法][Deployment Methods]页面。
@@ -15,6 +15,7 @@ cSpell:ignore: darwin dpkg journalctl kubectl otelcorecol pprof tlsv zpages
 
 以下命令会拉取一个 Docker 镜像，并在容器中运行 Collector。
 将 `{{% param vers %}}` 替换为你想要运行的 Collector 版本。
+Replace `{{% param vers %}}` with the version of the Collector you want to run.
 
 {{< tabpane text=true >}} {{% tab DockerHub %}}
 
@@ -75,7 +76,8 @@ otel-collector:
 kubectl apply -f https://raw.githubusercontent.com/open-telemetry/opentelemetry-collector/v{{% param vers %}}/examples/k8s/otel-config.yaml
 ```
 
-上述示例旨在作为起点，在实际生产使用前需要进行扩展和定制。
+The previous example is meant to serve as a starting point, to be extended and
+customized before actual production usage. 上述示例旨在作为起点，在实际生产使用前需要进行扩展和定制。
 有关生产环境的定制和安装，请参阅 [OpenTelemetry Helm Chart][OpenTelemetry Helm Charts]。
 
 你也可以使用 [OpenTelemetry Operator][] 来配置和维护一个 OpenTelemetry Collector 实例，
@@ -91,7 +93,8 @@ Collector 作为代理、网关以及完整演示部署的参考作业文件。
 
 ## Linux
 
-每个 Collector 发布版本都包含适用于 Linux amd64/arm64/i386 系统的 APK、DEB 和
+Every Collector release includes APK, DEB and RPM packaging for Linux
+amd64/arm64/i386 systems. 每个 Collector 发布版本都包含适用于 Linux amd64/arm64/i386 系统的 APK、DEB 和
 RPM 安装包。安装后你可以在 `/etc/otelcol/config.yaml` 中找到默认配置。
 
 > 注意：需要 `systemd` 才能进行自动服务配置。
@@ -164,7 +167,8 @@ sudo rpm -ivh otelcol_{{% param vers %}}_linux_386.rpm
 
 ### Linux 手动安装 {#manual-linux-installation}
 
-Linux [版本][releases]提供了多种架构版本供下载。你可以下载包含可执行文件的压缩包并手动安装：
+Linux [版本][releases]提供了多种架构版本供下载。你可以下载包含可执行文件的压缩包并手动安装： You can download the
+file containing the binary and install it on your machine manually:
 
 {{< tabpane text=true >}} {{% tab AMD64 %}}
 
@@ -202,7 +206,9 @@ tar -xvf otelcol_{{% param vers %}}_linux_ppc64le.tar.gz
 
 要使用不同的设置，请在 `/etc/otelcol/otelcol.conf` systemd 环境文件中设置 `OTELCOL_OPTIONS`
 变量为相应的命令行选项。你可以运行 `/usr/bin/otelcol --help` 来查看所有可用选项。
-你还可以通过将其他环境变量添加到该文件中来传递给 `otelcol` 服务。
+你还可以通过将其他环境变量添加到该文件中来传递给 `otelcol` 服务。 You can run `/usr/bin/otelcol --help` to see all available
+options. You can pass additional environment variables to the `otelcol` service
+by adding them to this file.
 
 如果你修改了 Collector 的配置文件或 `/etc/otelcol/otelcol.conf`，请通过以下命令重启 `otelcol` 服务以应用更改：
 
@@ -219,7 +225,9 @@ sudo journalctl -u otelcol
 ## macOS
 
 macOS [发布版本][releases] 适用于 Intel 和 ARM 系统。发布包为
-gzip 压缩的 tarball（`.tar.gz`）。要解压它们，请运行以下命令：
+gzip 压缩的 tarball（`.tar.gz`）。要解压它们，请运行以下命令： The releases are
+packaged as gzipped tarballs (`.tar.gz`). To unpack them, run the following
+commands:
 
 {{< tabpane text=true >}} {{% tab Intel %}}
 
@@ -241,8 +249,26 @@ tar -xvf otelcol_{{% param vers %}}_darwin_arm64.tar.gz
 
 ## Windows
 
-Windows [发布版本][releases]被打包为 gzip 压缩的 tarball（`.tar.gz`）。每个
-Collector 发布版本都包含一个可运行的 `otelcol.exe` 可执行文件。
+Windows [releases][] are available as MSI installers and gzipped tarballs
+(`.tar.gz`). The MSI installs the Collector as a Windows service named after the
+distribution, with the display name "OpenTelemetry Collector", and registers an
+Application Event Log source with the distribution name.
+
+### MSI installation
+
+```powershell
+msiexec /i "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v{{% param vers %}}/otelcol_{{% param vers %}}_windows_x64.msi"
+```
+
+### Manual installation
+
+```powershell
+Invoke-WebRequest -Uri "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v{{% param vers %}}/otelcol_{{% param vers %}}_windows_amd64.tar.gz" -OutFile "otelcol_{{% param vers %}}_windows_amd64.tar.gz"
+tar -xvzf otelcol_{{% param vers %}}_windows_amd64.tar.gz
+```
+
+Every release includes the Collector executable that you can run after
+installation.
 
 ## 从源码构建 {#build-from-source}
 

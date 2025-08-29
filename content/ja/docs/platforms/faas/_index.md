@@ -3,15 +3,17 @@ title: Functions as a Service
 linkTitle: FaaS
 description: >-
   OpenTelemetryは、さまざまなクラウドベンダーが提供するFaaSを監視するさまざまな方法をサポートしています。
-redirects: [{ from: /docs/faas/*, to: ':splat' }] # cSpell:disable-line
-default_lang_commit: 9ba98f4fded66ec78bfafa189ab2d15d66df2309
+redirects: [ { from: /docs/faas/*, to: ':splat' } ] # cSpell:disable-line
 ---
 
 Functions as a Service（FaaS）は、[クラウドネイティブアプリ][cloud native apps]にとって重要なサーバーレスコンピュートプラットフォームです。
-しかし、プラットフォームの癖によって、これらのアプリケーションはKubernetesやVirtual Machines上で実行されるアプリケーションとは若干異なる監視ガイダンスや要件を持つことになります。
+しかし、プラットフォームの癖によって、これらのアプリケーションはKubernetesやVirtual Machines上で実行されるアプリケーションとは若干異なる監視ガイダンスや要件を持つことになります。 However, platform quirks usually mean these applications
+have slightly different monitoring guidance and requirements than applications
+running on Kubernetes or Virtual Machines.
 
 FaaSドキュメントの最初のベンダー範囲は、Microsoft Azure、Google Cloud Platform（GCP）、Amazon Web Services（AWS）です。
-AWSのファンクション（関数）はLambdaとしても知られています。
+AWSのファンクション（関数）はLambdaとしても知られています。 AWS functions are
+also known as Lambda.
 
 ### コミュニティアセット {#community-assets}
 

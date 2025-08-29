@@ -1,9 +1,8 @@
 ---
 title: 快速入门
 description: 几分钟内完成设置并收集遥测数据！
-aliases: [getting-started]
+aliases: [ getting-started ]
 weight: 1
-default_lang_commit: ae313ca8475cc4694e900b61976e1a5228690912
 cSpell:ignore: docker dokey gobin okey telemetrygen
 ---
 
@@ -12,7 +11,8 @@ cSpell:ignore: docker dokey gobin okey telemetrygen
 OpenTelemetry Collector 是一个可执行文件，它能够接收[链路](/docs/concepts/signals/traces/)、
 [指标](/docs/concepts/signals/metrics/)和[日志](/docs/concepts/signals/logs/)，
 处理这些遥测数据，并通过其组件将其导出到多种可观测性后端。要了解 Collector 的概念性概览，
-请参见 [Collector](/docs/collector)。
+请参见 [Collector](/docs/collector)。 For a conceptual
+overview of the Collector, see [Collector](/docs/collector).
 
 你将学习如何在不到五分钟的时间内完成以下操作：
 
@@ -21,12 +21,13 @@ OpenTelemetry Collector 是一个可执行文件，它能够接收[链路](/docs
 
 ## 前提条件 {#prerequisites}
 
-请确保你的开发环境具备以下条件。本文档假设你使用的是 `bash`，请根据你所偏好的 Shell 适配相关配置与命令。
+Make sure that your developer environment has the following. This page assumes
+that you're using `bash`. Adapt configuration and commands as necessary for your
+preferred shell.
 
 - [Docker](https://www.docker.com/) 或任何兼容的容器运行时。
 - [Go](https://go.dev/) 1.20 或更高版本
 - [`GOBIN` 环境变量][gobin]已设置；若未设置，请按如下方式进行初始化[^1]：
-
   ```sh
   export GOBIN=${GOBIN:-$(go env GOPATH)/bin}
   ```
@@ -116,7 +117,7 @@ OpenTelemetry Collector 是一个可执行文件，它能够接收[链路](/docs
 
 ## 后续步骤 {#next-steps}
 
-在本教程中，你已经启动了 OpenTelemetry Collector 并向其发送了遥测数据。下一步建议你执行以下操作：
+在本教程中，你已经启动了 OpenTelemetry Collector 并向其发送了遥测数据。下一步建议你执行以下操作： As next steps, consider doing the following:
 
 - 探索其他[安装 Collector 的方式](../installation/)。
 - 了解 Collector 的不同运行模式，参见[部署方式](../deployment/)。

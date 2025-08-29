@@ -1,9 +1,15 @@
 ---
 title: ブログ
 menu: { main: { weight: 50 } }
-outputs: [HTML, RSS]
+outputs: [ HTML, RSS ]
+htmltest:
+  # 2024-11-07 DO NOT COPY the following IgnoreDirs to non-en pages because it handles all locales.
+  IgnoreDirs:
+    # Ignore blog index pages for all locales and in all blog sections (top-level and years)
+    - ^(../)?blog/(\d+/)?page/\d+
+    # Ignore old blog posts
+    - ^(../)?blog/20(19|21|22|23)/
 description: OpenTelemetry ブログ
-default_lang_commit: 94d77ab8cbfe5552a7cd68bf677be86c574a613a
 ---
 
 <script>

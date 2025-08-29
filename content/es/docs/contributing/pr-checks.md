@@ -1,11 +1,7 @@
 ---
-title: Comprobaciones para PR
-description:
-  Aprenda cómo hacer que su PR pase con éxito todas las comprobaciones
+title: Pull request checks
+description: Aprenda cómo hacer que su PR pase con éxito todas las comprobaciones
 weight: 40
-default_lang_commit: 565307515b288bf5e8bee88d73ff4fac1fd93d5e # patched
-drifted_from_default: true
-cSpell:ignore: REFCACHE
 ---
 
 Cuando creas un
@@ -43,7 +39,7 @@ Esta comprobación falla si no has [firmado el CLA](../prerequisites/#cla).
 Si la compilación [Netlify](https://www.netlify.com/) falla, selecciona
 **Details** para mas información.
 
-## Comprobaciones de estilo {#style-checks}
+## GitHub PR checks {#checks}
 
 Para asegurarnos de que las contribuciones sigan nuestra
 [guía de estilo](../style-guide/) hemos implementado un conjunto de
@@ -78,6 +74,10 @@ aplique los cambios sugeridos.
 
 Esta verificación comprueba que
 [todas las palabras estén escritas correctamente](../style-guide/#spell-checking).
+
+If this check fails, run `npm run check:spelling` locally to see the misspelled
+words. If a word is spelled correctly, you may need to add it to the
+`cSpell:ignore` section in the front matter of the file.
 
 ### `CSPELL check` {.notranslate lang=en}
 

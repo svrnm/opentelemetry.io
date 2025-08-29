@@ -1,12 +1,13 @@
 ---
 title: OpenTelemetryオペレーターチャート
 linkTitle: オペレーターチャート
-default_lang_commit: e8f18928513b726068be250802ebe7ece25e8851
 ---
 
 ## はじめに {#introduction}
 
-[OpenTelemetryオペレーター](/docs/platforms/kubernetes/operator) は、[OpenTelemetryコレクター](/docs/collector) とワークロードの自動計装を管理するKubernetesオペレーターです。
+The [OpenTelemetry Operator](/docs/platforms/kubernetes/operator) is a
+Kubernetes operator that manages [OpenTelemetry Collectors](/docs/collector) and
+auto-instrumentation of workloads. [OpenTelemetryオペレーター](/docs/platforms/kubernetes/operator) は、[OpenTelemetryコレクター](/docs/collector) とワークロードの自動計装を管理するKubernetesオペレーターです。
 OpenTelemetryオペレーターをインストールする方法の1つは、[OpenTelemetry Operator Helm Chart](https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator)を経由することです。
 
 OpenTelemetryオペレーターの詳しい使い方については、[ドキュメント](/docs/platforms/kubernetes/operator)を参照してください。
@@ -30,18 +31,26 @@ helm install my-opentelemetry-operator open-telemetry/opentelemetry-operator \
 オペレーターHelmチャートのデフォルトの `values.yaml` はすぐにでもインストール可能ですが、Cert Managerがクラスタ上にすでに存在していることを想定しています。
 
 Kubernetesでは、APIサーバーがWebhookコンポーネントと通信するために、WebhookはAPIサーバーが信頼するように設定されたTLS証明書を必要とします。
-必要なTLS証明書を生成/設定するには、いくつかの方法があります。
+必要なTLS証明書を生成/設定するには、いくつかの方法があります。 There are a few different ways you can use to
+generate/configure the required TLS certificate.
 
 - もっとも簡単でデフォルトの方法は、[cert-manager](https://cert-manager.io/docs/)をインストールし、 `admissionWebhooks.certManager.enabled` を `true` に設定することです。
   こうすることで、cert-managerが自己署名証明書を生成します。
-  詳細は[cert-managerのインストール](https://cert-manager.io/docs/installation/kubernetes/)を参照してください。
-- `admissionWebhooks.certManager.issuerRef` の値を設定することで、独自のIssuerを提供できます。
-  `kind` (Issuer または ClusterIssuer) と `name` を指定する必要があります。
-  この方法も cert-manager のインストールが必要であることに注意してください。
+  詳細は[cert-managerのインストール](https://cert-manager.io/docs/installation/kubernetes/)を参照してください。 In this way, cert-manager
+  will generate a self-signed certificate. See
+  [cert-manager installation](https://cert-manager.io/docs/installation/kubernetes/)
+  for more details.
+- You can provide your own Issuer by configuring the
+  `admissionWebhooks.certManager.issuerRef` value. You will need to specify the
+  `kind` (Issuer or ClusterIssuer) and the `name`. Note that this method also
+  requires the installation of cert-manager.
 - `admissionWebhooks.certManager.enabled` を `false` に、`admissionWebhooks.autoGenerateCert.enabled` を `true` に設定することで、自動生成された自己署名証明書を使用できます。
-  Helm が自己署名証明書とシークレットを作成してくれます。
+  Helm が自己署名証明書とシークレットを作成してくれます。 Helm will create a
+  self-signed cert and a secret for you.
 - `admissionWebhooks.certManager.enabled` と `admissionWebhooks.autoGenerateCert.enabled` の両方を `false` に設定することで、自分で生成した自己署名証明書を使用できます。
-  必要な値は `admissionWebhooks.cert_file` 、`admissionWebhooks.key_file` 、`admissionWebhooks.ca_file` に指定します。
+  必要な値は `admissionWebhooks.cert_file` 、`admissionWebhooks.key_file` 、`admissionWebhooks.ca_file` に指定します。 You should provide
+  the necessary values to `admissionWebhooks.cert_file`,
+  `admissionWebhooks.key_file`, and `admissionWebhooks.ca_file`.
 - `.Values.admissionWebhooks.create` と `admissionWebhooks.certManager.enabled` を無効にし、`admissionWebhooks.secretName` にカスタム証明書のシークレット名を設定することで、カスタムWebhookと証明書をサイドロードできます。
 - すべてのWebhookを一度に無効にするには、`.Values.admissionWebhooks.create` を無効にし、環境変数 `.Values.manager.env.ENABLE_WEBHOOKS` を `false` に設定します。
 

@@ -1,18 +1,15 @@
 ---
-title: Pautas para aprobadores y mantenedores
+title: SIG practices for approver and maintainers
 linkTitle: Pautas del SIG
-description:
-  Aprende cómo los aprobadores y mantenedores gestionan los problemas y las
-  contribuciones.
+description: Aprende cómo los aprobadores y mantenedores gestionan los problemas y las contribuciones.
 weight: 999
-default_lang_commit: 493a530efd3c2a058cc4aa055d7c8aadb5348beb
 cSpell:ignore: asincrónica chalin Comms cscell docsy
 ---
 
 Esta página incluye pautas y algunas prácticas comunes utilizadas por
 aprobadores y mantenedores.
 
-## Incorporación
+## Onboarding
 
 Si un colaborador asume un rol con mayor responsabilidad en la documentación
 (aprobador, mantenedor), será integrado por los aprobadores y mantenedores
@@ -55,7 +52,8 @@ Otros recursos valiosos para revisar son
 ## Colaboración
 
 - Los aprobadores y los mantenedores tienen horarios y circunstancias de trabajo
-  diferentes. Por eso, se asuma que toda la comunicación es asincrónica y no
+  diferentes.
+  Por eso, se asuma que toda la comunicación es asincrónica y no
   deberían sentirse obligados a responder fuera de su horario habitual.
 - Cuando un aprobador o mantenedor no esta disponible para contribuir durante un
   período prolongado (más de unos días o una semana) o no esta disponible
@@ -78,7 +76,8 @@ Otros recursos valiosos para revisar son
 - Si la rama de la solicitud de incorporación de cambios (PR) esta
   `desactualizada con respecto a la rama base`, no es necesario actualizarla
   continuamente: ¡cada actualización activa la ejecución de todas las
-  comprobaciones de CI de la PR! A menudo, basta con actualizarlas antes de
+  comprobaciones de CI de la PR!
+  A menudo, basta con actualizarlas antes de
   fusionar.
 - Una solicitud de solicitud (PR) realizada por personas que no son mantenedoras
   **nunca** debe actualizar los submódulos de Git. Esto ocurre accidentalmente
@@ -87,15 +86,14 @@ Otros recursos valiosos para revisar son
   el futuro debe asegurarse de trabajar desde una bifurcación actualizada.
 - Si el colaborador tiene problemas para firmar la CLA o usó un correo
   electrónico incorrecto por error en una de sus confirmaciones, pídele que
-  solucione el problema o que rebase la solicitud de incorporación de cambios.
-  En el peor de los casos, cierre y vuelve a abrir la solicitud de incorporación
+  solucione el problema o que rebase la solicitud de incorporación de cambios. En el peor de los casos, cierre y vuelve a abrir la solicitud de incorporación
   de cambios para activar una nueva comprobación de la CLA.
 - Los autores de la solicitud de registro (PR) deben añadir las palabras
   desconocidas para cscell a la lista de ignorados de cscell por página. Solo
   los aprobadores y mantenedores añadirán términos de uso común a la lista
   global.
 
-### Solicitudes de incorporación de cambios (PR) de propiedad conjunta
+### Co-owned PRs
 
 Las solicitudes de registro con cambios en la documentación de propiedad
 compartida de un SIG (recopilador, demostración, específico del idioma...) deben
@@ -113,7 +111,7 @@ por parte de un aprobador del SIG:
   el responsable de la documentación puede usar su propio criterio para fusionar
   esa solicitud de incorporación de cambios.
 
-### Solicitudes de incorporación de cambios (PR) de bots
+### PRs from bots
 
 Las solicitudes de incorporación de cambios creadas por bots se pueden fusionar
 mediante la siguiente práctica:
@@ -132,14 +130,14 @@ mediante la siguiente práctica:
   también pueden aprobarse y fusionarse, salvo que el SIG correspondiente
   indique que la fusión debe posponerse.
 
-### Solicitudes de registro traducción
+### Translation PRs
 
 Las solicitudes de registro con cambios en las traducciones deben aspirar a dos
 aprobaciones: una por parte del aprobador de documentos y otra por parte del
 aprobador de traducciones. Se aplican prácticas similares a las sugeridas para
 las solicitudes de registro de copropiedad.
 
-### Fusionando solicitudes de registro
+### Merging PRs
 
 Los mantenedores pueden aplicar el siguiente flujo de trabajo para fusionar
 solicitudes de incorporación de cambios (PR):

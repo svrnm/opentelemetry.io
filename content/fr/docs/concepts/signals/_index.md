@@ -1,13 +1,13 @@
 ---
 title: Les signaux
 description: Catégories de télémétrie supportées par OpenTelemetry
+aliases: [ data-sources, otel-concepts ]
 weight: 11
-default_lang_commit: 71833a5f8b84110dadf1e98604b87a900724ac33
-drifted_from_default: true
 ---
 
 L'objectif d'OpenTelemetry est de collecter, traiter et exporter des
-**[signaux][signals]**. Les signaux sont des données générées par le système et
+**[signaux][signals]**.
+Les signaux sont des données générées par le système et
 décrivant l'activité interne du système d'exploitation et des applications
 exécutées sur une plateforme. Un signal peut être quelque chose que vous
 souhaitez mesurer à un instant précis, comme par exemple la température ou
@@ -16,11 +16,20 @@ votre système distribué. Vous avez la possibilité de regrouper plusieurs sign
 ensemble afin d'observer sous différents angles le fonctionnement d'une
 technologie.
 
-OpenTelemetry supporte actuellement les [traces](/docs/concepts/signals/traces),
-les [métriques](/docs/concepts/signals/metrics), les
-[logs](/docs/concepts/signals/logs) et les
-[bagages](/docs/concepts/signals/baggage). Les _événements_ sont une catégorie
-de log. Un groupe dédié au profilage travaille actuellement sur les
-[_profils_](https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/profiles/0212-profiling-vision.md).
+OpenTelemetry currently supports:
 
+- [Traces](traces)
+- [Metrics](metrics)
+- [Logs](logs)
+- [Baggage](baggage)
+
+Also under development or at the [proposal] stage:
+
+- Les _événements_ sont une catégorie
+  de log.
+- [Profiles] are being worked on by the Profiling Working Group.
+
+[Events]: /docs/specs/otel/logs/data-model/#events
+[Profiles]: <Un groupe dédié au profilage travaille actuellement sur les&#xA;[_profils_](https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/profiles/0212-profiling-vision.md).>
+[proposal]: https://github.com/open-telemetry/opentelemetry-specification/tree/main/oteps/#readme
 [signals]: /docs/specs/otel/glossary/#signals

@@ -1,10 +1,9 @@
 ---
 title: Sem código
 description: >-
-  Aprenda como adicionar observabilidade a uma aplicação sem precisar escrever
-  código
+  Aprenda como adicionar observabilidade a uma aplicação sem precisar escrever código
 weight: 10
-default_lang_commit: d1ef521ee4a777881fb99c3ec2b506e068cdec4c
+aliases: [ automatic ]
 ---
 
 Como [operações](/docs/getting-started/ops/), você pode querer adicionar

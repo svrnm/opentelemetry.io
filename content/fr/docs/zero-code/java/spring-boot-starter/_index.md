@@ -4,7 +4,6 @@ aliases:
   - /docs/languages/java/automatic/spring-boot
   - /docs/zero-code/java/agent/spring-boot
   - /docs/zero-code/java/spring-boot
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 ---
 
 Vous pouvez utiliser deux options pour instrumenter les applications

@@ -1,12 +1,8 @@
 ---
 title: Enviando conteúdo
-description:
-  Aprenda como enviar novos conteúdos ou alterar conteúdos existentes usando a
-  interface do GitHub ou a partir de um _fork_ local.
-aliases: [new-content]
+description: Aprenda como enviar novos conteúdos ou alterar conteúdos existentes usando a interface do GitHub ou a partir de um _fork_ local.
+aliases: [ new-content ]
 weight: 15
-default_lang_commit: bc14fe46c2f358c8c0b6dc7f394535787bd4fff3
-drifted_from_default: true
 ---
 
 Para contribuir com novos conteúdos ou melhorar a documentação existente,
@@ -102,21 +98,21 @@ _Figura 2. Etapas para abrir um PR usando o GitHub._
 1. Na página onde você vê o problema, selecione a opção **Editar esta página**
    no painel de navegação à direita.
 
-1. Se você não for membro do projeto, o GitHub oferece a opção de criar um
+2. Se você não for membro do projeto, o GitHub oferece a opção de criar um
    _fork_ do repositório. Selecione **Fazer _fork_ deste repositório**.
 
-1. Faça suas alterações no editor do GitHub.
+3. Faça suas alterações no editor do GitHub.
 
-1. Preencha o formulário **Propor alteração de arquivo**.
+4. Preencha o formulário **Propor alteração de arquivo**.
 
-1. Selecione **Propor alteração de arquivo**.
+5. Selecione **Propor alteração de arquivo**.
 
-1. Selecione **Criar _pull request_**.
+6. Selecione **Criar _pull request_**.
 
-1. A tela **Abrir um _pull request_** aparece. Sua descrição ajuda os revisores
+7. A tela **Abrir um _pull request_** aparece. Sua descrição ajuda os revisores
    a entenderem sua alteração.
 
-1. Selecione **Criar _pull request_**.
+8. Selecione **Criar _pull request_**.
 
 Antes de mesclar um _pull request_, os membros da comunidade OpenTelemetry
 revisam e aprovam.
@@ -124,18 +120,17 @@ revisam e aprovam.
 Se um revisor pedir para você fazer alterações:
 
 1. Vá para a aba **Arquivos alterados**.
-1. Selecione o ícone de lápis (editar) em qualquer arquivo alterado pelo _pull
+2. Selecione o ícone de lápis (editar) em qualquer arquivo alterado pelo _pull
    request_.
-1. Faça as alterações solicitadas. Se houver uma sugestão de código, aplique-a.
-1. _Commit_ as alterações.
+3. Faça as alterações solicitadas. Se houver uma sugestão de código, aplique-a.
+4. _Commit_ as alterações.
 
 Quando sua revisão estiver completa, um revisor mescla seu PR e suas alterações
 ficam disponíveis alguns minutos depois.
 
 ### Corrigindo falhas na verificação do PR {#fixing-prs-in-github}
 
-Depois de enviar um PR, o GitHub executa algumas verificações de compilação.
-Certas falhas de verificação, como problemas de formatação, podem ser corrigidas
+Depois de enviar um PR, o GitHub executa algumas verificações de compilação. Certas falhas de verificação, como problemas de formatação, podem ser corrigidas
 automaticamente.
 
 Adicione o seguinte comentário ao seu PR:
@@ -144,8 +139,7 @@ Adicione o seguinte comentário ao seu PR:
 /fix:all
 ```
 
-Isso fará com que o bot OpenTelemetry tente corrigir os problemas de compilação.
-Ou você pode emitir um dos seguintes comandos de correção para resolver uma
+Isso fará com que o bot OpenTelemetry tente corrigir os problemas de compilação. Ou você pode emitir um dos seguintes comandos de correção para resolver uma
 falha específica:
 
 ```text
@@ -206,11 +200,11 @@ class changes,changes2 white
 
 \_Figura 3. Trabalhando a partir de um fork local para fazer suas alterações.\_
 
-### Faça o _fork_ do repositório {#fork-the-repository}
+### Fork the repository
 
 1. Navegue até o repositório
    [`opentelemetry.io`](https://github.com/open-telemetry/opentelemetry.io/).
-1. Selecione **Fork**.
+2. Selecione **Fork**.
 
 ### Clone e defina o repositório de origem (_upstream_) {#clone-and-set-upstream}
 
@@ -222,14 +216,14 @@ class changes,changes2 white
    npm install
    ```
 
-1. Defina o repositório `open-telemetry/opentelemetry.io` como o remoto
+2. Defina o repositório `open-telemetry/opentelemetry.io` como o remoto
    `upstream`:
 
    ```shell
    git remote add upstream https://github.com/open-telemetry/opentelemetry.io.git
    ```
 
-1. Confirme seus repositórios `origin` e `upstream`:
+3. Confirme seus repositórios `origin` e `upstream`:
 
    ```shell
    git remote -v
@@ -244,7 +238,7 @@ class changes,changes2 white
    upstream	https://github.com/open-telemetry/opentelemetry.io.git (push)
    ```
 
-1. Obtenha commits do `origin/main` do seu _fork_ e `upstream/main` do
+4. Obtenha commits do `origin/main` do seu _fork_ e `upstream/main` do
    repositório `open-telemetry/opentelemetry.io`:
 
    ```shell
@@ -256,7 +250,7 @@ class changes,changes2 white
    começar a fazer alterações. Envie alterações do _upstream_ para o _origin_
    regularmente para manter seu _fork_ sincronizado com o _upstream_.
 
-### Crie uma _branch_ (ramificação) {#create-a-branch}
+### Create a branch
 
 1. Crie uma nova _branch_. Este exemplo assume que a _branch_ base é
    `upstream/main`:
@@ -265,7 +259,7 @@ class changes,changes2 white
    git checkout -b <minha_nova_branch> upstream/main
    ```
 
-1. Faça suas alterações usando um editor de código ou texto.
+2. Faça suas alterações usando um editor de código ou texto.
 
 A qualquer momento, use o comando `git status` para ver quais arquivos você
 alterou.
@@ -296,7 +290,7 @@ alterações.
    no changes added to _commit_ (use "git add" and/or "git commit -a")
    ```
 
-1. Adicione os arquivos listados em **Alterações não preparadas para _commit_**
+2. Adicione os arquivos listados em **Alterações não preparadas para _commit_**
    (_Changes not staged for commit_) ao _commit_:
 
    ```shell
@@ -305,19 +299,19 @@ alterações.
 
    Repita isso para cada arquivo.
 
-1. Depois de adicionar todos os arquivos, crie um _commit_:
+3. Depois de adicionar todos os arquivos, crie um _commit_:
 
    ```shell
    git commit -m "Sua mensagem de _commit_"
    ```
 
-1. Envie sua _branch_ local e seu novo _commit_ para seu _fork_ remoto:
+4. Envie sua _branch_ local e seu novo _commit_ para seu _fork_ remoto:
 
    ```shell
    git push origin <minha_nova_branch>
    ```
 
-1. Assim que as alterações forem enviadas, o GitHub avisará que você pode criar
+5. Assim que as alterações forem enviadas, o GitHub avisará que você pode criar
    um PR.
 
 ### Abre um novo PR {#open-a-pr}
@@ -353,12 +347,18 @@ _Figura 4. Etapas para abrir um PR do seu fork para_
 
 1. Em um navegador da web, vá para o repositório
    [`opentelemetry.io`](https://github.com/open-telemetry/opentelemetry.io).
-1. Selecione **Novo _Pull Request_**.
-1. Selecione **comparar entre _forks_**.
-1. No menu suspenso **repositório de origem**, selecione seu _fork_.
-1. No menu suspenso **comparar**, selecione sua _branch_.
-1. Selecione **Criar _Pull Request_**.
-1. Adicione uma descrição para o seu _pull request_:
+
+2. Selecione **Novo _Pull Request_**.
+
+3. Selecione **comparar entre _forks_**.
+
+4. No menu suspenso **repositório de origem**, selecione seu _fork_.
+
+5. No menu suspenso **comparar**, selecione sua _branch_.
+
+6. Selecione **Criar _Pull Request_**.
+
+7. Adicione uma descrição para o seu _pull request_:
    - **Título** (50 caracteres ou menos): Resuma a intenção da alteração.
    - **Descrição**: Descreva a alteração em mais detalhes.
      - Se houver uma _issue_ relacionada no GitHub, inclua `Fixes #12345` ou
@@ -369,7 +369,7 @@ _Figura 4. Etapas para abrir um PR do seu fork para_
        quaisquer perguntas que você gostaria que os revisores levassem em conta
        durante a revisão.
 
-1. Selecione o botão **Criar _pull request_**.
+8. Selecione o botão **Criar _pull request_**.
 
 Seu _pull request_ está disponível em
 [_Pull requests_](https://github.com/open-telemetry/opentelemetry.io/pulls).
@@ -469,7 +469,7 @@ qualquer outra alteração, obtenha esses _commits_.
    git rebase origin/<seu-nome-da-branch>
    ```
 
-1. Após o _rebase_, execute um _force-push_ contendo as novas alterações para
+2. Após o _rebase_, execute um _force-push_ contendo as novas alterações para
    seu _fork_:
 
    ```shell
@@ -498,7 +498,7 @@ em seu PR.
    git push --force-with-lease origin <seu-nome-da-branch>
    ```
 
-1. Obtenha alterações do `upstream/main` do repositório
+2. Obtenha alterações do `upstream/main` do repositório
    `open-telemetry/opentelemetry.io` e faça _rebase_ de sua _branch_:
 
    ```shell
@@ -506,7 +506,7 @@ em seu PR.
    git rebase upstream/main
    ```
 
-1. Inspecione os resultados do _rebase_:
+3. Inspecione os resultados do _rebase_:
 
    ```shell
    git status
@@ -514,30 +514,30 @@ em seu PR.
 
    Isso resulta em vários arquivos marcados como conflitantes.
 
-1. Abra cada arquivo em conflito e procure os marcadores de conflito: `>>>`,
+4. Abra cada arquivo em conflito e procure os marcadores de conflito: `>>>`,
    `<<<`, e `===`. Resolva o conflito e exclua o marcador de conflito.
 
    Para mais informações, veja
    [Como os conflitos são apresentados](https://git-scm.com/docs/git-merge#_how_conflicts_are_presented).
 
-1. Adicione os arquivos ao conjunto de alterações:
+5. Adicione os arquivos ao conjunto de alterações:
 
    ```shell
    git add <nome_do_arquivo>
    ```
 
-1. Continue o _rebase_:
+6. Continue o _rebase_:
 
    ```shell
    git rebase --continue
    ```
 
-1. Repita as etapas 2 a 5 conforme necessário.
+7. Repita as etapas 2 a 5 conforme necessário.
 
    Após aplicar todos os _commits_, o comando `git status` mostra que o _rebase_
    está completo.
 
-1. Execute um _force-push_ da _branch_ para seu _fork_:
+8. Execute um _force-push_ da _branch_ para seu _fork_:
 
    ```shell
    git push --force-with-lease origin <seu-nome-da-branch>
@@ -545,7 +545,7 @@ em seu PR.
 
    O _pull request_ não mostra mais conflitos.
 
-### Requisitos de _merge_ {#merge-requirements}
+### Merge requirements
 
 O _merge_ dos _pull requests_ ocorrem quando são cumpridos os seguintes
 critérios:
@@ -568,8 +568,7 @@ critérios:
 > corrigi-las ou corrigindo-as em seu nome.
 
 [dashboard]: https://app.netlify.com/sites/opentelemetry/overview
-[deploy preview]:
-  https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/
+[deploy preview]: https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/
 [Git]: https://docs.github.com/en/get-started/using-git/about-git
 [`git` installed]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 [PR]: https://docs.github.com/en/pull-requests

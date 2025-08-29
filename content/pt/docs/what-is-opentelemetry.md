@@ -1,15 +1,15 @@
 ---
 title: O que é o OpenTelemetry?
 description: Uma breve explicação sobre o que o OpenTelemetry é e não é.
+aliases: [ /about, "{#why-opentelemetry}", /otel ]
 weight: 150
-default_lang_commit: fb38bda3b4b9ae69c99b8d70543d0df37872aeac
-drifted_from_default: true
 cSpell:ignore: youtube
 ---
 
 O OpenTelemetry é:
 
 - Um **_framework_ e conjunto de ferramentas** projetado para facilitar a
+
   - [Geração][instr]
   - Exportação
   - [Coleta](../concepts/components/#collector)
@@ -20,7 +20,8 @@ O OpenTelemetry é:
 - **Código aberto**, além de **agnóstico em relação a fornecedores e
   ferramentas**, o que possibilita ser utilizado com uma grande variedade de
   _backends_ de observabilidade, incluindo ferramentas de código aberto como
-  [Jaeger] e [Prometheus], além de soluções comerciais. O OpenTelemetry **não**
+  [Jaeger] e [Prometheus], além de soluções comerciais.
+  O OpenTelemetry **não**
   é um _backend_ de observabilidade.
 
 Um dos principais objetivos do OpenTelemetry é permitir que você possa
@@ -37,7 +38,7 @@ são intencionalmente deixados para outras ferramentas.
 Para mais vídeos nesta série e mais recursos, consulte
 [Próximos passos](#what-next)
 
-## O que é observabilidade? {#what-is-observability}
+## O que é observabilidade?
 
 [Observabilidade][observability] é a capacidade de entender o estado interno de
 um sistema ao examinar os dados que ele emite. No contexto de software, isso
@@ -48,7 +49,7 @@ Para tornar um sistema observável, ele deve ser [instrumentado][instr]. Ou seja
 o código deve emitir [rastros][traces], [métricas][metrics] ou [logs]. Os dados
 instrumentados devem então ser enviados para um backend de observabilidade.
 
-## Por que OpenTelemetry? {#why-opentelemetry}
+## Por que OpenTelemetry?
 
 Com a ascensão da computação em nuvem, arquiteturas de microsserviços e
 requisitos de negócios cada vez mais complexos, a necessidade de
@@ -130,10 +131,9 @@ OpenTelemetry e combinar seus esforços para oferecer uma solução única.
 Se você está atualmente utilizando OpenTracing ou OpenCensus, pode aprender como
 migrar para o OpenTelemetry no [guia de migração](../migration/).
 
-[merger]:
-  https://www.cncf.io/blog/2019/05/21/a-brief-history-of-opentelemetry-so-far/
+[merger]: https://www.cncf.io/blog/2019/05/21/a-brief-history-of-opentelemetry-so-far/
 
-## Próximos passos {#what-next}
+## What next?
 
 - [Começando](../getting-started/) &mdash; mergulhe de cabeça!
 - Aprenda sobre os [conceitos do OpenTelemetry](../concepts/).
@@ -148,8 +148,7 @@ migrar para o OpenTelemetry no [guia de migração](../migration/).
 [logs]: ../concepts/signals/logs/
 [metrics]: ../concepts/signals/metrics/
 [observability]: ../concepts/observability-primer/#what-is-observability
-[OTel for beginners]:
-  https://www.youtube.com/playlist?list=PLVYDBkQ1TdyyWjeWJSjXYUaJFVhplRtvN
+[OTel for beginners]: https://www.youtube.com/playlist?list=PLVYDBkQ1TdyyWjeWJSjXYUaJFVhplRtvN
 [playlists]: https://www.youtube.com/@otel-official/playlists
 [Prometheus]: https://prometheus.io/
 [telemetry data]: ../concepts/signals/

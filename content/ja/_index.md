@@ -2,9 +2,13 @@
 title: OpenTelemetry
 description: >-
   効果的な観測を可能にする、高品質でユビキタスかつポータブルなテレメトリー
+outputs:
+  - HTML
+  # Include the following for `content/en` ONLY
+  - REDIRECTS
+  - RSS
 developer_note: blocks/coverコラム（以下で使用）は、ファイル名に "background" を含む画像ファイルを背景画像として使用します。
 show_banner: true
-default_lang_commit: fd7da211d5bc37ca93112a494aaf6a94445e2e28
 ---
 
 <div class="d-none"><a rel="me" href="https://fosstodon.org/@opentelemetry"></a></div>
@@ -12,10 +16,12 @@ default_lang_commit: fd7da211d5bc37ca93112a494aaf6a94445e2e28
 {{< blocks/cover image_anchor="top" height="max" color="primary" >}}
 
 <!-- prettier-ignore -->
+
 ![OpenTelemetry](/img/logos/opentelemetry-horizontal-color.svg)
 {.otel-logo}
 
 <!-- prettier-ignore -->
+
 {{% param description %}}
 {.display-6}
 
@@ -40,7 +46,9 @@ default_lang_commit: fd7da211d5bc37ca93112a494aaf6a94445e2e28
 {{% blocks/lead color="white" %}}
 
 OpenTelemetry は API、SDK、ツールのコレクションです。
-テレメトリーデータ（メトリクス、ログ、トレース）の計装、生成、収集、エクスポートに使用し、ソフトウェアのパフォーマンスや動作の分析に役立てましょう。
+テレメトリーデータ（メトリクス、ログ、トレース）の計装、生成、収集、エクスポートに使用し、ソフトウェアのパフォーマンスや動作の分析に役立てましょう。 Use it to instrument,
+generate, collect, and export telemetry data (metrics, logs, and traces) to help
+you analyze your software's performance and behavior.
 
 > OpenTelemetryは[いくつかの言語](docs/languages/)で[一般的に利用可能](/status/)で、使用に適しています。
 
@@ -77,7 +85,8 @@ OpenTelemetry は多くの人気のライブラリーとフレームワークに
 
 {{% blocks/section color="secondary" type="cncf" %}}
 
-**OpenTelemetryは[CNCF][] [incubating][]プロジェクトです。**<br>OpenTracingとOpenCensusのプロジェクトが合併して設立されました。
+**OpenTelemetryは[CNCF][] [incubating][]プロジェクトです。**<br>OpenTracingとOpenCensusのプロジェクトが合併して設立されました。 Formed through a
+merger of the OpenTracing and OpenCensus projects.
 
 [![CNCF logo][]][cncf]
 

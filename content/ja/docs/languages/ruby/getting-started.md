@@ -1,9 +1,8 @@
 ---
 title: Getting Started
 description: 5分以内にあなたのアプリからテレメトリを取得します！
-aliases: [getting_started]
+aliases: [ getting_started ]
 weight: 10
-default_lang_commit: 646aedf04033f2d955dbdfb20f5e912c3cc89482
 cSpell:ignore: darwin rolldice sinatra struct tracestate truffleruby
 ---
 
@@ -20,15 +19,18 @@ cSpell:ignore: darwin rolldice sinatra struct tracestate truffleruby
 
 {{% alert  title="Warning" color="warning" %}}
 試験中ですが、`jruby` と `truffleruby` のサポートは現時点ではベストエフォートベースです。
-{{% /alert %}}
+{{% /alert %}} {{% /alert %}}
 
 ## アプリケーションの例 {#example-application}
 
-以下の例では、基本的な[Rails](https://rubyonrails.org/)
+The following example uses a basic [Rails](https://rubyonrails.org/)
+application. 以下の例では、基本的な[Rails](https://rubyonrails.org/)
 アプリケーションを使用します。
 Railsを使用しない場合でも問題ありません。
 SinatraやRackなどの他のWebフレームワークでもOpenTelemetry Rubyを使用できます。
-サポートされているフレームワークの完全なリストは、[レジストリ](/ecosystem/registry/?component=instrumentation&language=ruby)を参照してください。
+サポートされているフレームワークの完全なリストは、[レジストリ](/ecosystem/registry/?component=instrumentation&language=ruby)を参照してください。 For a complete
+list of libraries for supported frameworks, see the
+[registry](/ecosystem/registry/?component=instrumentation&language=ruby).
 
 より詳細な例については、[examples](/docs/languages/ruby/examples/)を参照してください。
 
@@ -56,7 +58,8 @@ rails generate controller dice
 ```
 
 このコマンドは、`app/controllers/dice_controller.rb` というファイルを作成します。
-任意のエディタでそのファイルを開き、以下のコードに更新します。
+任意のエディタでそのファイルを開き、以下のコードに更新します。 Open that
+file in your preferred editor and update it with the following code:
 
 ```ruby
 class DiceController < ApplicationController
@@ -80,8 +83,8 @@ end
 rails server -p 8080
 ```
 
-すべてが正常に動作していれば、1から6のいずれかの数字が返されるはずです。
-これで、アプリケーションを停止し、OpenTelemetryを使用して計装することができます。
+If everything works fine you should see a number between 1 and 6 returned to
+you. You can now stop the application and instrument it using OpenTelemetry.
 
 ### 計装 {#instrumentation}
 
@@ -94,7 +97,8 @@ bundle add opentelemetry-sdk opentelemetry-instrumentation-all
 `opentelemetry-instrumentation-all` を含めると、Rails、Sinatra、いくつかのHTTPライブラリなどの[計装][instrumentations]が提供されます。
 
 Railsアプリケーションでは、OpenTelemetryの初期化は通常Railsのイニシャライザで行います。
-他のRubyサービスでは、起動プロセスの可能な限り早い段階で初期化を行います。
+他のRubyサービスでは、起動プロセスの可能な限り早い段階で初期化を行います。 For other Ruby services, perform this initialization as early as
+possible in the start-up process.
 
 次のコードを含む `config/initializers/opentelemetry.rb` という名前のファイルを作成します。
 
@@ -109,7 +113,8 @@ end
 ```
 
 `c.use_all()` を呼び出すことで、`instrumentation/all` パッケージ内のすべての計装が有効化されます。
-より高度な設定が必要な場合は、[特定の計装ライブラリの設定][config]を参照してください。
+より高度な設定が必要な場合は、[特定の計装ライブラリの設定][config]を参照してください。 If you have more advanced configuration needs, see [configuring
+specific instrumentation libraries][config].
 
 ### 計装されたアプリを実行する {#run-the-instrumented-app}
 
@@ -120,7 +125,8 @@ env OTEL_TRACES_EXPORTER=console rails server -p 8080
 ```
 
 Webブラウザで <http://localhost:8080/rolldice> を開き、ページを数回リロードしてください。
-コンソールに以下のようなスパンが表示されるはずです。
+コンソールに以下のようなスパンが表示されるはずです。 You should see the spans printed in the console, such as the
+following:
 
 ```ruby
 #<struct OpenTelemetry::SDK::Trace::SpanData
@@ -165,8 +171,8 @@ Webブラウザで <http://localhost:8080/rolldice> を開き、ページを数�
 
 ## 次は何をしますか？ {#what-next}
 
-単一のサービスにトレースを追加することは、すばらしい第一歩です。
-OpenTelemetryにはさらにいくつかの機能があり、より深い洞察を得ることができます！
+Adding tracing to a single service is a great first step. OpenTelemetry provides
+a few more features that will allow you gain even deeper insights!
 
 - [エクスポーター][exporters]を使用して、データを任意のバックエンドにエクスポートできます。
 - [コンテキスト伝搬][context propagation]は、単一サービスのトレースを`分散トレース`にアップグレードし、OpenTelemetryベンダーがプロセスやネットワークの境界を超えてリクエストを可視化できるようにするための、おそらくOpenTelemetryの最も強力な概念のひとつです。

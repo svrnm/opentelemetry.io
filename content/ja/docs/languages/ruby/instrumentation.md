@@ -7,7 +7,6 @@ aliases:
   - /docs/languages/ruby/context-propagation
 weight: 20
 description: OpenTelemetry Ruby計装
-default_lang_commit: c651bbf2a61f1ea643ae1d2ae89d496c58dbb56d
 cSpell:ignore: SIGHUP
 ---
 
@@ -21,16 +20,17 @@ cSpell:ignore: SIGHUP
 gem install opentelemetry-sdk
 ```
 
-次に、プログラムの初期化時に実行される、設定コードを記述します。
-サービス名を設定して、`service.name` が設定されていることを確認してください。
+Then include configuration code that runs when your program initializes. Make
+sure that `service.name` is set by configuring a service name.
 
 ## トレース {#traces}
 
-### トレーサーの取得 {#acquiring-a-tracer}
+### Acquiring a Tracer
 
 [トレース](/docs/concepts/signals/traces)を開始するには、[`トレーサープロバイダー`](/docs/concepts/signals/traces#tracer-provider)から取得する、初期化された[`トレーサー`](/docs/concepts/signals/traces#tracer)が必要です。
 
-最も簡単で一般的な方法は、グローバルに登録されたトレーサープロバイダーを使用することです。
+The easiest and most common way to do this is to use the globally-registered
+TracerProvider. 最も簡単で一般的な方法は、グローバルに登録されたトレーサープロバイダーを使用することです。
 Railsアプリなどで[`計装ライブラリ`](/docs/languages/ruby/libraries)を使用している場合、トレーサープロバイダーは自動的に登録されます。
 
 ```ruby
@@ -50,7 +50,9 @@ MyAppTracer = OpenTelemetry.tracer_provider.tracer('<YOUR_TRACER_NAME>')
 ### 現在のスパンを取得 {#get-current-span}
 
 プログラム内のどこかで現在の[スパン](/docs/concepts/signals/traces#spans)に情報を追加することは、ごく一般的です。
-そのためには、現在のスパンを取得して、それに[属性](/docs/concepts/signals/traces#attributes)を追加することができます。
+そのためには、現在のスパンを取得して、それに[属性](/docs/concepts/signals/traces#attributes)を追加することができます。 To do
+so, you can get the current span and add
+[attributes](/docs/concepts/signals/traces#attributes) to it.
 
 ```ruby
 require "opentelemetry/sdk"
@@ -72,7 +74,7 @@ end
 [スパン](/docs/concepts/signals/traces#spans)を作成するには、[`構成済みのトレーサー`](/docs/concepts/signals/traces#tracer)が必要です。
 
 通常、新しいスパンを作成するときは、そのスパンをアクティブもしくは現在のスパンにしたいと思うでしょう。
-それには、`in_span`を使用します。
+それには、`in_span`を使用します。 To do that, use `in_span`:
 
 ```ruby
 require "opentelemetry/sdk"
@@ -108,7 +110,8 @@ def child_work
 end
 ```
 
-前述の例では、`parent` と `child` という名前の2つのスパンが作成され、`child` は `parent` の下にネストされています。
+In the preceding example, two spans are created - named `parent` and `child` -
+with `child` nested under `parent`. 前述の例では、`parent` と `child` という名前の2つのスパンが作成され、`child` は `parent` の下にネストされています。
 トレース可視化ツールでこれらのスパンを表示すると、`child` は `parent` の下にネストされていることがわかります。
 
 ### スパンへの属性の追加 {#add-attributes-to-a-span}
@@ -148,17 +151,21 @@ MyAppTracer.in_span('foo', attributes: { "hello" => "world", "some.number" => 10
 end
 ```
 
-> &#9888; スパンは、変更されるときにロックを必要とするスレッドセーフなデータ構造です。
+> &#9888; Spans are thread safe data structures that require locks when they are
+> mutated. &#9888; スパンは、変更されるときにロックを必要とするスレッドセーフなデータ構造です。
 > したがって、`set_attribute` を複数回呼び出すことは避け、代わりにスパンの作成中または既存のスパンの `add_attributes` を使用して、ハッシュで属性を一括で割り当てることが望ましいです。
 >
-> &#9888; サンプリングの決定は、スパンの作成時に行われます。
-> サンプラーがスパンをサンプリングするか決定する際にスパン属性を考慮する場合は、スパン作成の一部としてそれらの属性を渡す _必要があります_ 。
-> スパン作成後に追加された属性は、サンプリングの決定がすでに行われているため、サンプラーには表示されません。
+> &#9888; Sampling decisions happen at the moment of span creation. If your
+> sampler considers span attributes when deciding to sample a span, then you
+> _must_ pass those attributes as part of span creation. Any attributes added
+> after creation will not be seen by the sampler, because the sampling decision
+> has already been made.
 
 ### セマンティック属性の追加 {#add-semantic-attributes}
 
 [セマンティック属性][semconv-spec]は、一般的な種類のデータに対するよく知られた命名規則に基づいた、事前定義された[属性](/docs/concepts/signals/traces#attributes)です。
-セマンティック属性を使用することで、システム全体でこの種の情報を正規化できます。
+セマンティック属性を使用することで、システム全体でこの種の情報を正規化できます。 Using Semantic Attributes lets you
+normalize this kind of information across your systems.
 
 Rubyでセマンティック属性を使用するには、適切なgemを追加します。
 
@@ -182,10 +189,11 @@ current_span.add_attributes({
 
 ### スパンイベントの追加 {#add-span-events}
 
-[スパンイベント](/docs/concepts/signals/traces#span-events)は、スパンのライフタイム中に"何かが起こった"ことを表す、人間が読める形式のメッセージです。
-たとえば、ミューテックスで保護されているリソースへの排他的アクセスを必要とする関数を考えてみましょう。
-イベントは2つのポイントで作成できます。
-ひとつはリソースへのアクセスを試行するとき、もうひとつはミューテックスを取得するときです。
+A [span event](/docs/concepts/signals/traces#span-events) is a human-readable
+message on a span that represents "something happening" during it's lifetime.
+For example, imagine a function that requires exclusive access to a resource
+that is under a mutex. An event could be created at two points - once, when we
+try to gain access to the resource, and another when we acquire the mutex.
 
 ```ruby
 require "opentelemetry/sdk"
@@ -218,7 +226,8 @@ span.add_event("Cancelled wait due to external signal", attributes: {
 ### スパンリンクの追加 {#add-span-links}
 
 [スパン](/docs/concepts/signals/traces#spans)は、他のスパンと因果関係を持つ0個以上の[スパンリンク](/docs/concepts/signals/traces#span-links)を作成できます。
-リンクを作成するには、[スパンコンテキスト](/docs/concepts/signals/traces#span-context)が必要です。
+リンクを作成するには、[スパンコンテキスト](/docs/concepts/signals/traces#span-context)が必要です。 A link needs a
+[span context](/docs/concepts/signals/traces#span-context) to be created.
 
 ```ruby
 require "opentelemetry/sdk"
@@ -260,8 +269,8 @@ end
 
 ### スパン内での例外の記録 {#record-exceptions-in-spans}
 
-例外が発生したときに記録することは、良いアイデアです。
-[スパンステータス](#set-span-status)の設定と組み合わせて行うことをお勧めします。
+It can be a good idea to record exceptions when they happen. It’s recommended to
+do this in conjunction with [setting span status](#set-span-status).
 
 ```ruby
 require "opentelemetry/sdk"
@@ -287,17 +296,22 @@ current_span.record_exception(ex, attributes: { "some.attribute" => 12 })
 ### コンテキストの伝搬 {#context-propagation}
 
 > 分散トレーシングは、アプリケーションを構成するサービスによって処理される単一の（トレースと呼ばれる）リクエストの進行状況を追跡します。
-> 分散トレースは、プロセス、ネットワーク、セキュリティの境界を横断します。[用語集][glossary]
+> 分散トレースは、プロセス、ネットワーク、セキュリティの境界を横断します。[用語集][glossary] A Distributed
+> Trace transverses process, network and security boundaries. [Glossary][]
 
 これには _コンテキスト伝搬_ 、つまりトレースの識別子がリモートプロセスに送信されるメカニズムが必要です。
 
 > &#8505; OpenTelemetry Ruby SDKは、サービスが自動計装ライブラリを使用している限り、コンテキストの伝搬を処理します。
-> 詳細については[README][auto-instrumentation]を参照してください。
+> 詳細については[README][auto-instrumentation]を参照してください。 Please refer
+> to the [README][auto-instrumentation] for more details.
 
-トレースコンテキストをネットワーク越しに伝搬するためには、OpenTelemetry SDKにプロパゲーターを登録する必要があります。
-W3 TraceContextおよびBaggageプロパゲーターはデフォルトで構成されています。
-運用者は、環境変数 `OTEL_PROPAGATORS` にカンマ区切りの[プロパゲーター][propagators]のリストを設定することで、この値を上書きできます。
-たとえば、B3伝搬を追加するには、`OTEL_PROPAGATORS` にサポートしたい伝搬フォーマットの完全なリストを設定します。
+In order to propagate trace context over the wire, a propagator must be
+registered with the OpenTelemetry SDK. The W3 TraceContext and Baggage
+propagators are configured by default. Operators may override this value by
+setting `OTEL_PROPAGATORS` environment variable to a comma separated list of
+[propagators][propagators]. For example, to add B3 propagation, set
+`OTEL_PROPAGATORS` to the complete list of propagation formats you wish to
+support:
 
 ```sh
 export OTEL_PROPAGATORS=tracecontext,baggage,b3

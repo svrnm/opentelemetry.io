@@ -1,10 +1,8 @@
 ---
 title: Librerías
 description: Aprende a añadir instrumentación nativa a tu librería
-aliases: [../instrumenting-library]
+aliases: [ ../instrumenting-library ]
 weight: 40
-default_lang_commit: d8e58463c6e7c324b01115ab4f88d1f2bcf802c2
-Spell:ignore: cardinalidad definirlos serialización desactívalos muestreados
 ---
 
 OpenTelemetry proporciona [librerías de
@@ -60,7 +58,8 @@ o abriendo un issue o pull request en el
 ### Definir spans {#defining-spans}
 
 Piensa en tu librería desde la perspectiva de un usuario de la librería y en qué
-podría querer saber sobre el comportamiento y la actividad de la misma. Como
+podría querer saber sobre el comportamiento y la actividad de la misma.
+Como
 mantenedor de la librería, conoces el funcionamiento interno, pero lo más
 probable es que el usuario esté menos interesado en los entresijos de la
 librería y más en la funcionalidad de su aplicación. Piensa en qué información
@@ -85,7 +84,8 @@ Sigue las convenciones semánticas al establecer los atributos de span.
 
 Algunas librerías son clientes ligeros que envuelven llamadas de red. Lo más
 probable es que OpenTelemetry tenga una librería de instrumentación para el
-cliente RPC subyacente. Consulta el [registro](/ecosystem/registry/) para
+cliente RPC subyacente.
+Consulta el [registro](/ecosystem/registry/) para
 encontrar las librerías existentes. Si ya existe una librería, instrumentar la
 librería `wrapper` podría no ser necesario.
 
@@ -110,8 +110,10 @@ El primer paso al instrumentar una aplicación es incluir el paquete de la API d
 OpenTelemetry como una dependencia.
 
 OpenTelemetry tiene [dos módulos principales](/docs/specs/otel/overview/): la
-API y el SDK. La API de OpenTelemetry es un conjunto de abstracciones e
-implementaciones no operativas. A menos que tu aplicación importe el SDK de
+API y el SDK.
+La API de OpenTelemetry es un conjunto de abstracciones e
+implementaciones no operativas.
+A menos que tu aplicación importe el SDK de
 OpenTelemetry, tu instrumentación no hace nada y no afecta al rendimiento de la
 aplicación.
 
@@ -120,8 +122,7 @@ aplicación.
 Si te preocupa añadir nuevas dependencias, aquí tienes algunas consideraciones
 para ayudarte a decidir cómo minimizar los conflictos de dependencias:
 
-- La API de trazas de OpenTelemetry alcanzó la estabilidad a principios de 2021.
-  Sigue el
+- La API de trazas de OpenTelemetry alcanzó la estabilidad a principios de 2021. Sigue el
   [Versionado Semántico 2.0](/docs/specs/otel/versioning-and-stability/).
 - Utiliza la API de OpenTelemetry estable más temprana (1.0.\*) y evita
   actualizarla a menos que necesites usar nuevas funcionalidades.
@@ -137,16 +138,16 @@ para ayudarte a decidir cómo minimizar los conflictos de dependencias:
   OpenTelemetry puede ayudar a mantener las convenciones actualizadas sin
   generar cambios que rompen la compatibilidad para tus usuarios.
 
-  [stable, but subject to evolution]:
-    /docs/specs/otel/versioning-and-stability/#semantic-conventions-stability
+  [stable, but subject to evolution]: /docs/specs/otel/versioning-and-stability/#semantic-conventions-stability
 
-### Obtener un `tracer` {#getting-a-tracer}
+### Getting a tracer
 
 Toda la configuración de la aplicación está oculta para tu librería a través de
 la API de Tracer. Las librerías pueden permitir a las aplicaciones pasar
 instancias de `TracerProvider` para facilitar la inyección de dependencias y las
 pruebas, u obtenerlas del
-[`TracerProvider` global](/docs/specs/otel/trace/api/#get-a-tracer). Las
+[`TracerProvider` global](/docs/specs/otel/trace/api/#get-a-tracer).
+Las
 implementaciones de OpenTelemetry en los distintos lenguajes pueden tener
 diferentes preferencias para pasar instancias o acceder al global, basándose en
 lo que es idiomático en cada lenguaje de programación.
@@ -227,8 +228,7 @@ consideraciones que te ayudarán a decidir el mejor camino:
 
 - ¿El rastrear las llamadas de red mejoraría la observabilidad para los usuarios
   o tu capacidad para darles soporte?
-- ¿Es tu librería un `wrapper` sobre una API RPC pública y documentada?
-  ¿Necesitarían los usuarios obtener soporte del servicio subyacente en caso de
+- ¿Es tu librería un `wrapper` sobre una API RPC pública y documentada? ¿Necesitarían los usuarios obtener soporte del servicio subyacente en caso de
   problemas?
   - Instrumenta la librería y asegúrate de rastrear los intentos de red
     individuales.
@@ -271,9 +271,7 @@ Si tu lenguaje y ecosistema no tienen soporte de logging común, usa los [evento
 de span][span events] para compartir detalles adicionales de la aplicación. Los
 eventos pueden ser más convenientes si también quieres añadir atributos.
 
-Como regla general, usa eventos o logs para datos verbosos en lugar de spans.
-Adjunta siempre los eventos a la instancia de span que tu instrumentación creó.
-Evita usar el span activo si puedes, ya que no controlas a qué se refiere.
+Como regla general, usa eventos o logs para datos verbosos en lugar de spans. Adjunta siempre los eventos a la instancia de span que tu instrumentación creó. Evita usar el span activo si puedes, ya que no controlas a qué se refiere.
 
 ## Propagación de contexto {#context-propagation}
 
@@ -313,8 +311,7 @@ try (Scope unused = span.makeCurrent()) {
 ```
 
 En el caso de un sistema de mensajería, es posible que recibas más de un mensaje
-a la vez. Los mensajes recibidos se convierten en enlaces en el span que creas.
-Consulta las
+a la vez. Los mensajes recibidos se convierten en enlaces en el span que creas. Consulta las
 [convenciones de mensajería](/docs/specs/semconv/messaging/messaging-spans/)
 para más detalles.
 
@@ -322,8 +319,7 @@ para más detalles.
 
 Cuando haces una llamada saliente, normalmente quieres propagar el contexto al
 servicio downstream. En este caso, crea un nuevo span para rastrear la llamada
-saliente y usa la API de `Propagator` para inyectar contexto en el mensaje.
-Puede haber otros casos en los que quieras inyectar contexto, por ejemplo, al
+saliente y usa la API de `Propagator` para inyectar contexto en el mensaje. Puede haber otros casos en los que quieras inyectar contexto, por ejemplo, al
 crear mensajes para un procesamiento asíncrono. El siguiente ejemplo de Java
 muestra cómo propagar el contexto. Para más ejemplos, consulta la
 [inyección de contexto en Java](/docs/languages/java/instrumentation/#context-propagation).
@@ -429,7 +425,8 @@ Dado que OpenTelemetry tiene una variedad de auto-instrumentaciones, prueba cóm
 tu instrumentación interactúa con otra telemetría: solicitudes entrantes,
 solicitudes salientes, logs, etc. Usa una aplicación típica, con frameworks y
 librerías populares y con todo el tracing habilitado, cuando pruebes tu
-instrumentación. Comprueba cómo se ven las librerías similares a la tuya.
+instrumentación.
+Comprueba cómo se ven las librerías similares a la tuya.
 
 Para las pruebas unitarias, normalmente puedes simular o falsear el
 `SpanProcessor` y el `SpanExporter`, como en el siguiente ejemplo de Java:
@@ -460,6 +457,5 @@ class TestExporter implements SpanExporter {
 }
 ```
 
-[instrumentation libraries]:
-  /docs/specs/otel/overview/#instrumentation-libraries
+[instrumentation libraries]: /docs/specs/otel/overview/#instrumentation-libraries
 [span events]: /docs/specs/otel/trace/api/#add-events

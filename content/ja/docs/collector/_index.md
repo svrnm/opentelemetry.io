@@ -1,10 +1,10 @@
 ---
 title: コレクター
 description: テレメトリーデータを受信、処理、エクスポートするためのベンダー非依存な方法
+aliases: [ ./about ]
 cascade:
   vers: 0.132.0
 weight: 270
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
 ---
 
 ![Jaeger、OTLP、Prometheusを統合したOpenTelemetryコレクターのダイアグラム](img/otel-collector.svg)
@@ -13,7 +13,10 @@ default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
 
 OpenTelemetryコレクターは、テレメトリーデータの受信、処理、エクスポート方法について、ベンダーにとらわれない実装を提供します。
 複数のエージェント／コレクターの実行、操作、メンテナンスの必要性を取り除きます。
-これはスケーラビリティを向上させ、1つ以上のオープンソースまたは商用バックエンドに送信するオープンソースのオブザーバビリティデータフォーマット（Jaeger、Prometheus、Fluent Bitなど）をサポートします。
+これはスケーラビリティを向上させ、1つ以上のオープンソースまたは商用バックエンドに送信するオープンソースのオブザーバビリティデータフォーマット（Jaeger、Prometheus、Fluent Bitなど）をサポートします。 It removes the need to run, operate,
+and maintain multiple agents/collectors. This works with improved scalability
+and supports open source observability data formats (e.g. Jaeger, Prometheus,
+Fluent Bit, etc.) sending to one or more open source or commercial backends.
 
 ## 目的 {#objectives}
 
@@ -26,12 +29,14 @@ OpenTelemetryコレクターは、テレメトリーデータの受信、処理�
 ## コレクターを使う場面 {#when-to-use-a-collector}
 
 ほとんどの言語固有の計装ライブラリには、一般的なバックエンドやOTLP用のエクスポーターがあります。
-ですので、あなたは次のように不思議に思うかもしれません。
+ですので、あなたは次のように不思議に思うかもしれません。 You might wonder,
 
 > 各サービスがバックエンドに直接データを送信するのではなく、どのような状況でコレクターを使ってデータを送信するのだろう
 
 OpenTelemetryを試したり始めたりするには、バックエンドに直接データを送ることは、素早く価値を得るための素晴らしい方法です。
-また、開発環境や小規模な環境では、コレクターなしでも十分な結果を得られます。
+また、開発環境や小規模な環境では、コレクターなしでも十分な結果を得られます。 Also, in a
+development or small-scale environment you can get decent results without a
+collector.
 
 しかし、一般的には、サービスとともにコレクターを使用することをおすすめします。理由は、サービスが素早くコレクターにデータをオフロードして、コレクターが再試行、バッチ処理、暗号化、機密データのフィルタリングなどの追加処理を行えるからです。
 
@@ -46,13 +51,15 @@ OpenTelemetryを試したり始めたりするには、バックエンドに直�
 
 **コレクター**のステータスは、コレクターのコアコンポーネントが現在、[安定性レベル][stability levels]がまちまちであるため、 [混合状態（mixed）][mixed] となっています。
 
-**コレクターコンポーネント** は成熟度が異なります。
-各コンポーネントの安定性は `README.md` で明記されています。
-利用可能なコレクターコンポーネントの一覧は、[レジストリ][registry] にあります。
+**Collector components** differ in their maturity levels. Each component has its
+stability documented in its `README.md`. You can find a list of all available
+Collector components in the [registry][].
 
-コレクターのソフトウェアのアーティファクトは、対象となる利用者に応じた一定の期間、サポートが保証されます。
-このサポートには、最低限、重大なバグやセキュリティ問題の修正が含まれます。
-詳細については、[サポートポリシー](https://github.com/open-telemetry/opentelemetry-collector/blob/main/VERSIONING.md) を参照してください。
+Support is guaranteed for Collector software artifacts for a certain time period
+based on the artifact's intended audience. This support includes, at minimum,
+fixes for critical bugs and security issues. See the
+[support policies](https://github.com/open-telemetry/opentelemetry-collector/blob/main/VERSIONING.md)
+for more details.
 
 ## ディストリビューションとリリース {#releases}
 

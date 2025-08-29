@@ -1,26 +1,24 @@
 ---
 title: Distributions（发行版）
-description: 发行版是 OpenTelemetry 组件的定制版本，不应与“分支（fork）”混淆。
+description: >-
+  发行版是 OpenTelemetry 组件的定制版本，不应与“分支（fork）”混淆。
 weight: 190
-anchor: distributions
-default_lang_commit: 3337aa6fbaccf5e8734a1ef2c6ca8b61496c3d93
 ---
 
-## 简介 {#introduction}
-
 OpenTelemetry 项目由多个支持不同[信号](../signals)的[组件](../components)构成。
-其官方参考实现包括：
+其官方参考实现包括： The reference implementation of
+OpenTelemetry is available as:
 
 - 各语言的[自动插桩库](../instrumentation)
 - 一个 [Collector 二进制文件](/docs/concepts/components/#collector)
 
 任何参考实现都可以进行定制，形成一个发行版（Distribution）。
 
-## 什么是发行版？{#what-is-a-distribution}
+## What is a distribution?
 
-**发行版**是某个 OpenTelemetry 组件的定制版本。本质上，
-它是对上游 OpenTelemetry 仓库的封装，并包含一些定制功能。
-**发行版不应与 Fork 混淆**。
+A distribution is a customized version of an OpenTelemetry component. A
+distribution is a wrapper around an upstream OpenTelemetry repository with some
+customizations. Distributions are not to be confused with forks.
 
 发行版中的定制内容可能包括：
 
@@ -29,31 +27,34 @@ OpenTelemetry 项目由多个支持不同[信号](../signals)的[组件](../comp
 - 面向厂商或最终用户的额外打包选项
 - 比 OpenTelemetry 原生实现更广的测试、性能或安全覆盖
 - OpenTelemetry 尚未提供的附加功能
-- 经过精简、功能减少的版本
+- 注意：**发行版的技术支持由发行版的作者负责，非 OpenTelemetry 官方团队。**
 
 发行版大致可分为以下几类：
 
-- **“纯净版”（Pure）**：这类发行版与上游功能保持一致，100% 兼容，
-  通常仅针对易用性或打包方式进行增强。此类定制通常面向特定后端、厂商或最终用户。
-- **“增强版”（Plus）**：这类发行版在上游基础上增加了额外功能，
-  例如添加了尚未合入 OpenTelemetry 主项目的插桩库或厂商专用导出器。
-- **“精简版”（Minus）**：这类发行版移除了上游部分功能。
-  例如，可能剔除了某些插桩库、接收器、处理器、导出器或扩展组件。
-  此类定制可能是为了提升支持性或安全性。
+- **"Pure":** These distributions provide the same functionality as upstream and
+  are 100% compatible. Customizations typically enhance the ease of use or
+  packaging. These customizations may be backend, vendor, or end-user specific.
+- **"Plus":** These distributions provide added functionalities on top of
+  upstream through additional components. Examples include instrumentation
+  libraries or vendor exporters not upstreamed to the OpenTelemetry project.
+- **"Minus":** These distributions provide a subset of functionality from
+  upstream. Examples of this include the removal of instrumentation libraries or
+  receivers, processors, exporters, or extensions found in the OpenTelemetry
+  Collector project. These distributions may be provided to increase
+  supportability and security considerations.
 
 ## 谁可以创建发行版？{#who-can-create-a-distribution}
 
-\*\*任何人都可以创建自己的发行版。
-\*\*目前已有多个[厂商](/ecosystem/vendors/)提供了自己的[发行版](/ecosystem/distributions/)。
-此外，如果你希望使用某些尚未合入 OpenTelemetry 主项目的 Registry 组件，
-作为最终用户你也可以考虑创建一个定制发行版。
+Anyone can create a distribution. Today, several [vendors](/ecosystem/vendors/)
+offer [distributions](/ecosystem/distributions/). In addition, end-users can
+consider creating a distribution if they want to use components in the
+[Registry](/ecosystem/registry/) that are not upstreamed to the OpenTelemetry
+project.
 
 ## 贡献还是发行？{#contribution-or-distribution}
 
 在深入学习如何创建发行版之前，建议你先思考一下：
 你对某个 OpenTelemetry 组件的改动是否对所有用户都有价值？是否应该合并到官方参考实现中？
-
-以下问题可以帮助你判断：
 
 - 你编写的“易用性脚本”能否被通用化？
 - 你修改的默认设置是否对大多数用户都更合适？
@@ -78,14 +79,16 @@ OpenTelemetry 项目由多个支持不同[信号](../signals)的[组件](../comp
 
 - [Java agent 扩展机制](/docs/zero-code/java/agent/extensions)
 
-## 遵循品牌使用规范 {#follow-the-guidelines}
+## Follow the guidelines
 
 如果你在发行版中使用了 OpenTelemetry 项目的标识（如 logo、名称等），
 请务必遵循 [OpenTelemetry 品牌使用指南][guidelines]。
 
-目前，OpenTelemetry 项目**尚未提供发行版认证机制**。未来可能会效仿 Kubernetes 项目，
-引入认证与合作伙伴机制。在评估某个发行版时，请确保它不会导致供应商锁定（Vendor Lock-in）。
+The OpenTelemetry project does not certify distributions at this time. 目前，OpenTelemetry 项目**尚未提供发行版认证机制**。未来可能会效仿 Kubernetes 项目，
+引入认证与合作伙伴机制。在评估某个发行版时，请确保它不会导致供应商锁定（Vendor Lock-in）。 When evaluating a distribution, ensure using the
+distribution does not result in vendor lock-in.
 
-> 注意：**发行版的技术支持由发行版的作者负责，非 OpenTelemetry 官方团队。**
+> Any support for a distribution comes from the distribution authors and not the
+> OpenTelemetry authors.
 
 [guidelines]: https://github.com/open-telemetry/community/blob/main/marketing-guidelines.md

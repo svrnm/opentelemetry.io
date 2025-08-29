@@ -2,7 +2,6 @@
 title: トラブルシューティング
 description: コレクターのトラブルシューティングに関する推奨事項
 weight: 25
-default_lang_commit: 974cdea55c03089f4e86d6068ec133b04e2653da
 cSpell:ignore: confmap pprof tracez zpages
 ---
 
@@ -18,11 +17,13 @@ cSpell:ignore: confmap pprof tracez zpages
 
 ### ローカルエクスポーター {#local-exporters}
 
-設定の検証やネットワークのデバッグなど、特定の問題については、ローカルログに出力するように設定されたコレクターに少量のテストデータを送信できます。
+For certain types of issues, such as configuration verification and network
+debugging, you can send a small amount of test data to a Collector configured to
+output to local logs. 設定の検証やネットワークのデバッグなど、特定の問題については、ローカルログに出力するように設定されたコレクターに少量のテストデータを送信できます。
 [ローカルエクスポーター](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter#general-information)を使用することで、コレクターによって処理されているデータを検査できます。
 
 ライブトラブルシューティングには、コレクターがデータを受信、処理、エクスポートしていることを確認できる[`デバッグ` エクスポーター](https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/debugexporter/README.md)の使用を検討してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 ```yaml
 receivers:
@@ -38,7 +39,8 @@ service:
 ```
 
 テストを開始するには、Zipkinペイロードを生成します。
-たとえば、 `trace.json` という名前のファイルを以下の内容で作成できます。
+たとえば、 `trace.json` という名前のファイルを以下の内容で作成できます。 For example, you can create a file
+called `trace.json` that contains:
 
 ```json
 [
@@ -112,8 +114,9 @@ Attributes:
 
 ### コレクターコンポーネントの確認 {#check-collector-components}
 
-以下のサブコマンドを使用して、Collectorディストリビューションで利用可能なコンポーネントとその安定性のレベルを一覧表示します。
-出力形式はバージョンによって変更される可能性があることに注意してください。
+Use the following sub-command to list the available components in a Collector
+distribution, including their stability levels. Please note that the output
+format might change across versions.
 
 ```shell
 otelcol components
@@ -212,7 +215,8 @@ extensions:
 #### パフォーマンスプロファイラ (pprof) {#performance-profiler}
 
 ローカルのポート `1777` で利用可能な[pprof 拡張機能](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/extension/pprofextension/README.md)を使用すると、実行中のコレクターをプロファイリングできます。
-これは高度なユースケースであり、ほとんどの状況では必要ないはずです。
+これは高度なユースケースであり、ほとんどの状況では必要ないはずです。 This is an advanced use-case that should not be needed in most
+circumstances.
 
 #### zPages {#zpages}
 
@@ -220,14 +224,15 @@ extensions:
 
 `/debug/tracez` で公開されるTraceZページは、次のようなトレース操作のデバッグに役立ちます。
 
-- レイテンシーの問題。アプリケーションの遅い部分を特定します。
-- デッドロックと計装の問題。終了しない実行中のスパンを特定します。
-- エラー。発生しているエラーの種類と発生場所を特定します。
+- Latency issues. レイテンシーの問題。アプリケーションの遅い部分を特定します。
+- Deadlocks and instrumentation problems. Identify running spans that don't end.
+- Errors. エラー。発生しているエラーの種類と発生場所を特定します。
 
 `zpages` には、コレクター自体が出力しないエラーログが含まれている場合があることに注意してください。
 
 コンテナ環境では、このポートをローカルだけでなくパブリックインターフェースで公開したい場合があります。
-`endpoint` は `extensions` 設定セクションを使用して構成できます。
+`endpoint` は `extensions` 設定セクションを使用して構成できます。 The `endpoint` can be configured using the
+`extensions` configuration section:
 
 ```yaml
 extensions:
@@ -237,8 +242,9 @@ extensions:
 
 ## 複雑なパイプラインをデバッグするためのチェックリスト {#checklist-for-debugging-complex-pipelines}
 
-テレメトリーが複数のコレクターやネットワークを経由して流れる場合、問題を特定するのは困難な場合があります。
-テレメトリーがコレクターやパイプライン内の他のコンポーネントを通過する各"ホップ"で、以下を確認することが重要です。
+It can be difficult to isolate problems when telemetry flows through multiple
+Collectors and networks. For each "hop" of telemetry through a Collector or
+other component in your pipeline, it’s important to verify the following:
 
 - コレクターのログにエラーメッセージはありますか？
 - テレメトリーはこのコンポーネントにどのように取り込まれていますか？
@@ -265,6 +271,9 @@ extensions:
 
 ドロップを軽減するには、[`batch` プロセッサー](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/batchprocessor/README.md)を設定します。
 さらに、有効化されているエクスポーターで[キューリトライオプション](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/exporterhelper#configuration)を設定する必要があるかもしれません。
+In addition, it might be necessary to configure the
+[queued retry options](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/exporterhelper#configuration)
+on enabled exporters.
 
 #### コレクターがデータを受信していない {#collector-is-not-receiving-data}
 
@@ -280,9 +289,10 @@ extensions:
 #### コレクターがデータを処理していない {#collector-is-not-processing-data}
 
 ほとんどの処理の問題は、プロセッサーの動作に関する誤解やプロセッサーの誤った設定が原因です。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
-- アトリビュートプロセッサーはスパンの"タグ"にのみ機能します。スパン名はスパンプロセッサーによって処理されます。
+- アトリビュートプロセッサーはスパンの"タグ"にのみ機能します。スパン名はスパンプロセッサーによって処理されます。 The span name is
+  handled by the span processor.
 - トレースデータのプロセッサー（テールサンプリングを除く）は、個々のスパンに対してのみ機能します。
 
 #### コレクターがデータをエクスポートしていない {#collector-is-not-exporting-data}
@@ -295,7 +305,8 @@ extensions:
 
 潜在的な問題については、コレクターの[logs](/docs/collector/internal-telemetry/#configure-internal-logs) と[zPages](https://github.com/open-telemetry/opentelemetry-collector/blob/main/extension/zpagesextension/README.md)を確認してください。
 
-データのエクスポートが機能しないのは、ファイアウォール、DNS、プロキシの問題など、ネットワーク設定の問題が原因であることがよくあります。
+Exporting data often does not work because of a network configuration issue,
+such as a firewall, DNS, or proxy issue. データのエクスポートが機能しないのは、ファイアウォール、DNS、プロキシの問題など、ネットワーク設定の問題が原因であることがよくあります。
 コレクターには[プロキシのサポート](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter#proxy-support)があることに注意してください。
 
 ### コレクターで制御に関する問題が発生している {#collector-is-experiencing-control-issues}
@@ -308,13 +319,17 @@ extensions:
 
 - [`memory_limiter` プロセッサー](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/memorylimiterprocessor/README.md)がないこと、もしくは設定ミスによるメモリ逼迫。
 - 負荷に対する不適切なサイジング。
-- 不適切な設定。たとえば、利用可能なメモリよりも大きいサイズのキュー。
-- インフラストラクチャのリソース制限。たとえば、Kubernetesなど。
+- Improper configuration. For example, a queue sized to be larger than available
+  memory.
+- インフラストラクチャのリソース制限。たとえば、Kubernetesなど。 For example, Kubernetes.
 
 #### Windows Dockerコンテナでコレクターの起動に失敗する {#collector-fails-to-start-in-windows-docker-containers}
 
 v0.90.1以前では、Windows DockerコンテナでCollectorの起動に失敗し `The service process could not connect to the service controller` というエラーメッセージが表示されることがあります。
-この場合、`NO_WINDOWS_SERVICE=1` 環境変数を設定して、コレクターがWindowsサービスとして実行しようとせずに、インタラクティブなターミナルで実行されているかのように強制的に起動させる必要があります。
+この場合、`NO_WINDOWS_SERVICE=1` 環境変数を設定して、コレクターがWindowsサービスとして実行しようとせずに、インタラクティブなターミナルで実行されているかのように強制的に起動させる必要があります。 In this case,
+the `NO_WINDOWS_SERVICE=1` environment variable must be set to force the
+Collector to start as if it were running in an interactive terminal, without
+attempting to run as a Windows service.
 
 ### コレクターで設定に関する問題が発生している {#collector-is-experiencing-configuration-issues}
 
@@ -322,8 +337,9 @@ v0.90.1以前では、Windows DockerコンテナでCollectorの起動に失敗�
 
 #### Nullマップ {#null-maps}
 
-複数の設定ファイルを解決する際、後の設定値がnullであっても、前の設定ファイルの値は後の設定ファイルの値に置き換えられて削除されます。
-この問題は、以下の方法で修正できます。
+During configuration resolution of multiple configs, values in earlier configs
+are removed in favor of later configs, even if the later value is null. You can
+fix this issue by
 
 - `processors:` のかわりに `processors: {}` のように、空のマップを表すために `{}` を使用する。
 - `processors:` のような空の設定を構成から省略する。

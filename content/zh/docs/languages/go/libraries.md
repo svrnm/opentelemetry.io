@@ -1,11 +1,10 @@
 ---
-title: 使用插桩库
+title: Using instrumentation libraries
 linkTitle: Libraries
 aliases:
   - /docs/languages/go/using_instrumentation_libraries
   - /docs/languages/go/automatic_instrumentation
 weight: 40
-default_lang_commit: 859e80c74d61d694104f565aecde325ab4aa713f
 ---
 
 {{% docs/languages/libraries-intro "go" %}}
@@ -23,7 +22,8 @@ default_lang_commit: 859e80c74d61d694104f565aecde325ab4aa713f
 
 ## 安装{#setup}
 
-每个插桩库是一个独立的 Go 包。通常你需要使用 `go get` 获取相应的包。例如，如果要安装由
+Each instrumentation library is a package. In general, this means you need to
+`go get` the appropriate package. 每个插桩库是一个独立的 Go 包。通常你需要使用 `go get` 获取相应的包。例如，如果要安装由
 [Contrib repository](https://github.com/open-telemetry/opentelemetry-go-contrib)
 维护的插桩库，可以运行以下命令：
 
@@ -45,4 +45,6 @@ go get go.opentelemetry.io/contrib/instrumentation/{import-path}/otel{package-na
 插桩库可以生成入站和出站 HTTP 请求的遥测数据，但不会对你的实际应用程序进行插桩。
 
 你可以通过在代码中集成[自定义插桩](../instrumentation/)来丰富你的遥测数据。
-这补充了标准库生成的遥测数据，并且可以让你更深入地了解正在运行的应用程序。
+这补充了标准库生成的遥测数据，并且可以让你更深入地了解正在运行的应用程序。 This supplements
+the standard library telemetry, and can offer deeper insights into your running
+application.

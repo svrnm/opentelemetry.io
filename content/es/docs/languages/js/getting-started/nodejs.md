@@ -1,15 +1,14 @@
 ---
 title: Node.js
 description: ¡Obtén telemetría para tu aplicación en menos de 5 minutos!
-aliases: [/docs/js/getting_started/nodejs]
+aliases: [ /docs/js/getting_started/nodejs ]
 weight: 10
-default_lang_commit: 788277e362bc602b72a90aa9191f9c05c403458e
 cSpell:ignore: autoinstrumentaciones autoinstrumentación rolldice
 ---
 
 Esta página te mostrará cómo comenzar con OpenTelemetry en Node.js.
 
-Aprenderás cómo instrumentar tanto [trazas][] como [métricas][] y registrarlas
+Aprenderás cómo instrumentar tanto \[trazas]\[] como \[métricas]\[] y registrarlas
 en la consola.
 
 {{% alert title="Nota" %}} La biblioteca de registro (logging) de OpenTelemetry
@@ -178,6 +177,10 @@ tarea es la opción
 Crea un archivo llamado `instrumentation.ts` (o `instrumentation.js` si no usas
 TypeScript), que contendrá el código de configuración de tu instrumentación.
 
+{{% alert title="Note" %}} The following examples using
+`--import instrumentation.ts` (TypeScript) require Node.js v.20 or later. If you
+are using Node.js v.18, please use the JavaScript example. {{% /alert %}}
+
 {{< tabpane text=true >}} {{% tab TypeScript %}}
 
 ```ts
@@ -257,10 +260,9 @@ Abre <http://localhost:8080/rolldice> en tu navegador web y recarga la página
 varias veces. Después de un momento, deberías ver los spans impresos en la
 consola por el `ConsoleSpanExporter`.
 
-<details>
-<summary>Ver salida de ejemplo</summary>
+<details><summary>Ver salida de ejemplo</summary>
 
-```json
+```js
 {
   "traceId": "3f1fe6256ea46d19ec3ca97b3409ad6d",
   "parentId": "f0b7b340dd6e08a7",
@@ -346,8 +348,7 @@ El span generado rastrea la duración de una solicitud a la ruta `/rolldice`.
 Envía algunas solicitudes más al endpoint. Después de un momento, verás métricas
 en la salida de la consola, como las siguientes:
 
-<details>
-<summary>Ver salida de ejemplo</summary>
+<details><summary>Ver salida de ejemplo</summary>
 
 ```yaml
 {
@@ -522,5 +523,5 @@ diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
 
 {{% /tab %}} {{< /tabpane >}}
 
-[trazas]: /docs/concepts/signals/traces/
-[métricas]: /docs/concepts/signals/metrics/
+[traces]: /docs/concepts/signals/traces/
+[metrics]: /docs/concepts/signals/metrics/

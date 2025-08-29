@@ -5,7 +5,6 @@ date: 2025-08-11
 author: >-
   [Juraci Paixão Kröhling](https://github.com/jpkrohling) (OllyGarden)
 canonical_url: https://blog.olly.garden/how-to-name-your-spans
-default_lang_commit: 79619e1eba717a87f893989b5d016c3ddb4fb4e9
 cSpell:ignore: jpkrohling OllyGarden SemConv
 ---
 
@@ -25,7 +24,8 @@ que você adiciona à sua própria lógica de negócio. Estas são as operaçõe
 do domínio da sua aplicação.
 
 Para estes trechos personalizados, recomendamos um padrão inspirado na gramática
-básica. Frases simples e claras geralmente seguem uma estrutura sujeito -> verbo
+básica.
+Frases simples e claras geralmente seguem uma estrutura sujeito -> verbo
 -> objeto direto. O "sujeito" (o serviço que está executando o trabalho) já faz
 parte do contexto do rastro. Podemos usar o restante dessa estrutura para nomear
 o trecho:
@@ -43,13 +43,13 @@ abordaremos mais adiante.
 
 Vejamos alguns exemplos:
 
-| Nome ruim                                 | Bom nome de trecho         | Por que é melhor                                                                        |
-| :---------------------------------------- | :------------------------- | :-------------------------------------------------------------------------------------- |
+| Nome ruim                                                                                                                                          | Bom nome de trecho         | Por que é melhor                                                                                                        |
+| :------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
 | processar_pagamento_para_usuario_jane_doe | processar pagamento        | O verbo e objeto são claros. O ID do usuário deve estar em um atributo.                 |
-| enviar*fatura*#98765                      | enviar fatura              | Agregável. É fácil calcular a latência P95 para o envio de todas as faturas.            |
+| enviar_fatura_#98765                                                                                                                               | enviar fatura              | Agregável. É fácil calcular a latência P95 para o envio de todas as faturas.            |
 | renderizar_anuncio_para_campanha_de_verão | renderizar anúncio         | A campanha específica é um detalhe, não a operação principal. Coloque-a em um atributo. |
-| calcular_frete_para_cep_90210             | calcular frete             | A operação é consistente. O CEP é um parâmetro, não parte do nome.                      |
-| validação_falhou                          | validar entrada do usuário | Foque na operação, não no resultado. O resultado pertence ao estado do trecho.          |
+| calcular_frete_para_cep_90210                                  | calcular frete             | A operação é consistente. O CEP é um parâmetro, não parte do nome.                      |
+| validação_falhou                                                                                                              | validar entrada do usuário | Foque na operação, não no resultado. O resultado pertence ao estado do trecho.          |
 
 Ao seguir o formato `{verbo} {objeto}`, você cria um vocabulário claro e
 consistente para suas operações de negócio. Isso torna seus rastros extremamente
@@ -67,7 +67,9 @@ nome de trecho deve ter **baixa cardinalidade**. Se você incluir identificadore
 únicos, como um ID de usuário ou número de fatura, no nome do trecho, criará um
 nome único para cada operação. Isso inunda seu _backend_ de observabilidade,
 dificulta o agrupamento e análise de operações similares, e pode aumentar
-significativamente os custos.
+significativamente os custos. This floods your observability backend, makes
+it impossible to group and analyze similar operations, and can significantly
+increase costs.
 
 O padrão `{verbo} {objeto}` naturalmente gera nomes de baixa cardinalidade. Os
 detalhes únicos e de alta cardinalidade (`fatura\_#98765, usuario_jane_doe`)
@@ -95,7 +97,8 @@ Para trechos HTTP no lado do servidor, a convenção é `{method} {route}`.
 
 - **Exemplo:** `GET /api/users/:ID`
 - **Análise:** Este é um verbo (`GET`) atuando sobre um objeto
-  (`/api/users/:id`). O uso de um _template_ de rota no lugar do caminho real
+  (`/api/users/:id`).
+  O uso de um _template_ de rota no lugar do caminho real
   (`/api/users/123`) é um exemplo perfeito de manutenção de baixa cardinalidade.
 
 ### Trechos de banco de dados {#database-spans}
@@ -128,8 +131,7 @@ padrão claro e consistente como `{verbo} {objeto}` para seus trechos específic
 de negócio, você pode transformar seus dados de telemetria de um emaranhado
 confuso em um jardim bem cuidado.
 
-Um trecho bem nomeado é um presente para seu eu do futuro e sua equipe.
-Proporciona clareza durante incidentes, possibilita análises poderosas de
+Um trecho bem nomeado é um presente para seu eu do futuro e sua equipe. Proporciona clareza durante incidentes, possibilita análises poderosas de
 desempenho e, no fim, ajuda você a construir _software_ melhor e mais confiável.
 
 Na próxima publicação desta série, exploraremos a próxima camada de detalhes:

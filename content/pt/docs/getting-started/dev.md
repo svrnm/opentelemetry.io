@@ -1,7 +1,6 @@
 ---
 title: Primeiros passos para Desenvolvedores
 linkTitle: Dev
-default_lang_commit: f1ccafef4b5070f26ce63a3dc19fcafc8a00fb8f
 ---
 
 A página [primeiros-passos](..) é para você se:

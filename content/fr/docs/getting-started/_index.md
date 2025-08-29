@@ -1,9 +1,8 @@
 ---
-title: Débuter
+title: Getting Started
 description: Débutez avec OpenTelemetry selon votre rôle.
 no_list: true
 weight: 160
-default_lang_commit: 3512b0ae11f72d3a954d86da59ad7f98d064bdad
 ---
 
 Sélectionnez un rôle[^1] pour commencer :
@@ -24,8 +23,7 @@ _voir_ à quoi ressemble l'observabilité avec OpenTelemetry !
 
 </div>
 
-[^1]: Si aucun de ces rôles ne s'applique à vous, [faites-le nous savoir][].
+[^1]: Si aucun de ces rôles ne s'applique à vous, \[faites-le nous savoir]\[].
 
 [demo]: /ecosystem/demo/
-[faites-le nous savoir]:
-  https://github.com/open-telemetry/opentelemetry.io/issues/new?title=Add%20a%20new%20persona:%20My%20Persona&body=Provide%20a%20description%20of%20your%20role%20and%20responsibilities%20and%20what%20your%20observability%20goals%20are
+[let us know]: https://github.com/open-telemetry/opentelemetry.io/issues/new?title=Add%20a%20new%20persona:%20My%20Persona&body=Provide%20a%20description%20of%20your%20role%20and%20responsibilities%20and%20what%20your%20observability%20goals%20are

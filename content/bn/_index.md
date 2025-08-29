@@ -4,11 +4,11 @@ description: >-
   ইফেক্টিভ অবজারভেবিলিটির জন্য উচ্চ-মানের, সর্বজনীন ও পোর্টেবল টেলিমেট্রি প্রদান
 outputs:
   - HTML
-developer_note:
-  The blocks/cover shortcode (used below) will use as a background image any
-  image file containing "background" in its name.
+  # Include the following for `content/en` ONLY
+  - REDIRECTS
+  - RSS
+developer_note: The blocks/cover shortcode (used below) will use as a background image any image file containing "background" in its name.
 show_banner: true
-default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 ---
 
 <div class="d-none"><a rel="me" href="https://fosstodon.org/@opentelemetry"></a></div>
@@ -16,10 +16,12 @@ default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 {{< blocks/cover image_anchor="top" height="max" color="primary" >}}
 
 <!-- prettier-ignore -->
+
 ![OpenTelemetry](/img/logos/opentelemetry-horizontal-color.svg)
 {.otel-logo}
 
 <!-- prettier-ignore -->
+
 {{% param description %}}
 {.display-6}
 
@@ -43,10 +45,9 @@ default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 
 {{% blocks/lead color="white" %}}
 
-OpenTelemetry একটি API, SDK এবং টুলের সংগ্রহ। এটি ব্যবহার করে আপনি টেলিমেট্রি
-ডেটা (মেট্রিকস, লগ এবং ট্রেস) ইনস্ট্রুমেন্ট (instrument), জেনারেট, কালেক্ট এবং
-এক্সপোর্ট করতে পারেন, যা আপনার সফটওয়্যারের পারফরম্যান্স এবং আচরণ বিশ্লেষণে
-সহায়তা করে।
+OpenTelemetry is a collection of APIs, SDKs, and tools. Use it to instrument,
+generate, collect, and export telemetry data (metrics, logs, and traces) to help
+you analyze your software's performance and behavior.
 
 > OpenTelemetry সাধারণভাবে [অনেক ভাষায়](docs/languages/)
 > [এভেইলেবল (available)](/status/) এবং প্রোডাকশন ব্যবহারের জন্য উপযোগী।
@@ -87,8 +88,8 @@ OpenTelemetry অনেক জনপ্রিয় লাইব্রেরি ও
 
 {{% blocks/section color="secondary" type="cncf" %}}
 
-**OpenTelemetry একটি [CNCF][] [ইনকিউবেটিং][incubating] প্রজেক্ট**।<br> এটি
-OpenTracing এবং OpenCensus প্রকল্পের একীভূতকরণের মাধ্যমে গঠিত।
+**OpenTelemetry is a [CNCF][] [incubating][] project**.<br> Formed through a
+merger of the OpenTracing and OpenCensus projects.
 
 [![CNCF logo][]][cncf]
 

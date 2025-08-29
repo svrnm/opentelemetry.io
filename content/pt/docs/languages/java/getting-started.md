@@ -2,10 +2,10 @@
 title: Primeiros passos com exemplo
 description: Obtenha telemetria para sua aplicação em menos de 5 minutos!
 weight: 10
-default_lang_commit: 0930994d5be6f01b05d0caca0550c468d2f3e829
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/getting-started"?>
 
 Esta página mostrará como começar a utilizar o OpenTelemetry em Java.
@@ -27,14 +27,13 @@ Certifique-se de ter instalado localmente:
 O exemplo a seguir utiliza uma aplicação básica [Spring Boot][]. Você pode usar
 outros frameworks web, como Apache Wicket ou Play. Para uma lista completa das
 bibliotecas e frameworks suportados, consulte o
-[registro](/ecosystem/registry/?component=instrumentation&language=java).
+registro.
 
 Para exemplos mais elaborados, veja [exemplos](../examples/).
 
 ### Dependências {#dependencies}
 
-Para começar, configure um ambiente em um novo diretório chamado `java-simple`.
-Dentro dele, crie um arquivo chamado `build.gradle.kts` e adicione o seguinte
+Para começar, configure um ambiente em um novo diretório chamado `java-simple`. Dentro dele, crie um arquivo chamado `build.gradle.kts` e adicione o seguinte
 conteúdo ao arquivo:
 
 ```kotlin
@@ -65,7 +64,9 @@ No mesmo diretório, crie um arquivo chamado `DiceApplication.java` e adicione o
 seguinte código ao arquivo:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/DiceApplication.java"?>
+
 ```java
 package otel;
 
@@ -82,13 +83,16 @@ public class DiceApplication {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 Crie outro arquivo chamado `RollController.java` e adicione o seguinte código ao
 arquivo:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/RollController.java"?>
+
 ```java
 package otel;
 
@@ -120,6 +124,7 @@ public class RollController {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 Compile e execute a aplicação com o seguinte comando, e então abra
@@ -142,12 +147,16 @@ maneiras, os passos abaixo utilizam variáveis de ambiente.
    do repositório `opentelemetry-java-instrumentation`. O arquivo JAR contém o
    agente e todos os pacotes de instrumentação automática:
 
-   ```console
+   ```sh
    curl -L -O https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
    ```
 
+   {{% alert %}}
+
    {{% alert color="info" %}}<i class="fas fa-edit"></i> Take note of the path
    to the JAR file.{{% /alert %}}
+
+   {{% /alert %}}
 
 2. Configure e exporte as variáveis que especificam o JAR do agente Java e um
    [exportador de console][console exporter], utilizando a notação adequada para
@@ -162,6 +171,7 @@ maneiras, os passos abaixo utilizam variáveis de ambiente.
    ```
 
    {{% alert title="Important" color="warning" %}}
+
    - Replace `PATH/TO` above, with your path to the JAR.
    - Set `OTEL_METRIC_EXPORT_INTERVAL` to a value well below the default, as we
      illustrate above, **only during testing** to help you more quickly ensure
@@ -246,7 +256,7 @@ value=8192, exemplars=[]}], monotonic=false, aggregationTemporality=CUMULATIVE}}
 ...
 ```
 
-## O que vem depois? {#what-next}
+## O que vem depois?
 
 Para mais:
 
@@ -269,11 +279,8 @@ Para mais:
 [configure the java agent]: /docs/zero-code/java/agent/configuration/
 [console exporter]: /docs/languages/java/configuration/#properties-exporters
 [exporter]: /docs/languages/java/configuration/#properties-exporters
-[java-vers]:
-  https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#language-version-compatibility
+[java-vers]: https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#language-version-compatibility
 [manual instrumentation]: ../instrumentation
-[opentelemetry-javaagent.jar]:
-  https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
-[releases]:
-  https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases
+[opentelemetry-javaagent.jar]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
+[releases]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases
 [Spring Boot]: https://spring.io/guides/gs/spring-boot/

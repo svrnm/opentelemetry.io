@@ -1,5 +1,4 @@
 ---
-default_lang_commit: 7caeb2b26915ad05f4f36099ac3e4fe8d8b3c9f0
 params:
   aResource: um processo
 ---

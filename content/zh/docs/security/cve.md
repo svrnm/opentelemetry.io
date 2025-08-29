@@ -1,10 +1,11 @@
 ---
 title: 常见漏洞与暴露（CVE）
 weight: 100
-default_lang_commit: f35b3300574b428f94dfeeca970d93c5a6ddbf35
 ---
 
-以下是 [OpenTelemetry GitHub 组织](https://github.com/open-telemetry/)中所有代码仓库已报告的
+This is a list of reported Common Vulnerabilities and Exposures (CVEs) across
+all repositories in the
+[OpenTelemetry organization on GitHub](https://github.com/open-telemetry/). 以下是 [OpenTelemetry GitHub 组织](https://github.com/open-telemetry/)中所有代码仓库已报告的
 CVE 列表。原始数据存放在 [sig-security](https://github.com/open-telemetry/sig-security)
 仓库中，并在每日更新。
 
@@ -13,7 +14,7 @@ CVE 列表。原始数据存放在 [sig-security](https://github.com/open-teleme
     <tr>
       <th>CVE 编号</th>
       <th>问题摘要</th>
-      <th>严重等级</th>
+      <th>Severity</th>
       <th>所属仓库</th>
     </tr>
   </thead>

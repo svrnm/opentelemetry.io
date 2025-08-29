@@ -1,11 +1,11 @@
 ---
 title: Configuration du SDK
 weight: 30
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: customizer distro
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/spring-starter"?>
 
 Ce Spring Starter supporte les
@@ -128,7 +128,9 @@ dependencies {
 {{% /tab %}} {{< /tabpane>}}
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/FilterPaths.java"?>
+
 ```java
 package otel;
 
@@ -153,6 +155,7 @@ public class FilterPaths {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Configurer programmatiquement l'exportateur {#configure-the-exporter-programmatically}
@@ -162,7 +165,9 @@ configuration remplace l'exportateur OTLP par défaut et ajoute un en-tête
 personnalisé aux requêtes.
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomAuth.java"?>
+
 ```java
 package otel;
 
@@ -198,6 +203,7 @@ public class CustomAuth {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ## Fournisseurs de ressources {#resource-providers}
@@ -226,10 +232,10 @@ FQN:
 FQN:
 `io.opentelemetry.instrumentation.spring.autoconfigure.resources.SpringResourceProvider`
 
-| Attribut          | Valeur                                                                                                      |
-| ----------------- | ----------------------------------------------------------------------------------------------------------- |
+| Attribut          | Valeur                                                                                                                         |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `service.name`    | `spring.application.name` ou `build.name` de `build-info.properties` (voir [Nom du service](#service-name)) |
-| `service.version` | `build.version` de `build-info.properties`                                                                  |
+| `service.version` | `build.version` de `build-info.properties`                                                                                     |
 
 ## Nom du service {#service-name}
 

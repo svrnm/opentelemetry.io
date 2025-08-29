@@ -1,12 +1,12 @@
 ---
 title: Instrumentação
 description: Como o OpenTelemetry facilita a instrumentação
+aliases: [ instrumenting ]
 weight: 15
-default_lang_commit: efeda2d8ded2471211697c3993f6d475a3a8b06e
 ---
 
-Para que um sistema seja [observável], ele deve ser **instrumentado**: ou seja,
-o código dos componentes do sistema deve emitir [rastros], [métricas] e [logs].
+Para que um sistema seja \[observável], ele deve ser **instrumentado**: ou seja,
+o código dos componentes do sistema deve emitir \[rastros], \[métricas] e [logs].
 
 Com o OpenTelemetry, você pode instrumentar seu código de duas maneiras:
 
@@ -35,7 +35,7 @@ código. Os seguintes recursos também fazem parte do OpenTelemetry:
 - Bibliotecas podem utilizar a API OpenTelemetry como dependência, sem impactar
   as aplicações que usam essa biblioteca, a menos que o SDK do OpenTelemetry
   seja importado.
-- Para cada um dos [sinais], você tem à disposição diversos métodos para
+- Para cada um dos \[sinais], você tem à disposição diversos métodos para
   criá-los, processá-los e exportá-los.
 - Com a [propagação de contexto](../context-propagation/) integrada nas
   implementações, você pode correlacionar sinais independentemente de onde eles
@@ -52,7 +52,7 @@ código. Os seguintes recursos também fazem parte do OpenTelemetry:
   código e plataformas.
 
 [logs]: ../signals/logs/
-[métricas]: ../signals/metrics/
-[observável]: ../observability-primer/#what-is-observability
-[sinais]: ../signals/
-[rastros]: ../signals/traces/
+[metrics]: ../signals/metrics/
+[observable]: ../observability-primer/#what-is-observability
+[signals]: ../signals/
+[traces]: ../signals/traces/

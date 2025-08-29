@@ -1,15 +1,11 @@
 ---
 title: Amostragem
-description:
-  Aprenda sobre amostragem e explore as diferentes opções disponíveis no
-  OpenTelemetry.
+description: Aprenda sobre amostragem e explore as diferentes opções disponíveis no OpenTelemetry.
 weight: 80
-default_lang_commit: 49879d0c00a4a28c963a76998f7213af7b539c77
 ---
 
 Com [rastros](/docs/concepts/signals/traces), você pode observar as requisições
-à medida que se movem de um serviço para outro em um sistema distribuído.
-Rastreamento é muito útil tanto para análises de alto nível quanto para análises
+à medida que se movem de um serviço para outro em um sistema distribuído. Rastreamento é muito útil tanto para análises de alto nível quanto para análises
 aprofundadas de sistemas.
 
 Contudo, se a grande maioria das suas requisições é bem-sucedida e termina com
@@ -25,17 +21,17 @@ da amostragem correta.
 ou trecho é considerado "amostrado" (_sampled_) ou "não amostrado" (_not
 sampled_):
 
+- **Não amostrado**: Um rastro ou trecho não é processado ou exportado. Por não
+  ter sido escolhido pelo amostrador, ele é considerado "não amostrado".
 - **Amostrado**: Um rastro ou trecho é processado e exportado. Por ter sido
   escolhido pelo amostrador (_sampler_) como representativo do conjunto de
   dados, ele é considerado "amostrado".
-- **Não amostrado**: Um rastro ou trecho não é processado ou exportado. Por não
-  ter sido escolhido pelo amostrador, ele é considerado "não amostrado".
 
 Às vezes, as definições desses termos se confundem. Você pode encontrar alguém
 dizendo que está "amostrando dados" ou que os dados não processados ou
 exportados são considerados "amostrados". Essas afirmações estão incorretas.
 
-## Por que usar amostragem? {#why-sampling}
+## Por que usar amostragem?
 
 A amostragem é uma das formas mais eficazes de reduzir os custos de
 observabilidade sem perder visibilidade. Embora existam outras maneiras de
@@ -130,7 +126,7 @@ não pode garantir que todos os rastros com um erro sejam amostrados apenas com 
 amostragem pela cabeça. Para essa situação e muitas outras, você precisa da
 amostragem pela cauda.
 
-## Amostragem pela Cauda {#tail-sampling}
+## Tail Sampling
 
 A amostragem pela cauda (_tail sampling_) é onde a decisão de amostrar um rastro
 acontece considerando todos ou a maioria dos trechos dentro do rastro. A
@@ -161,14 +157,16 @@ Existem três principais desvantagens na amostragem pela cauda atualmente:
 1. A amostragem pela cauda pode ser difícil de implementar. Dependendo dos tipos
    de técnicas de amostragem a sua disposição, nem sempre é uma decisão do tipo
    "configurar e esquecer". À medida que seus sistemas mudam, suas estratégias
-   de amostragem também mudarão. Para um sistema distribuído grande e
+   de amostragem também mudarão.
+   Para um sistema distribuído grande e
    sofisticado, as regras que implementam estratégias de amostragem também podem
    ser grandes e sofisticadas.
 2. A amostragem pela cauda pode ser difícil de operar. O(s) componente(s) que
    implementam a amostragem pela cauda devem ser sistemas com estado que podem
    aceitar e armazenar uma grande quantidade de dados. Dependendo dos padrões de
    tráfego, isso pode exigir dezenas ou até centenas de nós de computação que
-   utilizam recursos de maneira diferente. Além disso, um amostrador pela cauda
+   utilizam recursos de maneira diferente.
+   Além disso, um amostrador pela cauda
    pode precisar "recorrer" a técnicas de amostragem menos intensivas
    computacionalmente se não conseguir acompanhar o volume de dados que está
    recebendo. Por conta desses fatores, é crucial monitorar os componentes de

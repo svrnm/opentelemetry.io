@@ -1,7 +1,6 @@
 ---
-title: Démarrage rapide
+title: Getting started
 weight: 20
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: springboot
 ---
 
@@ -103,7 +102,8 @@ dependencyManagement {
 {{% alert title="Note" %}}
 
 Faites attention à ne pas mélanger les différentes manières de configurer les
-choses avec Gradle. Par exemple, n'utilisez pas
+choses avec Gradle.
+Par exemple, n'utilisez pas
 `implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:{{% param vers.instrumentation %}}"))`
 avec le plugin `io.spring.dependency-management`.
 

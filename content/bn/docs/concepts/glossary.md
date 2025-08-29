@@ -1,30 +1,30 @@
 ---
 title: শব্দকোষ
-description:
-  OpenTelemetry-তে ব্যবহৃত টেলিমেট্রি টার্মস-এর সংজ্ঞা এবং প্রচলিত নিয়ম।
+description: OpenTelemetry-তে ব্যবহৃত টেলিমেট্রি টার্মস-এর সংজ্ঞা এবং প্রচলিত নিয়ম।
 weight: 200
-default_lang_commit: 1ef7e909832c9c1cbf97aa15af0516f1d5b6bde5
 ---
+
 এই শব্দকোষ OpenTelemetry প্রজেক্টে নতুন টার্মস
 এবং ধারণাগুলো ([concepts](/docs/concepts/)) সংজ্ঞায়িত করে, এবং
 অবজারভেবিলিটি ক্ষেত্রে প্রচলিত টার্মসগুলোর OpenTelemetry-সম্পর্কিত
 ব্যবহার স্পষ্ট করে।
 
-প্রয়োজনে আমরা বানান এবং ক্যাপিটালাইজেশনের উপরও মন্তব্য করি। উদাহরণস্বরূপ, [OpenTelemetry](#opentelemetry) এবং [OTel](#otel) দেখুন।
+We also comment on spelling and capitalization when helpful. For example, see
+[OpenTelemetry](#opentelemetry) and [OTel](#otel).
 
 ## টার্মস {#terms}
 
 ### এগ্রিগেশন (Aggregation) {#aggregation}
 
-একটি নির্দিষ্ট সময়ের ব্যবধানে, প্রোগ্রাম এক্সিকিউশনের সময় ঘটে যাওয়া
-পরিমাপগুলোর সম্পর্কে সুনির্দিষ্ট বা অনুমানভিত্তিক পরিসংখ্যানে একাধিক
-পরিমাপকে একত্রিত করার প্রক্রিয়া। [Metric](#metric) [Data source]
-(#data-source) দ্বারা ব্যবহৃত।
+The process of combining multiple measurements into exact or estimated
+statistics about the measurements that took place during an interval of time,
+during program execution. Used by the [Metric](#metric)
+[Data source](#data-source).
 
 ### API {#api}
 
-Application Programming Interface। OpenTelemetry প্রজেক্টে, [Data source](#data-source) অনুযায়ী টেলিমেট্রি ডেটা কীভাবে তৈরি হয় তা
-সংজ্ঞায়িত করতে ব্যবহৃত হয়।
+Application Programming Interface. In the OpenTelemetry project, used to define
+how telemetry data is generated per [Data source](#data-source).
 
 ### এপ্লিকেশন (Application) {#application}
 
@@ -38,24 +38,28 @@ Application Performance Monitoring হল সফটওয়্যার অ্�
 
 ### অ্যাট্রিবিউট (Attribute) {#attribute}
 
-[Metadata](#metadata)-এর জন্য OpenTelemetry টার্ম। টেলিমেট্রি উৎপাদনকারী এন্টিটিতে (entity) key-value তথ্য যুক্ত করে। [Signals](#signal) এবং
-[Resources](#resource) জুড়ে
-ব্যবহৃত হয়। [attribute spec][attribute] দেখুন।
+OpenTelemetry term for [Metadata](#metadata). Adds key-value information to the
+entity producing telemetry. Used across [Signals](#signal) and
+[Resources](#resource). See [attribute spec][attribute].
 
 ### অটোমেটিক ইনস্ট্রুমেন্টেশন (Automatic instrumentation) {#automatic-instrumentation}
 
-এটি টেলিমেট্রি কালেকশন মেথড-গুলিকে বোঝায় যেখানে এন্ড ইউজারকে (end user) অ্যাপ্লিকেশনের
-সোর্স কোড পরিবর্তন করতে হয় না। মেথড-গুলো প্রোগ্রামিং ভাষা অনুযায়ী ভিন্ন হয়, এবং
-উদাহরণ হিসেবে bytecode injection বা monkey patching-এর কথা বলা যায়।
+Refers to telemetry collection methods that do not require the end-user to
+modify application's source code. Methods vary by programming language, and
+examples include bytecode injection or monkey patching.
 
 ### ব্যাগেজ (Baggage) {#baggage}
 
-ইভেন্ট এবং সার্ভিস-গুলোর মধ্যে কার্যকারণ সম্পর্ক স্থাপনে সহায়তা করতে [Metadata](#metadata) প্রচারের একটি
-মেকানিজম (mechanism)। [baggage spec][baggage] দেখুন।
+A mechanism for propagating [Metadata](#metadata) to help establish a causal
+relationship between events and services. See [baggage spec][baggage].
 
 ### ক্লায়েন্ট লাইব্রেরি (Client library)
 
-[Instrumented library](#instrumented-library) দেখুন।
+The number of unique values for a given [Attribute](#attribute) or set of
+attributes. High cardinality means many unique values, which can impact the
+performance and storage requirements of telemetry backends. For example, a
+`user_id` attribute would have high cardinality, while a `status_code` attribute
+with values like "200", "404", "500" would have low cardinality.
 
 ### ক্লায়েন্ট-সাইড অ্যাপ (Client-side app)
 
@@ -65,21 +69,21 @@ Application Performance Monitoring হল সফটওয়্যার অ্�
 
 ### কালেক্টর (Collector) {#collector}
 
-[OpenTelemetry Collector], বা সংক্ষেপে Collector, হল টেলিমেট্রি ডেটা গ্রহণ, প্রক্রিয়াকরণ এবং
-রপ্তানির একটি ভেন্ডর-এগ্নস্টিক (vendor-agnostic) বাস্তবায়ন। এটি একটি একক বাইনারি যা agent বা
-gateway হিসেবে ডিপ্লয় (deploy) করা যায়।
+A component of an [Application](#application) that is not running inside a
+private infrastructure and is typically used directly by end-users. Examples of
+client-side apps are browser apps, mobile apps, and apps running on IoT devices.
 
-> **বানান**: [OpenTelemetry Collector] উল্লেখ করার সময়, সর্বদা Collector
-> বড় অক্ষরে লিখুন। আপনি যদি Collector-কে বিশেষণ হিসেবে ব্যবহার করেন তাহলে শুধু "Collector"
-> ব্যবহার করুন &mdash; উদাহরণস্বরূপ, "Collector configuration"।
+### Collector
+
+The [OpenTelemetry Collector], or Collector for short, is a vendor-agnostic
+implementation on how to receive, process, and export telemetry data. A single
+binary that can be deployed as an agent or gateway.
+
+> **Spelling**: When referring to the [OpenTelemetry Collector], always
+> capitalize Collector. Use just "Collector" if you are using Collector as an
+> adjective &mdash; for example, "Collector configuration".
 
 [OpenTelemetry Collector]: /docs/collector/
-
-### কন্ট্রিব (Contrib) {#contrib}
-
-বেশ কয়েকটি [Instrumentation Libraries](#instrumentation-library) এবং [Collector](#collector)
-কোর ক্যাপাবিলিটিজ-এর (core capabilities) একটি সেট এবং সাথে vendor `Exporters` সহ
-নন-কোর ক্যাপাবিলিটিজ-এর (non-core capabilities) জন্য একটি ডেডিকেটেড contrib repository অফার করে।
 
 ### কনটেক্সট প্রপাগেশন (Context propagation) {#context-propagation}
 
@@ -90,7 +94,10 @@ mechanism শেয়ার করে নেওয়ার অনুমতি 
 
 ### DAG {#dag}
 
-[Directed Acyclic Graph][dag]।
+Allows all [Data sources](#data-source) to share an underlying context mechanism
+for storing state and accessing data across the lifespan of a
+[Transaction](#transaction). See [context propagation
+spec][context propagation].
 
 ### ডাটা সোর্স (Data source) {#data-source}
 
@@ -102,63 +109,66 @@ mechanism শেয়ার করে নেওয়ার অনুমতি 
 
 ### ডিস্ট্রিবিউটেড ট্রেসিং (Distributed tracing) {#distributed-tracing}
 
-এটি একটি [Application](#application) তৈরিকারী [Services](#service) দ্বারা পরিচালিত হওয়ার
-সাথে সাথে একটি একক [Request](#request)-এর অগ্রগতি ট্র্যাক করে, যাকে [Trace](#trace) বলা হয়।
-একটি [Distributed trace](#distributed-tracing) প্রক্রিয়া,
-নেটওয়ার্ক এবং নিরাপত্তা সীমানা অতিক্রম করে।
+A term used specifically by [Metrics](#metric). See [Attribute](#attribute).
 
-[Distributed tracing][distributed tracing] দেখুন।
+### Distributed tracing
 
-### ডিস্ট্রিবিউশন (Distribution) {#distribution}
+Tracks the progression of a single [Request](#request), called a
+[Trace](#trace), as it is handled by [Services](#service) that make up an
+[Application](#application). A [Distributed trace](#distributed-tracing)
+transverses process, network and security boundaries.
 
 একটি distribution হল কিছু কাস্টমাইজেশন সহ একটি upstream OpenTelemetry repository-এর চারপাশে
-একটি wrapper। [Distributions] দেখুন।
+একটি wrapper। \[Distributions] দেখুন।
 
 ### (ইভেন্ট) Event {#event}
 
-Event একটি event name এবং well-known structure সহ একটি [Log Record](#log-record)। উদাহরণস্বরূপ, OpenTelemetry-তে
-ব্রাউজার ইভেন্টগুলো একটি নির্দিষ্ট নামকরণ নিয়ম
-অনুসরণ করে এবং একটি সাধারণ কাঠামোতে নির্দিষ্ট ডেটা বহন করে।
+A distribution is a wrapper around an upstream OpenTelemetry repository with
+some customizations. See [Distributions].
 
 ### এক্সপোর্টার (Exporter) {#exporter}
 
-consumers-দের কাছে টেলিমেট্রি নির্গত করার কার্যকারিতা প্রদান করে। Exporters push- বা
-pull-based হতে পারে।
+An Event is a [Log Record](#log-record) with an event name and a well-known
+structure. For example, browser events in OpenTelemetry follow a particular
+naming convention and carry particular data in a common structure.
 
 ### ফিল্ড (Field) {#field}
 
-[Log Records](#log-record) দ্বারা বিশেষভাবে ব্যবহৃত একটি পরিভাষা। [Attributes](#attribute) এবং
-[Resource](#resource) সহ নির্ধারিত ক্ষেত্রগুলোর মাধ্যমে [Metadata](#metadata) যুক্ত করা যেতে পারে। অন্যান্য
-ক্ষেত্রগুলোও `Metadata` হিসেবে বিবেচিত
-হতে পারে, যার মধ্যে severity এবং trace তথ্য রয়েছে। [field spec][field] দেখুন।
+Provides functionality to emit telemetry to consumers. Exporters can be push- or
+pull-based.
 
 ### gRPC {#grpc}
 
-একটি উচ্চ-পারফরম্যান্স, ওপেন সোর্স সর্বজনীন [RPC](#rpc) ফ্রেমওয়ার্ক।
-[gRPC](https://grpc.io) দেখুন।
+A term used specifically by [Log Records](#log-record). [Metadata](#metadata)
+can be added through defined fields, including [Attributes](#attribute) and
+[Resource](#resource). Other fields may also be considered `Metadata`, including
+severity and trace information. See the [field spec][field].
 
 ### HTTP {#http}
 
-[Hypertext Transfer Protocol][http]-এর সংক্ষিপ্ত রূপ।
+A high-performance, open source universal [RPC](#rpc) framework. See
+[gRPC](https://grpc.io).
 
 ### ইন্স্ট্রুমেন্টেড লাইব্রেরি (Instrumented library) {#instrumented-library}
 
 [Library](#library)-কে নির্দেশ করে, যার জন্য টেলিমেট্রি সিগনালগুলো
 ([Traces](#trace), [Metrics](#metric), [Logs](#log)) সংগ্রহ করা হয়।
-[Instrumented library][] দেখুন।
+\[Instrumented library]\[] দেখুন।
 
 ### ইনস্ট্রুমেন্টেশন লাইব্রেরি (Instrumentation library) {#instrumentation-library}
 
-[Library](#library)-কে নির্দেশ করে যা একটি নির্দিষ্ট [Instrumented library](#instrumented-library)-এর
-জন্য instrumentation প্রদান করে। [Instrumented library](#instrumented-library)
-এবং [Instrumentation library](#instrumentation-library)
-একই [Library](#library) হতে পারে
-যদি এতে built-in OpenTelemetry
-instrumentation থাকে। [lib specification][spec-instrumentation-lib] দেখুন।
+Denotes the [Library](#library) for which the telemetry signals
+([Traces](#trace), [Metrics](#metric), [Logs](#log)) are gathered. See
+[Instrumented library][].
 
 ### JSON {#json}
 
-[JavaScript Object Notation][json]-এর সংক্ষিপ্ত রূপ।
+Denotes the [Library](#library) that provides the instrumentation for a given
+[Instrumented library](#instrumented-library).
+[Instrumented library](#instrumented-library) and
+[Instrumentation library](#instrumentation-library) can be the same
+[Library](#library) if it has built-in OpenTelemetry instrumentation. See [the
+lib specification][spec-instrumentation-lib].
 
 ### লেবেল (Label) {#label}
 
@@ -166,7 +176,7 @@ instrumentation থাকে। [lib specification][spec-instrumentation-lib] �
 
 ### ভাষা (Language) {#language}
 
-Programming Language।
+A term used specifically by [Metrics](#metric). See [Metadata](#metadata).
 
 ### লাইব্রেরি (Library) {#library}
 
@@ -181,25 +191,28 @@ Programming Language।
 
 ### লগ রেকর্ড (Log record) {#log-record}
 
-একটি timestamp এবং একটি severity সহ ডেটার রেকর্ডিং। একটি trace-এর সাথে সম্পর্কিত হলে
-একটি [Trace ID](#trace) এবং
-[Span ID](#span) থাকতে পারে। [Log record][] দেখুন।
+Sometimes used to refer to a collection of [Log records](#log-record). Can be
+ambiguous since people also sometimes use [Log](#log) to refer to a single
+[Log record](#log-record). Where ambiguity is possible, use additional
+qualifiers, for example, `Log record`. See [Log].
 
 ### মেটাডাটা (Metadata) {#metadata}
 
-একটি key-value pair, উদাহরণস্বরূপ `foo="bar"`, টেলিমেট্রি উৎপাদনকারী একটি entity-তে যুক্ত।
-OpenTelemetry এই জোড়াগুলোকে [Attributes](#attribute) বলে।
-এছাড়াও, [Metrics](#metric)-এ [Dimensions](#dimension)
-এবং [Labels](#label) আছে, যখন [Logs](#log)-এ [Fields](#field) আছে।
+A recording of data with a timestamp and a severity. May also have a
+[Trace ID](#trace) and [Span ID](#span) when correlated with a trace. See [Log
+record][].
 
 ### মেট্রিক (Metric) {#metric}
 
-[Metadata](#metadata) সহ time series হিসেবে একটি ডেটা পয়েন্ট রেকর্ড করে, raw measurements বা
-predefined aggregation হিসেবে। [Metric] দেখুন।
+A key-value pair, for example `foo="bar"`, added to an entity producing
+telemetry. OpenTelemetry calls these pairs [Attributes](#attribute). In
+addition, [Metrics](#metric) have [Dimensions](#dimension) an [Labels](#label),
+while [Logs](#log) have [Fields](#field).
 
 ### OC {#oc}
 
-[OpenCensus](#opencensus)-এর সংক্ষিপ্ত রূপ।
+Records a data point, either raw measurements or predefined aggregation, as time
+series with [Metadata](#metadata). See [Metric].
 
 ### অবজারভেবিলিটি ব্যাকএন্ড (Observability backend) {#observability-backend}
 
@@ -210,71 +223,73 @@ predefined aggregation হিসেবে। [Metric] দেখুন।
 
 ### অবজারভেবিলিটি ফ্রন্টএন্ড (Observability frontend) {#observability-frontend}
 
-একটি observability platform-এর কম্পোনেন্ট যা টেলিমেট্রি ডেটা ভিজুয়ালাইজ এবং বিশ্লেষণের জন্য ইউজার ইন্টারফেস প্রদান করে।
-এটি প্রায়শই একটি observability backend-এর অংশ
-হতে পারে, বিশেষ করে যখন বাণিজ্যিক অফারিং বিবেচনা করা হয়।
+The component of an observability platform that is responsible for receiving,
+processing, storing, and querying telemetry data. Examples include open source
+tools like [Jaeger] and [Prometheus], as well as commercial offerings.
+OpenTelemetry is not an observability backend.
 
 ### OpAMP {#opamp}
 
-[Open Agent Management Protocol](/docs/collector/management/#opamp)-এর
-সংক্ষিপ্ত রূপ।
+The component of an observability platform that provides user interfaces for
+visualizing and analyzing telemetry data. It can be often a part of an
+observability backend, particularly when considering commercial offerings.
 
-> **বানান**: বর্ণনা বা নির্দেশনায় OpAMP লিখুন, `OPAMP` বা `opamp`
-> নয়।
+### OpAMP
 
-### OpenCensus {#opencensus}
+Abbreviation for the
+[Open Agent Management Protocol](/docs/collector/management/#opamp).
 
-OpenTelemetry-এর পূর্বসূরি। বিস্তারিত জানতে,
-[History](/docs/what-is-opentelemetry/#history) দেখুন।
+> **Spelling**: Write OpAMP, not `OPAMP` nor `opamp` in descriptions or
+> instructions.
 
 ### OpenTelemetry {#opentelemetry}
 
-[OpenTracing](#opentracing) এবং [OpenCensus](#opencensus) প্রকল্পের [merger] এর মাধ্যমে গঠিত, OpenTelemetry &mdash; এই
-ওয়েবসাইটের বিষয় হল [APIs](#api), [SDKs](#sdk), এবং
-টুলসগুলোর একটি কালেকশন যা আপনি [instrument](/docs/concepts/instrumentation/),
-generate, [collect](/docs/concepts/components/#collector),
-এবং [export](/docs/concepts/components/#exporters) করতে
-ব্যবহার করতে
-পারেন [telemetry data](/docs/concepts/signals/)
-যেমন [metrics](#metric), [logs](#log), এবং [traces](#trace)।
+Precursor to OpenTelemetry. For details, see
+[History](/docs/what-is-opentelemetry/#history).
 
-> **বানান**: OpenTelemetry সর্বদা একটি একক unhyphenated শব্দ হওয়া উচিত এবং
-> বড় অক্ষরে লিখতে হবে।
+### OpenTelemetry
+
+Formed through a [merger] of the [OpenTracing](#opentracing) and
+[OpenCensus](#opencensus) projects, OpenTelemetry &mdash; the subject of this
+website &mdash; is a collection of [APIs](#api), [SDKs](#sdk), and tools that
+you can use to [instrument](/docs/concepts/instrumentation/), generate,
+[collect](/docs/concepts/components/#collector), and
+[export](/docs/concepts/components/#exporters)
+[telemetry data](/docs/concepts/signals/) such as [metrics](#metric),
+[logs](#log), and [traces](#trace).
+
+> **Spelling**: OpenTelemetry should always be a single unhyphenated word and
+> capitalized as shown.
 
 [merger]: /docs/what-is-opentelemetry/#history
 
-### OpenTracing {#opentracing}
-
-OpenTelemetry-এর পূর্বসূরি। বিস্তারিত জানতে,
-[History](/docs/what-is-opentelemetry/#history) দেখুন।
-
 ### OT {#ot}
 
-[OpenTracing](#opentracing)-এর সংক্ষিপ্ত রূপ।
+Precursor to OpenTelemetry. For details, see
+[History](/docs/what-is-opentelemetry/#history).
 
 ### OTel {#otel}
 
 [OpenTelemetry](/docs/what-is-opentelemetry/)-এর সংক্ষিপ্ত রূপ।
 
-> **বানান**: OTel লিখুন, `OTEL` নয়।
+### OTel
 
-### OTelCol {#otelcol}
+Short form for [OpenTelemetry](/docs/what-is-opentelemetry/).
 
-[OpenTelemetry Collector](#collector)-এর সংক্ষিপ্ত রূপ।
+> **Spelling**: Write OTel, not `OTEL`.
 
 ### OTEP {#otep}
 
 [OpenTelemetry Enhancement Proposal]-এর একটি সংক্ষিপ্ত রূপ।
 
-> **বানান**: বহুবচন হিসেবে "OTEPs" লিখুন। বর্ণনায় `OTep` বা `otep`
-> লিখবেন না।
+### OTEP
 
-[OpenTelemetry Enhancement Proposal]:
-  https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/README.md
+An acronym for [OpenTelemetry Enhancement Proposal].
 
-### OTLP {#otlp}
+> **Spelling**: Write "OTEPs" as plural form. Don't write `OTep` or `otep` in
+> descriptions.
 
-[OpenTelemetry Protocol](/docs/specs/otlp/)-এর সংক্ষিপ্ত রূপ।
+[OpenTelemetry Enhancement Proposal]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/README.md
 
 ### প্রপাগেটরস (Propagators)
 
@@ -283,17 +298,18 @@ span context এবং [Spans](#span)-এ [Baggage](#baggage)-এর মতো �
 
 ### Proto {#proto}
 
-ভাষা নিরপেক্ষ ইন্টারফেস টাইপ। [opentelemetry-proto] দেখুন।
+Used to serialize and deserialize specific parts of telemetry data such as span
+context and [Baggage](#baggage) in [Spans](#span). See [Propagators].
 
 ### গ্রাহক (Receiver) {#receiver}
 
-পরিভাষা টেলিমেট্রি ডেটা কীভাবে গৃহীত হয় তা সংজ্ঞায়িত
-করতে [Collector](/docs/collector/configuration/#receivers) দ্বারা ব্যবহৃত হয়।
-Receivers push- বা pull-based হতে পারে। [Receiver] দেখুন।
+Language independent interface types. See [opentelemetry-proto].
 
 ### অনুরোধ (Request) {#request}
 
-[Distributed Tracing](#distributed-tracing) দেখুন।
+The term used by the [Collector](/docs/collector/configuration/#receivers) to
+define how telemetry data is received. Receivers can be push- or pull-based. See
+[Receiver].
 
 ### রিসোর্স (Resource) {#resource}
 
@@ -305,26 +321,30 @@ Receivers push- বা pull-based হতে পারে। [Receiver] দেখ
 
 ### REST {#rest}
 
-[Representational State Transfer][rest]-এর সংক্ষিপ্ত রূপ।
+Captures information about the entity producing telemetry as
+[Attributes](#attribute). For example, a process producing telemetry that is
+running in a container on Kubernetes has a process name, a pod name, a
+namespace, and possibly a deployment name. All these attributes can be included
+in the `Resource`.
 
 ### RPC {#rpc}
 
-[Remote Procedure Call][rpc]-এর সংক্ষিপ্ত রূপ।
+\[Remote Procedure Call]\[rpc]-এর সংক্ষিপ্ত রূপ।
 
 ### Sampling {#sampling}
 
 রপ্তানি করা ডেটার পরিমাণ নিয়ন্ত্রণের একটি মেকানিজম।
-সবচেয়ে সাধারণভাবে [Tracing](#trace) [Data Source](#data-source)-এর সাথে ব্যবহৃত। [Sampling] দেখুন।
+সবচেয়ে সাধারণভাবে [Tracing](#trace) [Data Source](#data-source)-এর সাথে ব্যবহৃত। \[Sampling] দেখুন।
 
 ### SDK {#sdk}
 
-Software Development Kit-এর সংক্ষিপ্ত রূপ। একটি টেলিমেট্রি SDK-কে বোঝায় যা একটি [Library](#library)
-নির্দেশ করে যা OpenTelemetry [API](#api) implement করে।
+A mechanism to control the amount of data exported. Most commonly used with the
+[Tracing](#trace) [Data Source](#data-source). See [Sampling].
 
 ### Semantic conventions {#semantic-conventions}
 
-vendor-agnostic টেলিমেট্রি ডেটা প্রদানের জন্য [Metadata](#metadata)-এর মানক নাম এবং
-মান সংজ্ঞায়িত করে।
+Short for Software Development Kit. Refers to a telemetry SDK that denotes a
+[Library](#library) that implement the OpenTelemetry [API](#api).
 
 ### সেবা (Service) {#service}
 
@@ -334,31 +354,33 @@ instances ডিপ্লয় করা হয়। একটি [Service](#s
 
 ### সিগন্যাল (Signal) {#signal}
 
-[Traces](#trace), [Metrics](#metric) বা [Logs](#log)-এর মধ্যে একটি। [Signals] দেখুন।
+A component of an [Application](#application). Multiple instances of a
+[Service](#service) are typically deployed for high availability and
+scalability. A [Service](#service) can be deployed in multiple locations.
 
 ### স্প্যান (Span) {#span}
 
-একটি [Trace](#trace)-এর মধ্যে একটি একক অপারেশন প্রতিনিধিত্ব করে। [Span] দেখুন।
+One of [Traces](#trace), [Metrics](#metric) or [Logs](#log). See [Signals].
 
 ### স্প্যান লিঙ্ক (Span link) {#span-link}
 
-একটি span link হল কার্যকারণ-সম্পর্কিত spans-এর মধ্যে একটি লিঙ্ক।
-বিস্তারিত জানতে [Links between spans](/docs/specs/otel/overview#links-between-spans) এবং
-[Specifying Links](/docs/specs/otel/trace/api#specifying-links) দেখুন।
+Represents a single operation within a [Trace](#trace). See [Span].
 
 ### স্পেসিফিকেশন (Specification) {#specification}
 
-সমস্ত বাস্তবায়নের জন্য ক্রস-ল্যাঙ্গুয়েজ প্রয়োজনীয়তা এবং
-প্রত্যাশা বর্ণনা করে। [Specification] দেখুন।
+A span link is a link between causally-related spans. For details see
+[Links between spans](/docs/specs/otel/overview#links-between-spans) and
+[Specifying Links](/docs/specs/otel/trace/api#specifying-links).
 
 ### স্ট্যাটাস (Status) {#status}
 
-অপারেশনের ফলাফল। সাধারণত একটি ত্রুটি ঘটেছে কিনা
-তা নির্দেশ করতে ব্যবহৃত। [Status] দেখুন।
+Describes the cross-language requirements and expectations for all
+implementations. See [Specification].
 
 ### ট্যাগ (Tag) {#tag}
 
-[Metadata](#metadata) দেখুন।
+The result of the operation. Typically used to indicate whether an error
+occurred. See [Status].
 
 ### ট্রেস (Trace) {#trace}
 
@@ -367,17 +389,24 @@ instances ডিপ্লয় করা হয়। একটি [Service](#s
 
 ### ট্রেসার (Tracer) {#tracer}
 
-[Spans](#span) তৈরির জন্য দায়ী। [Tracer] দেখুন।
+A [DAG](#dag) of [Spans](#span), where the edges between [Spans](#span) are
+defined as parent-child relationship. See [Traces].
 
 ### ট্রানজেকশন (Transaction) {#transaction}
 
-[Distributed Tracing](#distributed-tracing) দেখুন।
+Responsible for creating [Spans](#span). See [Tracer].
 
 ### zPages {#zpages}
 
 external exporters-এর একটি in-process বিকল্প।
 অন্তর্ভুক্ত করা হলে, তারা
 পটভূমিতে tracing এবং metrics তথ্য সংগ্রহ এবং একত্রিত করে; অনুরোধ করা হলে এই ডেটা ওয়েব পৃষ্ঠাগুলোতে পরিবেশিত হয়। [zPages] দেখুন।
+
+### zPages
+
+An in-process alternative to external exporters. When included, they collect and
+aggregate tracing and metrics information in the background; this data is served
+on web pages when requested. See [zPages].
 
 [attribute]: /docs/specs/otel/common/#attributes
 [baggage]: /docs/specs/otel/baggage/api/
@@ -407,5 +436,4 @@ external exporters-এর একটি in-process বিকল্প।
 [status]: /docs/specs/otel/trace/api#set-status
 [tracer]: /docs/specs/otel/trace/api#tracer
 [traces]: /docs/specs/otel/overview#traces
-[zpages]:
-  https://github.com/open-telemetry/opentelemetry-specification/blob/main/development/trace/zpages.md
+[zpages]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/development/trace/zpages.md

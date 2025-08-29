@@ -2,8 +2,7 @@
 title: Lambda 自動計装
 weight: 11
 description: あなたのLambdaをOpenTelemetryで自動的に計装する
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
-cSpell:ignore: Corretto
+cSpell:ignore: Corretto regionalized
 ---
 
 OpenTelemetryコミュニティは、以下の言語用のスタンドアロン計装Lambdaレイヤーを提供しています。
@@ -13,32 +12,41 @@ OpenTelemetryコミュニティは、以下の言語用のスタンドアロン�
 - Python
 - Ruby
 
-これらのレイヤーは、AWSポータルを使用してLambdaに追加し、アプリケーションを自動的に計装できます。
-これらのレイヤーにはコレクターは含まれておらず、外部コレクターインスタンスを構成してデータを送信しない限り、追加する必要があります。
+These can be added to your Lambda using the AWS portal to automatically
+instrument your application. These layers do not include the Collector which is
+a required addition unless you configure an external Collector instance to send
+your data.
 
 ### OTel Collector LambdaレイヤーのARNを追加する {#add-the-arn-of-the-otel-collector-lambda-layer}
 
 [Collector Lambdaレイヤーのガイダンス](../lambda-collector/)を参照して、アプリケーションにレイヤーを追加し、Collectorを設定してください。
-これを最初に追加することをおすすめします。
+これを最初に追加することをおすすめします。 We recommend you add this
+first.
 
 ### 言語要件 {#language-requirements}
 
 {{< tabpane text=true >}} {{% tab Java %}}
 
 Lambdaレイヤーは、Java 8, 11, 17 (Corretto) Lambdaランタイムをサポートしています。
-サポートされているJavaのバージョンについては、[OpenTelemetry Java ドキュメント](/docs/languages/java/) を参照してください。
+サポートされているJavaのバージョンについては、[OpenTelemetry Java ドキュメント](/docs/languages/java/) を参照してください。 For
+more information about supported Java versions, see the
+[OpenTelemetry Java documentation](/docs/languages/java/).
 
 **注意:** Javaの自動計装エージェントがLambdaレイヤー内にあります - 自動計装エージェントはAWS Lambdaの起動時間に顕著な影響を与えるので、初期化中に最初のリクエストでタイムアウトを起こさずに本番のリクエストに対応するためには、一般的にプロビジョニングされた同時実行とウォームアップリクエストと共にこれを使用する必要があります。
 
 デフォルトでは、レイヤーのOTel Javaエージェントは、アプリケーション内のすべてのコードを自動計装しようとします。
-これはLambdaのコールドスタートの起動時間に悪影響を及ぼす可能性があります。
+これはLambdaのコールドスタートの起動時間に悪影響を及ぼす可能性があります。 This can have a negative impact on the Lambda cold
+startup time.
 
 アプリケーションで使用するライブラリ／フレームワークの自動計装のみを有効にすることをおすすめします。
 
 特定の計装だけを有効にするには、以下の環境変数を使用します。
 
 - `OTEL_INSTRUMENTATION_COMMON_DEFAULT_ENABLED`: falseに設定すると、レイヤーの自動計装を無効にし、各計装を個別に有効にする必要があります。
-- `OTEL_INSTRUMENTATION_<NAME>_ENABLED`: 特定のライブラリやフレームワークの自動計装を有効にするには true を設定します。`<NAME>`の部分を有効にしたい計装で置き換えます。利用可能な計装のリストについては、[特定のエージェントの計装を抑制する][1] を参照してください。
+- `OTEL_INSTRUMENTATION_<NAME>_ENABLED`: set to true to enable
+  auto-instrumentation for a specific library or framework. Replace `<NAME>` by
+  the instrumentation that you want to enable. For the list of available
+  instrumentations, see [Suppressing specific agent instrumentation][1].
 
   [1]: /docs/zero-code/java/agent/disable/#suppressing-specific-agent-instrumentation
 
@@ -53,16 +61,18 @@ OTEL_INSTRUMENTATION_AWS_SDK_ENABLED=true
 {{% /tab %}} {{% tab JavaScript %}}
 
 Lambdaレイヤーは、Node.js v18+のLambdaランタイムをサポートしています。
-サポートされるJavaScriptとNode.jsのバージョンの詳細については、[OpenTelemetry JavaScriptドキュメント](https://github.com/open-telemetry/opentelemetry-js)を参照してください。
+サポートされるJavaScriptとNode.jsのバージョンの詳細については、[OpenTelemetry JavaScriptドキュメント](https://github.com/open-telemetry/opentelemetry-js)を参照してください。 For more information
+about supported JavaScript and Node.js versions, see the
+[OpenTelemetry JavaScript documentation](https://github.com/open-telemetry/opentelemetry-js).
 
 {{% /tab %}} {{% tab Python %}}
 
-LambdaレイヤーはPython 3.9+のLambdaランタイムをサポートしています。
+The Lambda layer supports Python 3.9+ Lambda runtimes. LambdaレイヤーはPython 3.9+のLambdaランタイムをサポートしています。
 サポートされているPythonのバージョンについては、[OpenTelemetry Pythonドキュメント](https://github.com/open-telemetry/opentelemetry-python/blob/main/README.md#supported-runtimes) と [PyPi](https://pypi.org/project/opentelemetry-api/) のパッケージを参照してください。
 
 {{% /tab %}} {{% tab Ruby %}}
 
-Lambda レイヤーは、Ruby 3.2 と 3.3 の Lambda ランタイムをサポートしています。
+The Lambda layer supports Ruby 3.2 and 3.3 Lambda runtimes. Lambda レイヤーは、Ruby 3.2 と 3.3 の Lambda ランタイムをサポートしています。
 サポートされる OpenTelemetry Ruby SDK と API バージョンの詳細については、[OpenTelemetry Rubyドキュメント](https://github.com/open-telemetry/opentelemetry-ruby/blob/main/README.md#compatibility) と [RubyGem](https://rubygems.org/search?query=opentelemetry) のパッケージを参照してください。
 
 {{% /tab %}} {{< /tabpane >}}
@@ -71,6 +81,8 @@ Lambda レイヤーは、Ruby 3.2 と 3.3 の Lambda ランタイムをサポー
 
 Node.js、Java、Ruby、Pythonの場合は `AWS_LAMBDA_EXEC_WRAPPER=/opt/otel-handler` を設定して、アプリケーションのエントリーポイントを変更します。
 このラッパースクリプトは、自動計装を適用したLambdaアプリケーションを起動します。
+This wrapper script invokes your Lambda application with the automatic
+instrumentation applied.
 
 ### 計装LambdaレイヤーのARNを追加する {#add-the-arn-of-instrumentation-lambda-layer}
 
@@ -83,13 +95,17 @@ Lambda関数でOTelの自動計装を有効にするには、計装レイヤー�
 あなたの言語の[最新の計装レイヤーリリース](https://github.com/open-telemetry/opentelemetry-lambda/releases)を見つけ、そのARNを使用します。
 `<region>`タグをあなたのラムダがあるリージョンに変更します。
 
-注意: ラムダレイヤーはリージョンで分かれたリソースで、公開されているリージョンでのみ使用できます。Lambda関数と同じリージョンでレイヤーを使用するようにしてください。コミュニティは、利用可能なすべてのリージョンでレイヤーを公開しています。
+注意: ラムダレイヤーはリージョンで分かれたリソースで、公開されているリージョンでのみ使用できます。Lambda関数と同じリージョンでレイヤーを使用するようにしてください。コミュニティは、利用可能なすべてのリージョンでレイヤーを公開しています。 Make sure to use the layer in
+the same region as your Lambda functions. The community publishes layers in all
+available regions.
 
 ### SDKのエクスポーターの設定 {#configure-your-sdk-exporters}
 
 gRPC/HTTPレシーバーを持つコレクターが組み込まれている場合、Lambdaレイヤーで使用されるデフォルトのエクスポーターは変更なしで動作します。
 環境変数を更新する必要はありません。
-ただし、プロトコルのサポートレベルやデフォルト値は言語によって異なります。
+ただし、プロトコルのサポートレベルやデフォルト値は言語によって異なります。 The environment
+variables do not need to be updated. However, there are varying levels of
+protocol support and default values by language which are documented below.
 
 {{< tabpane text=true >}} {{% tab Java %}}
 

@@ -3,7 +3,6 @@ title: ドキュメントスタイルガイド
 description: OpenTelemetry のドキュメントを書く際の用語とスタイル。
 linkTitle: スタイルガイド
 weight: 20
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
 cSpell:ignore: open-telemetry postgre style-guide textlintrc
 ---
 
@@ -34,27 +33,32 @@ OpenTelemetry 特有の用語や単語の一覧であり、サイト全体で一
 
 OpenTelemetry の用語と定義の完璧なリストには、[用語集](/docs/concepts/glossary/) を参照してください。
 
-ほかの CNCF プロジェクトやサードパーティツールなどの固有名詞は、適切に表記し、元の大文字・小文字の区別を正しく維持してください。
-たとえば、"postgre" のかわりに "PostgreSQL" と表記してください。
-すべてのリストは、[`.textlintrc.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.textlintrc.yml) を確認してください。
+Make sure that proper nouns, such as other CNCF projects or third-party tools,
+are properly written and use the original capitalization. For example, write
+"PostgreSQL" instead of "postgre". For a full list, check the
+[`.textlintrc.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.textlintrc.yml)
+file.
 
 ## マークダウン規約 {#markdown-standards}
 
 マークダウンファイルに規約と一貫性を確保するために、[markdownlint] によって定められたルールに従う必要があります。
-すべてのルールの一覧は、[.markdownlint.json] ファイルを確認してください。
+すべてのルールの一覧は、[.markdownlint.json] ファイルを確認してください。 For a full list, check the
+[.markdownlint.json] file.
 
-同様に、Markdown [file format](#file-format) を適用し、ファイルの末尾スペースを削除します。
-これは 2 つ以上のスペースを仕様する [line break syntax] を排除します。
-かわりに `<br>` を使うか、再フォーマットしてください。
+We also enforce Markdown [file format](#file-format) and strip files of trailing
+whitespace. This precludes the [line break syntax] of 2+ spaces; use `<br>`
+instead or reformat your text.
 
 ## スペルチェック {#spell-checking}
 
-すべてのテキストが適切に表記されているあ確認するために、[CSpell](https://github.com/streetsidesoftware/cspell) を使用します。
+Use [CSpell](https://github.com/streetsidesoftware/cspell) to make sure that all
+your text is spelled correctly. すべてのテキストが適切に表記されているあ確認するために、[CSpell](https://github.com/streetsidesoftware/cspell) を使用します。
 OpenTelemetry ウェブサイト固有の単語一覧は、[`.cspell.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.cspell.yml) ファイルを確認してください。
 
-`cspell` が「Unknown word」エラーを示した場合、単語を正しく記述したかどうかを確認してください。
-正しい場合、ファイルの先頭にある `cSpell:ignore` セクションに単語を追加してください。
-そのようなセクションがない場合は、Markdown ファイルの Front Matter に追加できます。
+If `cspell` indicates an "Unknown word" error, check whether you wrote the word
+correctly. If so, add the word to the `cSpell:ignore` section at the top of your
+file. If no such section exists, you can add it to the front matter of a
+Markdown file:
 
 ```markdown
 ---
@@ -64,7 +68,8 @@ cSpell:ignore: <word>
 ```
 
 ほかのファイルの場合は、そのファイルの状況に適したコメント行に `cSpell:ignore <word>` を追加してください。
-たとえば、[レジストリ](/ecosystem/registry/) エントリー YAML ファイルでは、次のように記述します。
+たとえば、[レジストリ](/ecosystem/registry/) エントリー YAML ファイルでは、次のように記述します。 For a [registry](/ecosystem/registry/) entry YAML file, it
+might look like this:
 
 ```yaml
 # cSpell:ignore <word>
@@ -73,7 +78,7 @@ title: registryEntryTitle
 
 ## ファイルのフォーマット {#file-format}
 
-[Prettier] を利用することでファイルフォーマットを強制します。
+We enforce file formatting using [Prettier]. [Prettier] を利用することでファイルフォーマットを強制します。
 `npm run fix:format` を実行して、フォーマットを適用してください。
 
 ## ファイル名 {#file-names}

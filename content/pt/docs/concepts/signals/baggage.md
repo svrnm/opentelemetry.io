@@ -2,11 +2,9 @@
 title: Bagagem
 weight: 4
 description: Informações contextuais que são propagadas entre sinais
-default_lang_commit: 7c0e4db0b6c39b0ca0e7efb17df5610d1b77b8a3
 ---
 
-No OpenTelemetry, Bagagem é uma informação contextual que acompanha o contexto.
-Bagagem é uma estrutura de armazenamento chave-valor, que te permite
+No OpenTelemetry, Bagagem é uma informação contextual que acompanha o contexto. Bagagem é uma estrutura de armazenamento chave-valor, que te permite
 [propagar](../../context-propagation/#propagation) quaisquer dados junto com o
 [contexto](../../context-propagation/#context).
 
@@ -32,7 +30,7 @@ automaticamente propagam a Bagagem para você.
 
 ![OTel Baggage](../otel-baggage.svg)
 
-## Para que a Bagagem do OTel deve ser usada? {#what-should-otel-baggage-be-used-for}
+## Para que a Bagagem do OTel deve ser usada?
 
 A Bagagem é mais adequada para incluir informações que normalmente estão
 disponíveis apenas no início de uma requisição e que precisam ser propagadas
@@ -53,8 +51,7 @@ usuário nos dados do log.
 
 Itens sensíveis da Bagagem podem ser compartilhados com recursos não
 intencionais, como APIs de terceiros. Isso ocorre porque a instrumentação
-automática inclui a Bagagem na maioria das requisições de rede do seu serviço.
-Especificamente, a Bagagem e outras partes do contexto do rastro são enviadas
+automática inclui a Bagagem na maioria das requisições de rede do seu serviço. Especificamente, a Bagagem e outras partes do contexto do rastro são enviadas
 nos cabeçalhos HTTP, tornando-os visíveis para qualquer pessoa que esteja
 inspecionando o tráfego de rede. Se o tráfego estiver restrito dentro da sua
 rede, esse risco pode não se aplicar, mas lembre-se de que serviços _downstream_
@@ -78,7 +75,7 @@ Como um dos casos de uso comum da Bagagem é adicionar dados aos
 linguagens possuem Processadores de Trecho de Bagagem que adicionam dados da
 Bagagem como atributos na criação de trechos.
 
-Para mais informações, consulte a [especificação da
-Bagagem][baggage specification].
+> Para mais informações, consulte a [especificação da
+> Bagagem][baggage specification].
 
 [baggage specification]: /docs/specs/otel/overview/#baggage-signal

@@ -1,26 +1,25 @@
 ---
-title: Démarrage rapide
+title: Getting started
 weight: 1
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: Dotel myapp
 ---
 
 ## Configuration {#setup}
 
-1.  Téléchargez [opentelemetry-javaagent.jar][] depuis les [Releases][] du dépôt
-    `opentelemetry-java-instrumentation` et placez le JAR dans le répertoire de
-    votre choix. Le fichier JAR contient l'agent et les bibliothèques
-    d'instrumentation.
-2.  Ajoutez `-javaagent:path/to/opentelemetry-javaagent.jar` et d'autres
-    configurations à vos arguments de démarrage de la JVM et lancez votre
-    application :
-    - Directement sur la commande de démarrage :
+1. Téléchargez [opentelemetry-javaagent.jar][] depuis les [Releases][] du dépôt
+   `opentelemetry-java-instrumentation` et placez le JAR dans le répertoire de
+   votre choix. Le fichier JAR contient l'agent et les bibliothèques
+   d'instrumentation.
+2. Ajoutez `-javaagent:path/to/opentelemetry-javaagent.jar` et d'autres
+   configurations à vos arguments de démarrage de la JVM et lancez votre
+   application :
+   - Directement sur la commande de démarrage :
 
       ```shell
       java -javaagent:path/to/opentelemetry-javaagent.jar -Dotel.service.name=your-service-name -jar myapp.jar
       ```
 
-    - Via les variables d'environnement `JAVA_TOOL_OPTIONS` et autres :
+   - Via les variables d'environnement `JAVA_TOOL_OPTIONS` et autres :
 
       ```shell
       export JAVA_TOOL_OPTIONS="-javaagent:path/to/opentelemetry-javaagent.jar"
@@ -76,7 +75,8 @@ Pour voir toutes les options de configuration, consultez
 ## Bibliothèques, frameworks, services d'application et JVM supportés {#supported-libraries-frameworks-application-services-and-jvms}
 
 L'agent Java est livré avec des bibliothèques d'instrumentation pour de nombreux
-composants populaires. Pour la liste complète, consultez [Bibliothèques,
+composants populaires.
+Pour la liste complète, consultez [Bibliothèques,
 frameworks, services d'application et JVM supportés][support].
 
 ## Dépannage {#troubleshooting}
@@ -95,9 +95,6 @@ service, vous pourriez [annoter](../annotations) des méthodes sélectionnées o
 ajouter une [instrumentation manuelle](/docs/languages/java/instrumentation/)
 pour collecter des données de télémétrie personnalisées.
 
-[opentelemetry-javaagent.jar]:
-  https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
-[releases]:
-  https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases
-[support]:
-  https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/docs/supported-libraries.md
+[opentelemetry-javaagent.jar]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
+[releases]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases
+[support]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/docs/supported-libraries.md

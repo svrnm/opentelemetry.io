@@ -1,7 +1,3 @@
----
-default_lang_commit: 7d0c3f247ee77671d1135b0af535a2aca05fe359
----
-
 ## Exportadores personalizados {#custom-exporters}
 
 Por fim, também é possível escrever o seu próprio exportador. Para mais

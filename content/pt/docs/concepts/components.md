@@ -1,8 +1,8 @@
 ---
 title: Componentes
 description: Os principais componentes que compõem o OpenTelemetry
+aliases: [ data-collection ]
 weight: 20
-default_lang_commit: 99a39c5e4e51daba968bfbb3eb078be4a14ad363
 ---
 
 O OpenTelemetry é atualmente composto por vários componentes principais:
@@ -64,8 +64,11 @@ Para mais informações, consulte
 
 O OpenTelemetry suporta um grande número de componentes que geram dados de
 telemetria relevantes a partir de bibliotecas e frameworks populares para as
-linguagens suportadas. Por exemplo, requisições HTTP de entrada e saída de uma
-biblioteca HTTP geram dados sobre essas requisições. Um objetivo aspiracional do
+linguagens suportadas.
+Por exemplo, requisições HTTP de entrada e saída de uma
+biblioteca HTTP geram dados sobre essas requisições.
+
+Um objetivo aspiracional do
 OpenTelemetry é que todas as bibliotecas populares sejam construídas para serem
 observáveis por padrão, de modo que dependências separadas não sejam
 necessárias.
@@ -81,8 +84,7 @@ Para mais informações, consulte
 
 O OpenTelemetry possibilita essa forma de instrumentar sua aplicação sem alterar
 seu código-fonte. Embora o mecanismo dependa da linguagem, a instrumentação sem
-código adiciona as capacidades da API e do SDK do OpenTelemetry à sua aplicação.
-Além disso, pode adicionar um conjunto de bibliotecas de instrumentação e
+código adiciona as capacidades da API e do SDK do OpenTelemetry à sua aplicação. Além disso, pode adicionar um conjunto de bibliotecas de instrumentação e
 dependências do exportador.
 
 Para mais informações, consulte
@@ -94,7 +96,9 @@ Um [recurso](/docs/concepts/resources/) representa a entidade que produz
 telemetria como atributos de recurso. Por exemplo, um processo que produz
 telemetria que está sendo executado em um contêiner no Kubernetes tem um nome de
 Pod, um namespace e possivelmente um nome de implantação. Você pode incluir
-todos esses atributos no recurso. As implementações específicas de linguagem do
+todos esses atributos no recurso.
+
+As implementações específicas de linguagem do
 OpenTelemetry fornecem detecção de recursos a partir da variável de ambiente
 `OTEL_RESOURCE_ATTRIBUTES` e para muitas entidades comuns, como tempo de
 execução do processo, serviço, host ou sistema operacional.
@@ -103,7 +107,8 @@ Para mais informações, consulte [Recursos](/docs/concepts/resources/).
 
 ### Propagadores entre serviços {#cross-service-propagators}
 
-A propagação é o mecanismo que move dados entre serviços e processos. Embora não
+A propagação é o mecanismo que move dados entre serviços e processos.
+Embora não
 se limite ao rastreamento, a propagação permite que os rastros construam
 informações sobre um sistema através de serviços que estão distribuídos
 arbitrariamente entre limites de processos e redes.
@@ -118,7 +123,6 @@ trecho e a [bagagem](/docs/concepts/signals/baggage/).
 A amostragem é um processo que restringe a quantidade de rastros que são gerados
 por um sistema. Cada implementação específica de linguagem do OpenTelemetry
 oferece [amostradores pela cabeça](/docs/concepts/sampling/#head-sampling).
-[Amostragem](/docs/concepts/sampling/#head-sampling).
 
 Para mais informações, consulte [Amostragem](/docs/concepts/sampling).
 

@@ -1,8 +1,6 @@
 ---
 title: Recursos
 weight: 70
-default_lang_commit: 86d2fbde246b9e56665146db78d4fc1d34d00ddf
-drifted_from_default: true
 ---
 
 ## Introdução {#introduction}
@@ -50,7 +48,8 @@ recursos do ambiente. Os detectores de recursos mais comuns incluem:
 
 Você também pode fornecer seus próprios atributos do recurso. Você pode
 fornecê-los em código ou definindo um valor para a variável de ambiente
-`OTEL_RESOURCE_ATTRIBUTES`. Se aplicável, utilize
+`OTEL_RESOURCE_ATTRIBUTES`.
+Se aplicável, utilize
 [convenções semânticas para seus atributos do recurso](/docs/specs/semconv/resource).
 Por exemplo, você pode fornecer o nome do seu
 [ambiente de execução](/docs/specs/semconv/resource/deployment-environment/)

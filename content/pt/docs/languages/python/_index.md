@@ -1,17 +1,14 @@
 ---
 title: Python
 description: >-
-  <img width="35" class="img-initial" src="/img/logos/32x32/Python_SDK.svg"
-  alt="Python"> Uma implementação específica de linguagem do OpenTelemetry em
-  Python.
+  <img width="35" class="img-initial" src="/img/logos/32x32/Python_SDK.svg" alt="Python"> Uma implementação específica de linguagem do OpenTelemetry em Python.
+aliases: [ /python, /python/metrics, /python/tracing ]
 weight: 22
-default_lang_commit: 3fd0bb513e5d3fa6f178a73584322bcc469f15e0 # patched
-drifted_from_default: true
 ---
 
 {{% docs/languages/index-intro python /%}}
 
-## Suporte de Versão {#status-and-releases}
+## Version support
 
 O OpenTelemetry suporta a versão Python 3.8 e superiores.
 
@@ -52,7 +49,8 @@ instrumentação, implementações de rastreadores, etc., visite o
 ### Instalando Pacotes de Ponta {#installing-cutting-edge-packages}
 
 Há algumas funcionalidades que ainda não foram lançadas no PyPI. Nessa situação,
-você pode querer instalar os pacotes diretamente do repositório. Isso pode ser
+você pode querer instalar os pacotes diretamente do repositório.
+Isso pode ser
 feito clonando o repositório e fazendo uma
 [instalação editável](https://pip.pypa.io/en/stable/reference/pip_install/#editable-installs):
 
@@ -68,5 +66,4 @@ pip install -e ./opentelemetry-api -e ./opentelemetry-sdk -e ./opentelemetry-sem
 - Repositório Contrib: [opentelemetry-python-contrib][]
 
 [opentelemetry-python]: https://github.com/open-telemetry/opentelemetry-python
-[opentelemetry-python-contrib]:
-  https://github.com/open-telemetry/opentelemetry-python-contrib
+[opentelemetry-python-contrib]: https://github.com/open-telemetry/opentelemetry-python-contrib

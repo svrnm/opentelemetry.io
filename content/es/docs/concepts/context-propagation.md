@@ -2,8 +2,6 @@
 title: Propagación de contexto
 weight: 10
 description: Aprende sobre el concepto que habilita el trazado distribuido.
-default_lang_commit: 4966f752eb35f97c095ed1c813972c2ab38f0b1a
-drifted_from_default: true
 ---
 
 Con la propagación de contexto, [Señales](/docs/concepts/signals) pueden
@@ -23,11 +21,10 @@ y receptor, o la
 [unidad de ejecución](/docs/specs/otel/glossary/#execution-unit), puedan
 correlacionar una señal con otra.
 
-Por ejemplo, si el servicio A llama al servicio B, entonces un span del servicio
-A cuyo ID está en el contexto será usado como el span padre para el próximo span
-creado en el servicio B. El ID de traza que está en el contexto también se usará
-para el siguiente span creado en el servicio B, lo que significa que el span es
-parte de la misma traza que el span del servicio A.
+When Service A calls Service B, it includes a trace ID and a span ID as part of
+the context. Service B uses these values to create a new span that belongs to
+the same trace, setting the span from Service A as its parent. This makes it
+possible to track the full flow of a request across service boundaries.
 
 ## Propagación {#propagation}
 

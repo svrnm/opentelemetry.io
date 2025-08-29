@@ -1,8 +1,7 @@
 ---
 title: Docker デプロイ
 linkTitle: Docker
-aliases: [docker_deployment]
-default_lang_commit: d0a90db560d4f15934bdb43d994eabcfd91c515a
+aliases: [ docker_deployment ]
 cSpell:ignore: otlphttp spanmetrics tracetest tracetesting
 ---
 
@@ -18,49 +17,59 @@ cSpell:ignore: otlphttp spanmetrics tracetest tracetesting
 
 ## デモの取得と実行 {#get-and-run-the-demo}
 
-1. デモリポジトリをクローンしてください。
+1. Clone the Demo repository:
 
-   ```shell
-   git clone https://github.com/open-telemetry/opentelemetry-demo.git
-   ```
+    ```shell
+    git clone https://github.com/open-telemetry/opentelemetry-demo.git
+    ```
 
 2. デモフォルダに移動します。
 
-   ```shell
-   cd opentelemetry-demo/
-   ```
+    ```shell
+    cd opentelemetry-demo/
+    ```
 
 3. デモを起動[^1]します。
 
-   {{< tabpane text=true >}} {{% tab Make %}}
+       {{< tabpane text=true >}} {{% tab Make %}}
 
 ```shell
 make start
 ```
 
+    ```
     {{% /tab %}} {{% tab Docker %}}
+    ```
 
 ```shell
 docker compose up --force-recreate --remove-orphans --detach
 ```
 
+    ```
     {{% /tab %}} {{< /tabpane >}}
+    ```
 
 4. (オプション) API オブザーバビリティ駆動テストの有効化[^1]します。
 
-   {{< tabpane text=true >}} {{% tab Make %}}
+    ```
+    {{< tabpane text=true >}} {{% tab Make %}}
+    ```
 
 ```shell
 make run-tracetesting
 ```
 
+    ```
     {{% /tab %}} {{% tab Docker %}}
+    ```
 
 ```shell
 docker compose -f docker-compose-tests.yml run traceBasedTests
 ```
 
+    ```
     {{% /tab %}} {{< /tabpane >}}
+    ```
 
 ## ウェブストアとテレメトリーの確認 {#verify-the-web-store-and-telemetry}
 
@@ -76,37 +85,43 @@ docker compose -f docker-compose-tests.yml run traceBasedTests
 ## デモのプライマリーポート番号の変更 {#changing-the-demos-primary-port-number}
 
 デフォルトでは、デモアプリケーションは 8080 ポートにバウンドされたすべてのブラウザのトラフィックに対してプロキシを開始します。
-ポート番号を変更するには、デモを開始する前に環境変数 `ENVOY_PORT` を設定してください。
+ポート番号を変更するには、デモを開始する前に環境変数 `ENVOY_PORT` を設定してください。 To change the port number, set the `ENVOY_PORT` environment
+variable before starting the demo.
 
 - 次の設定は 8081 ポートを利用する場合の例です[^1]。
 
-  {{< tabpane text=true >}} {{% tab Make %}}
+    {{< tabpane text=true >}} {{% tab Make %}}
 
 ```shell
 ENVOY_PORT=8081 make start
 ```
 
+    ```
     {{% /tab %}} {{% tab Docker %}}
+    ```
 
 ```shell
 ENVOY_PORT=8081 docker compose up --force-recreate --remove-orphans --detach
 ```
 
+    ```
     {{% /tab %}} {{< /tabpane >}}
+    ```
 
 ## 独自のバックエンドを導入する {#bring-your-own-backend}
 
 おそらく、あなたがすでに所持しているオブザーバビリティバックエンド（たとえば、Jaeger、Zipkin、または[選択したベンダー](/ecosystem/vendors/)のいずれかの既存インスタンス）のデモアプリケーションとしてウェブストアを利用したいでしょう。
 
 OpenTelemetry コレクターはテレメトリーデータを複数のバックエンドに送信するのに利用可能です。
-デフォルトで、デモアプリケーションのコレクターは 2 つのファイルから設定をマージします。
+デフォルトで、デモアプリケーションのコレクターは 2 つのファイルから設定をマージします。 By default, the collector in the demo application will merge the
+configuration from two files:
 
 - `otelcol-config.yml`
 - `otelcol-config-extras.yml`
 
 あなたのバックエンドに追加するために、エディターで [src/otel-collector/otelcol-config-extras.yml](https://github.com/open-telemetry/opentelemetry-demo/blob/main/src/otel-collector/otelcol-config-extras.yml) ファイルを開いてください。
 
-- 新しいエクスポーターを追加することで始めます。 たとえば、もしあなたのバックエンドが OTLP over HTTP をサポートしているのであれば、以下を追加してください。
+- Start by adding a new exporter. 新しいエクスポーターを追加することで始めます。 たとえば、もしあなたのバックエンドが OTLP over HTTP をサポートしているのであれば、以下を追加してください。
 
   ```yaml
   exporters:
@@ -123,16 +138,17 @@ OpenTelemetry コレクターはテレメトリーデータを複数のバック
         exporters: [spanmetrics, otlphttp/example]
   ```
 
-{{% alert title="Note" %}}
-YAML の値をコレクターとマージすると、オブジェクトはマージされて、配列は置き換えられます。
-`spanmetrics` エクスポーターを上書きする場合は、`traces` パイプラインのエクスポーターの配列に含める必要があります。
-このエクスポーターを含めないとエラーが発生します。
-{{% /alert %}}
+{{% alert title="Note" %}} When merging YAML values with the Collector, objects
+are merged and arrays are replaced. The `spanmetrics` exporter must be included
+in the array of exporters for the `traces` pipeline if overridden. Not including
+this exporter will result in an error. {{% /alert %}}
 
-ベンダーのバックエンドは認証のために追加のパラメーターを必要とするかもしれません。ドキュメントを確認してください。
+Vendor backends might require you to add additional parameters for
+authentication, please check their documentation. ベンダーのバックエンドは認証のために追加のパラメーターを必要とするかもしれません。ドキュメントを確認してください。
 一部のバックエンドは異なるエクスポーターが必要です。それらのエクスポーターとドキュメントについて[opentelemetry-collector-contrib/exporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter) で入手できます。
 
 `otelcol-config-extras.yml` を更新した後に、`make start` を実行してデモを開始してください。
-しばらくして、あなたのバックエンドにトレースが流れるのも確認できるはずです。
+しばらくして、あなたのバックエンドにトレースが流れるのも確認できるはずです。 After a while, you should see the traces flowing into your backend
+as well.
 
 [^1]: {{% param notes.docker-compose-v2 %}}

@@ -1,11 +1,11 @@
 ---
 title: ディストリビューション
 weight: 25
-default_lang_commit: dcd079d98e749febcefd4d7bb1da361770ec8ed3
 ---
 
 OpenTelemetryプロジェクトは現在、コレクターの事前ビルド済み[ディストリビューション][distributions]を提供しています。
-ディストリビューションに含まれるコンポーネントは、それぞれのディストリビューションの`manifest.yaml`で確認できます。
+ディストリビューションに含まれるコンポーネントは、それぞれのディストリビューションの`manifest.yaml`で確認できます。 The components included in the distributions can be found by in the
+`manifest.yaml` of each distribution.
 
 [distributions]: https://github.com/open-telemetry/opentelemetry-collector-releases/tree/main/distributions
 
@@ -13,21 +13,27 @@ OpenTelemetryプロジェクトは現在、コレクターの事前ビルド済�
 
 ## カスタムディストリビューション {#custom-distributions}
 
-OpenTelemetryプロジェクトが提供する既存のディストリビューションは、あなたのニーズに合わない場合があります。
-たとえば、より軽量なバイナリを必要とする場合や、[認証拡張機能](../building/authenticator-extension)、[レシーバー](../building/receiver)、プロセッサー、エクスポーターまたは[コネクター](../building/connector)などのカスタム機能を実装する必要がある場合があります。
-ディストリビューションを構築するためのツールである[ocb](../custom-collector)（OpenTelemetry Collector Builder）を使用して、独自のディストリビューションを作成できます。
+Existing distributions provided by the OpenTelemetry project may not meet your
+needs. For example, you may want a smaller binary or need to implement custom
+functionality like
+[authenticator extensions](../building/authenticator-extension),
+[receivers](../building/receiver), processors, exporters or
+[connectors](../building/connector). The tool used to build distributions
+[ocb](../custom-collector) (OpenTelemetry Collector Builder) is available to
+build your own distributions.
 
 ## サードパーティディストリビューション {#third-party-distributions}
 
-一部の組織は、追加機能を持つコレクターディストリビューションや、使いやすさを向上させたコレクターディストリビューションを提供しています。
-以下は、サードパーティが保守するコレクターディストリビューションのリストです。
+Some organizations provide a Collector distribution with additional capabilities
+or for improved ease of use. What follows is a list of Collector distributions
+maintained by third parties.
 
 {{% ecosystem/distributions-table filter="third-party-collector" %}}
 
 ## コレクターディストリビューションの追加 {#how-to-add}
 
 あなたのコレクターディストリビューションをリストに追加するには、[ディストリビューションリスト][distributions list]にエントリを追加した[PRを提出][submit a PR]してください。
-エントリには以下を含める必要があります。
+エントリには以下を含める必要があります。 The entry should include the following:
 
 - ディストリビューションのメインページへのリンク
 - ディストリビューションの使用方法を説明するドキュメントへのリンク

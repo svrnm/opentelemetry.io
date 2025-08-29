@@ -1,9 +1,8 @@
 ---
 title: コンテンツの提出
 description: GitHub UI 利用して、またはローカルのフォークから、新しいコンテンツまたはコンテンツの変更を提出する方法を学びます
-aliases: [new-content]
+aliases: [ new-content ]
 weight: 15
-default_lang_commit: 8eda3ad35e6fbeea601a033023f694c8750fd1b9
 ---
 
 新しいドキュメントの内容を追加や改善するには、[プルリクエスト][PR] （PR）を提出してください。
@@ -23,7 +22,9 @@ All contributors are required to [sign a Contributor License Agreement
 {{% alert title="ヒント: Draft ステータス" %}}
 
 コンテンツがレビューの準備ができていないことをメンテナーに知らせるために、プルリクエストのステータスを **Draft** にしてください。
-メンテナーは、Draft ステータスを解除するまでコンテンツを完全なレビューはしませんが、コメントや高レベルのレビューを行うことがあります。
+メンテナーは、Draft ステータスを解除するまでコンテンツを完全なレビューはしませんが、コメントや高レベルのレビューを行うことがあります。 Maintainers may still comment or do
+high-level reviews, though they won't review the content in full until you
+remove the draft status.
 
 {{% /alert %}}
 
@@ -54,8 +55,9 @@ _図 1. 新しいコンテンツにコントリビュートする。_
 
 ### ブラウザから修正し変更を提出する {#page-edit-from-browser}
 
-もし、Git のワークフローをあまり慣れていなければ、プルリクエストを作成して提出するより簡単な方法があります。
-図 2 は手順の概要を示しており、詳細はこの後に続きます。
+If you're less experienced with Git workflows, here's an easier method of
+preparing and opening a new pull request (PR). Figure 2 outlines the steps and
+the details follow.
 
 ```mermaid
 flowchart LR
@@ -89,35 +91,37 @@ _図 2. GitHub を利用した PR の公開手順。_
 
 1. 問題を見つけたページ上で、右側のナビゲーションパネルにある **ページの編集** のオプションを選択してください。
 
-1. プロジェクトのメンバーでない場合、GitHub でリポジトリのフォークの作成を提案されます。**Fork this repository**を選択してください。
+2. プロジェクトのメンバーでない場合、GitHub でリポジトリのフォークの作成を提案されます。**Fork this repository**を選択してください。 Select **Fork this repository**.
 
-1. GitHub のエディターで、変更を加えます。
+3. GitHub のエディターで、変更を加えます。
 
-1. **Propose file change** フォームに記入してください。
+4. **Propose file change** フォームに記入してください。
 
-1. **Propose file change** を選択します。
+5. **Propose file change** を選択します。
 
-1. **Create Pull request** を選択します。
+6. **Create Pull request** を選択します。
 
-1. **Open a pull request** 画面に表示されます。あなたの説明はレビュアーが理解するのに役立ちます。
+7. **Open a pull request** 画面に表示されます。あなたの説明はレビュアーが理解するのに役立ちます。 Your description helps reviewers
+   understand your change.
 
-1. **Create pull request**を選択してください。
+8. **Create pull request**を選択してください。
 
 プルリクエストをマージする前に、OpenTelemetry コミュニティメンバーはレビューして承認します。
 
 レビュアーから変更を求められた場合。
 
 1. **File changed**タブに移動してください。
-1. プルリクエストによって変更されたファイルのいずれかで、鉛筆（編集）アイコンを選択します。
-1. 求めら得た変更を加えください。 コードの提案があれば、適用してください。
-1. 変更をコミットしてください。
+2. プルリクエストによって変更されたファイルのいずれかで、鉛筆（編集）アイコンを選択します。
+3. Make the changes requested. If there's a code suggestion, apply it.
+4. 変更をコミットしてください。
 
 レビューが完了したら、レビュアーは PR をマージして変更が数分後に反映されます。
 
 ### Fixing PR check failures {#fixing-prs-in-github}
 
 PR を提出した後に、GitHub はいくつかのビルドチェックを実行します。
-フォーマットの問題といった、特定のチェックの失敗は自動的に修正できます。
+フォーマットの問題といった、特定のチェックの失敗は自動的に修正できます。 Certain check
+failures, like formatting issues, can be fixed automatically.
 
 以下のコメントを PR に追加してください。
 
@@ -126,7 +130,8 @@ PR を提出した後に、GitHub はいくつかのビルドチェックを実�
 ```
 
 これは、OpenTelemetry bot がビルドの問題を修正しようとします。
-もしくは、特定の失敗に対処するために、次の修正コマンドの 1 つを実行できます。
+もしくは、特定の失敗に対処するために、次の修正コマンドの 1 つを実行できます。 Or you can
+issue one of the following fix commands to address a specific failure:
 
 ```text
 fix:dict
@@ -143,7 +148,7 @@ fix:text
 
 {{% alert title="Pro Tip" %}}
 
-`fix` コマンドをローカルで実行できます。
+You can also run the `fix` commands locally. `fix` コマンドをローカルで実行できます。
 修正コマンドの全リストは、`npm run -s '_list:fix:*'` を実行してください。
 
 {{% /alert %}}
@@ -153,9 +158,11 @@ fix:text
 Git に慣れている場合もしくは、変更が数行以上の場合は、ローカルのフォークから作業してください。
 
 パソコンに [git がインストール済み][`git` installed]であることを確認してください。
-Git のユーザーインターフェースも利用できます。
+Git のユーザーインターフェースも利用できます。 You can also use a user
+interface for Git.
 
-図 3 は、ローカルのフォークから作業するときに従う手順を示しています。詳細はそれぞれの手順に従ってください。
+図 3 は、ローカルのフォークから作業するときに従う手順を示しています。詳細はそれぞれの手順に従ってください。 The details
+for each step follow.
 
 ```mermaid
 flowchart LR
@@ -187,7 +194,7 @@ _図 3. ローカルのフォークで作業して変更を追加。_
 ### リポジトリをフォークする {#fork-the-repository}
 
 1. [`opentelemetry.io`](https://github.com/open-telemetry/opentelemetry.io/) リポジトリに移動してください。
-1. **フォーク**を選択してください。
+2. **フォーク**を選択してください。
 
 ### クローンし、アップストリームを設定 {#clone-and-set-upstream}
 
@@ -199,13 +206,13 @@ _図 3. ローカルのフォークで作業して変更を追加。_
    npm install
    ```
 
-1. `open-telemetry/opentelemetry.io` リポジトリを `upstream` リモートに設定。
+2. `open-telemetry/opentelemetry.io` リポジトリを `upstream` リモートに設定。
 
    ```shell
    git remote add upstream https://github.com/open-telemetry/opentelemetry.io.git
    ```
 
-1. `origin` と `upstream` リポジトリの確認。
+3. `origin` と `upstream` リポジトリの確認。
 
    ```shell
    git remote -v
@@ -220,25 +227,26 @@ _図 3. ローカルのフォークで作業して変更を追加。_
    upstream	https://github.com/open-telemetry/opentelemetry.io.git (push)
    ```
 
-1. フォークの `origin/main` と `open-telemetry/opentelemetry.io` の `upstream/main` からコミットをフェッチ。
+4. フォークの `origin/main` と `open-telemetry/opentelemetry.io` の `upstream/main` からコミットをフェッチ。
 
    ```shell
    git fetch origin
    git fetch upstream
    ```
 
-   これにより、変更を加える前にローカルリポジトリが最新の状態であることを確認できます。
-   フォークをアップストリームと同期させるために、定期的にアップストリームの変更をオリジンにプッシュしてください。
+   This makes sure your local repository is up to date before you start making
+   changes. Push changes from upstream to origin regularly to keep your fork in
+   sync with upstream.
 
 ### ブランチを作成 {#create-a-branch}
 
-1. 新しいブランチを作成します。 この例はベースブランチが `upstream/main` であると想定しています。
+1. Create a new branch. This example assumes the base branch is `upstream/main`:
 
    ```shell
    git checkout -b <my_new_branch> upstream/main
    ```
 
-1. コードエディターまたはテキストエディターを使用して変更を加えてください。
+2. コードエディターまたはテキストエディターを使用して変更を加えてください。
 
 いつでも、`git status` コマンドを使用して、どのファイルが変更したか確認できます。
 
@@ -267,7 +275,7 @@ _図 3. ローカルのフォークで作業して変更を追加。_
    no changes added to commit (use "git add" and/or "git commit -a")
    ```
 
-1. **Changes not staged for commit** のリストされているファイルをコミットしてください。
+2. **Changes not staged for commit** のリストされているファイルをコミットしてください。
 
    ```shell
    git add <your_file_name>
@@ -275,19 +283,19 @@ _図 3. ローカルのフォークで作業して変更を追加。_
 
    これを各ファイルに対して繰り返してください。
 
-1. すべてのファイルを追加した後に、 コミットを作成してください。
+3. すべてのファイルを追加した後に、 コミットを作成してください。
 
    ```shell
    git commit -m "Your commit message"
    ```
 
-1. ローカルブランチと新しいコミットをリモートのフォークにプッシュしてください。
+4. ローカルブランチと新しいコミットをリモートのフォークにプッシュしてください。
 
    ```shell
    git push origin <my_new_branch>
    ```
 
-1. 変更がプッシュされると、GitHub が PR を作成できることを知らせます。
+5. 変更がプッシュされると、GitHub が PR を作成できることを知らせます。
 
 ### 新しいプルリクエストを公開する {#open-a-pr}
 
@@ -320,26 +328,36 @@ _図 4. フォークから、PR を公開する手順_
 [opentelemetry.io](https://github.com/open-telemetry/opentelemetry.io).
 
 1. Web ブラウザで [`opentelemetry.io`](https://github.com/open-telemetry/opentelemetry.io) リポジトリにアクセスしてください。
-1. **New Pull Request** を作成してください。
-1. **compare across forks** を選択してください。
-1. **head repository** ドロップダウンメニューから、あなたのフォークを選択してください。
-1. ドロップダウンメニューの **compare** から、あなたのブランチを選択してください。
-1. **Create Pull Request** を選択してください。
-1. プルリクエストの説明を追加してください。
+
+2. **New Pull Request** を作成してください。
+
+3. **compare across forks** を選択してください。
+
+4. **head repository** ドロップダウンメニューから、あなたのフォークを選択してください。
+
+5. ドロップダウンメニューの **compare** から、あなたのブランチを選択してください。
+
+6. **Create Pull Request** を選択してください。
+
+7. プルリクエストの説明を追加してください。
    - **タイトル** (50 文字未満): 変更の意図を要約してください。
    - **説明**: 変更を詳細に記述してください。
-     - GitHub イシューに関連する場合、`Fixes #12345` や `Closes #12345` を説明に記述することで、PR のマージしたあとに GitHub の自動化が該当イシューをクローズします。 他の関連する PR がある場合もリンクしてください。
-     - 特定のことに対してアドバイスを求める場合、説明にレビュアーが考えて欲しい質問を含めてください。
-1. **Create pull request** ボタンを選択してください。
+     - GitHub イシューに関連する場合、`Fixes #12345` や `Closes #12345` を説明に記述することで、PR のマージしたあとに GitHub の自動化が該当イシューをクローズします。 他の関連する PR がある場合もリンクしてください。 If there are other related PRs,
+       link those as well.
+     - If you want advice on something specific, include any questions you'd
+       like reviewers to think about in your description.
+
+8. **Create pull request** ボタンを選択してください。
 
 プルリクエストは、[Pull requests](https://github.com/open-telemetry/opentelemetry.io/pulls) で確認できます。
 
 PR を公開した後に、自動テストの実行と [Netlify](https://www.netlify.com/) を使用したプレビューのデプロイを試みます。
 
 - Netlify ビルドが失敗した場合、詳細な情報のために **Details** を選択してください。
-- Netlify のビルドが成功した場合、**Details** を選択して、変更が適用された OpenTelemetry のウェブサイトのステージングバージョンを開いてください。 これがレビュアーが変更を確認する方法です。
+- Netlify のビルドが成功した場合、**Details** を選択して、変更が適用された OpenTelemetry のウェブサイトのステージングバージョンを開いてください。 これがレビュアーが変更を確認する方法です。 This is how reviewers
+  check your changes.
 
-他のチェックも同様に失敗している可能性があります。[すべての PR チェック](../pr-checks) を参照してください。
+他のチェックも同様に失敗している可能性があります。[すべての PR チェック](../pr-checks) を参照してください。 See the [list of all PR checks](../pr-checks).
 
 ### 問題を修正する {#fix-issues}
 
@@ -357,12 +375,13 @@ npm run fix:all # ファイルを更新する場合があります。
 ```
 
 利用可能な NPM スクリプトのリストを表示するには、`npm run` を実行してください。
-プルリクエストのチェックとエラーの自動修正の詳細は、[PR checks](../pr-checks) を参照してください。
+プルリクエストのチェックとエラーの自動修正の詳細は、[PR checks](../pr-checks) を参照してください。 See [PR checks](../pr-checks) for
+more information on pull request checks and how to fix errors automatically.
 
 ### 変更をプレビューする {#preview-locally}
 
-変更のプッシュまたはプルリクエストの公開の前に、ローカルでプレビューしてください。
-プレビューはビルドエラーとマークダウンのフォーマットの問題を検出できます。
+Preview your changes locally before pushing them or opening a pull request. A
+preview lets you catch build errors or Markdown formatting problems.
 
 Hugo をローカルでビルドと提供するには、以下のコマンドを実行してください。
 
@@ -370,15 +389,16 @@ Hugo をローカルでビルドと提供するには、以下のコマンドを
 npm run serve
 ```
 
-Web ブラウザで <http://localhost:1313> に移動してローカルプレビューを確認してください。
-Hugo は変更を監視し、必要に応じてサイトをリビルドします。
+Navigate to <http://localhost:1313> in your web browser to see the local
+preview. Hugo watches for changes and rebuilds the site as needed.
 
 ローカルの Hugo インスタンスを停止するには、ターミナルにもどって `Ctrl+C` を入力するか、ターミナルを閉じてください。
 
 ### サイトデプロイと PR プレビュー {#site-deploys-and-pr-previews}
 
 PR を提出したら、Netlify は [deploy preview][] を作成し、変更をレビューできます。
-PR がマージされると、Netlify はプロダクションサーバーに更新されたサイトを本番サーバーにデプロイします。
+PR がマージされると、Netlify はプロダクションサーバーに更新されたサイトを本番サーバーにデプロイします。 Once your PR is merged, Netlify deploys the updated site to the
+production server.
 
 > **Note**: PR プレビューには ドラフトページ が含まれますが、本番ビルドには含まれません。
 
@@ -387,17 +407,20 @@ Netlify ログインが必要です。
 
 ### PR ガイドライン {#pr-guidelines}
 
-PR がマージされる前に、レビューと編集を数回繰り返すことがあります。
-このプロセスをできるだけ簡単にするために、以下のガイドラインに従ってください。
+Before a PR gets merged, it sometimes requires a few iterations of
+review-and-edit. To help us and yourself make this process as easy as possible,
+we ask that you adhere to the following:
 
-- もしあなたの PR が簡単な修正でない場合は、**フォークから作業**してください。 リポジトリの上部にある [Fork](https://github.com/open-telemetry/opentelemetry.io/fork) ボタンをクリックし、フォークをローカルにクローンしてください。準備ができたら、アップストリームリポジトリに PR を作成してください。
-- あたなたのフォークの **`main` ブランチから作業をせずに**、PR 専用のブランチを作成してください。
+- もしあなたの PR が簡単な修正でない場合は、**フォークから作業**してください。 リポジトリの上部にある [Fork](https://github.com/open-telemetry/opentelemetry.io/fork) ボタンをクリックし、フォークをローカルにクローンしてください。準備ができたら、アップストリームリポジトリに PR を作成してください。 When you are ready, raise a
+  PR with the upstream repository.
+- **Do not work from the `main`** branch of your fork, but create a PR-specific
+  branch.
 - メンテナーが[あなたのプルリクエストに変更を加えられること](https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork)を確認してください。
 
 ### レビュアーからの変更 {#changes-from-reviewers}
 
-レビュアーはあなたのプルリクエストにコミットすることがあります。
-ほかの変更を加える前に、それらのコミットをフェッチしてください。
+Sometimes reviewers commit to your pull request. Before making any other
+changes, fetch those commits.
 
 1. リモートフォークからコミットをフェッチして、作業中のブランチをリベースしてください。
 
@@ -406,18 +429,18 @@ PR がマージされる前に、レビューと編集を数回繰り返すこ�
    git rebase origin/<your-branch-name>
    ```
 
-1. リベースしたあとに、フォーク先にあなたの変更をフォースプッシュしてください。
+2. After rebasing, force-push new changes to your fork:
 
    ```shell
    git push --force-with-lease origin <your-branch-name>
    ```
 
-コンフリクトは GitHub UI からも解決できます。
+You can also solve merge conflicts from the GitHub UI.
 
-### マージのコンフリクトとリベース {#merge-conflicts-and-rebasing}
+### Merge conflicts and rebasing
 
 別のコントリビューターが別の PR で同じファイルに変更をコミットすると、マージコンフリクトが発生する可能性があります。
-あなたの PR ですべてのマージコンフリクトを解決する必要があります。
+あなたの PR ですべてのマージコンフリクトを解決する必要があります。 You must resolve all merge conflicts in your PR.
 
 1. フォークを更新して、ローカルブランチをリベースしてください。
 
@@ -426,20 +449,20 @@ PR がマージされる前に、レビューと編集を数回繰り返すこ�
    git rebase origin/<your-branch-name>
    ```
 
-   フォークに変更をフォースプッシュしてください。
+   Then force-push the changes to your fork:
 
    ```shell
    git push --force-with-lease origin <your-branch-name>
    ```
 
-1. `open-telemetry/opentelemetry.io` の `upstream/main` から変更をフェッチして、あなたのブランチをリベースしてください。
+2. `open-telemetry/opentelemetry.io` の `upstream/main` から変更をフェッチして、あなたのブランチをリベースしてください。
 
    ```shell
    git fetch upstream
    git rebase upstream/main
    ```
 
-1. リベースの結果を確認してください。
+3. リベースの結果を確認してください。
 
    ```shell
    git status
@@ -447,35 +470,36 @@ PR がマージされる前に、レビューと編集を数回繰り返すこ�
 
    これにより、多くのファイルがコンフリクトとしてマークされます。
 
-1. コンフリクトが発生した各ファイルを開き、コンフリクトマーカー（`>>>`、`<<<` そして `===`） を探してください。 コンフリクトを解消してコンフリクトマーカーを削除してください。
+4. Open each conflicted file and look for the conflict markers: `>>>`, `<<<`,
+   and `===`. Resolve the conflict and delete the conflict marker.
 
    詳細は、[How conflicts are presented](https://git-scm.com/docs/git-merge#_how_conflicts_are_presented) を確認してください。
 
-1. ファイルをチェンジセットに追加してください。
+5. ファイルをチェンジセットに追加してください。
 
    ```shell
    git add <filename>
    ```
 
-1. リベースを続けてください。
+6. Continue the rebase:
 
    ```shell
    git rebase --continue
    ```
 
-1. ステップ 2 から 5 を必要に応じて繰り返してください。
+7. ステップ 2 から 5 を必要に応じて繰り返してください。
 
    すべてのコミットを適用した後、`git status` コマンドはリベースが完了したことを示します。
 
-1. ブランチをあなたのフォークにフォースプッシュしてください。
+8. Force-push the branch to your fork:
 
    ```shell
    git push --force-with-lease origin <your-branch-name>
    ```
 
-   プルリクエストにはもうコンフリクトが表示されません。
+   The pull request no longer shows any conflicts.
 
-### マージの要件 {#merge-requirements}
+### Merge requirements
 
 プルリクエストは、以下の条件を満たしたときにマージされます。
 
@@ -483,7 +507,7 @@ PR がマージされる前に、レビューと編集を数回繰り返すこ�
 - 解決していない会話がないこと。
 - 最低 1 人の承認者によって承認されていること。
 - 失敗している PR チェックがないこと。
-- PR ブランチがベースブランチと最新の状態であること。
+- PR branch is up-to-date with the base branch.
 - ドキュメントページの変更が[ロケールをまたいでいないこと][do not span locales]
 
 [do not span locales]: ../localization/#prs-should-not-span-locales
@@ -491,7 +515,9 @@ PR がマージされる前に、レビューと編集を数回繰り返すこ�
 > **重要**
 >
 > PR チェックの失敗についてあまり心配しないでください。
-> コミュニティメンバーが修正方法を教えたり、代わりに修正したりしてくれます。
+> コミュニティメンバーが修正方法を教えたり、代わりに修正したりしてくれます。 Community members will help you
+> to get them fixed, by either providing you with instructions how to fix them
+> or by fixing them on your behalf.
 
 [dashboard]: https://app.netlify.com/sites/opentelemetry/overview
 [deploy preview]: https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/

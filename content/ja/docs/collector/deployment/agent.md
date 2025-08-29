@@ -2,7 +2,6 @@
 title: エージェント
 description: コレクターにシグナルを送信し、そこからバックエンドに送信する理由と方法
 weight: 2
-default_lang_commit: 548e5e29f574fddc3ca683989a458e9a6800242f
 cSpell:ignore: prometheusremotewrite
 ---
 
@@ -14,13 +13,16 @@ cSpell:ignore: prometheusremotewrite
 ![分散型コレクターデプロイメント概念](../../img/otel-agent-sdk.svg)
 
 1. アプリケーションで、SDKがOTLPデータをコレクターに送信するように設定されます。
-1. コレクターは、テレメトリーデータを1つ以上のバックエンドに送信するように設定されます。
+2. コレクターは、テレメトリーデータを1つ以上のバックエンドに送信するように設定されます。
 
 ## 例 {#example}
 
 コレクターのエージェントデプロイメントパターンの具体例は以下のようになります。
 たとえば、[Javaアプリケーションを計装してメトリクスをエクスポート][instrument-java-metrics]するためにOpenTelemetry Java SDKを使用します。
-アプリケーションのコンテキスト内で、`OTEL_METRICS_EXPORTER`を`otlp`（デフォルト値）に設定し、[OTLPエクスポーター][otlp-exporter]をコレクターのアドレスで設定します。たとえば、Bashまたは`zsh`シェルでは、次のように設定します。
+アプリケーションのコンテキスト内で、`OTEL_METRICS_EXPORTER`を`otlp`（デフォルト値）に設定し、[OTLPエクスポーター][otlp-exporter]をコレクターのアドレスで設定します。たとえば、Bashまたは`zsh`シェルでは、次のように設定します。 In the
+context of the app, you would set the `OTEL_METRICS_EXPORTER` to `otlp` (which
+is the default value) and configure the [OTLP exporter][otlp-exporter] with the
+address of your collector, for example (in Bash or `zsh` shell):
 
 ```shell
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://collector.example.com:4318
@@ -107,12 +109,12 @@ service:
 
 ## トレードオフ {#tradeoffs}
 
-長所：
+短所：
 
 - 始めやすい
 - アプリケーションとコレクターの間に明確な1:1のマッピング
 
-短所：
+Cons:
 
 - スケーラビリティ（人的および負荷面）
 - 柔軟性に欠ける

@@ -1,17 +1,22 @@
 ---
 title: SDKによるテレメトリーの管理
 weight: 12
-aliases: [exporters]
-default_lang_commit: 6f3712c5cda4ea79f75fb410521880396ca30c91
-cSpell:ignore: Interceptable Logback okhttp
+aliases: [ exporters ]
+cSpell:ignore: autoconfigured FQCNs Interceptable Logback okhttp
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/configuration"?>
 
 SDKは、計装API呼び出しによって生成されたテレメトリーを処理およびエクスポートする[API](../api/)の組み込み参照実装です。
 このページは、説明、関連するJavadocへのリンク、アーティファクト座標、サンプルプログラム設定などを含むSDKの概念的な概要です。
-[ゼロコードSDK自動設定](../configuration/#zero-code-sdk-autoconfigure)を含むSDK設定の詳細については、**[SDKの設定](../configuration/)**を参照してください。
+[ゼロコードSDK自動設定](../configuration/#zero-code-sdk-autoconfigure)を含むSDK設定の詳細については、\*\*[SDKの設定](../configuration/)\*\*を参照してください。 This
+page is a conceptual overview of the SDK, including descriptions, links to
+relevant Javadocs, artifact coordinates, sample programmatic configurations and
+more. See **[Configure the SDK](../configuration/)** for details on SDK
+configuration, including
+[zero-code SDK autoconfigure](../configuration/#zero-code-sdk-autoconfigure).
 
 SDKは以下のトップレベルコンポーネントで構成されています。
 
@@ -41,7 +46,8 @@ SDKには多くの使用例に十分な様々な組み込みコンポーネン�
 
 `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}` アーティファクトにはOpenTelemetry SDKが含まれています。
 
-以下のセクションでは、SDKのコアユーザー向けコンポーネントについて説明します。各コンポーネントセクションには以下が含まれます。
+以下のセクションでは、SDKのコアユーザー向けコンポーネントについて説明します。各コンポーネントセクションには以下が含まれます。 Each
+component section includes:
 
 - Javadoc型リファレンスへのリンクを含む簡潔な説明
 - コンポーネントが[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)の場合、利用可能な組み込みおよび`opentelemetry-java-contrib`実装のテーブル
@@ -51,7 +57,9 @@ SDKには多くの使用例に十分な様々な組み込みコンポーネン�
 ### OpenTelemetrySdk {#opentelemetrysdk}
 
 [OpenTelemetrySdk](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk/latest/io/opentelemetry/sdk/OpenTelemetrySdk.html)は[OpenTelemetry](../api/#opentelemetry)のSDK実装です。
-これは、完全に設定されたSDKコンポーネントを計装に渡すのに便利なトップレベルSDKコンポーネントのホルダーです。
+これは、完全に設定されたSDKコンポーネントを計装に渡すのに便利なトップレベルSDKコンポーネントのホルダーです。 It is a
+holder for top-level SDK components which makes it convenient to pass
+fully-configured SDK components to instrumentation.
 
 `OpenTelemetrySdk`はアプリケーション所有者によって設定され、以下で構成されています。
 
@@ -63,7 +71,9 @@ SDKには多くの使用例に十分な様々な組み込みコンポーネン�
 以下のコードスニペットは`OpenTelemetrySdk`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/OpenTelemetrySdkConfig.java"?>
+
 ```java
 package otel;
 
@@ -82,24 +92,26 @@ public class OpenTelemetrySdkConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Resource {#resource}
 
 [Resource](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-common/latest/io/opentelemetry/sdk/resources/Resource.html)は、テレメトリーソースを定義する属性のセットです。
-アプリケーションは、[SdkTracerProvider](#sdktracerprovider)、[SdkMeterProvider](#sdkmeterprovider)、[SdkLoggerProvider](#sdkloggerprovider)と同じリソースを関連付ける必要があります。
-
-{{% alert %}}
+アプリケーションは、[SdkTracerProvider](#sdktracerprovider)、[SdkMeterProvider](#sdkmeterprovider)、[SdkLoggerProvider](#sdkloggerprovider)と同じリソースを関連付ける必要があります。 An application should
+associate the same resource with [SdkTracerProvider](#sdktracerprovider),
+[SdkMeterProvider](#sdkmeterprovider), [SdkLoggerProvider](#sdkloggerprovider).
 
 [ResourceProviders](../configuration/#resourceprovider)は、環境に基づいて[自動設定された](../configuration/#zero-code-sdk-autoconfigure)リソースにコンテキスト情報を提供します。
-利用可能な`ResourceProvider`のリストについてはドキュメントを参照してください。
-
+利用可能な`ResourceProvider`のリストについてはドキュメントを参照してください。 See documentation for list of available `ResourceProvider`s.
 {{% /alert %}}
 
 以下のコードスニペットは`Resource`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ResourceConfig.java"?>
+
 ```java
 package otel;
 
@@ -114,13 +126,14 @@ public class ResourceConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### SdkTracerProvider {#sdktracerprovider}
 
 [SdkTracerProvider](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-trace/latest/io/opentelemetry/sdk/trace/SdkTracerProvider.html)は[TracerProvider](../api/#tracerprovider)のSDK実装で、APIによって生成されたトレーステレメトリーの処理を担当します。
 
-`SdkTracerProvider`はアプリケーション所有者によって設定され、以下で構成されています。
+以下のコードスニペットは`SdkTracerProvider`のプログラム設定を示します。
 
 - [Resource](#resource)：スパンが関連付けられるリソース
 - [Sampler](#sampler)：記録およびサンプリングされるスパンを設定します
@@ -128,10 +141,12 @@ public class ResourceConfig {
 - [SpanExporters](#spanexporter)：スパンをプロセス外にエクスポートします（関連する`SpanProcessor`と連携して）
 - [SpanLimits](#spanlimits)：スパンに関連付けられるデータの制限を制御します
 
-以下のコードスニペットは`SdkTracerProvider`のプログラム設定を示します。
+`SdkTracerProvider`はアプリケーション所有者によって設定され、以下で構成されています。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SdkTracerProviderConfig.java"?>
+
 ```java
 package otel;
 
@@ -151,36 +166,37 @@ public class SdkTracerProviderConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Sampler {#sampler}
 
 [Sampler](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-trace/latest/io/opentelemetry/sdk/trace/samplers/Sampler.html)は、記録およびサンプリングされるスパンを決定する責任を持つ[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)です。
 
-{{% alert %}}
-
 デフォルトで`SdkTracerProvider`は`ParentBased(root=AlwaysOn)`サンプラーで設定されています。
-これにより、呼び出し元アプリケーションがサンプリングを実行しない限り、100%のスパンがサンプリングされます。これが過度にノイジー/高コストの場合は、サンプラーを変更してください。
-
-{{% /alert %}}
+これにより、呼び出し元アプリケーションがサンプリングを実行しない限り、100%のスパンがサンプリングされます。これが過度にノイジー/高コストの場合は、サンプラーを変更してください。 This results in 100% of spans being
+sampled if unless a calling application performs sampling. If this is too noisy
+/ expensive, change the sampler. {{% /alert %}}
 
 SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているサンプラー。
 
-| クラス                    | アーティファクト                                                                              | 説明                                                                                                                          |
-| ------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `ParentBased`             | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | スパンの親のサンプリングステータスに基づいてスパンをサンプリングします。                                                      |
-| `AlwaysOn`                | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | すべてのスパンをサンプリングします。                                                                                          |
-| `AlwaysOff`               | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | すべてのスパンをドロップします。                                                                                              |
-| `TraceIdRatioBased`       | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | 設定可能な比率に基づいてスパンをサンプリングします。                                                                          |
-| `JaegerRemoteSampler`     | `io.opentelemetry:opentelemetry-sdk-extension-jaeger-remote-sampler:{{% param vers.otel %}}`  | リモートサーバーからの設定に基づいてスパンをサンプリングします。                                                              |
-| `LinksBasedSampler`       | `io.opentelemetry.contrib:opentelemetry-samplers:{{% param vers.contrib %}}-alpha`            | スパンのリンクのサンプリングステータスに基づいてスパンをサンプリングします。                                                  |
-| `RuleBasedRoutingSampler` | `io.opentelemetry.contrib:opentelemetry-samplers:{{% param vers.contrib %}}-alpha`            | 設定可能なルールに基づいてスパンをサンプリングします。                                                                        |
+| クラス                       | アーティファクト                                                                                      | 説明                                                                                           |
+| ------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `ParentBased`             | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | スパンの親のサンプリングステータスに基づいてスパンをサンプリングします。                                                         |
+| `AlwaysOn`                | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | すべてのスパンをサンプリングします。                                                                           |
+| `AlwaysOff`               | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | すべてのスパンをドロップします。                                                                             |
+| `TraceIdRatioBased`       | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                  | 設定可能な比率に基づいてスパンをサンプリングします。                                                                   |
+| `JaegerRemoteSampler`     | `io.opentelemetry:opentelemetry-sdk-extension-jaeger-remote-sampler:{{% param vers.otel %}}`  | リモートサーバーからの設定に基づいてスパンをサンプリングします。                                                             |
+| `LinksBasedSampler`       | `io.opentelemetry.contrib:opentelemetry-samplers:{{% param vers.contrib %}}-alpha`            | スパンのリンクのサンプリングステータスに基づいてスパンをサンプリングします。                                                       |
+| `RuleBasedRoutingSampler` | `io.opentelemetry.contrib:opentelemetry-samplers:{{% param vers.contrib %}}-alpha`            | 設定可能なルールに基づいてスパンをサンプリングします。                                                                  |
 | `ConsistentSamplers`      | `io.opentelemetry.contrib:opentelemetry-consistent-sampling:{{% param vers.contrib %}}-alpha` | [確率サンプリング](/docs/specs/otel/trace/tracestate-probability-sampling/)で定義されたさまざまな一貫性のあるサンプラー実装。 |
 
 以下のコードスニペットは`Sampler`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SamplerConfig.java"?>
+
 ```java
 package otel;
 
@@ -220,13 +236,17 @@ public class SamplerConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムサンプリングロジックを提供するには、`Sampler`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For
+example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomSampler.java"?>
+
 ```java
 package otel;
 
@@ -267,28 +287,33 @@ public class CustomSampler implements Sampler {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### SpanProcessor {#spanprocessor}
 
 [SpanProcessor](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-trace/latest/io/opentelemetry/sdk/trace/SpanProcessor.html)は、スパンが開始および終了されたときに呼び出されるコールバックを持つ[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)です。
-これらはしばしば[SpanExporters](#spanexporter)と組み合わせてスパンをプロセス外にエクスポートしますが、データエンリッチメントなどの他の用途もあります。
+これらはしばしば[SpanExporters](#spanexporter)と組み合わせてスパンをプロセス外にエクスポートしますが、データエンリッチメントなどの他の用途もあります。 They are often paired with
+[SpanExporters](#spanexporter) to export spans out of process, but have other
+applications such as data enrichment.
 
 SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているスパンプロセッサー。
 
-| クラス                    | アーティファクト                                                                            | 説明                                                                                         |
-| ------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| クラス                       | アーティファクト                                                                                    | 説明                                                    |
+| ------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
 | `BatchSpanProcessor`      | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                | サンプリングされたスパンをバッチ処理し、設定可能な`SpanExporter`を介してエクスポートします。 |
-| `SimpleSpanProcessor`     | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                | 各サンプリングされたスパンを設定可能な`SpanExporter`を介してエクスポートします。             |
-| `BaggageSpanProcessor`    | `io.opentelemetry.contrib:opentelemetry-baggage-processor:{{% param vers.contrib %}}-alpha` | スパンをバゲージでエンリッチします。                                                         |
-| `JfrSpanProcessor`        | `io.opentelemetry.contrib:opentelemetry-jfr-events:{{% param vers.contrib %}}-alpha`        | スパンからJFRイベントを作成します。                                                          |
-| `StackTraceSpanProcessor` | `io.opentelemetry.contrib:opentelemetry-span-stacktrace:{{% param vers.contrib %}}-alpha`   | 選択されたスパンをスタックトレースデータでエンリッチします。                                 |
-| `InferredSpansProcessor`  | `io.opentelemetry.contrib:opentelemetry-inferred-spans:{{% param vers.contrib %}}-alpha`    | 計装ではなく非同期プロファイラーからスパンを生成します。                                     |
+| `SimpleSpanProcessor`     | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                                | 各サンプリングされたスパンを設定可能な`SpanExporter`を介してエクスポートします。       |
+| `BaggageSpanProcessor`    | `io.opentelemetry.contrib:opentelemetry-baggage-processor:{{% param vers.contrib %}}-alpha` | Enriches spans with baggage.          |
+| `JfrSpanProcessor`        | `io.opentelemetry.contrib:opentelemetry-jfr-events:{{% param vers.contrib %}}-alpha`        | スパンからJFRイベントを作成します。                                   |
+| `StackTraceSpanProcessor` | `io.opentelemetry.contrib:opentelemetry-span-stacktrace:{{% param vers.contrib %}}-alpha`   | 選択されたスパンをスタックトレースデータでエンリッチします。                        |
+| `InferredSpansProcessor`  | `io.opentelemetry.contrib:opentelemetry-inferred-spans:{{% param vers.contrib %}}-alpha`    | 計装ではなく非同期プロファイラーからスパンを生成します。                          |
 
 以下のコードスニペットは`SpanProcessor`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SpanProcessorConfig.java"?>
+
 ```java
 package otel;
 
@@ -312,13 +337,16 @@ public class SpanProcessorConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムスパン処理ロジックを提供するには、`SpanProcessor`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomSpanProcessor.java"?>
+
 ```java
 package otel;
 
@@ -367,32 +395,37 @@ public class CustomSpanProcessor implements SpanProcessor {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### SpanExporter {#spanexporter}
 
 [SpanExporter](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-trace/latest/io/opentelemetry/sdk/trace/export/SpanExporter.html)は、スパンをプロセス外にエクスポートする責任を持つ[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)です。
-`SdkTracerProvider`に直接登録するのではなく、[SpanProcessors](#spanprocessor)（通常は`BatchSpanProcessor`）と組み合わせます。
+`SdkTracerProvider`に直接登録するのではなく、[SpanProcessors](#spanprocessor)（通常は`BatchSpanProcessor`）と組み合わせます。 Rather than directly registering with
+`SdkTracerProvider`, they are paired with [SpanProcessors](#spanprocessor)
+(typically `BatchSpanProcessor`).
 
 SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているスパンエクスポーター。
 
-| クラス                         | アーティファクト                                                                         | 説明                                                                                    |
-| ------------------------------ | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `OtlpHttpSpanExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`                   | OTLP `http/protobuf`を介してスパンをエクスポートします。                                |
-| `OtlpGrpcSpanExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`                   | OTLP `grpc`を介してスパンをエクスポートします。                                         |
-| `LoggingSpanExporter`          | `io.opentelemetry:opentelemetry-exporter-logging:{{% param vers.otel %}}`                | スパンをデバッグ形式でJULにログ出力します。                                             |
-| `OtlpJsonLoggingSpanExporter`  | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`           | スパンをOTLP JSONエンコーディングでJULにログ出力します。                                |
-| `OtlpStdoutSpanExporter`       | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`           | スパンをOTLP [JSONファイルエンコーディング][]（実験的）で`System.out`にログ出力します。 |
-| `ZipkinSpanExporter`           | `io.opentelemetry:opentelemetry-exporter-zipkin:{{% param vers.otel %}}`                 | スパンをZipkinにエクスポートします。                                                    |
-| `InterceptableSpanExporter`    | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha`     | エクスポート前にスパンを柔軟なインターセプターに渡します。                              |
-| `KafkaSpanExporter`            | `io.opentelemetry.contrib:opentelemetry-kafka-exporter:{{% param vers.contrib %}}-alpha` | Kafkaトピックに書き込むことでスパンをエクスポートします。                               |
+| クラス                                                                                | アーティファクト                                                                                 | 説明                                                         |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `OtlpHttpSpanExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`                   | OTLP `http/protobuf`を介してスパンをエクスポートします。                     |
+| `OtlpGrpcSpanExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`                   | OTLP `grpc`を介してスパンをエクスポートします。                              |
+| `LoggingSpanExporter`                                                              | `io.opentelemetry:opentelemetry-exporter-logging:{{% param vers.otel %}}`                | スパンをデバッグ形式でJULにログ出力します。                                    |
+| `OtlpJsonLoggingSpanExporter`                                                      | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`           | スパンをOTLP JSONエンコーディングでJULにログ出力します。                         |
+| `OtlpStdoutSpanExporter`                                                           | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`           | スパンをOTLP \[JSONファイルエンコーディング]\[]（実験的）で`System.out`にログ出力します。 |
+| `ZipkinSpanExporter`                                                               | `io.opentelemetry:opentelemetry-exporter-zipkin:{{% param vers.otel %}}`                 | スパンをZipkinにエクスポートします。                                      |
+| `InterceptableSpanExporter`                                                        | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha`     | エクスポート前にスパンを柔軟なインターセプターに渡します。                              |
+| `KafkaSpanExporter`                                                                | `io.opentelemetry.contrib:opentelemetry-kafka-exporter:{{% param vers.contrib %}}-alpha` | Kafkaトピックに書き込むことでスパンをエクスポートします。                            |
 
 **[1]**: 実装の詳細については[OTLPエクスポーター](#otlp-exporters)を参照してください。
 
 以下のコードスニペットは`SpanExporter`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SpanExporterConfig.java"?>
+
 ```java
 package otel;
 
@@ -429,13 +462,16 @@ public class SpanExporterConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムスパンエクスポートロジックを提供するには、`SpanExporter`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomSpanExporter.java"?>
+
 ```java
 package otel;
 
@@ -474,6 +510,7 @@ public class CustomSpanExporter implements SpanExporter {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### SpanLimits {#spanlimits}
@@ -483,7 +520,9 @@ public class CustomSpanExporter implements SpanExporter {
 以下のコードスニペットは`SpanLimits`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SpanLimitsConfig.java"?>
+
 ```java
 package otel;
 
@@ -502,6 +541,7 @@ public class SpanLimitsConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### SdkMeterProvider {#sdkmeterprovider}
@@ -512,14 +552,21 @@ public class SpanLimitsConfig {
 
 - [Resource](#resource)：メトリクスが関連付けられるリソース
 - [MetricReader](#metricreader)：メトリクスの集約状態を読み取ります
-  - オプションで、計装種別ごとのカーディナリティ制限をオーバーライドするための[CardinalityLimitSelector](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-metrics/latest/io/opentelemetry/sdk/metrics/export/CardinalityLimitSelector.html)。設定されていない場合、各計装は収集サイクルごとに2000の一意の属性組み合わせに制限されます。カーディナリティ制限は[ビュー](#views)を介して個々の計装でも設定可能です。詳細については[カーディナリティ制限](/docs/specs/otel/metrics/sdk/#cardinality-limits)を参照してください
+  - オプションで、計装種別ごとのカーディナリティ制限をオーバーライドするための[CardinalityLimitSelector](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-metrics/latest/io/opentelemetry/sdk/metrics/export/CardinalityLimitSelector.html)。設定されていない場合、各計装は収集サイクルごとに2000の一意の属性組み合わせに制限されます。カーディナリティ制限は[ビュー](#views)を介して個々の計装でも設定可能です。詳細については[カーディナリティ制限](/docs/specs/otel/metrics/sdk/#cardinality-limits)を参照してください If unset, each
+    instrument is limited to 2000 unique combinations of attributes per
+    collection cycle. Cardinality limits are also configurable for individual
+    instruments via [views](#views). See
+    [cardinality limits](/docs/specs/otel/metrics/sdk/#cardinality-limits) for
+    more details.
 - [MetricExporter](#metricexporter)：メトリクスをプロセス外にエクスポートします（関連する`MetricReader`と連携して）
 - [Views](#views)：未使用メトリクスのドロップを含む、メトリクスストリームを設定します
 
 以下のコードスニペットは`SdkMeterProvider`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SdkMeterProviderConfig.java"?>
+
 ```java
 package otel;
 
@@ -554,24 +601,31 @@ public class SdkMeterProviderConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### MetricReader {#metricreader}
 
-[MetricReader](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-metrics/latest/io/opentelemetry/sdk/metrics/export/MetricReader.html)は、集約されたメトリクスを読み取る責任を持つ[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)です。
-これらはしばしば[MetricExporters](#metricexporter)と組み合わせてメトリクスをプロセス外にエクスポートしますが、プルベースプロトコルで外部スクレイパーにメトリクスを提供するためにも使用される場合があります。
+A
+[MetricReader](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-metrics/latest/io/opentelemetry/sdk/metrics/export/MetricReader.html)
+is a [plugin extension interface](#sdk-plugin-extension-interfaces) which is
+responsible for reading aggregated metrics. They are often paired with
+[MetricExporters](#metricexporter) to export metrics out of process, but may
+also be used to serve the metrics to external scrapers in pull-based protocols.
 
 下表は、SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているメトリクスリーダーです。
 
-| クラス                 | アーティファクト                                                                   | 説明                                                                                 |
-| ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| クラス                    | アーティファクト                                                                           | 説明                                                 |
+| ---------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------- |
 | `PeriodicMetricReader` | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                       | 定期的にメトリクスを読み取り、設定可能な`MetricExporter`を介してエクスポートします。 |
-| `PrometheusHttpServer` | `io.opentelemetry:opentelemetry-exporter-prometheus:{{% param vers.otel %}}-alpha` | さまざまなprometheus形式でHTTPサーバー上でメトリクスを提供します。                   |
+| `PrometheusHttpServer` | `io.opentelemetry:opentelemetry-exporter-prometheus:{{% param vers.otel %}}-alpha` | さまざまなprometheus形式でHTTPサーバー上でメトリクスを提供します。           |
 
 以下のコードスニペットは`MetricReader`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/MetricReaderConfig.java"?>
+
 ```java
 package otel;
 
@@ -591,13 +645,16 @@ public class MetricReaderConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムメトリクスリーダーロジックを提供するには、`MetricReader`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomMetricReader.java"?>
+
 ```java
 package otel;
 
@@ -675,30 +732,34 @@ public class CustomMetricReader implements MetricReader {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### MetricExporter {#metricexporter}
 
 [MetricExporter](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-metrics/latest/io/opentelemetry/sdk/metrics/export/MetricExporter.html)は、メトリクスをプロセス外にエクスポートする責任を持つ[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)です。
-`SdkMeterProvider`に直接登録するのではなく、[PeriodicMetricReader](#metricreader)と組み合わせます。
+`SdkMeterProvider`に直接登録するのではなく、[PeriodicMetricReader](#metricreader)と組み合わせます。 Rather than directly registering with
+`SdkMeterProvider`, they are paired with [PeriodicMetricReader](#metricreader).
 
 SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているメトリクスエクスポーター。
 
-| クラス                           | アーティファクト                                                                     | 説明                                                                                        |
-| -------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| `OtlpHttpMetricExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `http/protobuf`を介してメトリクスをエクスポートします。                                |
-| `OtlpGrpcMetricExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `grpc`を介してメトリクスをエクスポートします。                                         |
-| `LoggingMetricExporter`          | `io.opentelemetry:opentelemetry-exporter-logging:{{% param vers.otel %}}`            | メトリクスをデバッグ形式でJULにログ出力します。                                             |
-| `OtlpJsonLoggingMetricExporter`  | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | メトリクスをOTLP JSONエンコーディングでJULにログ出力します。                                |
-| `OtlpStdoutMetricExporter`       | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | メトリクスをOTLP [JSONファイルエンコーディング][]（実験的）で`System.out`にログ出力します。 |
-| `InterceptableMetricExporter`    | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha` | エクスポート前にメトリクスを柔軟なインターセプターに渡します。                              |
+| クラス                                                                                  | アーティファクト                                                                             | 説明                                                           |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| `OtlpHttpMetricExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `http/protobuf`を介してメトリクスをエクスポートします。                     |
+| `OtlpGrpcMetricExporter` **[1]** | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `grpc`を介してメトリクスをエクスポートします。                              |
+| `LoggingMetricExporter`                                                              | `io.opentelemetry:opentelemetry-exporter-logging:{{% param vers.otel %}}`            | メトリクスをデバッグ形式でJULにログ出力します。                                    |
+| `OtlpJsonLoggingMetricExporter`                                                      | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | メトリクスをOTLP JSONエンコーディングでJULにログ出力します。                         |
+| `OtlpStdoutMetricExporter`                                                           | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | メトリクスをOTLP \[JSONファイルエンコーディング]\[]（実験的）で`System.out`にログ出力します。 |
+| `InterceptableMetricExporter`                                                        | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha` | エクスポート前にメトリクスを柔軟なインターセプターに渡します。                              |
 
 **[1]**: 実装の詳細については[OTLPエクスポーター](#otlp-exporters)を参照してください。
 
 以下のコードスニペットは`MetricExporter`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/MetricExporterConfig.java"?>
+
 ```java
 package otel;
 
@@ -735,13 +796,16 @@ public class MetricExporterConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムメトリクスエクスポートロジックを提供するには、`MetricExporter`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomMetricExporter.java"?>
+
 ```java
 package otel;
 
@@ -804,26 +868,28 @@ public class CustomMetricExporter implements MetricExporter {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Views {#views}
 
 [Views](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-metrics/latest/io/opentelemetry/sdk/metrics/View.html)は、メトリクス名の変更、メトリクス説明、メトリクス集約（ヒストグラムバケット境界など）、保持する属性キーのセット、カーディナリティ制限などを含む、メトリクスストリームのカスタマイズを可能にします。
 
-{{% alert %}}
-
-ビューは、特定の計装に複数がマッチした場合、やや直感的でない動作をします。
-マッチするビューの一つがメトリクス名を変更し、別のビューがメトリクス集約を変更する場合、名前と集約の両方が変更されることを期待するかもしれませんが、
-そうではありません。かわりに、2つのメトリクスストリームが生成されます。一つは設定されたメトリクス名とデフォルト集約、もう一つは元のメトリクス名と設定された集約です。
-言い換えると、マッチするビューは _マージされません_。
-最良の結果を得るために、狭い選択基準（特定の単一計装を選択するなど）でビューを設定してください。
-
-{{% /alert %}}
+{{% alert %}} Views have somewhat unintuitive behavior when multiple match a
+particular instrument. If one matching view changes the metric name and another
+changes the metric aggregation, you might expect the name and aggregation are
+changed, but this is not the case. Instead, two metric streams are produced: one
+with the configured metric name and the default aggregation, and another with
+the original metric name and the configured aggregation. In other words,
+matching views _do not merge_. For best results, configure views with narrow
+selection criteria (i.e. select a single specific instrument). {{% /alert %}}
 
 以下のコードスニペットは`View`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ViewConfig.java"?>
+
 ```java
 package otel;
 
@@ -866,6 +932,7 @@ public class ViewConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### SdkLoggerProvider {#sdkloggerprovider}
@@ -882,7 +949,9 @@ public class ViewConfig {
 以下のコードスニペットは`SdkLoggerProvider`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SdkLoggerProviderConfig.java"?>
+
 ```java
 package otel;
 
@@ -901,25 +970,30 @@ public class SdkLoggerProviderConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### LogRecordProcessor {#logrecordprocessor}
 
 [LogRecordProcessor](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-logs/latest/io/opentelemetry/sdk/logs/LogRecordProcessor.html)は、ログが発行されたときに呼び出されるコールバックを持つ[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)です。
-これらはしばしば[LogRecordExporters](#logrecordexporter)と組み合わせてログをプロセス外にエクスポートしますが、データエンリッチメントなどの他の用途もあります。
+これらはしばしば[LogRecordExporters](#logrecordexporter)と組み合わせてログをプロセス外にエクスポートしますが、データエンリッチメントなどの他の用途もあります。 They are often paired with
+[LogRecordExporters](#logrecordexporter) to export logs out of process, but have
+other applications such as data enrichment.
 
 下表は、SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているログレコードプロセッサーです。
 
-| クラス                     | アーティファクト                                                                     | 説明                                                                                  |
-| -------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| クラス                        | アーティファクト                                                                             | 説明                                                   |
+| -------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------- |
 | `BatchLogRecordProcessor`  | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                         | ログレコードをバッチ処理し、設定可能な`LogRecordExporter`を介してエクスポートします。 |
-| `SimpleLogRecordProcessor` | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                         | 各ログレコードを設定可能な`LogRecordExporter`を介してエクスポートします。             |
-| `EventToSpanEventBridge`   | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha` | イベントログレコードを現在のスパンのスパンイベントとして記録します。                  |
+| `SimpleLogRecordProcessor` | `io.opentelemetry:opentelemetry-sdk:{{% param vers.otel %}}`                         | 各ログレコードを設定可能な`LogRecordExporter`を介してエクスポートします。       |
+| `EventToSpanEventBridge`   | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha` | イベントログレコードを現在のスパンのスパンイベントとして記録します。                   |
 
 以下のコードスニペットは`LogRecordProcessor`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/LogRecordProcessorConfig.java"?>
+
 ```java
 package otel;
 
@@ -943,13 +1017,16 @@ public class LogRecordProcessorConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムログ処理ロジックを提供するには、`LogRecordProcessor`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomLogRecordProcessor.java"?>
+
 ```java
 package otel;
 
@@ -981,32 +1058,39 @@ public class CustomLogRecordProcessor implements LogRecordProcessor {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### LogRecordExporter {#logrecordexporter}
 
 [LogRecordExporter](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-logs/latest/io/opentelemetry/sdk/logs/export/LogRecordExporter.html)は、ログレコードをプロセス外にエクスポートする責任を持つ[プラグイン拡張インターフェース](#sdk-plugin-extension-interfaces)です。
-`SdkLoggerProvider`に直接登録するのではなく、[LogRecordProcessors](#logrecordprocessor)（通常は`BatchLogRecordProcessor`）と組み合わせます。
+`SdkLoggerProvider`に直接登録するのではなく、[LogRecordProcessors](#logrecordprocessor)（通常は`BatchLogRecordProcessor`）と組み合わせます。 Rather than directly registering with
+`SdkLoggerProvider`, they are paired with
+[LogRecordProcessors](#logrecordprocessor) (typically
+`BatchLogRecordProcessor`).
 
 下表は、SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているスパンエクスポーターです。
 
-| クラス                                     | アーティファクト                                                                     | 説明                                                                                          |
-| ------------------------------------------ | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| `OtlpHttpLogRecordExporter` **[1]**        | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `http/protobuf`を介してログレコードをエクスポートします。                                |
-| `OtlpGrpcLogRecordExporter` **[1]**        | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `grpc`を介してログレコードをエクスポートします。                                         |
-| `SystemOutLogRecordExporter`               | `io.opentelemetry:opentelemetry-exporter-logging:{{% param vers.otel %}}`            | ログレコードをデバッグ形式でsystem outにログ出力します。                                      |
-| `OtlpJsonLoggingLogRecordExporter` **[2]** | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | ログレコードをOTLP JSONエンコーディングでJULにログ出力します。                                |
-| `OtlpStdoutLogRecordExporter`              | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | ログレコードをOTLP [JSONファイルエンコーディング][]（実験的）で`System.out`にログ出力します。 |
-| `InterceptableLogRecordExporter`           | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha` | エクスポート前にログレコードを柔軟なインターセプターに渡します。                              |
+| クラス                                                                                            | アーティファクト                                                                             | 説明                                                            |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| `OtlpHttpLogRecordExporter` **[1]**        | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `http/protobuf`を介してログレコードをエクスポートします。                     |
+| `OtlpGrpcLogRecordExporter` **[1]**        | `io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`               | OTLP `grpc`を介してログレコードをエクスポートします。                              |
+| `SystemOutLogRecordExporter`                                                                   | `io.opentelemetry:opentelemetry-exporter-logging:{{% param vers.otel %}}`            | ログレコードをデバッグ形式でsystem outにログ出力します。                             |
+| `OtlpJsonLoggingLogRecordExporter` **[2]** | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | ログレコードをOTLP JSONエンコーディングでJULにログ出力します。                         |
+| `OtlpStdoutLogRecordExporter`                                                                  | `io.opentelemetry:opentelemetry-exporter-logging-otlp:{{% param vers.otel %}}`       | ログレコードをOTLP \[JSONファイルエンコーディング]\[]（実験的）で`System.out`にログ出力します。 |
+| `InterceptableLogRecordExporter`                                                               | `io.opentelemetry.contrib:opentelemetry-processors:{{% param vers.contrib %}}-alpha` | エクスポート前にログレコードを柔軟なインターセプターに渡します。                              |
 
 **[1]**: 実装の詳細については[OTLPエクスポーター](#otlp-exporters)を参照してください。
 
-**[2]**: `OtlpJsonLoggingLogRecordExporter`はJULにログ出力し、適切に設定されていない場合、無限ループ（JUL -> SLF4J -> Logback -> OpenTelemetry Appender -> OpenTelemetry Log SDK -> JUL）を引き起こす可能性があります。
+**[2]**: `OtlpJsonLoggingLogRecordExporter`はJULにログ出力し、適切に設定されていない場合、無限ループ（JUL -> SLF4J -> Logback -> OpenTelemetry Appender -> OpenTelemetry Log SDK -> JUL）を引き起こす可能性があります。 JUL -> SLF4J -> Logback -> OpenTelemetry Appender -> OpenTelemetry
+Log SDK -> JUL) if not carefully configured.
 
 以下のコードスニペットは`LogRecordProcessor`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/LogRecordExporterConfig.java"?>
+
 ```java
 package otel;
 
@@ -1043,13 +1127,16 @@ public class LogRecordExporterConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムログレコードエクスポートロジックを提供するには、`LogRecordExporter`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomLogRecordExporter.java"?>
+
 ```java
 package otel;
 
@@ -1088,6 +1175,7 @@ public class CustomLogRecordExporter implements LogRecordExporter {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### LogLimits {#loglimits}
@@ -1097,7 +1185,9 @@ public class CustomLogRecordExporter implements LogRecordExporter {
 以下のコードスニペットは`LogRecordProcessor`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/LogLimitsConfig.java"?>
+
 ```java
 package otel;
 
@@ -1112,6 +1202,7 @@ public class LogLimitsConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### TextMapPropagator {#textmappropagator}
@@ -1120,22 +1211,24 @@ public class LogLimitsConfig {
 
 SDKに組み込まれ、`opentelemetry-java-contrib`でコミュニティによって維持されているTextMapPropagators。
 
-| クラス                      | アーティファクト                                                                              | 説明                                                                              |
-| --------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `W3CTraceContextPropagator` | `io.opentelemetry:opentelemetry-api:{{% param vers.otel %}}`                                  | W3Cトレースコンテキスト伝搬プロトコルを使用してトレースコンテキストを伝搬します。 |
-| `W3CBaggagePropagator`      | `io.opentelemetry:opentelemetry-api:{{% param vers.otel %}}`                                  | W3Cバゲージ伝搬プロトコルを使用してバゲージを伝搬します。                         |
-| `MultiTextMapPropagator`    | `io.opentelemetry:opentelemetry-context:{{% param vers.otel %}}`                              | 複数のプロパゲーターを構成します。                                                |
-| `JaegerPropagator`          | `io.opentelemetry:opentelemetry-extension-trace-propagators:{{% param vers.otel %}}`          | Jaeger伝搬プロトコルを使用してトレースコンテキストを伝搬します。                  |
-| `B3Propagator`              | `io.opentelemetry:opentelemetry-extension-trace-propagators:{{% param vers.otel %}}`          | B3伝搬プロトコルを使用してトレースコンテキストを伝搬します。                      |
-| `OtTracePropagator`         | `io.opentelemetry:opentelemetry-extension-trace-propagators:{{% param vers.otel %}}`          | OpenTracing伝搬プロトコルを使用してトレースコンテキストを伝搬します。             |
-| `PassThroughPropagator`     | `io.opentelemetry:opentelemetry-api-incubator:{{% param vers.otel %}}-alpha`                  | テレメトリーに参加することなく、設定可能なフィールドセットを伝搬します。          |
-| `AwsXrayPropagator`         | `io.opentelemetry.contrib:opentelemetry-aws-xray-propagator:{{% param vers.contrib %}}-alpha` | AWS X-Ray伝搬プロトコルを使用してトレースコンテキストを伝搬します。               |
-| `AwsXrayLambdaPropagator`   | `io.opentelemetry.contrib:opentelemetry-aws-xray-propagator:{{% param vers.contrib %}}-alpha` | 環境変数とAWS X-Ray伝搬プロトコルを使用してトレースコンテキストを伝搬します。     |
+| クラス                         | アーティファクト                                                                                      | 説明                                          |
+| --------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `W3CTraceContextPropagator` | `io.opentelemetry:opentelemetry-api:{{% param vers.otel %}}`                                  | W3Cトレースコンテキスト伝搬プロトコルを使用してトレースコンテキストを伝搬します。  |
+| `W3CBaggagePropagator`      | `io.opentelemetry:opentelemetry-api:{{% param vers.otel %}}`                                  | W3Cバゲージ伝搬プロトコルを使用してバゲージを伝搬します。              |
+| `MultiTextMapPropagator`    | `io.opentelemetry:opentelemetry-context:{{% param vers.otel %}}`                              | 複数のプロパゲーターを構成します。                           |
+| `JaegerPropagator`          | `io.opentelemetry:opentelemetry-extension-trace-propagators:{{% param vers.otel %}}`          | Jaeger伝搬プロトコルを使用してトレースコンテキストを伝搬します。         |
+| `B3Propagator`              | `io.opentelemetry:opentelemetry-extension-trace-propagators:{{% param vers.otel %}}`          | B3伝搬プロトコルを使用してトレースコンテキストを伝搬します。             |
+| `OtTracePropagator`         | `io.opentelemetry:opentelemetry-extension-trace-propagators:{{% param vers.otel %}}`          | OpenTracing伝搬プロトコルを使用してトレースコンテキストを伝搬します。    |
+| `PassThroughPropagator`     | `io.opentelemetry:opentelemetry-api-incubator:{{% param vers.otel %}}-alpha`                  | テレメトリーに参加することなく、設定可能なフィールドセットを伝搬します。        |
+| `AwsXrayPropagator`         | `io.opentelemetry.contrib:opentelemetry-aws-xray-propagator:{{% param vers.contrib %}}-alpha` | AWS X-Ray伝搬プロトコルを使用してトレースコンテキストを伝搬します。      |
+| `AwsXrayLambdaPropagator`   | `io.opentelemetry.contrib:opentelemetry-aws-xray-propagator:{{% param vers.contrib %}}-alpha` | 環境変数とAWS X-Ray伝搬プロトコルを使用してトレースコンテキストを伝搬します。 |
 
 以下のコードスニペットは`TextMapPropagator`のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ContextPropagatorsConfig.java"?>
+
 ```java
 package otel;
 
@@ -1152,13 +1245,16 @@ public class ContextPropagatorsConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 独自のカスタムプロパゲーターロジックを提供するには、`TextMapPropagator`インターフェースを実装してください。
-例を挙げましょう。
+例を挙げましょう。 For example:
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CustomTextMapPropagator.java"?>
+
 ```java
 package otel;
 
@@ -1189,6 +1285,7 @@ public class CustomTextMapPropagator implements TextMapPropagator {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ## 付録 {#appendix}
@@ -1198,13 +1295,20 @@ public class CustomTextMapPropagator implements TextMapPropagator {
 SDKコンポーネントは、関連するコンポーネントの完全修飾クラス名に基づくロガー名を使用して、さまざまなログレベルで[java.util.logging](https://docs.oracle.com/javase/7/docs/api/java/util/logging/package-summary.html)にさまざまな情報をログ出力します。
 
 デフォルトでは、ログメッセージはアプリケーションのルートハンドラーによって処理されます。
-アプリケーション用にカスタムルートハンドラーをインストールしていない場合、デフォルトで`INFO`レベル以上のログがコンソールに送信されます。
+アプリケーション用にカスタムルートハンドラーをインストールしていない場合、デフォルトで`INFO`レベル以上のログがコンソールに送信されます。 If
+you have not installed a custom root handler for your application, logs of level
+`INFO` or higher are sent to the console by default.
 
-OpenTelemetryのロガーの動作を変更したい場合があります。
-たとえば、デバッグ時に追加情報を出力するためにログレベルを下げたり、特定のクラスからのエラーを無視するために特定のクラスのレベルを上げたり、OpenTelemetryが特定のメッセージをログ出力するたびにカスタムコードを実行するためにカスタムハンドラーまたはフィルターをインストールしたりできます。
-ロガー名とログ情報の詳細なリストは維持されていません。
-ただし、すべてのOpenTelemetry API、SDK、contrib、および計装コンポーネントは同じ`io.opentelemetry.*`パッケージプレフィックスを共有しています。
-すべての`io.opentelemetry.*`に対してより細かいログを有効にし、出力を検査し、興味のあるパッケージやFQCNに絞り込むことが有用です。
+You may want to change the behavior of the logger for OpenTelemetry. For
+example, you can reduce the logging level to output additional information when
+debugging, increase the level for a particular class to ignore errors coming
+from the class, or install a custom handler or filter to run custom code
+whenever OpenTelemetry logs a particular message. No detailed list of logger
+names and log information is maintained. However, all OpenTelemetry API, SDK,
+contrib and instrumentation components share the same `io.opentelemetry.*`
+package prefix. It can be useful to enable finer grain logs for all
+`io.opentelemetry.*`, inspect the output, and narrow down to packages or FQCNs
+of interest.
 
 例を挙げましょう。
 
@@ -1252,7 +1356,8 @@ io.opentelemetry.sdk.trace.export.BatchSpanProcessor = io.opentelemetry.extensio
 - `OtlpGrpc{Signal}Exporter`は、OTLP `grpc`を介してデータをエクスポートします
 
 すべてのシグナルのエクスポーターは`io.opentelemetry:opentelemetry-exporter-otlp:{{% param vers.otel %}}`を介して利用可能で、OTLPプロトコルの`grpc`と`http/protobuf`バージョン間、およびシグナル間で大幅に重複しています。
-以下のセクションでは、これらの重要な概念について詳しく説明します。
+以下のセクションでは、これらの重要な概念について詳しく説明します。 The following sections elaborate on these key
+concepts:
 
 - [センダー](#senders)：異なるHTTP / gRPCクライアントライブラリの抽象化
 - OTLPエクスポーターの[認証](#authentication)オプション
@@ -1260,20 +1365,23 @@ io.opentelemetry.sdk.trace.export.BatchSpanProcessor = io.opentelemetry.extensio
 #### Senders {#senders}
 
 OTLPエクスポーターは、HTTPおよびgRPCリクエストを実行するためにさまざまなクライアントライブラリに依存しています。
-Javaエコシステムのすべての使用例を満たす単一のHTTP / gRPCクライアントライブラリはありません。
+Javaエコシステムのすべての使用例を満たす単一のHTTP / gRPCクライアントライブラリはありません。 There is no single HTTP / gRPC client library which satisfies all use
+cases in the Java ecosystem:
 
 - Java 11+は組み込みの`java.net.http.HttpClient`を提供しますが、`opentelemetry-java`はJava 8+ユーザーをサポートする必要があり、トレーラーヘッダーのサポートがないため`gRPC`経由でエクスポートするために使用できません
 - [OkHttp](https://square.github.io/okhttp/)はトレーラーヘッダーをサポートする強力なHTTPクライアントを提供しますが、kotlin標準ライブラリに依存しています
 - [grpc-java](https://github.com/grpc/grpc-java)は、さまざまな[トランスポート実装](https://github.com/grpc/grpc-java#transport)を持つ独自の`ManagedChannel`抽象化を提供しますが、`http/protobuf`には適していません
 
-さまざまな使用例に対応するため、`opentelemetry-exporter-otlp`は内部の「sender」抽象化を使用し、アプリケーションの制約を反映するさまざまな実装を提供しています。
+In order to accommodate various use cases, `opentelemetry-exporter-otlp` uses an
+internal "sender" abstraction, with a variety of implementations to reflect
+application constraints. さまざまな使用例に対応するため、`opentelemetry-exporter-otlp`は内部の「sender」抽象化を使用し、アプリケーションの制約を反映するさまざまな実装を提供しています。
 別の実装を選択するには、デフォルトの`io.opentelemetry:opentelemetry-exporter-sender-okhttp`依存関係を除外し、代替に依存関係を追加してください。
 
-| アーティファクト                                                                                      | 説明                                              | OTLPプロトコル          | デフォルト |
-| ----------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ----------------------- | ---------- |
-| `io.opentelemetry:opentelemetry-exporter-sender-okhttp:{{% param vers.otel %}}`                       | OkHttpベースの実装。                              | `grpc`, `http/protobuf` | はい       |
-| `io.opentelemetry:opentelemetry-exporter-sender-jdk:{{% param vers.otel %}}`                          | Java 11+ `java.net.http.HttpClient`ベースの実装。 | `http/protobuf`         | いいえ     |
-| `io.opentelemetry:opentelemetry-exporter-sender-grpc-managed-channel:{{% param vers.otel %}}` **[1]** | `grpc-java` `ManagedChannel`ベースの実装。        | `grpc`                  | いいえ     |
+| アーティファクト                                                                                                                                                  | 説明                                         | OTLPプロトコル               | デフォルト |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------------------- | ----- |
+| `io.opentelemetry:opentelemetry-exporter-sender-okhttp:{{% param vers.otel %}}`                                                                           | OkHttpベースの実装。                              | `grpc`, `http/protobuf` | はい    |
+| `io.opentelemetry:opentelemetry-exporter-sender-jdk:{{% param vers.otel %}}`                                                                              | Java 11+ `java.net.http.HttpClient`ベースの実装。 | `http/protobuf`         | いいえ   |
+| `io.opentelemetry:opentelemetry-exporter-sender-grpc-managed-channel:{{% param vers.otel %}}` **[1]** | `grpc-java` `ManagedChannel`ベースの実装。        | `grpc`                  | いいえ   |
 
 **[1]**: `opentelemetry-exporter-sender-grpc-managed-channel`を使用するには、[gRPCトランスポート実装](https://github.com/grpc/grpc-java#transport)への依存関係も追加する必要があります。
 
@@ -1289,7 +1397,9 @@ OTLPエクスポーターは、静的および動的ヘッダーベース認証�
 以下のコードスニペットは、静的および動的ヘッダーベース認証のプログラム設定を示します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/OtlpAuthenticationConfig.java"?>
+
 ```java
 package otel;
 
@@ -1381,10 +1491,11 @@ public class OtlpAuthenticationConfig {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### テスト {#testing}
 
 TODO: SDKのテストに利用可能なツールをドキュメント化
 
-[JSONファイルエンコーディング]: /docs/specs/otel/protocol/file-exporter/#json-file-serialization
+[JSON file encoding]: /docs/specs/otel/protocol/file-exporter/#json-file-serialization
