@@ -2,7 +2,6 @@
 title: コレクターの設定のベストプラクティス
 linkTitle: コレクターの設定
 weight: 112
-default_lang_commit: 179f03bf118e1e8a3cc195ab56fc09d85c476394
 cSpell:ignore: exporterhelper
 ---
 
@@ -19,7 +18,10 @@ OpenTelemetry (OTel)コレクターを設定するときは、コレクターイ
 - APIトークンのような認証情報
 - 秘密鍵を含むTLS証明書
 
-暗号化されたファイルシステムやシークレットストアのような機密情報を安全に管理できるものを利用して機密情報を管理すべきです。コレクターは[環境変数の展開](/docs/collector/configuration/#environment-variables)もサポートしています。
+You should store sensitive information securely such as on an encrypted
+filesystem or secret store. You can use environment variables to handle
+sensitive and non-sensitive data as the Collector supports
+[environment variable expansion](/docs/collector/configuration/#environment-variables).
 
 ### 暗号化と認証の利用 {#use-encryption-and-authentication}
 
@@ -30,8 +32,9 @@ OTelコレクターの設定には暗号化と認証を利用するべきです�
 
 ### コンポーネント数の最小化 {#minimize-the-number-of-components}
 
-コレクターの設定で、必要なコンポーネントのみに制限することを推奨します。
-コンポーネントを最小化することは攻撃対象を最小限に抑えることにもなります。
+We recommend limiting the set of components in your Collector configuration to
+only those you need. Minimizing the number of components you use minimizes the
+attack surface exposed.
 
 - 必要最小限のコンポーネントを利用したコレクターの作成には [OpenTelemetry Collector Builder (`ocb`)](/docs/collector/custom-collector)を利用してください
 - 使用しないコンポーネントの設定は削除してください。
@@ -41,22 +44,33 @@ OTelコレクターの設定には暗号化と認証を利用するべきです�
 いくつかのコンポーネントではあなたのコレクターのパイプラインのセキュリティリスクを増大させる可能性があります。
 
 - レシーバー、エクスポーター、その他のコンポーネントは、ネットワーク接続をセキュアなチャネル経由で確立し、必要に応じて認証も行うべきです。
-- レシーバーとエクスポーターは、バッファ、キュー、ペイロード、およびワーカー設定を構成パラメーターを通じて公開する場合があります。
-  これらの設定が利用可能な場合、デフォルトの設定値を変更する前に慎重に進めるべきです。
-  不適切にこれらの値を設定すると、OpenTelemetryコレクターが追加の攻撃ベクトルにさらされる可能性があります。
+- Receivers and exporters might expose buffer, queue, payload, and worker
+  settings using configuration parameters. If these settings are available, you
+  should proceed with caution before modifying the default configuration values.
+  Improperly setting these values might expose the OpenTelemetry Collector to
+  additional attack vectors.
 
 ## 慎重に権限を与える {#set-permissions-carefully}
 
-rootユーザーでの実行は避けてください。ただし、いくつかのコンポーネントでは特別な権限を必要とする場合があります。その場合は、最小権限の原則に従いその役割に必要なアクセスしかできないように確認してください。
+Avoid running the Collector as a root user. Some components might require
+special permissions, however. In those cases, follow the principle of least
+privilege and make sure your components only have the access they need to do
+their job.
 
-### オブザーバー {#observers}
+### Observers
 
-オブザーバーはエクステンションとして実装されます。エクステンションは、Collector の主要機能の上に機能を追加するコンポーネントの一種です。
-エクステンションはテレメトリーに直接アクセスする必要はなく、パイプラインの一部でもありませんが、特別なパーミッションが必要な場合、セキュリティリスクを引き起こす可能性があります。
+Observers are implemented as extensions. Extensions are a type of component that
+adds capabilities on top of the primary functions of the Collector. Extensions
+don't require direct access to telemetry and aren't part of pipelines, but they
+can still pose security risks if they require special permissions.
 
-オブザーバーは、[receiver creator](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/receivercreator/README.md)にかわって、Kubernetes Pod、Dockerコンテナ、またはローカルのリスニングポートなどのネットワーク接続されたエンドポイントを検出します。
-サービスを検出するために、オブザーバーは上位のアクセス権限を要求する場合があります。
-たとえば、`k8s_observer`がKubernetes上で要求する権限については [role-based access control (RBAC) permissions](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/extension/observer/k8sobserver#setting-up-rbac-permissions) を参照してください。
+An observer discovers networked endpoints such as a Kubernetes pod, Docker
+container, or local listening port on behalf of the
+[receiver creator](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/receiver/receivercreator/README.md).
+In order to discover services, observers might require greater access. For
+example, the `k8s_observer` requires
+[role-based access control (RBAC) permissions](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/extension/observer/k8sobserver#setting-up-rbac-permissions)
+in Kubernetes.
 
 ## 特定のセキュリティリスクを管理する {#manage-specific-security-risks}
 
@@ -64,15 +78,18 @@ rootユーザーでの実行は避けてください。ただし、いくつか�
 
 ### DoS攻撃からの保護　{#protect-against-denial-of-service-attacks}
 
-サーバーのようなレシーバーや拡張機能では、これらのコンポーネントのエンドポイントを、許可されたユーザーへの接続を制限するアドレスにバインドすることで、コレクターがインターネット上に公開されたり、必要以上に広いネットワークに公開されたりするのを防ぐことができます。
-PodのIPや、`0.0.0.0`のかわりに`localhost`など、常に特定のインターフェイスを使用するようにしてください。
-詳しくは [CWE-1327: Binding to an Unrestricted IP Address](https://cwe.mitre.org/data/definitions/1327.html) を参照してください。
+For server-like receivers and extensions, you can protect your Collector from
+exposure to the public internet or to wider networks than necessary by binding
+these components' endpoints to addresses that limit connections to authorized
+users. Try to always use specific interfaces, such as a pod's IP, or `localhost`
+instead of `0.0.0.0`. For more information, see
+[CWE-1327: Binding to an Unrestricted IP Address](https://cwe.mitre.org/data/definitions/1327.html).
 
-コレクターv0.110.0以降、コレクターコンポーネントのすべてのサーバのデフォルトホストは `localhost` です。
+From Collector v0.110.0, the default host for all servers in Collector
+components is `localhost`. コレクターv0.110.0以降、コレクターコンポーネントのすべてのサーバのデフォルトホストは `localhost` です。
 以前のバージョンのコレクターでは、`component.UseLocalHostAsDefaultHost`の[feature gate](https://github.com/open-telemetry/opentelemetry-collector/tree/main/featuregate) を有効にすることで、すべてのコンポーネントでのデフォルトエンドポイントを `0.0.0.0` から `localhost` に変更してください。
 
 DNSの設定によって`localhost`が別のIPに解決される場合は、IPv4の場合は `127.0.0.1`、IPv6の場合は `::1` のように、ループバックIPを明示的に使用してください。
-
 gRPCポートを使用したIPv4の設定例は以下になります。
 
 ```yaml
@@ -87,12 +104,15 @@ IPv6の設定では、システムがIPv4とIPv6のループバックアドレ�
 
 Docker や Kubernetes のような標準的でないネットワーキング・セットアップを持つ環境で作業している場合、`localhost` は期待通りに動作しないかもしれません。
 以下の例は、OTLPレシーバのgRPCエンドポイントのセットアップを示しています。
-他のCollectorコンポーネントも同様の設定が必要な場合があります。
+他のCollectorコンポーネントも同様の設定が必要な場合があります。 The following
+examples show setups for the OTLP receiver gRPC endpoint. Other Collector
+components might need similar configuration.
 
 #### Docker {#docker}
 
 正しいアドレスをバインドすることでDocker環境でコレクターを動かすことができます。
-以下の例は、DockerでのOTLPエクスポーターの`config.yaml`です。
+以下の例は、DockerでのOTLPエクスポーターの`config.yaml`です。 Here is a
+`config.yaml` configuration file for an OTLP exporter in Docker:
 
 ```yaml
 receivers:
@@ -103,9 +123,9 @@ receivers:
 ```
 
 `docker run`コマンド上で、コレクターの`my-hostname`アドレスをバインドするために`--hostname`引数を使用してください。
-`127.0.0.1:4567`に接続することで、Dockerネットワークの外(たとえば、ホスト上で実行されるプログラム等)からCollectorにアクセスすることができます。
-
-以下は `docker run`コマンドの実行例です。
+`127.0.0.1:4567`に接続することで、Dockerネットワークの外(たとえば、ホスト上で実行されるプログラム等)からCollectorにアクセスすることができます。 You can access the Collector from
+outside that Docker network (for example, on a regular program running on the
+host) by connecting to `127.0.0.1:4567`. 以下は `docker run`コマンドの実行例です。
 
 ```shell
 docker run --hostname my-hostname --name container-name -p 127.0.0.1:4567:4317 otel/opentelemetry-collector:{{% param collector_vers %}}
@@ -115,7 +135,7 @@ docker run --hostname my-hostname --name container-name -p 127.0.0.1:4567:4317 o
 
 Dockerを利用する時と同様に、正しいアドレスをバインドすることでコレクターを実行することができます。
 
-以下は`compose.yaml`の設定例です。
+The Docker `compose.yaml` file:
 
 ```yaml
 services:
@@ -136,7 +156,9 @@ receivers:
 ```
 
 同一のネットワーク上に存在する別のDockerコンテナから`otel-collector:4317`でコレクターに接続することができます。
-ホスト上で動くプログラムのように、Dockerネットワークの外部からの場合は、`127.0.0.1:4567`でコレクターに接続することができます。
+ホスト上で動くプログラムのように、Dockerネットワークの外部からの場合は、`127.0.0.1:4567`でコレクターに接続することができます。 You can access the
+Collector from outside that Docker network (for example, on a regular program
+running on the host) by connecting to `127.0.0.1:4567`.
 
 #### Kubernetes {#kubernetes}
 
@@ -177,7 +199,9 @@ spec:
 
 この例では、Pod自身ののIPアドレスを取得するために[Kubernetes Downward API](https://kubernetes.io/docs/concepts/workloads/pods/downward-api/)を利用し、ネットワークインターフェイスとバインドしています。
 さらに、`hostPort`オプションを利用してコレクターがホスト上に公開されるようになります。
-コレクターの設定は以下のようになります。
+コレクターの設定は以下のようになります。 Then, we use the
+`hostPort` option to ensure that the Collector is exposed on the host. The
+Collector's config should look like this:
 
 ```yaml
 receivers:
@@ -191,7 +215,8 @@ receivers:
 
 ノード上の任意のPodからコレクターに対して、`${MY_HOST_IP}:4317`にアクセスすることで、OTLP over gRPCで、`${MY_HOST_IP}:4318`にアクセスすることで、OTLP over gRPCで、OTLPデータを送信することができます。
 `MY_HOST_IP` にはノードのIPアドレスを指定してください。
-このIPアドレスは、以下のようにDownward APIから取得可能です。
+このIPアドレスは、以下のようにDownward APIから取得可能です。 You can get this IP
+from the Downward API:
 
 ```yaml
 env:
@@ -203,12 +228,17 @@ env:
 
 ### 機密データの洗浄 {#scrub-sensitive-data}
 
-[プロセッサー](/docs/collector/configuration/#processors)はレシーバーとエクスポーターの間に位置するコンポーネントです。解析の前にテレメトリーを処理する責務を担っています。
-`redaction`プロセッサーはバックエンドへテレメトリーを出力する前に、機密データの難読化や洗浄することができます。
+[Processors](/docs/collector/configuration/#processors) are the Collector
+components that sit between receivers and exporters. They are responsible for
+processing telemetry before it's analyzed. You can use the OpenTelemetry
+Collector's `redaction` processor to obfuscate or scrub sensitive data before
+exporting it to a backend.
 
 [`redaction`プロセッサー](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/redactionprocessor)はスパンやログ、許可していない属性に一致しないメトリクスデータポイントの属性を削除します。
 また、ブロックされた値のリストに一致する属性をマスクします。
-許可されたリストにない属性は、値のチェックが行われる前に削除されます。
+許可されたリストにない属性は、値のチェックが行われる前に削除されます。 It also masks attribute values that match a blocked value
+list. Attributes that aren't on the allowed list are removed before any value
+checks are done.
 
 以下は、クレジットカード番号の値をマスクする設定例です。
 
@@ -237,7 +267,11 @@ processors:
 
 テレメトリーの集約やコレクターにメモリ使用の制限を設定することで、out-of-memoryエラーやスパイクの発生を防ぐことができます。
 キューサイズの最適化やデータ欠損を防ぐためのメモリ使用設定の管理を行うことによってトラフィックのスパイクを防ぐこともできます。
-たとえば、[`exporterhelper`](https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/exporterhelper/README.md)を使用することで、`otlp`エクスポーターのキューサイズを管理することができます。
+たとえば、[`exporterhelper`](https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/exporterhelper/README.md)を使用することで、`otlp`エクスポーターのキューサイズを管理することができます。 You can also handle traffic
+spikes by adjusting queue sizes to manage memory usage while avoiding data loss.
+For example, use the
+[`exporterhelper`](https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/exporterhelper/README.md)
+to manage queue size for your `otlp` exporter:
 
 ```yaml
 exporters:
@@ -250,7 +284,11 @@ exporters:
 不要なテレメトリーを除外することはコレクターリソースを保護するためのもう一つの方法になります。
 コレクターインスタンスを保護するだけでなく、バックエンドの負荷を軽減することにもなります。
 [`filter`プロセッサー](/docs/collector/transforming-telemetry/#basic-filtering)を使用することで、不必要なログやメトリクス、スパンを削除することができます。
-以下はHTTPではなくスパンを削除する設定の例です。
+以下はHTTPではなくスパンを削除する設定の例です。 Not only does filtering protect your Collector instance, but it also
+reduces the load on your backend. You can use the
+[`filter` processor](/docs/collector/transforming-telemetry/#basic-filtering) to
+drop logs, metrics, and spans you don't need. For example, here's a
+configuration that drops non-HTTP spans:
 
 ```yaml
 processors:
@@ -262,9 +300,9 @@ processors:
 ```
 
 また、適切なタイムアウト制限と再試行の制限をコンポーネントに設定することもできます。
-これらの制限により、Collectorはメモリに過剰なデータを蓄積することなく送信エラーを処理できるようになるでしょう。
+これらの制限により、Collectorはメモリに過剰なデータを蓄積することなく送信エラーを処理できるようになるでしょう。 These limits should allow your Collector to handle failures without
+accumulating too much data in memory. 詳細は[`exporterhelper`](https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/exporterhelper/README.md)を参照してください。
 
-詳細は[`exporterhelper`](https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/exporterhelper/README.md)を参照してください。
-
-最後に、データの送信サイズを削減し、ネットワークやCPUリソース使用量を節約するためにエクスポーターでの圧縮設定の使用を検討してください。
+Finally, consider using compression with your exporters to reduce the send size
+of your data and conserve network and CPU resources. 最後に、データの送信サイズを削減し、ネットワークやCPUリソース使用量を節約するためにエクスポーターでの圧縮設定の使用を検討してください。
 [`otlp`エクスポーター](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlpexporter)はデフォルトで`gzip`圧縮を使用します。
