@@ -1,10 +1,8 @@
 ---
 title: Configuration du serveur d'application
 linkTitle: Configuration du serveur d'application
-description:
-  Apprenez à définir les chemins d'agent pour les serveurs d'applications Java
+description: Apprenez à définir les chemins d'agent pour les serveurs d'applications Java
 weight: 215
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: asadmin Glassfish Payara setenv
 ---
 
@@ -82,12 +80,12 @@ Ajoutez le chemin vers l'agent Java en utilisant l'outil `asadmin` :
 Vous pouvez également ajouter l'argument `-javaagent` depuis la console
 d'administration. Par exemple :
 
-1.  Ouvrez la console d'administration de GlassFish sur <http://localhost:4848>.
-2.  Allez à **Configurations > server-config > JVM Settings**.
-3.  Sélectionnez **JVM Options > Add JVM Option**.
-4.  Entrez le chemin vers l'agent :
-    `-javaagent:/path/to/opentelemetry-javaagent.jar`
-5.  **Enregistrez** et redémarrez le serveur.
+1. Ouvrez la console d'administration de GlassFish sur <http://localhost:4848>.
+2. Allez à **Configurations > server-config > JVM Settings**.
+3. Sélectionnez **JVM Options > Add JVM Option**.
+4. Entrez le chemin vers l'agent :
+   `-javaagent:/path/to/opentelemetry-javaagent.jar`
+5. **Enregistrez** et redémarrez le serveur.
 
 Assurez-vous que le fichier domain.xml dans votre répertoire de domaine contient
 une entrée `<jmv-options>` pour l'agent.
@@ -157,10 +155,10 @@ Ouvrez la console d'administration de WebSphere et suivez ces étapes :
 
 <!-- markdownlint-disable blanks-around-fences -->
 
-1.  Naviguez vers **Servers > Server type > WebSphere application servers**.
-2.  Sélectionnez le serveur.
-3.  Allez à **Java and Process Management > Process Definition**.
-4.  Sélectionnez **Java Virtual Machine**.
-5.  Dans **Generic JVM arguments**, entrez le chemin vers l'agent :
-    `-javaagent:/path/to/opentelemetry-javaagent.jar`.
-6.  Enregistrez la configuration et redémarrez le serveur.
+1. Naviguez vers **Servers > Server type > WebSphere application servers**.
+2. Sélectionnez le serveur.
+3. Allez à **Java and Process Management > Process Definition**.
+4. Sélectionnez **Java Virtual Machine**.
+5. Dans **Generic JVM arguments**, entrez le chemin vers l'agent :
+   `-javaagent:/path/to/opentelemetry-javaagent.jar`.
+6. Enregistrez la configuration et redémarrez le serveur.
