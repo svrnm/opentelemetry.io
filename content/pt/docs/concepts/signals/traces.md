@@ -2,8 +2,7 @@
 title: Rastros
 weight: 1
 description: O caminho de uma solicitação através do seu aplicativo.
-default_lang_commit: 7c0e4db0b6c39b0ca0e7efb17df5610d1b77b8a3
-drifted_from_default: true
+cSpell:ignore: Guten
 ---
 
 Os **rastros** nos fornecem uma visão geral do que acontece quando uma
@@ -22,7 +21,7 @@ Os exemplos JSON a seguir não apresentam um formato específico, especialmente 
 
 {{% /alert %}}
 
-trecho `olá`:
+`hello` span:
 
 ```json
 {
@@ -49,11 +48,12 @@ trecho `olá`:
 }
 ```
 
-Este é o trecho raiz, sinalizando o início e o fim de toda a operação. Note que
+Este é o trecho raiz, sinalizando o início e o fim de toda a operação.
+Note que
 ele possui um campo `trace_id` indicando o rastro, mas não possui `parent_id`. É
 assim que você sabe que é o trecho raiz.
 
-O trecho `olá-cumprimentos`:
+`hello-greetings` span:
 
 ```json
 {
@@ -92,7 +92,7 @@ trecho `olá`. Note que ele compartilha o mesmo `trace_id` que o trecho raiz,
 indicando que faz parte do mesmo rastro. Além disso, ele possui um `parent_id`
 que corresponde ao `span_id` do trecho `olá`.
 
-O trecho `olá-saudações`:
+`hello-salutations` span:
 
 ```json
 {
@@ -126,10 +126,10 @@ Este trecho representa a terceira operação neste rastro e assim como o anterio
 Esses três blocos de JSON compartilham o mesmo `trace_id`, e o campo `parent_id`
 que representa uma hierarquia. Isso o torna um rastro!
 
-Outra coisa que você notará é que cada trecho se parece com um log estruturado.
-Isso porque, de certa forma, é mesmo! Uma maneira de pensar em rastros é como
+Outra coisa que você notará é que cada trecho se parece com um log estruturado. Isso porque, de certa forma, é mesmo! Uma maneira de pensar em rastros é como
 uma coleção de logs estruturados com contexto, correlação, hierarquia e outros
-recursos. No entanto, esses "logs estruturados" podem vir de diferentes
+recursos.
+No entanto, esses "logs estruturados" podem vir de diferentes
 processos, serviços, VMs, data centers, e assim por diante. Isso torna possível
 que o rastreamento represente uma visão de ponta a ponta de qualquer sistema.
 
@@ -146,7 +146,7 @@ Trace Provider também inclui a inicialização de Resource e Exporter. Geralmen
 é a primeira etapa do rastreamento com OpenTelemetry. Em alguns SDKs, um Trace
 Provider global já é inicializado para você.
 
-## Rastro {#tracer}
+## Tracer
 
 Um rastro cria trechos contendo mais informações sobre o que está acontecendo em
 uma determinada operação, como uma solicitação em um serviço. Rastros são
@@ -166,7 +166,7 @@ entre si e montados em um rastro, independentemente de onde os trechos são
 gerados. Para saber mais sobre este tópico, consulte a página de conceitos sobre
 [Propagação de Contexto](../../context-propagation).
 
-## Trechos {#spans}
+## Spans
 
 Um **trecho** representa uma unidade de trabalho ou operação. Trechos são os
 blocos que compõem os rastros. No OpenTelemetry, eles incluem as seguintes
@@ -224,7 +224,7 @@ Trechos podem ser aninhados, como é indicado pela presença de um ID de trecho
 pai: trechos filhos representam sub-operações. Isso permite que os trechos
 capturem de forma mais precisa o trabalho realizado em uma aplicação.
 
-### Contexto do Trecho {#span-context}
+### Span Context
 
 O contexto do trecho é um objeto imutável em cada trecho que contém o seguinte:
 
@@ -250,8 +250,7 @@ Por exemplo, se um trecho rastreia uma operação que adiciona um item ao carrin
 de compras de um usuário em um sistema de eCommerce, é possível obter o ID do
 usuário o ID do item a ser adicionado ao carrinho e o ID do carrinho.
 
-Você pode adicionar atributos aos trecho durante ou após a criação do trecho.
-Prefira adicionar atributos na criação do trecho para disponibilizar os
+Você pode adicionar atributos aos trecho durante ou após a criação do trecho. Prefira adicionar atributos na criação do trecho para disponibilizar os
 atributos para a amostragem do SDK. Se precisar adicionar um valor após a
 criação do trecho, atualize o trecho com o valor.
 
@@ -263,7 +262,8 @@ Os atributos têm as seguintes regras que é implementada por cada SDK:
 
 Além disso, existem [atributos semânticos](/docs/specs/semconv/general/trace/),
 que são convenções de nomenclatura conhecidas para metadados que estão
-tipicamente presentes em operações comuns. É útil usar a nomenclatura de
+tipicamente presentes em operações comuns.
+É útil usar a nomenclatura de
 atributos semânticos sempre que possível para que tipos comuns de metadados
 sejam padronizados entre sistemas.
 
@@ -350,7 +350,7 @@ representa quando um desenvolvedor marca explicitamente um trecho como
 bem-sucedido. Na maioria dos casos, não é necessário marcar explicitamente um
 trecho como OK.
 
-### Tipo de Trecho {#span-kind}
+### Span Kind
 
 Quando um trecho é criado, ele pode ser do tipo: `Client`, `Server`, `Internal`,
 `Producer` ou `Consumer`. Esse tipo de trecho indica ao backend de rastreamento
@@ -379,7 +379,8 @@ uma solicitação HTTP de entrada ou uma chamada de procedimento remoto.
 #### Internal
 
 Trechos internos representam operações que não atravessam uma fronteira de
-processo. Coisas como instrumentar uma chamada de função ou um Express
+processo.
+Coisas como instrumentar uma chamada de função ou um Express
 middleware podem usar trechos internos.
 
 #### Producer
@@ -389,7 +390,7 @@ processado de forma assíncrona mais tarde. Pode ser uma tarefa remota, como uma
 adição em uma fila de tarefas, ou uma tarefa local processada por um ouvinte de
 eventos.
 
-### Consumer
+#### Consumer
 
 Trechos de consumidor representam o processamento de um trabalho criado por um
 produtor e podem começar muito tempo depois que o trecho de produtor já
