@@ -2,7 +2,6 @@
 title: 故障排查
 description: Collector 故障排查建议
 weight: 25
-default_lang_commit: 00927d66af2f5f9e6d2b6fc90ce77341c3cf9033
 cSpell:ignore: confmap pprof tracez zpages
 ---
 
@@ -18,13 +17,15 @@ Collector 在调试问题方面提供了多种指标、日志和扩展功能。
 
 ### 本地导出器 {#local-exporters}
 
-针对某些类型的问题，例如配置验证和网络调试，你可以将少量测试数据发送到配置为输出到本地日志的 Collector。
+For certain types of issues, such as configuration verification and network
+debugging, you can send a small amount of test data to a Collector configured to
+output to local logs. 针对某些类型的问题，例如配置验证和网络调试，你可以将少量测试数据发送到配置为输出到本地日志的 Collector。
 通过使用一个[本地导出器](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter#general-information)，
 你可以检查 Collector 正在处理的数据。
 
 对于实时故障排查，可以考虑使用
 [`debug` 导出器](https://github.com/open-telemetry/opentelemetry-collector/blob/main/exporter/debugexporter/README.md)，它可确认
-Collector 是否正在接收、处理并导出数据。例如：
+Collector 是否正在接收、处理并导出数据。例如： For example:
 
 ```yaml
 receivers:
@@ -39,7 +40,7 @@ service:
       exporters: [debug]
 ```
 
-开始测试时，生成一个 Zipkin 负载。例如，你可以创建一个名为 `trace.json` 的文件，内容如下：
+To begin testing, generate a Zipkin payload. 开始测试时，生成一个 Zipkin 负载。例如，你可以创建一个名为 `trace.json` 的文件，内容如下：
 
 ```json
 [
@@ -113,7 +114,8 @@ Attributes:
 
 ### 检查 Collector 组件 {#check-collector-components}
 
-使用以下子命令列出 Collector 分发包中可用的组件及其稳定性等级。请注意，输出格式可能随版本变化：
+使用以下子命令列出 Collector 分发包中可用的组件及其稳定性等级。请注意，输出格式可能随版本变化： Please note that the output
+format might change across versions.
 
 ```shell
 otelcol components
@@ -212,7 +214,8 @@ extensions:
 #### 性能分析器 (pprof) {#performance-profiler-pprof}
 
 [pprof 扩展](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/extension/pprofextension/README.md)默认在本地端口
-`1777` 提供服务，可在 Collector 运行时对其进行性能分析。这是一种高级使用场景，通常情况下无需使用。
+`1777` 提供服务，可在 Collector 运行时对其进行性能分析。这是一种高级使用场景，通常情况下无需使用。 This is an advanced use-case that should not be needed in most
+circumstances.
 
 #### zPages
 
@@ -221,13 +224,14 @@ extensions:
 
 其中，`/debug/tracez` 上的 TraceZ 页面对调试链路操作很有帮助，例如：
 
-- 延迟问题。找出应用中耗时的部分。
-- 死锁与探针问题。识别未正常结束的正在运行的 Span。
-- 错误。判断发生了哪些类型的错误以及错误发生的位置。
+- Latency issues. 延迟问题。找出应用中耗时的部分。
+- Deadlocks and instrumentation problems. Identify running spans that don't end.
+- Errors. 错误。判断发生了哪些类型的错误以及错误发生的位置。
 
 请注意，`zpages` 中可能包含 Collector 本身未输出的错误日志。
 
-在容器化环境中，建议将此端口暴露至公有接口而非仅本地可用。可通过 `extensions` 配置段设置 `endpoint`：
+在容器化环境中，建议将此端口暴露至公有接口而非仅本地可用。可通过 `extensions` 配置段设置 `endpoint`： The `endpoint` can be configured using the
+`extensions` configuration section:
 
 ```yaml
 extensions:
@@ -237,15 +241,16 @@ extensions:
 
 ## 复杂管道的调试清单 {#checklist-for-debugging-complex-pipelines}
 
-当遥测数据通过多个 Collector 和网络流动时，定位问题可能会比较困难。每次数据在
-Collector 或其他组件之间传递时，都应验证以下内容：
+It can be difficult to isolate problems when telemetry flows through multiple
+Collectors and networks. For each "hop" of telemetry through a Collector or
+other component in your pipeline, it’s important to verify the following:
 
 - Collector 日志中是否有错误信息？
 - 遥测数据是如何进入该组件的？
 - 此组件是否修改了遥测数据（如采样、脱敏）？
 - 此组件如何导出遥测数据？
 - 遥测数据使用的是什么格式？
-- 下游组件的配置如何？
+- How is the next hop configured?
 - 是否存在网络策略阻止数据进出？
 
 ## 常见的 Collector 问题 {#common-collector-issues}
@@ -266,6 +271,9 @@ Collector 可能因以下常见原因丢失数据：
 为缓解丢失情况，请配置
 [`batch` 处理器](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/batchprocessor/README.md)。
 另外，还可能需要在启用的导出器上配置[排队重试选项](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/exporterhelper#configuration)。
+In addition, it might be necessary to configure the
+[queued retry options](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/exporterhelper#configuration)
+on enabled exporters.
 
 #### Collector 收不到数据 {#collector-is-not-receiving-data}
 
@@ -282,9 +290,10 @@ Collector 收不到数据的原因可能包括：
 
 #### Collector 未处理数据 {#collector-is-not-processing-data}
 
-大多数处理问题源于对处理器工作方式的误解或处理器配置错误。例如：
+大多数处理问题源于对处理器工作方式的误解或处理器配置错误。例如： For example:
 
-- 属性处理器仅作用于 Span 上的标签，Span 名称需由 Span 处理器处理。
+- 属性处理器仅作用于 Span 上的标签，Span 名称需由 Span 处理器处理。 The span name is
+  handled by the span processor.
 - 除尾部采样外的链路数据处理器仅作用于单个 Span。
 
 #### Collector 未导出数据 {#collector-is-not-exporting-data}
@@ -299,7 +308,8 @@ Collector 未导出数据的原因可能包括：
 [zPages](https://github.com/open-telemetry/opentelemetry-collector/blob/main/extension/zpagesextension/README.md)
 以排查问题。
 
-导出数据失败通常是由于网络配置问题，例如防火墙、DNS 或代理问题。注意 Collector
+Exporting data often does not work because of a network configuration issue,
+such as a firewall, DNS, or proxy issue. 导出数据失败通常是由于网络配置问题，例如防火墙、DNS 或代理问题。注意 Collector
 支持[代理](https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter#proxy-support)。
 
 ### Collector 出现控制问题 {#collector-is-experiencing-control-issues}
@@ -312,16 +322,20 @@ Collector 可能因以下原因退出或重启：
 
 - 缺少或错误配置的
   [`memory_limiter` 处理器](https://github.com/open-telemetry/opentelemetry-collector/blob/main/processor/memorylimiterprocessor/README.md)导致内存压力。
-- 负载下资源配置不当。
-- 错误的配置，例如队列大小超过可用内存。
-- 基础设施资源限制，如 Kubernetes。
+- Improper sizing for load.
+- Improper configuration. For example, a queue sized to be larger than available
+  memory.
+- 基础设施资源限制，如 Kubernetes。 For example, Kubernetes.
 
 #### Collector 在 Windows Docker 容器中启动失败 {#collector-fails-to-start-in-windows-docker-containers}
 
 在 v0.90.1 及更早版本中，Collector 在 Windows Docker 容器中启动可能失败，并出现错误信息：
 `The service process could not connect to the service controller`。
 此时，需设置 `NO_WINDOWS_SERVICE=1` 环境变量，使 Collector
-以交互式终端方式启动，而非尝试作为 Windows 服务运行。
+以交互式终端方式启动，而非尝试作为 Windows 服务运行。 In this case,
+the `NO_WINDOWS_SERVICE=1` environment variable must be set to force the
+Collector to start as if it were running in an interactive terminal, without
+attempting to run as a Windows service.
 
 ### Collector 出现配置问题 {#collector-is-experiencing-configuration-issues}
 
@@ -329,7 +343,9 @@ Collector 可能因配置问题导致异常。
 
 #### 空映射问题 {#null-maps}
 
-在解析多个配置文件时，较早配置中的值会被较晚配置中的值覆盖，即便后者为 null。你可以通过以下方式修复：
+During configuration resolution of multiple configs, values in earlier configs
+are removed in favor of later configs, even if the later value is null. You can
+fix this issue by
 
 - 使用 `{}` 表示空映射，例如使用 `processors: {}` 而非 `processors:`。
 - 省略空配置段，例如不写 `processors:`。
