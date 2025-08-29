@@ -2,23 +2,26 @@
 title: 用語集
 description: OpenTelemetry で使用されるテレメトリー用語の定義と規則
 weight: 200
-default_lang_commit: 530c8fd130c93dd95e9638c8919518dbbc9c6b0a
 ---
 
 この用語集は、OpenTelemetry プロジェクトに対して新しい、用語と[概念](/docs/concepts/)を定義し、オブザーバビリティの分野で一般的に使われている OpenTelemetry 特有の使用法を明確にします。
 また、役に立つように、スペルや大文字かについてもコメントしました。
 たとえば、[OpenTelemetry](#opentelemetry) と [OTel](#otel) を参照してください。
 
-## 用語 {#terms}
+We also comment on spelling and capitalization when helpful. For example, see
+[OpenTelemetry](#opentelemetry) and [OTel](#otel).
+
+## Terms
 
 ### 集約（集計、アグリゲーション） {#aggregation}
 
 複数の測定値を組み合わせて、プログラム実行中のある時間間隔に行われた測定値に関する正確な統計値または推定統計値にするプロセス。
-[メトリクス](#metric)の[データソース](#data-source) で使用されます。
+[メトリクス](#metric)の[データソース](#data-source) で使用されます。 Used by the [Metric](#metric)
+[Data source](#data-source).
 
 ### API {#api}
 
-アプリケーション・プログラミング・インターフェース。
+Application Programming Interface. アプリケーション・プログラミング・インターフェース。
 OpenTelemetryプロジェクトでは、[データソース](#data-source)ごとにどのようにテレメトリーデータを生成するかを定義するために使用されます。
 
 ### アプリケーション {#application}
@@ -31,26 +34,29 @@ OpenTelemetryプロジェクトでは、[データソース](#data-source)ごと
 
 ### 属性（アトリビュート） {#attribute}
 
-[メタデータ](#metadata)のOpenTelemetry用語。
-テレメトリーを生成するエンティティにキーバリュー情報を追加します。
-[シグナル](#signal)と[リソース](#resource) にまたがって使用されます。
-[属性仕様][attribute]を参照のこと。
+[メトリクス](#metric)で特に使われる用語。
+[メタデータ](#metadata)を参照。 Adds key-value information to the
+entity producing telemetry. Used across [Signals](#signal) and
+[Resources](#resource). See [attribute spec][attribute].
 
 ### 自動計装 {#automatic-instrumentation}
 
 エンドユーザーがアプリケーションのソースコードを変更する必要のないテレメトリー収集方法を指します。
-方法はプログラミング言語によって異なり、バイトコードインジェクションやモンキーパッチがその例です。
+方法はプログラミング言語によって異なり、バイトコードインジェクションやモンキーパッチがその例です。 Methods vary by programming language, and
+examples include bytecode injection or monkey patching.
 
 ### バゲッジ {#baggage}
 
 イベントとサービスの因果関係を確立するための[メタデータ](#metadata)を伝搬するメカニズム。
-[バゲッジ仕様][baggage]を参照のこと。
+[バゲッジ仕様][baggage]を参照のこと。 See [baggage spec][baggage].
 
 ### カーディナリティ {#cardinality}
 
-特定の[属性](#attribute)または属性のセットに対する一意の値の数。
-カーディナリティが高いということは、一意の値が多いことを意味しており、テレメトリーバックエンドのパフォーマンスやストレージ要件に影響を与える可能性があります。
-たとえば、`user_id` 属性は高いカーディナリティを持ちますが、"200"、"404"、"500" などの値を持つ `status_code` 属性は低いカーディナリティを持ちます。
+The number of unique values for a given [Attribute](#attribute) or set of
+attributes. High cardinality means many unique values, which can impact the
+performance and storage requirements of telemetry backends. For example, a
+`user_id` attribute would have high cardinality, while a `status_code` attribute
+with values like "200", "404", "500" would have low cardinality.
 
 ### クライアントライブラリ {#client-library}
 
@@ -59,27 +65,29 @@ OpenTelemetryプロジェクトでは、[データソース](#data-source)ごと
 ### クライアントサイドアプリケーション
 
 [アプリケーション](#application)のコンポーネントで、プライベートなインフラストラクチャ内で実行されておらず、通常エンドユーザーが直接使用するもの。
-クライアントサイドアプリの例としては、ブラウザアプリ、モバイルアプリ、IoTデバイス上で動作するアプリなどがあります。
+クライアントサイドアプリの例としては、ブラウザアプリ、モバイルアプリ、IoTデバイス上で動作するアプリなどがあります。 Examples of
+client-side apps are browser apps, mobile apps, and apps running on IoT devices.
 
 ### コレクター {#collector}
 
 [OpenTelemetry コレクター][OpenTelemetry Collector]または短くしてコレクターは、テレメトリーデータの受信、処理、エクスポート方法に関するベンダー非依存の実装です。
-エージェントまたはゲートウェイとしてデプロイ可能な単一のバイナリです。
+エージェントまたはゲートウェイとしてデプロイ可能な単一のバイナリです。 A single
+binary that can be deployed as an agent or gateway.
 
-> OpenTelemetry コレクターを指す場合は、常に「コレクター」と大文字で記載してください。「コレクター」を形容詞として使用する場合（例：「コレクターの設定」）も、「コレクター」と記載してください（英語では大文字で Collector と書くことを示しているが、日本語の場合はコレクターと記述する）。
+> OpenTelemetry コレクターを指す場合は、常に「コレクター」と大文字で記載してください。「コレクター」を形容詞として使用する場合（例：「コレクターの設定」）も、「コレクター」と記載してください（英語では大文字で Collector と書くことを示しているが、日本語の場合はコレクターと記述する）。 Use just "Collector" if you are using Collector as an
+> adjective &mdash; for example, "Collector configuration".
 
 [OpenTelemetry Collector]: /docs/collector/
 
-### Contrib {#contrib}
+### Contrib
 
 いくつかの[計装ライブラリ](#instrumentation-library)と[コレクター](#collector)はコア機能のセットと、ベンダーの `エクスポーター` を含む非コア機能専用のcontribリポジトリを提供しています。
 
-<!-- prettier-ignore-start -->
 ### コンテキスト伝搬（プロパゲーション） {#context-propagation}
-<!-- prettier-ignore-end -->
 
 すべての[データソース](#data-source)が、[トランザクション](#transaction)の寿命にわたって状態を保存したりデータにアクセスしたりするための基盤となるコンテキストメカニズムを共有できるようにします。
-[コンテキスト伝搬仕様][context propagation]を参照。
+[コンテキスト伝搬仕様][context propagation]を参照。 See [context propagation
+spec][context propagation].
 
 ### DAG {#dag}
 
@@ -91,41 +99,45 @@ OpenTelemetryプロジェクトでは、[データソース](#data-source)ごと
 
 ### 次元（ディメンション） {#dimension}
 
-[メトリクス](#metric)で特に使われる用語。[属性](#attribute)を参照のこと。
+A term used specifically by [Metrics](#metric). See [Attribute](#attribute).
 
 ### 分散トレース {#distributed-tracing}
 
 [アプリケーション](#application)を構成する[サービス](#service)によって処理される、[トレース](#trace)と呼ばれる単一の[リクエスト](#request)の進行を追跡します。
-[分散トレース](#distributed-tracing)は、プロセス、ネットワーク、セキュリティの境界を越えます。
+[分散トレース](#distributed-tracing)は、プロセス、ネットワーク、セキュリティの境界を越えます。 A [Distributed trace](#distributed-tracing)
+transverses process, network and security boundaries.
 
 [分散トレース][distributed tracing]を参照してください。
 
 ### ディストリビューション {#distribution}
 
 ディストリビューションとは、アップストリームのOpenTelemetryリポジトリのラッパーで、いくつかのカスタマイズが施されています。
-詳細は[ディストリビューション][Distributions]を参照してください。
+詳細は[ディストリビューション][Distributions]を参照してください。 See [Distributions].
 
 ### イベント {#event}
 
 イベントは、イベント名とよく知られた構造の[ログレコード](#log-record)です。
-たとえば、OpenTelemetry のブラウザイベントは、特有の命名規則に従い、共通の構造における特有のデータを運びます。
+たとえば、OpenTelemetry のブラウザイベントは、特有の命名規則に従い、共通の構造における特有のデータを運びます。 For example, browser events in OpenTelemetry follow a particular
+naming convention and carry particular data in a common structure.
 
 ### エクスポーター {#exporter}
 
-テレメトリーをコンシューマーに送信する機能を提供します。
-エクスポーターはプッシュベースかプルベースのいずれかになります。
+Provides functionality to emit telemetry to consumers. Exporters can be push- or
+pull-based.
 
 ### フィールド {#field}
 
-[ログレコード](#log-record)で特に使われる用語。
+A term used specifically by [Log Records](#log-record). [ログレコード](#log-record)で特に使われる用語。
 [メタデータ](#metadata)は、[属性](#attribute)や[リソース](#resource)などの定義されたフィールドを通して追加できます。
 重大度やトレース情報など、他のフィールドも `Metadata` とみなされるかもしれません。
-[フィールド仕様][field]を参照してください。
+[フィールド仕様][field]を参照してください。 Other fields may also be considered `Metadata`, including
+severity and trace information. See the [field spec][field].
 
 ### gRPC {#grpc}
 
 高性能でオープンソースのユニバーサル [RPC](#rpc) フレームワーク。
-詳細は[gRPC](https://grpc.io)を参照してください。
+詳細は[gRPC](https://grpc.io)を参照してください。 See
+[gRPC](https://grpc.io).
 
 ### HTTP {#http}
 
@@ -134,13 +146,17 @@ OpenTelemetryプロジェクトでは、[データソース](#data-source)ごと
 ### 計装済みライブラリ {#instrumented-library}
 
 テレメトリーシグナル([トレース](#trace)、[メトリクス](#metric)、[ログ](#log))を収集する[ライブラリ](#library)を表します。
-詳細は[計装済みライブラリ][Instrumented library]を参照してください。
+詳細は[計装済みライブラリ][Instrumented library]を参照してください。 See
+[Instrumented library][].
 
 ### 計装ライブラリ {#instrumentation-library}
 
+Denotes the [Library](#library) that provides the instrumentation for a given
+[Instrumented library](#instrumented-library).
 特定の[計装済みライブラリ](#instrumented-library)に計装を提供する[ライブラリ](#library)を表します。
 [計装済みライブラリ](#instrumented-library)と[計装ライブラリ](#instrumentation-library)は、ビルトインのOpenTelemetry計装をしている場合、同一の[ライブラリ](#library)になります。
-詳細は[ライブラリ仕様][spec-instrumentation-lib]を参照してください。
+詳細は[ライブラリ仕様][spec-instrumentation-lib]を参照してください。 See [the
+lib specification][spec-instrumentation-lib].
 
 ### JSON {#json}
 
@@ -148,8 +164,7 @@ OpenTelemetryプロジェクトでは、[データソース](#data-source)ごと
 
 ### ラベル {#label}
 
-[メトリクス](#metric)で特に使われる用語。
-[メタデータ](#metadata)を参照。
+A term used specifically by [Metrics](#metric). See [Metadata](#metadata).
 
 ### 言語 {#language}
 
@@ -161,42 +176,46 @@ OpenTelemetryプロジェクトでは、[データソース](#data-source)ごと
 
 ### ログ {#log}
 
-[ログレコード](#log-record)の集まりを指すのに使われることもあります。
+Sometimes used to refer to a collection of [Log records](#log-record). [ログレコード](#log-record)の集まりを指すのに使われることもあります。
 また、単一の[ログ記録](#log-record)を指すために[ログ](#log)を使うこともあるので、曖昧になる可能性があります。
 曖昧になる可能性がある場合は、追加の修飾子、たとえば`ログレコード`を使用してください。
-詳細は[ログ][log]を参照してください。
+詳細は[ログ][log]を参照してください。 Where ambiguity is possible, use additional
+qualifiers, for example, `Log record`. See [Log].
 
 ### ログレコード {#log-record}
 
-タイムスタンプと重要度のデータの記録です。
-トレースと関連があるとき、[トレース ID](#trace)と[スパン ID](#span)を持つ可能性があります。
-詳細は[ログレコード][Log record]を参照してください。
+A recording of data with a timestamp and a severity. May also have a
+[Trace ID](#trace) and [Span ID](#span) when correlated with a trace. See [Log
+record][].
 
 ### メタデータ {#metadata}
 
-たとえば `foo="bar"` のようなキーと値のペアで、テレメトリーを生成するエンティティに追加されます。
-OpenTelemetryはこれらのペアを[属性](#attribute)と呼びます。
-また、[メトリクス](#metric)には[次元](#dimension)と[ラベル](#label)があり、[ログ](#log)には[フィールド](#field)があります。
+A key-value pair, for example `foo="bar"`, added to an entity producing
+telemetry. OpenTelemetry calls these pairs [Attributes](#attribute). In
+addition, [Metrics](#metric) have [Dimensions](#dimension) an [Labels](#label),
+while [Logs](#log) have [Fields](#field).
 
 ### メトリクス {#metric}
 
 生の測定値または事前定義された集計値のいずれかのデータポイントを、[メタデータ](#metadata)付きの時系列として記録します。
-詳細は[メトリクス][metric]を参照してください。
+詳細は[メトリクス][metric]を参照してください。 See [Metric].
 
 ### OC {#oc}
 
 [OpenCensus](#opencensus)の略称。
 
-### オブザーバビリティバックエンド {#observability-backend}
+### Observability backend
 
-テレメトリーデータの受信、処理、保存、クエリを担うオブザーバビリティプラットフォームのコンポーネントです。
-商用製品だけではなく、たとえば [Jaeger] や [Prometheus] のようなオープンソースツールも含みます。
-OpenTelemetry はオブザーバビリティバックエンドではありません。
+The component of an observability platform that is responsible for receiving,
+processing, storing, and querying telemetry data. Examples include open source
+tools like [Jaeger] and [Prometheus], as well as commercial offerings.
+OpenTelemetry is not an observability backend.
 
-### オブザーバビリティフロントエンド {#observability-frontend}
+### Observability frontend
 
 テレメトリーデータの可視化と分析のためのユーザーインターフェースを提供するオブザーバビリティプラットフォームのコンポーネントです。
-特に商用製品を検討すると、オブザーバビリティバックエンドの一部である場合がしばしばあります。
+特に商用製品を検討すると、オブザーバビリティバックエンドの一部である場合がしばしばあります。 It can be often a part of an
+observability backend, particularly when considering commercial offerings.
 
 ### OpAMP {#opamp}
 
@@ -206,7 +225,8 @@ OpenTelemetry はオブザーバビリティバックエンドではありませ
 
 ### OpenCensus {#opencensus}
 
-OpenTelemetry の前身です。詳細については、[歴史](/docs/what-is-opentelemetry/#history) を参照してください。
+Precursor to OpenTelemetry. For details, see
+[History](/docs/what-is-opentelemetry/#history).
 
 ### OpenTelemetry {#opentelemetry}
 
@@ -219,8 +239,7 @@ OpenTelemetry &mdash; 本サイトの主題である &mdash;は、[API](#api)、
 
 ### OpenTracing {#opentracing}
 
-OpenTelemetry の前身です。
-詳細については、[歴史](/docs/what-is-opentelemetry/#history)を参照してください。
+Precursor to OpenTelemetry. OpenTelemetry の前身です。詳細については、[歴史](/docs/what-is-opentelemetry/#history) を参照してください。
 
 ### OT {#ot}
 
@@ -241,7 +260,8 @@ OpenTelemetry の前身です。
 [OpenTelemetry Enhancement Proposal] の頭字語。
 
 > **Spelling**: "OTEPs" は複数形で記述してください。
-> 説明で `OTep` または `otep` と書かないでください。
+> 説明で `OTep` または `otep` と書かないでください。 Don't write `OTep` or `otep` in
+> descriptions.
 
 [OpenTelemetry Enhancement Proposal]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/README.md
 
@@ -249,20 +269,21 @@ OpenTelemetry の前身です。
 
 [OpenTelemetryプロトコル](/docs/specs/otlp/)の略称。
 
-### プロパゲーター {#propagators}
+### Propagators
 
 [スパン](#span)内のスパンコンテキストや[バゲッジ](#baggage)など、テレメトリーデータの特定の部分をシリアライズおよびデシリアライズするために使用します。
-詳細は[プロパゲーター][Propagators]を参照してください。
+詳細は[プロパゲーター][Propagators]を参照してください。 See [Propagators].
 
 ### Proto {#proto}
 
-言語に依存しないインターフェイス型。[opentelemetry-proto]を参照してください。
+Language independent interface types. See [opentelemetry-proto].
 
 ### レシーバー {#receiver}
 
 [コレクター](/docs/collector/configuration/#receivers)が使用する用語で、テレメトリーデータの受信方法を定義します。
 レシーバーはプッシュベースとプルベースがあります。
-詳細は[レシーバー][Receiver]を参照してください。
+詳細は[レシーバー][Receiver]を参照してください。 Receivers can be push- or pull-based. See
+[Receiver].
 
 ### リクエスト {#request}
 
@@ -272,7 +293,10 @@ OpenTelemetry の前身です。
 
 テレメトリーを生成するエンティティに関する情報を[属性](#attribute)として捕捉します。
 たとえば、Kubernetes 上のコンテナで実行されているテレメトリーを生成するプロセスには、プロセス名、ポッド名、名前空間、そして場合によってはデプロイメント名があります。
-これらすべての属性を `Resource` に含めることができます。
+これらすべての属性を `Resource` に含めることができます。 For example, a process producing telemetry that is
+running in a container on Kubernetes has a process name, a pod name, a
+namespace, and possibly a deployment name. All these attributes can be included
+in the `Resource`.
 
 ### REST {#rest}
 
@@ -284,13 +308,12 @@ OpenTelemetry の前身です。
 
 ### サンプリング {#sampling}
 
-エクスポートされるデータ量を制御するメカニズム。
-[トレース](#trace) [データソース](#data-source) と共に使われるのが一般的です。
-詳細は[サンプリング][Sampling]を参照してください。
+A mechanism to control the amount of data exported. Most commonly used with the
+[Tracing](#trace) [Data Source](#data-source). See [Sampling].
 
 ### SDK {#sdk}
 
-ソフトウェア開発キット（Software Development Kit）の略称。
+Short for Software Development Kit. ソフトウェア開発キット（Software Development Kit）の略称。
 OpenTelemetryの[API](#api)を実装する[ライブラリ](#library)を示すテレメトリーSDKを指します。
 
 ### セマンティック規約 {#semantic-conventions}
@@ -299,35 +322,34 @@ OpenTelemetryの[API](#api)を実装する[ライブラリ](#library)を示す�
 
 ### サービス {#service}
 
-[アプリケーション](#application)のコンポーネント。
-[サービス](#service)の複数のインスタンスは、通常、高可用性とスケーラビリティのためにデプロイされます。
-[サービス](#service)は複数の場所に配置できます。
+A component of an [Application](#application). Multiple instances of a
+[Service](#service) are typically deployed for high availability and
+scalability. A [Service](#service) can be deployed in multiple locations.
 
 ### シグナル {#signal}
 
 OpenTelemetryにおいては[トレース](#trace)、[メトリクス](#metric)、[ログ](#log)のいずれか。
-詳細は[シグナル][Signals]を参照してください。
+詳細は[シグナル][Signals]を参照してください。 See [Signals].
 
-### スパン {#span}
+### Span
 
 [トレース](#trace)内の単一の操作を表します。
-詳細は[スパン][Span]参照してください。
+詳細は[スパン][Span]参照してください。 See [Span].
 
 ### スパンリンク {#span-link}
 
-スパンリンクは、因果関係のあるスパン間のリンクです。
+A span link is a link between causally-related spans. スパンリンクは、因果関係のあるスパン間のリンクです。
 詳細は[スパン間のリンク](/docs/specs/otel/overview#links-between-spans)と[リンクの指定](/docs/specs/otel/trace/api#specifying-links)を参照してください。
 
 ### 仕様 {#specification}
 
 すべての実装に対する言語横断的な要求と期待を記述しています。
-詳細は[仕様][Specification]を参照してください。
+詳細は[仕様][Specification]を参照してください。 See [Specification].
 
 ### ステータス {#status}
 
-操作の結果。
-通常、エラーが発生したかどうかを示すために使用されます。
-詳細は[ステータス][Status]を参照してください。
+The result of the operation. Typically used to indicate whether an error
+occurred. See [Status].
 
 ### タグ {#tag}
 
@@ -336,12 +358,11 @@ OpenTelemetryにおいては[トレース](#trace)、[メトリクス](#metric)�
 ### トレース {#trace}
 
 [スパン](#span)の[DAG](#dag)で、[スパン](#span)間のエッジ（辺）は親子関係として定義されます。
-詳細は[トレース][Traces]を参照してください。
+詳細は[トレース][Traces]を参照してください。 See [Traces].
 
 ### トレーサー {#tracer}
 
-[スパン](#span)の作成を担当します。
-詳細は[トレーサー][Tracer]を参照してください。
+Responsible for creating [Spans](#span). See [Tracer].
 
 ### トランザクション {#transaction}
 
@@ -349,9 +370,9 @@ OpenTelemetryにおいては[トレース](#trace)、[メトリクス](#metric)�
 
 ### zPages {#zpages}
 
-外部エクスポーターにかわるプロセス内エクスポーター。
-これを使うと、トレースとメトリクスの情報をバックグラウンドで収集し、集約できます。
-詳細は[zPages]を参照してください。
+An in-process alternative to external exporters. When included, they collect and
+aggregate tracing and metrics information in the background; this data is served
+on web pages when requested. See [zPages].
 
 [attribute]: /docs/specs/otel/common/#attributes
 [baggage]: /docs/specs/otel/baggage/api/
