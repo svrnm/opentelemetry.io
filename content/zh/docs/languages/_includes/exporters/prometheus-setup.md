@@ -1,7 +1,3 @@
----
-default_lang_commit: 2f850a610b5f7da5730265b32c25c9226dc09e5f
----
-
 ## Prometheus
 
 要将你的指标（metrics）数据发送到 [Prometheus](https://prometheus.io/)，
@@ -42,6 +38,8 @@ docker run --rm -v ${PWD}/prometheus.yml:/prometheus/prometheus.yml -p 9090:9090
 当使用 Prometheus 的 OTLP 接收器（Reciever）时，确保在应用中设置 OTLP 端点为
 `http://localhost:9090/api/v1/otlp`。
 
-并非所有的 Docker 环境都支持 `host.docker.internal`。在某些情况下，你可能需要将 `host.docker.internal` 替换为 `localhost` 或你机器的 IP 地址。
+并非所有的 Docker 环境都支持 `host.docker.internal`。在某些情况下，你可能需要将 `host.docker.internal` 替换为 `localhost` 或你机器的 IP 地址。 In some cases you
+may need to replace `host.docker.internal` with `localhost` or the IP address of
+your machine.
 
 {{% /alert %}}
