@@ -1,9 +1,8 @@
 ---
 title: Componentes
 description: Componentes que forman OpenTelemetry
-aliases: [data-collection]
+aliases: [ data-collection ]
 weight: 20
-default_lang_commit: 99a39c5e4e51daba968bfbb3eb078be4a14ad363
 ---
 
 OpenTelemetry está compuesto por varios componentes principales:
@@ -16,7 +15,7 @@ OpenTelemetry está compuesto por varios componentes principales:
   - [Instrumentación sin código](#instrumentación-sin-código)
   - [Detectores de Recursos](#detectores-de-recursos)
   - [Propagadores entre servicios](#propagadores-entre-servicios)
-  - [Muestreadores](#muestreadores)
+  - [Samplers](#samplers)
 - [Operador de Kubernetes](#operador-de-kubernetes)
 - [Elementos de Función como Servicio](#elementos-de-función-como-servicio)
 
@@ -65,7 +64,8 @@ Para más información, consulta
 
 OpenTelemetry soporta una amplia gama de componentes que generan datos de
 telemetría relevantes desde librerías y frameworks populares para los lenguajes
-soportados. Por ejemplo, las solicitudes HTTP entrantes y salientes desde una
+soportados.
+Por ejemplo, las solicitudes HTTP entrantes y salientes desde una
 librería HTTP generan datos sobre esas solicitudes.
 
 Un objetivo aspiracional de OpenTelemetry es que todas las librerías populares
@@ -82,10 +82,8 @@ Para más información, consulta
 ### Instrumentación sin código
 
 Si aplica, una implementación específica de OpenTelemetry en un lenguaje
-proporciona una forma de instrumentar tu aplicación sin tocar el código fuente.
-Aunque el mecanismo subyacente depende del lenguaje, la instrumentación sin
-código añade las capacidades de API y SDK de OpenTelemetry a tu aplicación.
-Adicionalmente, puede añadir un conjunto de librerías de instrumentación y
+proporciona una forma de instrumentar tu aplicación sin tocar el código fuente. Aunque el mecanismo subyacente depende del lenguaje, la instrumentación sin
+código añade las capacidades de API y SDK de OpenTelemetry a tu aplicación. Adicionalmente, puede añadir un conjunto de librerías de instrumentación y
 dependencias de exportador.
 
 Para más información, consulta
@@ -96,8 +94,7 @@ Para más información, consulta
 Un [recurso](/docs/concepts/resources/) representa la entidad que produce
 telemetría como atributos de tipo recurso. Por ejemplo, un proceso que produce
 telemetría y que se está ejecutando en un contenedor en Kubernetes tiene el
-nombre del Pod, un nombre del namespace y posiblemente un nombre del Deployment.
-Puedes incluir todos estos atributos como tipo recurso.
+nombre del Pod, un nombre del namespace y posiblemente un nombre del Deployment. Puedes incluir todos estos atributos como tipo recurso.
 
 Las implementaciones específicas de OpenTelemetry para cada lenguaje
 proporcionan detección de recursos desde la variable de entorno
@@ -106,7 +103,7 @@ proceso, servicio, host o sistema operativo.
 
 Para más información, consulta [Recursos](/docs/concepts/resources/).
 
-### Propagadores entre servicios
+### Cross-service propagators
 
 La propagación es el mecanismo que transfiere datos entre servicios y procesos.
 Aunque no está limitado a las trazas, la propagación permite que las trazas
@@ -118,7 +115,7 @@ librerías de instrumentación. Si es necesario, puedes utilizar propagadores t�
 mismo para serializar y deserializar intereses compartidos, como el contexto de
 un span y el [equipaje](/docs/concepts/signals/baggage/).
 
-### Muestreadores
+### Samplers
 
 El muestreo es un proceso que restringe la cantidad de trazas generadas por un
 sistema. Cada implementación específica de OpenTelemetry para un lenguaje ofrece
@@ -128,8 +125,7 @@ Para más información, consulta [Muestreo](/docs/concepts/sampling).
 
 ## Operador de Kubernetes
 
-El Operador de OpenTelemetry es una implementación de un Operador de Kubernetes.
-El operador gestiona el Collector de OpenTelemetry y la auto-instrumentación de
+El Operador de OpenTelemetry es una implementación de un Operador de Kubernetes. El operador gestiona el Collector de OpenTelemetry y la auto-instrumentación de
 las aplicaciones usando OpenTelemetry.
 
 Para más información, consulta el
