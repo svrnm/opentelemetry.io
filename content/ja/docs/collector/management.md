@@ -2,14 +2,13 @@
 title: 管理
 description: OpenTelemetry Collectorのデプロイメントを大規模に管理する方法
 weight: 23
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: hostmetrics opampsupervisor
 ---
 
 このドキュメントでは、OpenTelemetry コレクターのデプロイを大規模に管理する方法について説明します。
 
 このページを最大限に活用するには、コレクターのインストールと設定方法を知っている必要があります。
-これらのトピックは、別の場所でカバーされています。
+これらのトピックは、別の場所でカバーされています。 These topics are covered elsewhere:
 
 - [クイックスタート](/docs/collector/quick-start/) は OpenTelemetry コレクターのインストール方法を説明します。
 - [設定][Configuration] では、OpenTelemetry コレクターの設定方法、テレメトリーパイプラインの設定方法を説明します。
@@ -18,25 +17,33 @@ cSpell:ignore: hostmetrics opampsupervisor
 
 大規模なテレメトリー収集には、エージェントを管理するための構造的なアプローチが必要です。
 典型的なエージェント管理タスクは以下の通りです。
+Typical agent management tasks include:
 
-1. エージェント情報と設定の照会。エージェント情報には、バージョン、オペレーティングシステム関連情報、または機能が含まれます。
-   エージェントの設定は、OpenTelemetry コレクターの[設定][configuration]などのテレメトリー収集のセットアップを指します。
-1. エージェントのアップグレードやダウングレードと、基本的なエージェント機能とプラグインを含むエージェント固有のパッケージの管理。
-1. エージェントへの新しい設定の適用。これは、環境の変化やポリシーの変更により必要になる場合があります。
-1. エージェントのヘルスとパフォーマンスの監視。通常、CPU とメモリの使用量、またエージェント固有のメトリクス（たとえば、処理速度やバックプレッシャー関連情報）。
-1. TLS証明書の処理（失効とローテーション）のような、コントロールプレーンとエージェント間の接続管理。
+1. Querying the agent information and configuration. The agent information can
+   include its version, operating system related information, or capabilities.
+   The configuration of the agent refers to its telemetry collection setup, for
+   example, the OpenTelemetry Collector [configuration].
+2. エージェントのアップグレードやダウングレードと、基本的なエージェント機能とプラグインを含むエージェント固有のパッケージの管理。
+3. Applying new configurations to agents. This might be required because of
+   changes in the environment or due to policy changes.
+4. エージェントのヘルスとパフォーマンスの監視。通常、CPU とメモリの使用量、またエージェント固有のメトリクス（たとえば、処理速度やバックプレッシャー関連情報）。
+5. TLS証明書の処理（失効とローテーション）のような、コントロールプレーンとエージェント間の接続管理。
 
 すべてのユースケースが、上記のエージェント管理タスクのすべてのサポートを必要とするわけではありません。
 OpenTelemetryのコンテキストでは、タスク _4.ヘルスとパフォーマンスの監視_ は、OpenTelemetryを使うのが理想的です。
+In the context of OpenTelemetry task _4. Health and performance monitoring_ is
+ideally done using OpenTelemetry.
 
 ## OpAMP
 
-オブザーバビリティベンダーやクラウドプロバイダーは、エージェント管理に独自のソリューションを提供しています。
-オープンソースのオブザーバビリティの領域では、エージェント管理に使用できる新しい標準があります。
-[Open Agent Management Protocol] (OpAMP)です。
+Observability vendors and cloud providers offer proprietary solutions for agent
+management. In the open source observability space, there is an emerging
+standard that you can use for agent management: [Open Agent Management Protocol]
+(OpAMP).
 
 [OpAMPの仕様][OpAMP specification]では、テレメトリーデータエージェントのフリート管理方法を定義しています。
-これらのエージェントは、[OpenTelemetry コレクター](/docs/collector/)、Fluent Bit、または他のエージェントを任意の組み合わせで使用できます。
+これらのエージェントは、[OpenTelemetry コレクター](/docs/collector/)、Fluent Bit、または他のエージェントを任意の組み合わせで使用できます。 These agents can be [OpenTelemetry Collectors](/docs/collector/), Fluent
+Bit or other agents in any arbitrary combination.
 
 > **注意** 「エージェント」という用語は、ここではOpAMPに応答するOpenTelemetryコンポーネントの総称として使われています。
 > つまりコレクターはもちろん、SDKコンポーネントでもありえます。
@@ -44,25 +51,29 @@ OpenTelemetryのコンテキストでは、タスク _4.ヘルスとパフォー
 OpAMPは、HTTPとWebSocketでの通信をサポートするクライアント/サーバープロトコルです。
 
 - **OpAMPサーバ**はコントロールプレーンの一部であり、オーケストレータとして機能し、テレメトリーエージェントのフリートを管理します。
-- **OpAMPクライアント**はデータプレーンの一部です。
-  OpAMPのクライアント側は、たとえば[OpenTelemetry コレクターにおけるOpAMPサポート][opamp-in-otel-collector]のように、インプロセスで実装できます。
-  OpAMPのクライアント側は、アウトオブプロセスで実装することもできます。
-  この場合、OpAMPサーバとのOpAMP固有の通信を行い、同時にテレメトリーエージェントを制御するスーパーバイザーを使用できます。
-  スーパーバイザーやテレメトリー通信はOpAMPの一部ではないことに注意してください。
+- The **OpAMP client** is part of the data plane. The client side of OpAMP can
+  be implemented in-process, for example, as the case in [OpAMP support in the
+  OpenTelemetry Collector][opamp-in-otel-collector]. The client side of OpAMP
+  could alternatively be implemented out-of-process. For this latter option, you
+  can use a supervisor that takes care of the OpAMP specific communication with
+  the OpAMP server and at the same time controls the telemetry agent, for
+  example to apply a configuration or to upgrade it. Note that the
+  supervisor/telemetry communication is not part of OpAMP.
 
-具体的な設定を見てみましょう。
+Let's have a look at a concrete setup:
 
 ![OpAMPのセットアップ例](../img/opamp.svg)
 
 1. OpenTelemetry コレクターが、次のようなパイプラインで構成されているとする
    - (A) ダウンストリームのソースからシグナルを受信する
    - (B) シグナルをアップストリームの宛先にエクスポートする。ここではコレクター自体のテレメトリーを含む可能性がある。（OpAMP `own_xxx` 接続設定で表されます）。
-1. サーバ側のOpAMPパートを実装するコントロールプレーンと、クライアント側のOpAMPを実装するコレクター（またはコレクターを制御するスーパーバイザー）の間の双方向のOpAMP制御フロー。
+2. サーバ側のOpAMPパートを実装するコントロールプレーンと、クライアント側のOpAMPを実装するコレクター（またはコレクターを制御するスーパーバイザー）の間の双方向のOpAMP制御フロー。
 
-### 試してみてください {#try-it-out}
+### Try it out
 
 [GoによるOpAMPプロトコル実装][opamp-go]を使えば、簡単なOpAMPセットアップを自分で試すことができます。
-以下のチュートリアルでは、Go 1.22以上が必要です。
+以下のチュートリアルでは、Go 1.22以上が必要です。 For the following walkthrough you will need Go
+1.22+.
 
 OpAMPサーバの例で構成されるシンプルなOpAMPコントロールプレーンをセットアップし、OpenTelemetryコレクターを[OpAMPスーパーバイザー][opamp-supervisor]を使って接続させます。
 
@@ -87,13 +98,18 @@ $ go run .
 OpAMPスーパーバイザーが管理できるOpenTelemetryコレクターのバイナリが必要です。
 そのために、[OpenTelemetry Collector Contrib][otelcolcontrib]ディストーションをインストールします。
 コレクターバイナリをインストールしたパスは、以下の設定では `$OTEL_COLLECTOR_BINARY` として参照されます。
+For that, install the [OpenTelemetry Collector Contrib][otelcolcontrib] distro.
+The path where you installed the Collector binary is referred to as
+`$OTEL_COLLECTOR_BINARY` in the following configuration.
 
 #### ステップ3 - OpAMPスーパーバイザーのインストール {#step-3---install-the-opamp-supervisor}
 
 `opampsupervisor` バイナリは、OpenTelemetry コレクター [`cmd/opampsupervisor` タグが付いたリリース][tags]からダウンロード可能なアセットとして入手できます。
-OSとチップセットに基づいて命名されたアセットのリストがありますので、あなたの構成に合うものをダウンロードしてください。
+OSとチップセットに基づいて命名されたアセットのリストがありますので、あなたの構成に合うものをダウンロードしてください。 You
+will find a list of assets named based on OS and chipset, so download the one
+that fits your configuration:
 
-{{< tabpane text=true >}}。
+{{< tabpane text=true >}}
 
 {{% tab "Linux (AMD 64)" %}}
 
@@ -172,7 +188,7 @@ storage:
 
 {{% alert color="primary" title="NOTE" %}}
 
-`$OTEL_COLLECTOR_BINARY` を実際のファイルパスに置き換えてください。
+Make sure to replace `$OTEL_COLLECTOR_BINARY` with the actual file path. `$OTEL_COLLECTOR_BINARY` を実際のファイルパスに置き換えてください。
 たとえば、LinuxまたはmacOSでは、コレクターを `/usr/local/bin/` にインストールした場合、 `$OTEL_COLLECTOR_BINARY` を `/usr/local/bin/otelcol` に置き換えます。
 
 {{% /alert %}}
@@ -187,8 +203,9 @@ $ ./opampsupervisor --config=./supervisor.yaml
 {"level":"info","ts":1745154644.74608,"logger":"supervisor","caller":"supervisor/supervisor.go:1086","msg":"No last received remote config found"}
 ```
 
-すべてがうまくいっていれば、[http://localhost:4321/](http://localhost:4321/)にアクセスし、OpAMPサーバのUIにアクセスできるはずです。
-スーパーバイザーが管理するエージェントの中に、あなたのコレクターが表示されているはずです。
+If everything worked out, you should now be able to go to
+[http://localhost:4321/](http://localhost:4321/) and access the OpAMP server UI.
+You should see your Collector listed among the agents managed by the Supervisor:
 
 ![OpAMPの設定例](../img/opamp-server-ui.png)
 
