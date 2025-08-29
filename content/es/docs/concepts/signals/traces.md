@@ -2,7 +2,7 @@
 title: Trazas
 weight: 1
 description: La ruta de una solicitud a través de tu aplicación
-default_lang_commit: 860f51415c48bf7d743d4280398de0631702c335
+cSpell:ignore: Guten
 ---
 
 Las **trazas** nos dan una visión general de lo que ocurre cuando se hace una
@@ -129,7 +129,8 @@ representa una jerarquía. ¡Eso lo convierte en una traza!
 Otra cosa que notarás es que cada span parece un log estructurado. ¡Eso es
 porque, en cierto modo, lo es! Una forma de pensar en las trazas es que son una
 colección de logs estructurados con contexto, correlación, jerarquía y mucho más
-incorporado. Sin embargo, estos "logs estructurados" pueden provenir de
+incorporado.
+Sin embargo, estos "logs estructurados" pueden provenir de
 diferentes procesos, servicios, máquinas virtuales, centros de datos, etc. Esto
 es lo que permite que el trazado represente una vista de extremo a extremo de
 cualquier sistema.
@@ -164,8 +165,7 @@ de tu elección.
 
 La propagación de contexto es el concepto central que habilita el trazado
 distribuido. Con la propagación de contexto, los spans pueden correlacionarse
-entre sí y ensamblarse en una traza, independientemente de dónde se generen.
-Para saber más sobre este tema, consulta la página sobre
+entre sí y ensamblarse en una traza, independientemente de dónde se generen. Para saber más sobre este tema, consulta la página sobre
 [Context Propagation](../../context-propagation).
 
 ## Spans
@@ -267,7 +267,8 @@ Los atributos tienen las siguientes reglas que cada SDK de lenguaje implementa:
 
 Además, existen [Atributos Semánticos](/docs/specs/semconv/general/trace/), que
 son convenciones conocidas de nomenclatura para los metadatos que suelen estar
-presentes en operaciones comunes. Es útil usar la nomenclatura de atributos
+presentes en operaciones comunes.
+Es útil usar la nomenclatura de atributos
 semánticos siempre que sea posible para que los tipos comunes de metadatos estén
 estandarizados en todos los sistemas.
 
@@ -291,8 +292,7 @@ representa un punto significativo y singular en el tiempo.
 #### Cuándo usar eventos de span en lugar de atributos de span {#when-to-use-span-events-versus-span-attributes}
 
 Dado que los eventos de span también contienen atributos, la pregunta de cuándo
-usar eventos en lugar de atributos podría no tener siempre una respuesta obvia.
-Para ayudarte a decidir, considera si una marca de tiempo específica es
+usar eventos en lugar de atributos podría no tener siempre una respuesta obvia. Para ayudarte a decidir, considera si una marca de tiempo específica es
 significativa.
 
 Por ejemplo, cuando estás rastreando una operación con un span y la operación se
@@ -314,15 +314,15 @@ adicional para ser ejecutada, pero su ejecución es asíncrona. Podemos rastrear
 esta operación subsiguiente con una traza también.
 
 Nos gustaría asociar la traza de las operaciones subsiguientes con la primera
-traza, pero no podemos predecir cuándo comenzarán las operaciones subsiguientes.
-Necesitamos asociar estas dos trazas, así que usaremos un link de span.
+traza, pero no podemos predecir cuándo comenzarán las operaciones subsiguientes. Necesitamos asociar estas dos trazas, así que usaremos un link de span.
 
 Puedes enlazar el último span de la primera traza con el primer span de la
 segunda traza. Ahora, están asociados causalmente entre sí.
 
 Los links son opcionales pero sirven como una buena manera de asociar spans de
-traza entre sí. Para más información, consulta
-[Links de span](/docs/specs/otel/trace/api/#link).
+traza entre sí.
+
+860f51415c48bf7d743d4280398de0631702c335
 
 ### Estado del span {#span-status}
 
@@ -340,8 +340,7 @@ operación que rastrea. Por ejemplo, esto podría deberse a un error HTTP 500 en
 un servidor que maneja una solicitud.
 
 Cuando un estado de span es `Ok`, significa que el span fue marcado
-explícitamente como libre de errores por el desarrollador de una aplicación.
-Aunque esto no es intuitivo, no es obligatorio establecer un estado de span como
+explícitamente como libre de errores por el desarrollador de una aplicación. Aunque esto no es intuitivo, no es obligatorio establecer un estado de span como
 `Ok` cuando se sabe que un span se ha completado sin error, ya que esto está
 cubierto por `Unset`. Lo que `Ok` hace es representar una "llamada final"
 inequívoca sobre el estado de un span que ha sido explícitamente establecido por
@@ -359,8 +358,7 @@ Cuando se crea un span, este es uno de los siguientes: `Client`, `Server`,
 `Internal`, `Producer` o `Consumer`. Este tipo de span proporciona una pista al
 backend de trazado sobre cómo se debe ensamblar la traza. Según la
 especificación de OpenTelemetry, el padre de un span `Server` es a menudo un
-span `Client` remoto, y el hijo de un span `Client` suele ser un span `Server`.
-De manera similar, el padre de un span `Consumer` es siempre un `Producer` y el
+span `Client` remoto, y el hijo de un span `Client` suele ser un span `Server`. De manera similar, el padre de un span `Consumer` es siempre un `Producer` y el
 hijo de un span `Producer` es siempre un `Consumer`. Si no se proporciona, se
 asume que el tipo de span es `Internal`.
 
