@@ -1,27 +1,24 @@
 ---
-title: Introduction à l'observabilité
+title: Observability primer
 description: Concepts fondamentaux de l'observabilité
 weight: 9
-default_lang_commit: 71833a5f8b84110dadf1e98604b87a900724ac33
 cSpell:ignore: webshop
 ---
 
-## Qu'est-ce que l'observabilité ? {#what-is-observability}
+## What is Observability?
 
-L'observabilité est la capacité à comprendre l'état d'un système en examinant
-ses données sortantes, sans avoir besoin de connaître son fonctionnement
-interne. Elle permet non seulement de résoudre facilement les problèmes et
-d'appréhender les nouveaux "inconnus inconnus" mais également de répondre à la
-question "Pourquoi cela arrive-t-il ?"
+Observability lets you understand a system from the outside by letting you ask
+questions about that system without knowing its inner workings. Furthermore, it
+allows you to easily troubleshoot and handle novel problems, that is, "unknown
+unknowns”. It also helps you answer the question "Why is this happening?"
 
-Pour pouvoir poser ce type de questions à votre système, votre application doit
+To ask those questions about your system, your application must be properly
+instrumented. Pour pouvoir poser ce type de questions à votre système, votre application doit
 être correctement instrumentée, c'est-à-dire que votre code doit émettre :
 [des signaux](/docs/concepts/signals/) tels que
 [des traces](/docs/concepts/signals/traces/),
 [des métriques](/docs/concepts/signals/metrics/), et
-[des logs](/docs/concepts/signals/logs/).
-
-Une application est correctement instrumentée si les développeurs disposent de
+[des logs](/docs/concepts/signals/logs/). Une application est correctement instrumentée si les développeurs disposent de
 toutes les informations nécessaires pour corriger un problème et n'ont pas
 besoin d'ajouter une instrumentation supplémentaire.
 
@@ -51,12 +48,14 @@ sur les métriques et leur rôle dans OpenTelemetry, référez-vous à la page
 [Métriques](/docs/concepts/signals/metrics/).
 
 L'indicateur de niveau de service, également connu sous le nom de **SLI**, est
-un indicateur de fonctionnement d'un service qui est évalué côté utilisateur. La
+un indicateur de fonctionnement d'un service qui est évalué côté utilisateur. A good SLI measures your service from the perspective of your users.
+La
 vitesse à laquelle une page Web se charge est un exemple de SLI.
 
 Les objectifs de niveau de service, communément appelés **SLO**, permettent de
 rendre compte à une organisation ou à d'autres équipes de la fiabilité d'un
-système.
+système. This is accomplished by
+attaching one or more SLIs to business value.
 
 ## Comprendre le traçage distribué {#understanding-distributed-tracing}
 
@@ -125,7 +124,7 @@ La table suivante liste des exemples d'attributs de span :
 | `http.route`                | `"/webshop/articles/:article_id"`                                                  |
 | `http.response.status_code` | `200`                                                                              |
 | `client.address`            | `"192.0.2.4"`                                                                      |
-| `client.socket.address`     | `"192.0.2.5"` (le client passe par un proxy)                                       |
+| `client.socket.address`     | `"192.0.2.5"` (le client passe par un proxy)                    |
 | `user_agent.original`       | `"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"` |
 
 Pour plus d'informations sur les spans et leur rôle dans OpenTelemetry,
@@ -141,7 +140,6 @@ serverless.
 
 Une trace se compose d'un ou de plusieurs spans. Le premier span représente le
 span racine.
-
 Chaque span racine représente une requête, depuis son origine jusqu'à son
 aboutissement. Les spans présents sous le parent fournissent plus d'informations
 sur ce qui se passe pendant une requête (ou les étapes qui composent une
@@ -155,7 +153,7 @@ au fil de leur exécution dans le système.
 De nombreuses plateformes d'observabilité représentent les traces sous forme de
 diagrammes en cascade comme celui-ci :
 
-![Exemple de trace](/img/waterfall-trace.svg 'Diagramme en cascade de traces')
+![Exemple de trace](/img/waterfall-trace.svg "Diagramme en cascade de traces")
 
 Les diagrammes en cascade permettent de visualiser la relation parent-enfant
 entre un span racine et ses spans enfants. Lorsqu'un span encapsule un autre
