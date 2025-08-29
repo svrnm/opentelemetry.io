@@ -5,8 +5,6 @@ aliases:
   - manual_instrumentation
 weight: 30
 description: Instrumentação manual para OpenTelemetry Go
-default_lang_commit: dc20c29a4c79ad0424c0fcc3271216af7e035d9b
-drifted_from_default: true
 cSpell:ignore: fatalf logr logrus otlplog otlploghttp sdktrace sighup updown
 ---
 
@@ -168,7 +166,7 @@ func childFunction(ctx context.Context) {
 Uma vez que o trecho é finalizado, ele se torna imutável e não pode mais ser
 modificado.
 
-### Atributos de Trecho {#span-attributes}
+### Span Attributes
 
 Os atributos são pares de chave e valor aplicados como metadados aos seus
 trechos e são úteis para agregar, filtrar e agrupar rastros. Os atributos podem
@@ -193,8 +191,7 @@ span.SetAttributes(myKey.String("um valor em texto"))
 
 Os Atributos Semânticos são atributos definidos pela [Especificação do
 OpenTelemetry][opentelemetry specification] para fornecer um conjunto comum de
-chaves de atributos entre várias linguagens, frameworks e ambientes de execução.
-Esses atributos representam conceitos como métodos HTTP, códigos de estado, user
+chaves de atributos entre várias linguagens, frameworks e ambientes de execução. Esses atributos representam conceitos como métodos HTTP, códigos de estado, user
 agents e outros. Estes atributos estão disponíveis no pacote
 `go.opentelemetry.io/otel/semconv/v1.26.0`.
 
@@ -305,7 +302,8 @@ dos panos para gerenciar a serialização de contexto.
 Para começar a produzir [métricas](/docs/concepts/signals/metrics), você
 precisará ter um `MeterProvider` inicializado que permita a criação de um
 `Meter`. Os _Meters_ permitem que você crie instrumentos que podem ser
-utilizados para gerar diferentes tipos de métricas. O OpenTelemetry Go suporta
+utilizados para gerar diferentes tipos de métricas.
+O OpenTelemetry Go suporta
 atualmente os seguintes instrumentos:
 
 - Contador (Counter), um instrumento síncrono que suporta incrementos
@@ -324,9 +322,9 @@ atualmente os seguintes instrumentos:
 - Contador UpDown Assíncrono (Asynchronous UpDownCounter), um instrumento
   assíncrono que suporta incrementos e decrementos.
 
-- Para mais informações sobre instrumentos síncronos, assíncronos, e entender
-  qual dos tipos melhor se encaixa no seu caso de uso, consulte as
-  [Diretrizes Suplementares](/docs/specs/otel/metrics/supplementary-guidelines/).
+Para mais informações sobre instrumentos síncronos, assíncronos, e entender
+qual dos tipos melhor se encaixa no seu caso de uso, consulte as
+[Diretrizes Suplementares](/docs/specs/otel/metrics/supplementary-guidelines/).
 
 Caso um `MeterProvider` não seja criado, tanto por uma biblioteca de
 instrumentação ou manualmente, a API de Métricas do OpenTelemetry usará uma
@@ -339,8 +337,7 @@ A seguir, você poderá encontrar uma documentação mais detalhada para os paco
 
 ### Inicializar Métricas {#initialize-metrics}
 
-{{% alert %}} Caso você esteja instrumentando uma biblioteca, pule esta etapa.
-{{% /alert %}}
+{{% alert %}} Caso você esteja instrumentando uma biblioteca, pule esta etapa. {{% /alert %}}
 
 Para habilitar [métricas](/docs/concepts/signals/metrics/) em sua aplicação,
 você precisará de um
@@ -466,8 +463,7 @@ várias medições agregadas.
 Os instrumentos assíncronos, por outro lado, fornecem uma medição a partir de
 uma solicitação do SDK. Quando o SDK realiza a exportação, uma função de retorno
 fornecida ao instrumento de medição no momento de sua criação é invocada. Esta
-função de retorno fornece ao SDK uma medição, que é imediatamente exportada.
-Todas as medições em instrumentos assíncronos são realizadas uma vez por cada
+função de retorno fornece ao SDK uma medição, que é imediatamente exportada. Todas as medições em instrumentos assíncronos são realizadas uma vez por cada
 ciclo de exportação.
 
 Os instrumentos assíncronos podem ser úteis em diversas circunstâncias, como:
@@ -810,8 +806,7 @@ devem ser processados ou ignorados. Você também pode personalizar a agregaçã
 quais atributos você deseja relatar nas métricas.
 
 Cada instrumento possui sua _view_ padrão, que mantém o nome, descrição e
-atributos originais, e tem uma agregação padrão baseada no tipo do instrumento.
-Quando uma _view_ registrada corresponde a um instrumento, a _view_ padrão é
+atributos originais, e tem uma agregação padrão baseada no tipo do instrumento. Quando uma _view_ registrada corresponde a um instrumento, a _view_ padrão é
 substituída pela _view_ registrada. _Views_ registradas adicionais que
 correspondem ao instrumento são aditivas, resultando em múltiplas métricas
 exportadas para o instrumento.
@@ -967,13 +962,12 @@ de design, consulte a [especificação de Logs](/docs/specs/otel/logs/).
 Os dois _workflows_ discutidos abaixo atendem a diferentes requisitos de
 aplicação.
 
-### Direto para o Collector {#direct-to-collector}
+### Direct-to-Collector
 
 **Estado**: [Experimental](/docs/specs/otel/document-status/)
 
 No _workflow_ direto para o collector, os logs são emitidos diretamente da
-aplicação para o Collector utilizando um protocolo de rede (por exemplo, OTLP).
-Este _workflow_ é simples de configurar, pois não requer componentes adicionais
+aplicação para o Collector utilizando um protocolo de rede (por exemplo, OTLP). Este _workflow_ é simples de configurar, pois não requer componentes adicionais
 de encaminhamento de logs, permitindo que uma aplicação emita logs estruturados
 e que estejam nos conformes do [modelo de dados de logs][log data model]. No
 entanto, a sobrecarga necessária para que as aplicações enfileirem e exportem
@@ -1105,7 +1099,8 @@ instruções de instalação e configuração, e um exemplo.
 ### Através de arquivos ou stdout {#via-file-or-stdout}
 
 No _workflow_ utilizado em arquivos ou _stdout_, os logs são gravados em
-arquivos ou na saída padrão da aplicação. Outro componente (por exemplo,
+arquivos ou na saída padrão da aplicação.
+Outro componente (por exemplo,
 FluentBit) é responsável por ler/acompanhar os logs, convertê-los para um
 formato mais estruturado e encaminhá-los para um destino, como o Collector. Este
 _workflow_ pode ser preferível em situações onde os requisitos da aplicação não
@@ -1125,20 +1120,13 @@ mais backends de telemetria.
 [opentelemetry specification]: /docs/specs/otel/
 [trace semantic conventions]: /docs/specs/semconv/general/trace/
 [instrumentation library]: ../libraries/
-[opentelemetry collector]:
-  https://github.com/open-telemetry/opentelemetry-collector
+[opentelemetry collector]: https://github.com/open-telemetry/opentelemetry-collector
 [logs bridge API]: /docs/specs/otel/logs/api/
 [log data model]: /docs/specs/otel/logs/data-model
 [`go.opentelemetry.io/otel`]: https://pkg.go.dev/go.opentelemetry.io/otel
-[`go.opentelemetry.io/otel/exporters/stdout/stdoutmetric`]:
-  https://pkg.go.dev/go.opentelemetry.io/otel/exporters/stdout/stdoutmetric
-[`go.opentelemetry.io/otel/metric`]:
-  https://pkg.go.dev/go.opentelemetry.io/otel/metric
-[`go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp`]:
-  https://pkg.go.dev/go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp
-[`go.opentelemetry.io/otel/sdk/log`]:
-  https://pkg.go.dev/go.opentelemetry.io/otel/sdk/log
-[`go.opentelemetry.io/otel/sdk/metric`]:
-  https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric
-[`go.opentelemetry.io/otel/sdk/resource`]:
-  https://pkg.go.dev/go.opentelemetry.io/otel/sdk/resource
+[`go.opentelemetry.io/otel/exporters/stdout/stdoutmetric`]: https://pkg.go.dev/go.opentelemetry.io/otel/exporters/stdout/stdoutmetric
+[`go.opentelemetry.io/otel/metric`]: https://pkg.go.dev/go.opentelemetry.io/otel/metric
+[`go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp`]: https://pkg.go.dev/go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp
+[`go.opentelemetry.io/otel/sdk/log`]: https://pkg.go.dev/go.opentelemetry.io/otel/sdk/log
+[`go.opentelemetry.io/otel/sdk/metric`]: https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric
+[`go.opentelemetry.io/otel/sdk/resource`]: https://pkg.go.dev/go.opentelemetry.io/otel/sdk/resource
