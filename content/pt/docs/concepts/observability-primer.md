@@ -2,11 +2,10 @@
 title: Introdução à Observabilidade
 description: Conceitos essenciais de Observabilidade
 weight: 9
-default_lang_commit: 6e3124135e38e749cdda15271d891813d6bc43db
 cSpell:ignore: webshop
 ---
 
-## O que é Observabilidade? {#what-is-observability}
+## O que é Observabilidade?
 
 Observabilidade permite que você compreenda um sistema de fora para dentro,
 permitindo que você faça perguntas sobre ele sem precisar conhecer seu
@@ -29,8 +28,7 @@ da aplicação é instrumentado para ajudar a tornar um sistema observável.
 
 ## Confiabilidade e métricas
 
-**Telemetria** refere-se aos dados emitidos por um sistema e seu comportamento.
-Esses dados podem vir na forma de [rastros](/docs/concepts/signals/traces/),
+**Telemetria** refere-se aos dados emitidos por um sistema e seu comportamento. Esses dados podem vir na forma de [rastros](/docs/concepts/signals/traces/),
 [métricas](/docs/concepts/signals/metrics/) e
 [logs](/docs/concepts/signals/logs/).
 
@@ -47,7 +45,8 @@ informações sobre métricas e como elas se relacionam com o OpenTelemetry,
 consulte [Métricas](/docs/concepts/signals/metrics/).
 
 **SLI**, ou _Service Level Indicator_, representa uma medida do comportamento de
-um serviço. Um bom SLI mede seu serviço do ponto de vista dos seus usuários. Um
+um serviço. Um bom SLI mede seu serviço do ponto de vista dos seus usuários.
+Um
 exemplo de SLI pode ser a velocidade de carregamento de uma página web.
 
 **SLO**, ou _Service Level Objective_, representa a forma como confiabilidade é
@@ -69,7 +68,8 @@ cada um de seus componentes: logs, trechos e rastros.
 ### Logs
 
 Um **log** é uma mensagem com registro de data e hora emitida por serviços ou
-outros componentes. Ao contrário dos [rastros](#distributed-traces), eles não
+outros componentes.
+Ao contrário dos [rastros](#distributed-traces), eles não
 são necessariamente associados a uma requisição de usuário ou transação
 específica. Você pode encontrar logs em praticamente todos os softwares. Logs
 foram muito utilizados no passado tanto por equipes de desenvolvimento quanto de
@@ -90,7 +90,7 @@ Eles se tornam muito mais úteis quando incluídos como parte de um
 Para mais informações sobre logs e como eles se relacionam com o OpenTelemetry,
 consulte [Logs](/docs/concepts/signals/logs/).
 
-### Trechos {#spans}
+### Spans
 
 Um **trecho** representa uma unidade de trabalho ou operação. Trechos rastreiam
 operações específicas que uma requisição realiza, mostrando o que aconteceu
@@ -119,7 +119,7 @@ A tabela a seguir contém exemplos de atributos de trecho:
 | `http.route`                | `"/webshop/articles/:article_id"`                                                  |
 | `http.response.status_code` | `200`                                                                              |
 | `client.address`            | `"192.0.2.4"`                                                                      |
-| `client.socket.address`     | `"192.0.2.5"` (o cliente passa por um proxy)                                       |
+| `client.socket.address`     | `"192.0.2.5"` (o cliente passa por um proxy)                    |
 | `user_agent.original`       | `"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"` |
 
 Para mais informações sobre trechos e como eles se relacionam com o
@@ -133,7 +133,8 @@ final) enquanto se propagam por arquiteturas com múltiplos serviços, como
 aplicações de microsserviços e _serverless_.
 
 Um rastro é composto de um ou mais trechos. O primeiro trecho representa o
-trecho raiz. Cada trecho raiz representa uma requisição do início ao fim. Os
+trecho raiz.
+Cada trecho raiz representa uma requisição do início ao fim. Os
 trechos abaixo do trecho raiz fornecem um contexto mais aprofundado do que
 ocorre durante uma requisição (ou quais etapas compõem uma requisição).
 
@@ -146,7 +147,7 @@ distribuído.
 Muitos _backends_ de Observabilidade visualizam rastros como diagramas em
 cascata que se parecem com isto:
 
-![Exemplo de Rastro](/img/waterfall-trace.svg 'Diagrama em cascata de rastreamento')
+![Exemplo de Rastro](/img/waterfall-trace.svg "Diagrama em cascata de rastreamento")
 
 Os diagramas em cascata mostram a relação pai-filho entre um trecho raiz e seus
 trechos filhos. Quando um trecho encapsula outro trecho, isso também representa
