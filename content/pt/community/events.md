@@ -1,11 +1,10 @@
 ---
 title: Eventos
-default_lang_commit: 4f38b130938b017a283457de2404a4cd0fd77819
-cSpell:ignore: cloudnativecon
 ---
 
 A comunidade OpenTelemetry participa e organiza diversos eventos ao longo do ano
-para reunir contribuidores, mantenedores e usuários finais. Esses eventos
+para reunir contribuidores, mantenedores e usuários finais.
+Esses eventos
 oferecem oportunidades para aprender, compartilhar experiências, colaborar no
 projeto e se conectar com a comunidade de observabilidade mais ampla.
 
@@ -33,7 +32,7 @@ Encontre todos os eventos virtuais do SIG End-User e junte-se à comunidade em
 O OpenTelemetry possui uma forte presença em eventos KubeCon + CloudNativeCon em
 todo o mundo. Esses eventos incluem:
 
-- Palestras e _workshops_
+- OpenTelemetry maintainer talks and workshops
 - Encontros comunitários no Observatório OpenTelemetry
 - Sessões práticas e tutoriais
 - Oportunidades de _networking_ com contribuidores e usuários finais
@@ -60,7 +59,7 @@ Kubernetes Community Days em todo o mundo. Esses eventos oferecem:
 - Encontros comunitários locais
 - Histórias de adoção do OpenTelemetry
 - Sessões técnicas profundas e melhores práticas
-- Sessões práticas e tutoriais
+- Hands-on workshops
 
 Encontre seu KCD local em [community.cncf.io](https://community.cncf.io/).
 
