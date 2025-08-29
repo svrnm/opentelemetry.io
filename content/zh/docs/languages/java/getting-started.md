@@ -1,9 +1,10 @@
 ---
 title: 通过示例入门
 description: 5 分钟内为你的应用接入遥测数据！
-default_lang_commit: 0930994d5be6f01b05d0caca0550c468d2f3e829
 weight: 10
 ---
+
+<!-- markdownlint-disable blanks-around-fences -->
 
 <?code-excerpt path-base="examples/java/getting-started"?>
 
@@ -21,14 +22,15 @@ weight: 10
 
 ## 示例应用 {#example-application}
 
-以下示例使用一个基础的 [Spring Boot][] 应用。你也可以使用其他 Web 框架，例如 Apache Wicket 或 Play。
-若需查看库和受支持框架的完整列表，请参考[注册表](/ecosystem/registry/?component=instrumentation&language=java).
+The following example uses a basic [Spring Boot] application. You can use
+another web framework, such as Apache Wicket or Play. 以下示例使用一个基础的 [Spring Boot][] 应用。你也可以使用其他 Web 框架，例如 Apache Wicket 或 Play。
+若需查看库和受支持框架的完整列表，请参考注册表.
 
 若需更复杂的示例，请参见[示例集](../examples/).
 
 ### 依赖项 {#dependencies}
 
-首先，在一个新目录 `java-simple` 中搭建环境。在该目录下，创建一个名为 `build.gradle.kts` 的文件，并填入以下内容：
+To begin, set up an environment in a new directory called `java-simple`. 首先，在一个新目录 `java-simple` 中搭建环境。在该目录下，创建一个名为 `build.gradle.kts` 的文件，并填入以下内容：
 
 ```kotlin
 plugins {
@@ -57,6 +59,7 @@ dependencies {
 在同一个文件夹中，创建一个名为 `DiceApplication.java` 的文件，并向该文件中添加以下代码：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/DiceApplication.java"?>
 
 ```java
@@ -75,11 +78,13 @@ public class DiceApplication {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 创建另一个名为 `RollController.java` 的文件，并向该文件中添加以下代码：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/RollController.java"?>
 
 ```java
@@ -113,6 +118,7 @@ public class RollController {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 使用以下命令构建并运行应用程序，然后在网页浏览器中打开 <http://localhost:8080/rolldice> 以确认其正常运行。
@@ -125,10 +131,12 @@ java -jar ./build/libs/java-simple.jar
 ## 插桩 {#instrumentation}
 
 接下来，你将使用 [Java 代理](/docs/zero-code/java/agent/)在启动时对应用进行自动插桩。
-虽然你可以通过多种方式[配置 Java 代理][configure the java agent]，但以下步骤将使用环境变量。
+虽然你可以通过多种方式[配置 Java 代理][configure the java agent]，但以下步骤将使用环境变量。 While you can [configure the Java
+agent][] in a number of ways, the steps below use environment variables.
 
 1. 从 `opentelemetry-java-instrumentation` 仓库的 [发布（页面）][Releases] 下载 [opentelemetry-javaagent.jar][]。
-   该 JAR 文件包含代理程序及所有自动插桩包：
+   该 JAR 文件包含代理程序及所有自动插桩包： The JAR file contains the
+   agent and all automatic instrumentation packages:
 
    ```sh
    curl -L -O https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
@@ -152,6 +160,7 @@ java -jar ./build/libs/java-simple.jar
    ```
 
    {{% alert title="重要" color="warning" %}}
+
    - 将上面的 `PATH/TO` 替换为你实际的 JAR 文件路径。
    - 如上文所示，将 `OTEL_METRIC_EXPORT_INTERVAL` 设置为远低于默认值的值，**仅在测试期间**帮助你更快地确认指标是否已正确生成。
 
