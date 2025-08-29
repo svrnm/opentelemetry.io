@@ -1,10 +1,8 @@
 ---
 title: Instrumentación
-aliases: [manual]
+aliases: [ manual ]
 weight: 20
 description: Instrumentación manual para OpenTelemetry Python
-default_lang_commit: 9b53527853049b249f60f12a000c0d85b9e5f5dc
-drifted_from_default: true
 cSpell:ignore: millis ottrace textmap
 ---
 
@@ -23,7 +21,7 @@ pip install opentelemetry-sdk
 
 ## Trazas
 
-### Adquirir el trazador
+### Acquire Tracer
 
 Para comenzar a realizar trazas, necesitarás inicializar un
 [`TracerProvider`](/docs/concepts/signals/traces/#tracer-provider) y
@@ -61,8 +59,7 @@ def do_work():
         # Cuando el bloque 'with' sale del contexto, 'span' se cierra automáticamente
 ```
 
-También puedes usar `start_span` para crear un span sin hacerlo el span actual.
-Esto se suele hacer para rastrear operaciones concurrentes o asíncronas.
+También puedes usar `start_span` para crear un span sin hacerlo el span actual. Esto se suele hacer para rastrear operaciones concurrentes o asíncronas.
 
 ### Crear spans anidados
 
@@ -327,8 +324,7 @@ se usan en línea con la lógica de procesamiento de aplicaciones/negocios, como
 cuando se maneja una solicitud o se llama a otro servicio.
 
 Primero, crea tu instrumento. Los instrumentos generalmente se crean una vez al
-nivel del módulo o clase y luego se utilizan en línea con la lógica del negocio.
-Este ejemplo utiliza un [contador](/docs/specs/otel/metrics/api/#counter) para
+nivel del módulo o clase y luego se utilizan en línea con la lógica del negocio. Este ejemplo utiliza un [contador](/docs/specs/otel/metrics/api/#counter) para
 contar la cantidad de tareas de trabajo completadas:
 
 ```python
@@ -380,7 +376,8 @@ def scrape_config_versions(options: CallbackOptions) -> Iterable[Observation]:
 ```
 
 Nota que OpenTelemetry pasará opciones a tu callback que contienen un tiempo de
-espera. Las callbacks deben respetar este tiempo de espera para evitar
+espera.
+Las callbacks deben respetar este tiempo de espera para evitar
 bloquearse indefinidamente. Finalmente, crea el instrumento con la callback para
 registrarlo:
 
@@ -401,7 +398,38 @@ meter.create_observable_gauge(
 
 ## Logs
 
-La API y SDK de logs están actualmente en desarrollo.
+La API y SDK de logs están actualmente en desarrollo. To start collecting logs,
+you need to initialize a
+[`LoggerProvider`](/docs/specs/otel/logs/api/#loggerprovider) and optionally set
+it as the global default. Then use Python's built-in logging module to create
+log records that OpenTelemetry can process.
+
+```python
+import logging
+from opentelemetry.sdk._logs import LoggerProvider, LoggingHandler
+from opentelemetry.sdk._logs.export import BatchLogRecordProcessor, ConsoleLogExporter
+from opentelemetry._logs import set_logger_provider, get_logger
+
+provider = LoggerProvider()
+processor = BatchLogRecordProcessor(ConsoleLogExporter())
+provider.add_log_record_processor(processor)
+# Sets the global default logger provider
+set_logger_provider(provider)
+
+logger = get_logger(__name__)
+
+handler = LoggingHandler(level=logging.INFO, logger_provider=provider)
+logging.basicConfig(handlers=[handler], level=logging.INFO)
+
+logging.info("This is an OpenTelemetry log record!")
+```
+
+### Further Reading
+
+- [Logs Concepts](/docs/concepts/signals/logs/)
+- [Logs Specification](/docs/specs/otel/logs/)
+- [Python Logs API Documentation](https://opentelemetry-python.readthedocs.io/en/latest/api/_logs.html)
+- [Python Logs SDK Documentation](https://opentelemetry-python.readthedocs.io/en/latest/sdk/_logs.html)
 
 ## Próximos pasos
 
