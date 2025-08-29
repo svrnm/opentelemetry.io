@@ -2,7 +2,6 @@
 title: Configuration de l'instrumentation
 linkTitle: Configuration de l'instrumentation
 weight: 100
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: enduser hset serverlessapis
 ---
 
@@ -51,7 +50,7 @@ Alors, les requêtes vers `1.2.3.4` n'auront pas de surcharge pour l'attribut
 
 {{% /config_option %}}
 
-## Nettoyage des instructions de base de données {#db-statement-sanitization}
+## DB statement sanitization
 
 L'agent nettoie toutes les requêtes/instructions de base de données avant de
 définir l'attribut sémantique `db.statement`. Toutes les valeurs (chaînes de
@@ -75,8 +74,7 @@ de données. Utilisez la propriété suivante pour le désactiver :
 {{% config_option
 name="otel.instrumentation.common.db-statement-sanitizer.enabled"
 default=true
-%}} Active le nettoyage des instructions de base de données.
-{{% /config_option %}}
+%}} Active le nettoyage des instructions de base de données. {{% /config_option %}}
 
 ## Capture de la télémétrie de réception de messages des consommateurs dans les instrumentations de messagerie {#capturing-consumer-message-receive-telemetry-in-messaging-instrumentations}
 
@@ -87,8 +85,7 @@ propriété suivante pour l'activer :
 {{% config_option
 name="otel.instrumentation.messaging.experimental.receive-telemetry.enabled"
 default=false
-%}} Active la télémétrie de réception de messages des consommateurs.
-{{% /config_option %}}
+%}} Active la télémétrie de réception de messages des consommateurs. {{% /config_option %}}
 
 Notez que cela amènera le côté consommateur à démarrer une nouvelle trace, avec
 seulement un lien de span le connectant à la trace du producteur.
