@@ -1,10 +1,7 @@
 ---
 title: Distribuições
-description:
-  Lista de distribuições de código aberto do OpenTelemetry mantidas por
-  terceiros.
-default_lang_commit: b6ddba1118d07bc3c8d1d07b293f227686d0290e
-drifted_from_default: true
+linkTitle: Distributions
+description: Lista de distribuições de código aberto do OpenTelemetry mantidas por terceiros.
 ---
 
 As [distribuições](/docs/concepts/distributions/) do OpenTelemetry são uma forma
@@ -18,18 +15,16 @@ OpenTelemetry, embora elas possam facilitar o uso em determinadas
 circunstâncias, como requisitos específicos de fornecedores.
 
 A lista a seguir contém uma amostra de distribuições do OpenTelemetry e seus
-componentes personalizados.
-
-{{% alert title="Nota" color="warning" %}} O OpenTelemetry **não valida nem
-endossa** as distribuições de terceiros listadas na tabela a seguir. A lista é
-fornecida como uma conveniência para a comunidade. {{% /alert %}}
+componentes personalizados. For
+[OpenTelemetry Collector](/docs/collector/) distributions, see
+[Collector distributions](/docs/collector/distributions/).
 
 {{% ecosystem/distributions-table %}}
 
 ## Adicionando sua distribuição {#how-to-add}
 
-Para que sua distribuição seja listada, [envie um PR] com uma entrada adicionada
-à [lista de distribuições]. A entrada deve incluir:
+Para que sua distribuição seja listada, \[envie um PR] com uma entrada adicionada
+à \[lista de distribuições]. A entrada deve incluir:
 
 - Link para a página principal da sua distribuição
 - Link para a documentação que explica como utilizar a distribuição
@@ -51,9 +46,11 @@ Para que sua distribuição seja listada, [envie um PR] com uma entrada adiciona
 
 {{% /alert %}}
 
-[envie um PR]: /docs/contributing/pull-requests/
+[submit a PR]: /docs/contributing/pull-requests/
 
 {{% include keep-up-to-date.md distribuições %}}
 
-[lista de distribuições]:
-  https://github.com/open-telemetry/opentelemetry.io/tree/main/data/ecosystem/distributions.yaml
+[components]: /docs/concepts/components/
+[distributions]: /docs/concepts/distributions/
+[distributions list]: https://github.com/open-telemetry/opentelemetry.io/tree/main/data/ecosystem/distributions.yaml
+[vendor]: ../vendors/
