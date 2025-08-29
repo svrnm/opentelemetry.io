@@ -1,27 +1,27 @@
 ---
-title: Instrumentation prête à l'emploi
+title: Out of the box instrumentation
 weight: 40
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: autoconfigurations logback webflux webmvc
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/spring-starter"?>
 
 Une instrumentation prête à l'emploi par défaut est disponible pour plusieurs
 frameworks :
 
-| Fonctionnalité        | Propriété                                       | Valeur par défaut |
-| --------------------- | ----------------------------------------------- | ----------------- |
-| JDBC                  | `otel.instrumentation.jdbc.enabled`             | true              |
-| Logback               | `otel.instrumentation.logback-appender.enabled` | true              |
-| Logback MDC           | `otel.instrumentation.logback-mdc.enabled`      | true              |
-| Spring Web            | `otel.instrumentation.spring-web.enabled`       | true              |
-| Spring Web MVC        | `otel.instrumentation.spring-webmvc.enabled`    | true              |
-| Spring WebFlux        | `otel.instrumentation.spring-webflux.enabled`   | true              |
-| Kafka                 | `otel.instrumentation.kafka.enabled`            | true              |
-| MongoDB               | `otel.instrumentation.mongo.enabled`            | true              |
-| Micrometer            | `otel.instrumentation.micrometer.enabled`       | false             |
+| Fonctionnalité                           | Propriété                                       | Valeur par défaut |
+| ---------------------------------------- | ----------------------------------------------- | ----------------- |
+| JDBC                                     | `otel.instrumentation.jdbc.enabled`             | true              |
+| Logback                                  | `otel.instrumentation.logback-appender.enabled` | true              |
+| Logback MDC                              | `otel.instrumentation.logback-mdc.enabled`      | true              |
+| Spring Web                               | `otel.instrumentation.spring-web.enabled`       | true              |
+| Spring Web MVC                           | `otel.instrumentation.spring-webmvc.enabled`    | true              |
+| Spring WebFlux                           | `otel.instrumentation.spring-webflux.enabled`   | true              |
+| Kafka                                    | `otel.instrumentation.kafka.enabled`            | true              |
+| MongoDB                                  | `otel.instrumentation.mongo.enabled`            | true              |
+| Micrometer                               | `otel.instrumentation.micrometer.enabled`       | false             |
 | R2DBC (reactive JDBC) | `otel.instrumentation.r2dbc.enabled`            | true              |
 
 ## Activer les instrumentations de manière sélective {#turn-on-instrumentations-selectively}
@@ -38,32 +38,31 @@ définissez `otel.instrumentation.jdbc.enabled` à `true`.
 
 Propriétés communes à toutes les instrumentations de base de données :
 
-| Propriété système                                            | Type    | Défaut | Description                                              |
-| ------------------------------------------------------------ | ------- | ------ | -------------------------------------------------------- |
-| `otel.instrumentation.common.db-statement-sanitizer.enabled` | Boolean | true   | Active le nettoyage des instructions de base de données. |
+| Propriété système                                            | Type    | Default | Description                                                              |
+| ------------------------------------------------------------ | ------- | ------- | ------------------------------------------------------------------------ |
+| `otel.instrumentation.common.db-statement-sanitizer.enabled` | Boolean | true    | Active le nettoyage des instructions de base de données. |
 
 ## Instrumentation JDBC {#jdbc-instrumentation}
 
-| Propriété système                                       | Type    | Défaut | Description                                              |
-| ------------------------------------------------------- | ------- | ------ | -------------------------------------------------------- |
-| `otel.instrumentation.jdbc.statement-sanitizer.enabled` | Boolean | true   | Active le nettoyage des instructions de base de données. |
+| Propriété système                                       | Type    | Default | Description                                                              |
+| ------------------------------------------------------- | ------- | ------- | ------------------------------------------------------------------------ |
+| `otel.instrumentation.jdbc.statement-sanitizer.enabled` | Boolean | true    | Active le nettoyage des instructions de base de données. |
 
-## Logback {#logback}
+## Logback
 
 Vous pouvez activer des fonctionnalités expérimentales à l'aide des propriétés
 système pour capturer des attributs :
 
-| Propriété système                                                                      | Type    | Défaut | Description                                                                                                                                                                    |
-| -------------------------------------------------------------------------------------- | ------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `otel.instrumentation.logback-appender.experimental-log-attributes`                    | Boolean | false  | Active la capture des attributs de log expérimentaux `thread.name` et `thread.id`.                                                                                             |
-| `otel.instrumentation.logback-appender.experimental.capture-code-attributes`           | Boolean | false  | Active la capture des [attributs de code source]. Notez que la capture des attributs de code source sur les sites de journalisation peut ajouter une surcharge de performance. |
-| `otel.instrumentation.logback-appender.experimental.capture-marker-attribute`          | Boolean | false  | Active la capture des marqueurs Logback comme attributs.                                                                                                                       |
-| `otel.instrumentation.logback-appender.experimental.capture-key-value-pair-attributes` | Boolean | false  | Active la capture des paires clé-valeur Logback comme attributs.                                                                                                               |
-| `otel.instrumentation.logback-appender.experimental.capture-logger-context-attributes` | Boolean | false  | Active la capture des propriétés de contexte du logger Logback comme attributs.                                                                                                |
-| `otel.instrumentation.logback-appender.experimental.capture-mdc-attributes`            | String  |        | Liste séparée par des virgules des attributs MDC à capturer. Utilisez le caractère générique `*` pour capturer tous les attributs.                                             |
+| Propriété système                                                                      | Type    | Default | Description                                                                                                                                                                     |
+| -------------------------------------------------------------------------------------- | ------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `otel.instrumentation.logback-appender.experimental-log-attributes`                    | Boolean | false   | Active la capture des attributs de log expérimentaux `thread.name` et `thread.id`.                                                                              |
+| `otel.instrumentation.logback-appender.experimental.capture-code-attributes`           | Boolean | false   | Active la capture des \[attributs de code source]. Notez que la capture des attributs de code source sur les sites de journalisation peut ajouter une surcharge de performance. |
+| `otel.instrumentation.logback-appender.experimental.capture-marker-attribute`          | Boolean | false   | Active la capture des marqueurs Logback comme attributs.                                                                                                        |
+| `otel.instrumentation.logback-appender.experimental.capture-key-value-pair-attributes` | Boolean | false   | Active la capture des paires clé-valeur Logback comme attributs.                                                                                                |
+| `otel.instrumentation.logback-appender.experimental.capture-logger-context-attributes` | Boolean | false   | Active la capture des propriétés de contexte du logger Logback comme attributs.                                                                                 |
+| `otel.instrumentation.logback-appender.experimental.capture-mdc-attributes`            | String  |         | Liste séparée par des virgules des attributs MDC à capturer. Utilisez le caractère générique `*` pour capturer tous les attributs.              |
 
-[attributs de code source]:
-  /docs/specs/semconv/general/attributes/#source-code-attributes
+[source code attributes]: /docs/specs/semconv/general/attributes/#source-code-attributes
 
 Par ailleurs, vous pouvez activer ces fonctionnalités en ajoutant l'appender
 Logback OpenTelemetry dans votre fichier `logback.xml` ou `logback-spring.xml` :
@@ -109,7 +108,9 @@ consultez
 Les manières suivantes de créer un `RestTemplate` sont supportées :
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/RestTemplateConfig.java"?>
+
 ```java
 package otel;
 
@@ -128,6 +129,7 @@ public class RestTemplateConfig {
 ```
 
 <?code-excerpt "src/main/java/otel/RestTemplateController.java"?>
+
 ```java
 package otel;
 
@@ -145,12 +147,15 @@ public class RestTemplateController {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 Les manières suivantes de créer un `RestClient` sont supportées :
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/RestClientConfig.java"?>
+
 ```java
 package otel;
 
@@ -169,6 +174,7 @@ public class RestClientConfig {
 ```
 
 <?code-excerpt "src/main/java/otel/RestClientController.java"?>
+
 ```java
 package otel;
 
@@ -185,6 +191,7 @@ public class RestClientController {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 Comme il est possible avec l'agent Java, vous pouvez configurer la capture des
@@ -226,7 +233,9 @@ spring webflux 5.0+. Pour plus de détails, consultez
 Les manières suivantes de créer un `WebClient` sont supportées :
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/WebClientConfig.java"?>
+
 ```java
 package otel;
 
@@ -245,6 +254,7 @@ public class WebClientConfig {
 ```
 
 <?code-excerpt "src/main/java/otel/WebClientController.java"?>
+
 ```java
 package otel;
 
@@ -261,15 +271,16 @@ public class WebClientController {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ## Instrumentation Kafka {#kafka-instrumentation}
 
 Fournit une autoconfiguration pour l'instrumentation du client Kafka.
 
-| Propriété système                                         | Type    | Défaut | Description                                            |
-| --------------------------------------------------------- | ------- | ------ | ------------------------------------------------------ |
-| `otel.instrumentation.kafka.experimental-span-attributes` | Boolean | false  | Active la capture des attributs de span expérimentaux. |
+| Propriété système                                         | Type    | Default | Description                                                            |
+| --------------------------------------------------------- | ------- | ------- | ---------------------------------------------------------------------- |
+| `otel.instrumentation.kafka.experimental-span-attributes` | Boolean | false   | Active la capture des attributs de span expérimentaux. |
 
 ## Instrumentation Micrometer {#micrometer-instrumentation}
 
@@ -279,14 +290,14 @@ Fournit une autoconfiguration pour le pont Micrometer vers OpenTelemetry.
 
 Fournit une autoconfiguration pour l'instrumentation du client MongoDB.
 
-| Propriété système                                        | Type    | Défaut | Description                                              |
-| -------------------------------------------------------- | ------- | ------ | -------------------------------------------------------- |
-| `otel.instrumentation.mongo.statement-sanitizer.enabled` | Boolean | true   | Active le nettoyage des instructions de base de données. |
+| Propriété système                                        | Type    | Default | Description                                                              |
+| -------------------------------------------------------- | ------- | ------- | ------------------------------------------------------------------------ |
+| `otel.instrumentation.mongo.statement-sanitizer.enabled` | Boolean | true    | Active le nettoyage des instructions de base de données. |
 
 ## Instrumentation R2DBC {#r2dbc-instrumentation}
 
 Fournit une autoconfiguration pour l'instrumentation R2DBC OpenTelemetry.
 
-| Propriété système                                        | Type    | Défaut | Description                                              |
-| -------------------------------------------------------- | ------- | ------ | -------------------------------------------------------- |
-| `otel.instrumentation.r2dbc.statement-sanitizer.enabled` | Boolean | true   | Active le nettoyage des instructions de base de données. |
+| Propriété système                                        | Type    | Default | Description                                                              |
+| -------------------------------------------------------- | ------- | ------- | ------------------------------------------------------------------------ |
+| `otel.instrumentation.r2dbc.statement-sanitizer.enabled` | Boolean | true    | Active le nettoyage des instructions de base de données. |
