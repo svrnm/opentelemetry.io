@@ -1,8 +1,7 @@
 ---
 title: Dépannage des problèmes d'instrumentation automatique de Python
-linkTitle: Dépannage
+linkTitle: Troubleshooting
 weight: 40
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 ---
 
 ## Problèmes d'installation {#installation-issues}
