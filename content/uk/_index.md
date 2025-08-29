@@ -4,11 +4,11 @@ description: >-
   Високоякісна, повсюдна та переносна телеметрія для забезпечення ефективної спостережуваності
 outputs:
   - HTML
-developer_note:
-  The blocks/cover shortcode (used below) will use as a background image any
-  image file containing "background" in its name.
+  # Include the following for `content/en` ONLY
+  - REDIRECTS
+  - RSS
+developer_note: The blocks/cover shortcode (used below) will use as a background image any image file containing "background" in its name.
 show_banner: true
-default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 ---
 
 <div class="d-none"><a rel="me" href="https://fosstodon.org/@opentelemetry"></a></div>
@@ -16,10 +16,12 @@ default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 {{< blocks/cover image_anchor="top" height="max" color="primary" >}}
 
 <!-- prettier-ignore -->
+
 ![OpenTelemetry](/img/logos/opentelemetry-horizontal-color.svg)
 {.otel-logo}
 
 <!-- prettier-ignore -->
+
 {{% param description %}}
 {.display-6}
 
@@ -30,8 +32,7 @@ default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 
 </div>
 
-<div class="h3 mt-4">
-<a class="text-secondary" href="docs/getting-started/">Розпочніть</a> відповідно до вашої ролі
+<div class="h3 mt-4"><a class="text-secondary" href="docs/getting-started/">Розпочніть</a> відповідно до вашої ролі
 </div>
 <div class="l-get-started-buttons">
 
@@ -43,7 +44,9 @@ default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 
 {{% blocks/lead color="white" %}}
 
-OpenTelemetry — це набір API, SDK та інструментів. Використовуйте цей набір для вимірювання, генерування, збору та експорту телеметричних даних (метрик, журналів і трейсів), які допоможуть вам аналізувати продуктивність та поведінку вашого програмного забезпечення.
+OpenTelemetry is a collection of APIs, SDKs, and tools. Use it to instrument,
+generate, collect, and export telemetry data (metrics, logs, and traces) to help
+you analyze your software's performance and behavior.
 
 > OpenTelemetry [доступна](/status/) для [різних мов програмування](docs/languages/) та придатна для промислового використання.
 
@@ -79,8 +82,8 @@ OpenTelemetry — це на 100% відкритий та вільний код, 
 
 {{% blocks/section color="secondary" type="cncf" %}}
 
-**OpenTelemetry є проєктом, який [розвивається][incubating] під егідою [CNCF][]**.<br>
-Створений шляхом злиття проєктів OpenTracing та OpenCensus.
+**OpenTelemetry is a [CNCF][] [incubating][] project**.<br> Formed through a
+merger of the OpenTracing and OpenCensus projects.
 
 [![CNCF logo][]][cncf]
 
