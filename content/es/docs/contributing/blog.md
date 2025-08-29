@@ -2,13 +2,11 @@
 title: Blog
 description: Aprende a enviar una publicación de blog.
 weight: 30
-default_lang_commit: 493a530efd3c2a058cc4aa055d7c8aadb5348beb
 ---
 
 El [blog de OpenTelemetry] [OpenTelemetry blog](/blog/) comunica nuevas
 funciones, informes de la comunidad y cualquier noticia relevante para la
-comunidad de OpenTelemetry. Esto incluye a usuarios finales y desarrolladores.
-Cualquiera puede escribir una entrada de blog. Lee a continuación los
+comunidad de OpenTelemetry. Esto incluye a usuarios finales y desarrolladores. Cualquiera puede escribir una entrada de blog. Lee a continuación los
 requisitos.
 
 ## ¿Documentación o publicación de blog?
@@ -48,7 +46,7 @@ un problema]
 [raise an issue](https://github.com/open-telemetry/opentelemetry.io/issues/new?title=New%20Blog%20Post:%20%3Ctitle%3E)
 con la siguiente información:
 
-- Título de la entrada
+- Title of the blog post
 - Breve descripción y resumen de la entrada
 - Si corresponde, enumera las tecnologías utilizadas en la entrada. Asegúrate de
   que todas sean de código abierto y prioriza los proyectos CNCF sobre los que
@@ -80,7 +78,8 @@ las instrucciones proporcionadas por la [plantilla de publicación de blog]
 ### Bifurcar y escribir localmente
 
 Después de configurar la bifurcación local, puedes crear una entrada de blog
-usando una plantilla. Sigue estos pasos para crear una entrada a partir de la
+usando una plantilla.
+Sigue estos pasos para crear una entrada a partir de la
 plantilla:
 
 1. Ejecuta el siguiente comando desde la raíz del repositorio:
@@ -96,15 +95,13 @@ plantilla:
    npx hugo new content/en/blog/2024/short-name-for-post/index.md
    ```
 
-2. Edita el archivo Markdown en la ruta que proporcionó en el comando anterior.
-   El archivo se inicializa desde el iniciador de la entrada del blog en
+2. Edita el archivo Markdown en la ruta que proporcionó en el comando anterior. El archivo se inicializa desde el iniciador de la entrada del blog en
    [arquetipos]
    [archetypes](https://github.com/open-telemetry/opentelemetry.io/tree/main/archetypes/).
 
 3. Coloca activos, como imágenes o otros archivos, en la carpeta que has creado.
 
-4. Cuando tu publicación esta lista, envíala a través de una solicitud de
-   extracción.
+4. When your post is ready, submit it through a pull request.
 
 ### Utiliza la interfaz de usuario de GitHub
 
@@ -112,25 +109,25 @@ Si prefieres no crear una bifurcación local, puedes usar la interfaz de GitHub
 para crear una nueva publicación. Sigue estos pasos para agregar una publicación
 usando la interfaz:
 
-1.  Va a la [plantilla de publicación de blog]
-    [blog post template](https://github.com/open-telemetry/opentelemetry.io/tree/main/archetypes/blog.md)
-    y haz clic en **Copiar contenido sin procesar** en la parte superior derecha
-    del menú.
+1. Va a la [plantilla de publicación de blog]
+   [blog post template](https://github.com/open-telemetry/opentelemetry.io/tree/main/archetypes/blog.md)
+   y haz clic en **Copiar contenido sin procesar** en la parte superior derecha
+   del menú.
 
-2.  Selecciona [Crear un nuevo archivo]
-    [Create a new file](https://github.com/open-telemetry/opentelemetry.io/new/main).
+2. Selecciona [Crear un nuevo archivo]
+   [Create a new file](https://github.com/open-telemetry/opentelemetry.io/new/main).
 
-3.  Pega el contenido de la plantilla que copiaste en el primer paso.
+3. Pega el contenido de la plantilla que copiaste en el primer paso.
 
-4.  Nombra tu archivo, por ejemplo
-    `content/en/blog/2022/short-name-for-your-blog-post/index.md`.
+4. Nombra tu archivo, por ejemplo
+   `content/en/blog/2022/short-name-for-your-blog-post/index.md`.
 
-5.  Edita el archivo Markdown en GitHub.
+5. Edita el archivo Markdown en GitHub.
 
-6.  Cuando tu publicación esta lista, selecciona **Proponer cambios** y sigue
-    las instrucciones.
+6. Cuando tu publicación esta lista, selecciona **Proponer cambios** y sigue
+   las instrucciones.
 
-## Plazos de publicación
+## Publication timelines
 
 El blog de OpenTelemetry no sigue un plazo de publicación estricto. Esto
 significa que:
