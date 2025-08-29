@@ -1,7 +1,6 @@
 ---
-title: Primeiros passos para Operações
+title: Getting started for Ops
 linkTitle: Ops
-default_lang_commit: 99a39c5e4e51daba968bfbb3eb078be4a14ad363
 ---
 
 A página [primeiros-passos](..) é para você se:
