@@ -1,9 +1,7 @@
 ---
 title: Propagação de contexto
 weight: 10
-description:
-  Entenda os conceitos que tornam possível o Rastreamento Distribuído.
-default_lang_commit: 934b6fcfceb53ae7c1e0da921777e896461205ed
+description: Entenda os conceitos que tornam possível o Rastreamento Distribuído.
 ---
 
 Com a propagação de contexto, os [sinais](../signals/) podem ser correlacionados
@@ -22,15 +20,15 @@ emissor e receptor, ou
 [unidade de execução](/docs/specs/otel/glossary/#execution-unit), correlacionem
 um sinal com outro.
 
-Por exemplo, se o serviço A chamar o serviço B, um trecho do serviço A, cujo ID
-está no contexto, será usado como o trecho pai para o próximo trecho criado no
-serviço B. O ID do rasto que está no contexto também será usado para o próximo
-trecho criado no serviço B, o que significa que o trecho faz parte do mesmo
-rastro que o trecho do serviço A.
+When Service A calls Service B, it includes a trace ID and a span ID as part of
+the context. Service B uses these values to create a new span that belongs to
+the same trace, setting the span from Service A as its parent. This makes it
+possible to track the full flow of a request across service boundaries.
 
 ## Propagação {#propagation}
 
-Propagação é o mecanismo que move o contexto entre serviços e processos. Ele
+Propagação é o mecanismo que move o contexto entre serviços e processos.
+Ele
 serializa ou desserializa o objeto de contexto e fornece as informações
 relevantes a serem propagadas de um serviço para outro.
 
