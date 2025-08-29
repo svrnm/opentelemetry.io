@@ -1,8 +1,7 @@
 ---
 title: Configuration
 weight: 10
-aliases: [agent-config]
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
+aliases: [ agent-config ]
 cSpell:ignore: customizer logback
 ---
 
@@ -55,8 +54,7 @@ Vous pouvez activer les [extensions][] en définissant la propriété suivante :
 
 {{% config_option name="otel.javaagent.extensions" %}}
 
-Chemin vers un fichier jar d'extension ou un dossier contenant des fichiers jar.
-Si vous pointez vers un dossier, chaque fichier jar dans ce dossier sera traité
+Chemin vers un fichier jar d'extension ou un dossier contenant des fichiers jar. Si vous pointez vers un dossier, chaque fichier jar dans ce dossier sera traité
 comme une extension distincte et indépendante.
 
 {{% /config_option %}}
@@ -68,17 +66,16 @@ propriété suivante :
 
 {{% config_option name="otel.javaagent.logging" %}}
 
-L'agent Java supporte ces 3 modes de journalisation :
+L'agent Java supporte ces 3 modes de journalisation : The following 3 modes are supported:
 
 - `simple` : L'agent imprimera ses journaux en utilisant le flux d'erreur
-  standard. Seuls les journaux de niveau `INFO` ou supérieur seront imprimés.
-  C'est le mode de journalisation par défaut de l'agent Java.
+  standard.
+  Seuls les journaux de niveau `INFO` ou supérieur seront imprimés. C'est le mode de journalisation par défaut de l'agent Java.
 - `none` : L'agent ne journalisera rien - pas même sa propre version.
 - `application` : L'agent tentera de rediriger ses propres journaux vers le
   logger slf4j de l'application instrumentée. Cela fonctionne le mieux pour les
   applications simples à un seul jar qui n'utilisent pas plusieurs chargeurs de
-  classe (Classloader) ; les applications Spring Boot sont également supportées.
-  La sortie des journaux de l'agent Java peut être configurée davantage en
+  classe (Classloader) ; les applications Spring Boot sont également supportées. La sortie des journaux de l'agent Java peut être configurée davantage en
   utilisant la configuration de journalisation de l'application instrumentée
   (par exemple `logback.xml` ou `log4j2.xml`). **Assurez-vous de tester que ce
   mode fonctionne pour votre application avant de l'exécuter dans un
@@ -89,7 +86,8 @@ L'agent Java supporte ces 3 modes de journalisation :
 ## Configuration du SDK {#sdk-configuration}
 
 Le module d'autoconfiguration du SDK est utilisé pour la configuration de base
-de l'agent. Lisez la [documentation](/docs/languages/java/configuration) pour
+de l'agent.
+Lisez la [documentation](/docs/languages/java/configuration) pour
 trouver des paramètres tels que la configuration de l'exportation ou de
 l'échantillonnage.
 
@@ -128,5 +126,4 @@ default=false
 [fournisseur de ressources Azure](https://github.com/open-telemetry/opentelemetry-java-contrib/tree/main/azure-resources).
 {{% /config_option %}}
 
-[extensions]:
-  https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/main/examples/extension#readme
+[extensions]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/main/examples/extension#readme
