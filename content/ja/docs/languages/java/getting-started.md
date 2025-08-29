@@ -2,15 +2,15 @@
 title: サンプルによる入門
 description: 5分以内にアプリのテレメトリーを取得しましょう！
 weight: 10
-default_lang_commit: 8eda3ad35e6fbeea601a033023f694c8750fd1b9
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/getting-started"?>
 
 このページでは、JavaでOpenTelemetryを始める方法を紹介します。
 
-シンプルなJavaアプリケーションを自動的に計装する方法を学び、[トレース][trace]、[メトリクス][metrics]、および[ログ][logs]がコンソールに出力されるようにします。
+シンプルなJavaアプリケーションを自動的に計装する方法を学び、\[トレース]\[trace]、[メトリクス][metrics]、および[ログ][logs]がコンソールに出力されるようにします。
 
 ## 前提条件 {#prerequisites}
 
@@ -21,15 +21,16 @@ default_lang_commit: 8eda3ad35e6fbeea601a033023f694c8750fd1b9
 
 ## サンプルアプリケーション {#example-application}
 
-次の例では、基本的な[Spring Boot]アプリケーションを使用します。
+The following example uses a basic [Spring Boot] application. You can use
+another web framework, such as Apache Wicket or Play. 次の例では、基本的な[Spring Boot]アプリケーションを使用します。
 Apache WicketやPlayなどの他のWebフレームワークを使用することもできます。
-ライブラリとサポートされているフレームワークの完全なリストについては、[レジストリ](/ecosystem/registry/?component=instrumentation&language=java)を参照してください。
+ライブラリとサポートされているフレームワークの完全なリストについては、レジストリを参照してください。
 
 より詳細な例については、[例](../examples/)を参照してください。
 
 ### 依存関係 {#dependencies}
 
-開始するには、`java-simple`という新しいディレクトリに環境を設定します。
+To begin, set up an environment in a new directory called `java-simple`. 開始するには、`java-simple`という新しいディレクトリに環境を設定します。
 そのディレクトリ内に、次の内容で`build.gradle.kts`というファイルを作成します。
 
 ```kotlin
@@ -59,7 +60,9 @@ dependencies {
 同じフォルダに、`DiceApplication.java`というファイルを作成し、次のコードをファイルに追加します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/DiceApplication.java"?>
+
 ```java
 package otel;
 
@@ -76,12 +79,15 @@ public class DiceApplication {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 `RollController.java`という別のファイルを作成し、次のコードをファイルに追加します。
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/RollController.java"?>
+
 ```java
 package otel;
 
@@ -113,6 +119,7 @@ public class RollController {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 次のコマンドでアプリケーションをビルドして実行し、Webブラウザで<http://localhost:8080/rolldice>を開いて動作していることを確認します。
@@ -125,9 +132,11 @@ java -jar ./build/libs/java-simple.jar
 ## 計装 {#instrumentation}
 
 次に、[Javaエージェント](/docs/zero-code/java/agent/)を使用して、起動時にアプリケーションを自動的に計装します。
-[Javaエージェントの設定][configure the java agent]にはいくつかの方法がありますが、以下の手順では環境変数を使用します。
+[Javaエージェントの設定][configure the java agent]にはいくつかの方法がありますが、以下の手順では環境変数を使用します。 While you can [configure the Java
+agent][] in a number of ways, the steps below use environment variables.
 
-1. `opentelemetry-java-instrumentation`リポジトリの[リリース][releases]から[opentelemetry-javaagent.jar][]をダウンロードします。JARファイルには、エージェントとすべての自動計装パッケージが含まれています。
+1. `opentelemetry-java-instrumentation`リポジトリの[リリース][releases]から[opentelemetry-javaagent.jar][]をダウンロードします。JARファイルには、エージェントとすべての自動計装パッケージが含まれています。 The JAR file contains the
+   agent and all automatic instrumentation packages:
 
    ```sh
    curl -L -O https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
@@ -150,6 +159,7 @@ java -jar ./build/libs/java-simple.jar
    ```
 
    {{% alert title="重要" color="warning" %}}
+
    - 上記の`PATH/TO`を、JARへのパスに置き換えてください。
    - メトリクスが適切に生成されることを迅速に確認するために、**テスト中のみ**、上記のように`OTEL_METRIC_EXPORT_INTERVAL`をデフォルトよりもはるかに低い値に設定してください。
 
@@ -164,7 +174,7 @@ java -jar ./build/libs/java-simple.jar
 
    `otel.javaagent`からの出力に注意してください。
 
-4. *別の*ターミナルから、`curl`を使用してリクエストを送信します。
+4. _別の_ターミナルから、`curl`を使用してリクエストを送信します。
 
    ```sh
    curl localhost:8080/rolldice
@@ -228,9 +238,9 @@ value=8192, exemplars=[]}], monotonic=false, aggregationTemporality=CUMULATIVE}}
 ...
 ```
 
-## 次のステップ {#what-next}
+## What next?
 
-詳細については。
+For more:
 
 - この例を別の[エクスポーター][exporter]でテレメトリーデータ用に実行してください。
 - 自分のアプリの1つで[ゼロコード計装](/docs/zero-code/java/agent/)を試してください。
@@ -238,7 +248,7 @@ value=8192, exemplars=[]}], monotonic=false, aggregationTemporality=CUMULATIVE}}
 - [手動計装][manual instrumentation]について学び、さらに多くの[例](../examples/)を試してください。
 - Javaベースの[広告サービス](/docs/demo/services/ad/)とKotlinベースの[不正検出サービス](/docs/demo/services/fraud-detection/)を含む[OpenTelemetryデモ](/docs/demo/)をご覧ください。
 
-[trace]: /docs/concepts/signals/traces/
+[traces]: /docs/concepts/signals/traces/
 [metrics]: /docs/concepts/signals/metrics/
 [logs]: /docs/concepts/signals/logs/
 [annotations]: /docs/zero-code/java/agent/annotations/
