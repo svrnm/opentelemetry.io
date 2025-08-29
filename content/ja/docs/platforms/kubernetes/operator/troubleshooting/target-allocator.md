@@ -1,6 +1,5 @@
 ---
 title: ターゲットアロケーター
-default_lang_commit: f02328f074d7cbd837dda6653754daee0c452a2a
 cSpell:ignore: bleh targetallocator
 ---
 
@@ -12,7 +11,7 @@ cSpell:ignore: bleh targetallocator
 
 最初のステップとして、関連するすべてのリソースがKubernetesクラスターにデプロイされていることを確認してください。
 
-### メトリクスは実際にスクレイプされていますか？ {#do-you-know-if-metrics-are-actually-being-scraped}
+### Do you know if metrics are actually being scraped?
 
 すべてのリソースをKubernetesにデプロイしたら、ターゲットアロケーターが
 [`ServiceMonitor`](https://prometheus-operator.dev/docs/getting-started/design/#servicemonitor)または[PodMonitor]からスクレイプ対象を検出していることを確認してください。
@@ -171,9 +170,10 @@ curl localhost:8080/jobs | jq
 
 同様に、`PodMonitor` は `curl` の出力で `podMonitor/opentelemetry/pm-example/0` として表示されます。
 
-これは、スクレイプ構成の検出が機能していることを示す朗報です!
+This is good news, because it tells us that the scrape config discovery is
+working!
 
-これは、(`otel-collector` という名前の)`OpenTelemetryCollector` リソースの `spec.config.receivers.prometheusReceiver` でセルフスクレイプが有効になっているためです。
+You might also be wondering about the `otel-collector` entry. これは、(`otel-collector` という名前の)`OpenTelemetryCollector` リソースの `spec.config.receivers.prometheusReceiver` でセルフスクレイプが有効になっているためです。
 
 ```yaml
 prometheus:
@@ -266,13 +266,16 @@ curl localhost:8080/jobs/serviceMonitor%2Fopentelemetry%2Fsm-example%2F0/targets
 
 {{% /alert %}}
 
-### ターゲットアロケーターは有効ですか？Prometheusのサービスディスカバリーは有効ですか？ {#is-the-target-allocator-enabled-is-prometheus-service-discovery-enabled}
+### Is the Target Allocator enabled? ターゲットアロケーターは有効ですか？Prometheusのサービスディスカバリーは有効ですか？ {#is-the-target-allocator-enabled-is-prometheus-service-discovery-enabled}
 
 上記の `curl` コマンドで期待される `ServiceMonitor` や `PodMonitor` のリストが表示されない場合、それらの値を設定する機能が有効になっているかを確認する必要があります。
 
 留意すべきことは、`OpenTelemetryCollector` CRに `targetAllocator` セクションを含めたからといって、それが有効になるわけではないということです。
 ターゲットアロケーターは明示的に有効化する必要があります。
-さらに、[Prometheusのサービスディスカバリー](https://github.com/open-telemetry/opentelemetry-operator/blob/main/cmd/otel-allocator/README.md#discovery-of-prometheus-custom-resources)を使用する場合は、明示的に有効化する必要があります。
+さらに、[Prometheusのサービスディスカバリー](https://github.com/open-telemetry/opentelemetry-operator/blob/main/cmd/otel-allocator/README.md#discovery-of-prometheus-custom-resources)を使用する場合は、明示的に有効化する必要があります。 You
+need to explicitly enable it. Furthermore, if you want to use
+[Prometheus service discovery](https://github.com/open-telemetry/opentelemetry-operator/blob/main/cmd/otel-allocator/README.md#discovery-of-prometheus-custom-resources),
+you must explicitly enable it:
 
 - `spec.targetAllocator.enabled` を `true` に設定する
 - `spec.targetAllocator.prometheusCR.enabled` を `true` に設定する
@@ -341,7 +344,7 @@ spec:
 
 {{% alert title="Tip" %}}
 
-[PodMonitor]を使用している場合も同様です。
+The same applies if you're using a [PodMonitor]. [PodMonitor]を使用している場合も同様です。
 その場合は、`serviceMonitorSelector` のかわりに [`podMonitorSelector`](https://github.com/open-telemetry/opentelemetry-operator/blob/main/docs/api/targetallocators.md#targetallocatorspecprometheuscr)を使用します。
 
 {{% /alert %}}
@@ -361,7 +364,8 @@ prometheusCR:
   serviceMonitorSelector: {}
 ```
 
-この構成は、すべての `PodMonitor` および `ServiceMonitor` リソースに一致することを意味します。
+This configuration means that it will match on all `PodMonitor` and
+`ServiceMonitor` resources. この構成は、すべての `PodMonitor` および `ServiceMonitor` リソースに一致することを意味します。
 [完全なOpenTelemetryCollectorの定義については、"メトリクスは実際にスクレイプされていますか？ "](#do-you-know-if-metrics-are-actually-being-scraped)を参照してください。
 
 ### ServiceMonitorとService(または PodMonitor と Pod)のラベル、名前空間、ポートは一致していますか？ {#do-your-labels-namespaces-and-ports-match-for-your-servicemonitor-and-your-service-or-podmonitor-and-your-pod}
