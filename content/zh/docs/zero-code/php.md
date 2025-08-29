@@ -2,8 +2,7 @@
 title: PHP 零代码插桩
 linkTitle: PHP
 weight: 30
-aliases: [/docs/languages/php/automatic]
-default_lang_commit: 179f03bf118e1e8a3cc195ab56fc09d85c476394
+aliases: [ /docs/languages/php/automatic ]
 cSpell:ignore: centos democlass epel myapp pecl phar remi
 ---
 
@@ -20,12 +19,13 @@ cSpell:ignore: centos democlass epel myapp pecl phar remi
 
 ## 安装 OpenTelemetry 扩展 {#install-the-opentelemetry-extension}
 
-{{% alert title="重要" color="warning" %}}仅安装 OpenTelemetry 扩展本身不会生成链路数据。{{% /alert %}}
+{{% alert title="重要" color="warning" %}}仅安装 OpenTelemetry 扩展本身不会生成链路数据。{{% /alert %}} {{% /alert %}}
 
 该扩展可以通过 pecl、[pickle](https://github.com/FriendsOfPHP/pickle)、
 [PIE](https://github.com/php/pie) 或
 [php-extension-installer](https://github.com/mlocati/docker-php-extension-installer)
-（Docker 专用）进行安装。一些 Linux 软件包管理器也提供了预构建版本。
+（Docker 专用）进行安装。一些 Linux 软件包管理器也提供了预构建版本。 There are also packaged versions of the extension available
+for some Linux package managers.
 
 ### Linux 软件包 {#linux-packages}
 
@@ -63,9 +63,9 @@ php --ri opentelemetry
 
 ### PECL
 
-1. 设置开发环境。源码安装需要配置好开发环境并安装依赖项：
+1. Setup development environment. 设置开发环境。源码安装需要配置好开发环境并安装依赖项：
 
-   {{< tabpane text=true >}} {{% tab "Linux (apt)" %}}
+      {{< tabpane text=true >}} {{% tab "Linux (apt)" %}}
 
    ```sh
    sudo apt-get install gcc make autoconf
@@ -79,9 +79,9 @@ php --ri opentelemetry
 
    {{% /tab %}} {{< /tabpane >}}
 
-2. 构建并安装扩展。在准备好开发环境后，使用以下命令安装扩展：
+2. Build/install the extension. 构建并安装扩展。在准备好开发环境后，使用以下命令安装扩展：
 
-   {{< tabpane text=true >}} {{% tab pecl %}}
+      {{< tabpane text=true >}} {{% tab pecl %}}
 
    ```sh
    pecl install opentelemetry
@@ -118,12 +118,14 @@ php --ri opentelemetry
 
 在安装完扩展后，你需要安装 OpenTelemetry SDK 和一个或多个插桩库。
 
-PHP 常用库的自动插桩已被支持。完整列表请查阅
-[packagist 网站上的插桩库](https://packagist.org/search/?query=open-telemetry&tags=instrumentation)。
+Automatic instrumentation is available for a number of commonly used PHP
+libraries. For the full list, see
+[instrumentation libraries on packagist](https://packagist.org/search/?query=open-telemetry&tags=instrumentation).
 
 假设你的应用使用 Slim Framework 和 PSR-18 HTTP 客户端，并希望使用 OTLP 协议导出链路数据。
 
-你可以安装以下软件包：
+You would then install the SDK, an exporter, and auto-instrumentation packages
+for Slim Framework and PSR-18:
 
 ```shell
 composer require \
@@ -166,24 +168,28 @@ OTEL_PROPAGATORS=baggage,tracecontext
 
 在完成上述安装和配置后，像往常一样运行你的应用即可。
 
-你看到的链路数据取决于你安装的插桩库以及程序运行时的代码路径。以
-Slim Framework 和 PSR-18 插桩库为例，你应能看到如下 Span：
+The traces you see exported to the OpenTelemetry Collector depend on the
+instrumentation libraries you have installed, and the code path that was taken
+inside the application. In the previous example, using Slim Framework and PSR-18
+instrumentation libraries, you should expect to see spans such as:
 
 - 表示 HTTP 事务的根 Span
-- 表示执行操作的 Span
+- A span for the action that was executed
 - 每个 PSR-18 客户端发出的 HTTP 请求的 Span
 
 请注意，PSR-18 客户端的插桩会自动为出站 HTTP
 请求添加[分布式追踪](/docs/concepts/context-propagation/#propagation)相关的标头。
 
-## 工作原理 {#how-it-works}
+## How it works
 
-{{% alert title="可选" %}}如果你只想快速开始，并且已有合适的插桩库可用，可以跳过本节。{{% /alert %}}
+{{% alert title="可选" %}}如果你只想快速开始，并且已有合适的插桩库可用，可以跳过本节。{{% /alert %}} {{% /alert %}}
 
 该扩展支持注册观察函数，用于观察某些类和方法，并在方法执行前后运行这些函数。
 
-如果你的框架或应用没有可用的插桩库，也可以自定义编写。以下是一个示例，
-包括待插桩代码，以及如何使用 OpenTelemetry 扩展对其进行追踪：
+If there is not an instrumentation library for your framework or application,
+you can write your own. The following example provides some code to be
+instrumented, and then illustrates how to use the OpenTelemetry extension to
+trace the execution of that code.
 
 ```php
 <?php
@@ -232,7 +238,9 @@ $demo->run();
 ```
 
 上述示例定义了 `DemoClass`，并为其 `run` 方法注册了 `pre` 和 `post` 钩子。
-钩子会在每次方法执行前后运行，`pre` 函数启动 Span，`post` 函数结束 Span。
+钩子会在每次方法执行前后运行，`pre` 函数启动 Span，`post` 函数结束 Span。 The hook functions run before and after each
+execution of the `DemoClass::run()` method. The `pre` function starts and
+activates a span, while the `post` function ends it.
 
 如果 `DemoClass::run()` 抛出异常，`post` 函数会记录异常，但不会干扰异常传播机制。
 
