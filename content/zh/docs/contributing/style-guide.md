@@ -3,8 +3,6 @@ title: 文档风格指南
 description: 编写 OpenTelemetry 文档时的术语和风格指南。
 linkTitle: 风格指南
 weight: 20
-default_lang_commit: 2394fa1f1c693e547093e46e83a6819d3c26e9d5
-drifted_from_default: true
 cSpell:ignore: open-telemetry postgre style-guide textlintrc
 ---
 
@@ -28,48 +26,40 @@ OpenTelemetry 还没有官方的风格指南，当前版本的 OpenTelemetry 文
 
 请在整个网站上统一使用以下 OpenTelemetry 特定术语和词语列表。
 
-<!-- prettier-ignore-start -->
-
-| 术语 | 用法 |
-| ---- | ----- |
-| OpenTelemetry | OpenTelemetry 应始终大写。请勿使用 Open-Telemetry。|
-| OTel | OTel 是 OpenTelemetry 的公认缩写形式。请勿使用 OTEL。|
-| Collector | 当引用 OpenTelemetry Collector 时，请始终将 Collector 大写。在句子开头请使用 `The Collector` 或 `The Opentelemetry Collector`， 在句中或句尾则使用 `the Collector` 或 `the OpenTelemetry Collector`。如果您要将 Collector 用作形容词（例如， `Collector 配置` ），请只使用 `Collector`。|
-| OTEP | OpenTelemetry 增强提案（OpenTelemetry Enhancement Proposal）。复数形式请写作 `OTEPs` 。请不要写成 `OTep` 或 `otep`。|
-| OpAMP | 开放代理管理协议（Open Agent Management Protocol）。请勿在描述或说明中写成 `OPAMP` 或 `opamp`。|
-<!-- prettier-ignore-end -->
-
-确保正确书写专有名词（例如其他 CNCF 项目或第三方工具）并使用原始大写字母。例如，
-书写 `PostgreSQL` 而不是 `postgre`。有关完整列表，请查看
-[`.textlintrc.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.textlintrc.yml) 文件。
+- OpenTelemetry 增强提案（OpenTelemetry Enhancement Proposal）。复数形式请写作 `OTEPs` 。请不要写成 `OTep` 或 `otep`。
+- [Collector](/docs/concepts/glossary/#collector)
+- [OTEP](/docs/concepts/glossary/#otep)
+- [OpAMP](/docs/concepts/glossary/#opamp)
 
 另请参阅 [词汇表](/docs/concepts/glossary/) 以获取 OpenTelemetry术语及其定义的列表。
 
-运行 `npm run check:text` 命令以验证所有术语和单词是否书写正确。
-
-运行 `npm run check:text -- --fix` 命令以修复书写不正确的术语和单词。
+Make sure that proper nouns, such as other CNCF projects or third-party tools,
+are properly written and use the original capitalization. For example, write
+"PostgreSQL" instead of "postgre". For a full list, check the
+[`.textlintrc.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.textlintrc.yml)
+file.
 
 ## Markdown 标准 {#markdown-standards}
 
-为了增强 Markdown 文件的标准性和一致性，所有文件都应遵循
-[markdownlint](https://github.com/DavidAnson/markdownlint)
-确定的相关规则。有关完整列表，请查看
-[`.markdownlint.json`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.markdownlint.json)
-文件。
+To enforce standards and consistency for Markdown files, all files should follow
+certain rules, enforced by [markdownlint]. For a full list, check the
+[.markdownlint.json] file.
 
-运行 `npm run check:markdown` 命令以验证所有文件是否遵循标准。
-
-运行 `npm run fix:markdown` 命令以修复与 Markdown 相关的格式问题。
+We also enforce Markdown [file format](#file-format) and strip files of trailing
+whitespace. This precludes the [line break syntax] of 2+ spaces; use `<br>`
+instead or reformat your text.
 
 ## 拼写检查 {#spell-checking}
 
-使用 [CSpell](https://github.com/streetsidesoftware/cspell) 确保所有文本拼写正确。
+Use [CSpell](https://github.com/streetsidesoftware/cspell) to make sure that all
+your text is spelled correctly. 使用 [CSpell](https://github.com/streetsidesoftware/cspell) 确保所有文本拼写正确。
 有关 OpenTelemetry 网站特定单词的列表，请参阅
 [`.cspell.yml`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.cspell.yml) 文件。
 
-运行 `npm run check:spelling` 命令以验证所有单词拼写是否正确。如果 `cspell` 指示
-`Unknown word` 错误，请验证您是否正确编写了该单词。如果正确，请将此单词添加到文件顶部的
-`cSpell:ignore` 部分。如果不存在这样的部分，您可以将其添加到 Markdown 文件的元数据中：
+If `cspell` indicates an "Unknown word" error, check whether you wrote the word
+correctly. If so, add the word to the `cSpell:ignore` section at the top of your
+file. If no such section exists, you can add it to the front matter of a
+Markdown file:
 
 ```markdown
 ---
@@ -78,7 +68,8 @@ cSpell:ignore: <word>
 ---
 ```
 
-对于任何其他文件，请在适合文件上下文的注释行中添加 `cSpell:ignore <word>`。
+For any other file, add `cSpell:ignore <word>` in a comment line appropriate for
+the file's context. 对于任何其他文件，请在适合文件上下文的注释行中添加 `cSpell:ignore <word>`。
 对于 [registry](/ecosystem/registry/) 条目 YAML 文件，它可能看起来像这样：
 
 ```yaml
@@ -86,15 +77,20 @@ cSpell:ignore: <word>
 title: registryEntryTitle
 ```
 
-网站工具通过移除重复单词、删除全局单词列表中的单词以及对单词进行排序来规范特定于页面的词典（即
-`cSpell:ignore` 单词列表）。要规范特定于页面的词典，请运行 `npm run fix:dict`。
-
 ## 文件格式 {#file-format}
 
-为了执行关于文件结构的特定标准，所有文件都应使用 [prettier](https://prettier.io)
-进行格式化。在提交 PR 之前运行 `npm run fix:format`，或者在提交 PR 之后运行它并推送额外的提交。
+We enforce file formatting using [Prettier]. 运行 `npm run fix:markdown` 命令以修复与 Markdown 相关的格式问题。
 
 ## 文件名 {#file-names}
 
 所有文件名都应采用[短横线命名](https://en.wikipedia.org/wiki/Letter_case#Kebab_case)。
 运行 `npm run fix:filenames` 以自动重命名文件。
+
+## Fixing validation issues
+
+To learn how to fix validation issues, see [Pull request checks](../pr-checks).
+
+[.markdownlint.json]: <为了增强 Markdown 文件的标准性和一致性，所有文件都应遵循&#xA;[markdownlint](https://github.com/DavidAnson/markdownlint)&#xA;确定的相关规则。有关完整列表，请查看&#xA;[`.markdownlint.json`](https://github.com/open-telemetry/opentelemetry.io/blob/main/.markdownlint.json)&#xA;文件。>
+[line break syntax]: https://www.markdownguide.org/basic-syntax/#line-breaks
+[markdownlint]: https://github.com/DavidAnson/markdownlint
+[Prettier]: https://prettier.io
