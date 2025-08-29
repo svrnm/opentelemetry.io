@@ -2,7 +2,6 @@
 title: Lambdaの手動計装
 weight: 11
 description: OpenTelemetryであなたのLambdaを手動計装する
-default_lang_commit: 9ba98f4fded66ec78bfafa189ab2d15d66df2309
 ---
 
 Lambdaの自動計装ドキュメントでカバーされていない言語については、コミュニティはスタンドアロンの計装レイヤーを持っていません。
@@ -12,7 +11,8 @@ Lambdaの自動計装ドキュメントでカバーされていない言語に�
 ### OTelコレクターLambdaレイヤーのARNを追加する {#add-the-arn-of-the-otel-collector-lambda-layer}
 
 [コレクターLambdaレイヤーのガイダンス](../lambda-collector/)を参照して、アプリケーションにレイヤーを追加し、コレクターを設定してください。
-これを最初に追加することをおすすめします。
+これを最初に追加することをおすすめします。 We recommend you add this
+first.
 
 ### LambdaをOTelで計装する {#instrument-the-lambda-with-otel}
 
