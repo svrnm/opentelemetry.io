@@ -2,11 +2,10 @@
 title: Introducción a la Observabilidad
 description: Conceptos básicos de observabilidad.
 weight: 9
-default_lang_commit: e58a252c44875b04247b53e2394b4634f5a0a84e
 cSpell:ignore: webshop
 ---
 
-## ¿Qué es la observabilidad? {#what-is-observability}
+## ¿Qué es la observabilidad?
 
 La observabilidad te permite entender un sistema desde el exterior al permitirte
 hacer preguntas sobre ese sistema sin conocer su funcionamiento interno. Además,
@@ -50,7 +49,8 @@ información sobre métricas y cómo se relacionan con OpenTelemetry, consulta
 
 **SLI**, o Indicador de Nivel de Servicio, representa una medición del
 comportamiento de un servicio. Un buen SLI mide tu servicio desde la perspectiva
-de tus usuarios. Un ejemplo de SLI puede ser la velocidad con la que se carga
+de tus usuarios.
+Un ejemplo de SLI puede ser la velocidad con la que se carga
 una página web.
 
 **SLO**, u Objetivo de Nivel de Servicio, representa el medio por el cual la
@@ -72,10 +72,10 @@ de sus componentes: logs, spans y trazas.
 ### Logs
 
 Un **log** es un mensaje con marca de tiempo emitido por servicios u otros
-componentes. A diferencia de las [trazas](#distributed-traces), no están
+componentes.
+A diferencia de las [trazas](#distributed-traces), no están
 necesariamente asociados con una solicitud o transacción de usuario en
-particular. Los logs se pueden encontrar casi en cualquier parte del software.
-Los logs han sido ampliamente utilizados en el pasado tanto por desarrolladores
+particular. Los logs se pueden encontrar casi en cualquier parte del software. Los logs han sido ampliamente utilizados en el pasado tanto por desarrolladores
 como operadores para ayudarles a entender el comportamiento del sistema.
 
 Ejemplo de un log:
@@ -122,7 +122,7 @@ La siguiente tabla contiene ejemplos de atributos de span:
 | `http.route`                | `"/webshop/articles/:article_id"`                                                  |
 | `http.response.status_code` | `200`                                                                              |
 | `client.address`            | `"192.0.2.4"`                                                                      |
-| `client.socket.address`     | `"192.0.2.5"` (el cliente pasa por un proxy)                                       |
+| `client.socket.address`     | `"192.0.2.5"` (el cliente pasa por un proxy)                    |
 | `user_agent.original`       | `"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"` |
 
 Para más información sobre los spans y cómo se relacionan con OpenTelemetry,
@@ -136,8 +136,8 @@ final) a medida que se propagan a través de arquitecturas multi-servicio, como
 aplicaciones de microservicios y sin servidor.
 
 Una traza está compuesta por uno o más spans. El primer span representa el span
-raíz. Cada span raíz representa una solicitud desde el inicio hasta el final.
-Los spans debajo del span principal proporcionan un contexto más detallado de lo
+raíz.
+Cada span raíz representa una solicitud desde el inicio hasta el final. Los spans debajo del span principal proporcionan un contexto más detallado de lo
 que ocurre durante una solicitud (o los pasos que componen una solicitud).
 
 Sin el trazado, encontrar la causa raíz de los problemas de rendimiento en un
@@ -149,7 +149,7 @@ distribuido.
 Muchos sistemas de observabilidad visualizan las trazas como diagramas de
 cascada que se ven así:
 
-![Trazado Ejemplo](/img/waterfall-trace.svg 'Diagrama de cascada de trazas')
+![Trazado Ejemplo](/img/waterfall-trace.svg "Diagrama de cascada de trazas")
 
 Los diagramas de cascada muestran la relación padre-hijo entre un span raíz y
 sus spans hijos. Cuando un span encapsula otro span, esto también representa una
