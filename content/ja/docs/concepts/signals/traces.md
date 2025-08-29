@@ -2,14 +2,14 @@
 title: トレース
 weight: 1
 description: アプリケーションを通過するリクエストの経路
-default_lang_commit: 548e5e29f574fddc3ca683989a458e9a6800242f
 cSpell:ignore: Guten
 ---
 
-**トレース** は、リクエストがアプリケーションに投げられたときに何が起こるかの全体像を教えてくれます。
+**Traces** give us the big picture of what happens when a request is made to an
+application. **トレース** は、リクエストがアプリケーションに投げられたときに何が起こるかの全体像を教えてくれます。
 あなたのアプリケーションが、単一のデータベースを持つモノリスであろうと、洗練されたメッシュサービスであろうと、トレースは、リクエストがアプリケーションの中でたどる完全な「経路」を理解するために不可欠です。
 
-[スパン](#spans)で表現される以下の3つのJSONデータで、これを探ってみましょう。
+Let's explore this with three units of work, represented as [Spans](#spans):
 
 {{% alert title="Note" %}}
 
@@ -44,9 +44,10 @@ cSpell:ignore: Guten
 }
 ```
 
+This is the root span, denoting the beginning and end of the entire operation.
 これはルートスパンであり、オペレーション全体の始まりと終わりを示します。
 トレースを示す `trace_id` フィールドがありますが、`parent_id` がないことに注意してください。
-これがルートスパンであることを示します。
+これがルートスパンであることを示します。 That's how you know it's the root span.
 
 `hello-greetings` スパンは次のとおりです。
 
@@ -82,9 +83,10 @@ cSpell:ignore: Guten
 }
 ```
 
-このスパンは、挨拶（`greetings`）のような特定のタスクをカプセル化していて、その親は `hello` スパンです。
-このスパンはルートスパンと同じ `trace_id` を共有していて、同じトレースの一部であることを示しています。
-さらに、 `hello` スパンの `span_id` と一致する `parent_id` を持っています。
+This span encapsulates specific tasks, like saying greetings, and its parent is
+the `hello` span. Note that it shares the same `trace_id` as the root span,
+indicating it's a part of the same trace. Additionally, it has a `parent_id`
+that matches the `span_id` of the `hello` span.
 
 `hello-salutations` スパンは次のとおりです。
 
@@ -114,50 +116,53 @@ cSpell:ignore: Guten
 ```
 
 このスパンはこのトレースにおける3つ目の操作を表し、前のスパンと同様に`hello`スパンの子です。
-また、`hello-greetings`スパンの兄弟でもあります。
+また、`hello-greetings`スパンの兄弟でもあります。 That also makes it a sibling of the
+`hello-greetings` span.
 
 これらの3つのJSONブロックはすべて同じ `trace_id` を共有していて、`parent_id` フィールドは階層を表しています。
-これは1つのトレースになります！
+これは1つのトレースになります！ That makes it a Trace!
 
-もうひとつ、各スパンが構造化されたログのように見えることにお気づきでしょう。
-それはその通りだからです！トレースについて考える一つの方法は、トレースはコンテキスト、相関関係、階層構造などを持つ構造化されたログの集まりであるということです。
-しかし、これらの「構造化されたログ」は、異なるプロセス、サービス、VM、データセンターなどから来る可能性があります。
-これにより、トレースはあらゆるシステムのエンドツーエンドのビューを表現できます。
+Another thing you'll note is that each Span looks like a structured log. That's
+because it kind of is! One way to think of Traces is that they're a collection
+of structured logs with context, correlation, hierarchy, and more baked in.
+However, these "structured logs" can come from different processes, services,
+VMs, data centers, and so on. This is what allows tracing to represent an
+end-to-end view of any system.
 
 OpenTelemetryでのトレースがどのように機能するかを理解するために、コードの計装の一翼を担う一連のコンポーネントを見てみましょう。
 
 ## トレーサープロバイダー {#tracer-provider}
 
-トレーサープロバイダー（`TracerProvider` と呼ばれることもあります）は `Tracer` のファクトリーです。
-ほとんどのアプリケーションでは、トレーサープロバイダーは一度だけ初期化され、そのライフサイクルはアプリケーションのライフサイクルと一致します。
-トレーサープロバイダーの初期化には、リソースとエクスポーターの初期化も含まれます。
-これは通常、OpenTelemetry によるトレースの最初のステップです。
-いくつかの言語SDKでは、グローバルなトレーサープロバイダーがすでに初期化されています。
+A Tracer Provider (sometimes called `TracerProvider`) is a factory for
+`Tracer`s. In most applications, a Tracer Provider is initialized once and its
+lifecycle matches the application's lifecycle. Tracer Provider initialization
+also includes Resource and Exporter initialization. It is typically the first
+step in tracing with OpenTelemetry. In some language SDKs, a global Tracer
+Provider is already initialized for you.
 
 ## トレーサー {#tracer}
 
 トレーサーは、サービス内のリクエストなど、与えられた操作で何が起こっているかについての詳細な情報を含むスパンを作成します。
-トレーサーはトレーサープロバイダーから作成されます。
+トレーサーはトレーサープロバイダーから作成されます。 Tracers are created from Tracer
+Providers.
 
 ## トレースエクスポーター {#trace-exporters}
 
-トレースエクスポーターはトレースをコンシューマーに送信します。
-このコンシューマーは、デバッグや開発時間用の標準出力、OpenTelemetryコレクター、あるいは任意のオープンソースやベンダーのバックエンドです。
+Trace Exporters send traces to a consumer. This consumer can be standard output
+for debugging and development-time, the OpenTelemetry Collector, or any open
+source or vendor backend of your choice.
 
 ## コンテキスト伝搬 {#context-propagation}
 
-<!-- prettier-ignore-start -->
-コンテキスト伝搬（プロパゲーション）は、分散トレースを可能にする中心となる概念です。
-<!-- prettier-ignore-end -->
+コンテキスト伝搬（プロパゲーション）は、分散トレースを可能にする中心となる概念です。 With
+Context Propagation, Spans can be correlated with each other and assembled into
+a trace, regardless of where Spans are generated. To learn more about this
+topic, see the concept page on [Context Propagation](../../context-propagation).
 
-コンテキスト伝搬を使用すると、スパンがどこで生成されたかに関係なく、スパンを相互に関連付け、トレースとして組み立てられます。
-このトピックについては、[コンテキスト伝搬](../../context-propagation)の概要を参照してください。
+## Spans
 
-## スパン {#spans}
-
-**スパン** は、作業や操作の単位を表します。
-スパンはトレースの構成要素です。
-OpenTelemetryでは、以下の情報を含みます。
+A **span** represents a unit of work or operation. Spans are the building blocks
+of Traces. In OpenTelemetry, they include the following information:
 
 - 名前
 - 親のスパンID（ルートスパンなら空）
@@ -168,7 +173,7 @@ OpenTelemetryでは、以下の情報を含みます。
 - [スパンリンク](#span-links)
 - [スパンステータス](#span-status)
 
-次はスパンの例です。（訳注：JSON形式で表現しているだけで、必ずしもJSONではありません）
+Sample span:
 
 ```json
 {
@@ -207,8 +212,9 @@ OpenTelemetryでは、以下の情報を含みます。
 }
 ```
 
-スパンは、親スパンIDの存在によって暗示されるように、入れ子にできます。
-これによって、スパンはアプリケーションで行われる作業をより正確に把握できます。
+Spans can be nested, as is implied by the presence of a parent span ID: child
+spans represent sub-operations. This allows spans to more accurately capture the
+work done in an application.
 
 ### スパンコンテキスト {#span-context}
 
@@ -229,9 +235,9 @@ OpenTelemetryでは、以下の情報を含みます。
 
 たとえば、eコマースシステムでユーザーのショッピングカートに商品を追加する操作をスパンが追跡する場合、ユーザーのID、カートに追加する商品のID、カートIDを捕捉できます。
 
-スパンには、スパン作成中または作成後に属性を追加できます。
-SDKでのサンプリングで属性を利用できるようにするには、スパン作成時に属性を追加することをおすすめします。
-スパン作成後に値を追加する必要がある場合は、その値でスパンを更新してください。
+You can add attributes to spans during or after span creation. Prefer adding
+attributes at span creation to make the attributes available to SDK sampling. If
+you have to add a value after span creation, update the span with the value.
 
 属性には、各言語SDKが実装する以下のルールがあります。
 
@@ -240,6 +246,8 @@ SDKでのサンプリングで属性を利用できるようにするには、�
 
 さらに、[セマンティック属性](/docs/specs/semconv/general/trace/)があり、これは一般的な操作に通常存在するメタデータのための既知の命名規則です。
 システム間で共通の種類のメタデータが標準化されるように、可能な限りセマンティック属性の命名を使用することは有用です。
+It's helpful to use semantic attribute naming wherever possible so that common
+kinds of metadata are standardized across systems.
 
 ### スパンイベント {#span-events}
 
@@ -256,8 +264,9 @@ SDKでのサンプリングで属性を利用できるようにするには、�
 
 #### スパンイベントとスパン属性の使い分け
 
-スパンイベントにも属性が含まれるため、属性のかわりにいつイベントを使用するかという質問には、必ずしも明白な答えがあるとは限りません。
-決定するための参考として、特定のタイムスタンプに意味があるかどうかを考えてみてください。
+Since span events also contain attributes, the question of when to use events
+instead of attributes might not always have an obvious answer. To inform your
+decision, consider whether a specific timestamp is meaningful.
 
 たとえば、スパンで操作を追跡していて、操作が完了した時、操作からのデータをテレメトリーに追加したいと思うかもしれません。
 
@@ -266,17 +275,20 @@ SDKでのサンプリングで属性を利用できるようにするには、�
 
 ### スパンリンク {#span-links}
 
-リンクは、あるスパンと別の1つ以上のスパンを関連付け、因果関係を示唆するために存在します。
-たとえば、ある操作がトレースによって追跡される分散システムがあるとしましょう。
+Links exist so that you can associate one span with one or more spans, implying
+a causal relationship. For example, let’s say we have a distributed system where
+some operations are tracked by a trace.
 
-これらの操作のいくつかに対して、追加の操作がキューに入れられ実行されますが、その実行は非同期です。
-この後続の操作もトレースで追跡できます。
+In response to some of these operations, an additional operation is queued to be
+executed, but its execution is asynchronous. We can track this subsequent
+operation with a trace as well.
 
 後続の操作のトレースを最初のトレースに関連付けたいと思っても、後続の操作がいつ始まるかは予測できません。
-この2つのトレースを関連付ける必要があるので、スパンリンクを使用します。
+この2つのトレースを関連付ける必要があるので、スパンリンクを使用します。 We
+need to associate these two traces, so we will use a span link.
 
-最初のトレースの最後のスパンを、2番目のトレースの最初のスパンにリンクできます。
-これで、これらのスパンは互いに因果関係があることになります。
+You can link the last span from the first trace to the first span in the second
+trace. Now, they are causally associated with one another.
 
 リンクは必須ではありませんが、トレーススパン同士を関連付ける良い方法として役立ちます。
 
@@ -284,42 +296,50 @@ SDKでのサンプリングで属性を利用できるようにするには、�
 
 ### スパンステータス {#span-status}
 
-各スパンにはステータスがあります。可能な値は以下の3つです。
+Each span has a status. The three possible values are:
 
 - `Unset`
 - `Error`
 - `Ok`
 
-デフォルト値は `Unset` です。
+The default value is `Unset`. デフォルト値は `Unset` です。
 スパンのステータスが `Unset` である場合は、追跡した操作がエラーなしで正常に完了したということです。
 
 スパンのステータスが `Error` である場合、そのスパンが追跡する操作で何らかのエラーが発生したことを意味します。
-たとえば、リクエストを処理するサーバーでHTTP 500エラーが発生した場合などです。
+たとえば、リクエストを処理するサーバーでHTTP 500エラーが発生した場合などです。 For example, this could be due to an HTTP 500 error on a
+server handling a request.
 
-スパンのステータスが `Ok` である場合、そのスパンはアプリケーションの開発者によって明示的にエラーなしとマークされたことを意味します。
-これは直感的ではありませんが、スパンがエラーなく完了したことが分かっている場合、スパンのステータスを `Ok` とする必要はありません。
-これは `Unset` でカバーされるからです。
-`Ok`は、ユーザーによって明示的に設定されたスパンのステータスの明確な「最終決定」を表すものです。
-これは、開発者がスパンの解釈を「成功した」以外のものにはしないことを望む場合に役立ちます。
+When a span status is `Ok`, then that means the span was explicitly marked as
+error-free by the developer of an application. Although this is unintuitive,
+it's not required to set a span status as `Ok` when a span is known to have
+completed without error, as this is covered by `Unset`. What `Ok` does is
+represent an unambiguous "final call" on the status of a span that has been
+explicitly set by a user. This is helpful in any situation where a developer
+wishes for there to be no other interpretation of a span other than
+"successful".
 
-もう一度確認します。
-`Unset` はエラーなしで完了したスパンを表します。
-`Ok` は、開発者が明示的にスパンを成功とマークした場合を表します。
-ほとんどの場合、スパンを明示的に `Ok` とマークする必要はありません。
+To reiterate: `Unset` represents a span that completed without an error. `Ok`
+represents when a developer explicitly marks a span as successful. In most
+cases, it is not necessary to explicitly mark a span as `Ok`.
 
 ### スパンの種類（SpanKind） {#span-kind}
 
-スパンが作成されると、`Client（クライアント）`、 `Server（サーバー）`、 `Internal（内部）`、 `Producer（プロデューサー）`、 `Consumer（コンシューマー）` のいずれかとなります。
-このスパンの種類は、トレースがどのように組み立てられるべきかのヒントをトレースバックエンドに提供します。
-OpenTelemetryの仕様によると、サーバースパンの親はリモートクライアントスパンであることが多く、クライアントスパンの子は通常サーバースパンです。
-同様に、コンシューマースパンの親は、常にプロデューサであり、プロデューサースパンの子は、常にコンシューマである。提供されない場合、スパンの種類は内部的なものとみなされます。
+When a span is created, it is one of `Client`, `Server`, `Internal`, `Producer`,
+or `Consumer`. This span kind provides a hint to the tracing backend as to how
+the trace should be assembled. According to the OpenTelemetry specification, the
+parent of a server span is often a remote client span, and the child of a client
+span is usually a server span. Similarly, the parent of a consumer span is
+always a producer and the child of a producer span is always a consumer. If not
+provided, the span kind is assumed to be internal.
 
 SpanKindの詳細については、[SpanKind](/docs/specs/otel/trace/api/#spankind)を参照してください。
 
 #### Client（クライアント） {#client}
 
-クライアントスパンは、発信HTTPリクエストやデータベース呼び出しのような、同期的な発信リモート呼び出しを表します。
-この文脈では、「同期」は `async/await` を指すのではなく、後の処理のためにキューに入れることが出来ない、ということを指すことに注意してください。
+A client span represents a synchronous outgoing remote call such as an outgoing
+HTTP request or database call. Note that in this context, "synchronous" does not
+refer to `async/await`, but to the fact that it is not queued for later
+processing.
 
 #### Server（サーバー） {#server}
 
@@ -327,17 +347,20 @@ SpanKindの詳細については、[SpanKind](/docs/specs/otel/trace/api/#spanki
 
 #### Internal（内部） {#internal}
 
-内部スパンは、プロセス境界を越えない操作を表します。
-関数呼び出しやNode.jsのExpressミドルウェアの計装などで、内部スパンを使用することがあります。
+Internal spans represent operations which do not cross a process boundary.
+Things like instrumenting a function call or an Express middleware may use
+internal spans.
 
 #### Producer（プロデューサー） {#producer}
 
-プロデューサースパンは、後で非同期に処理される可能性のあるジョブの作成を表します。
-それは、ジョブキューに挿入されるようなリモートジョブかもしれないし、イベントリスナーによって処理されるローカルジョブかもしれません。
+Producer spans represent the creation of a job which may be asynchronously
+processed later. It may be a remote job such as one inserted into a job queue or
+a local job handled by an event listener.
 
 #### Consumer（コンシューマー） {#consumer}
 
-コンシューマースパンは、プロデューサーが作成したジョブの処理を表し、プロデューサースパンがすでに終了したずっと後に開始されることがあります。
+Consumer spans represent the processing of a job created by a producer and may
+start long after the producer span has already ended.
 
 ## 仕様 {#specification}
 
