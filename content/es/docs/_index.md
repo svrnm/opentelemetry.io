@@ -2,7 +2,7 @@
 title: Documentación
 linkTitle: Docs
 menu: { main: { weight: 10 } }
-default_lang_commit: f7cb8b65a478450d80d703b34c8473c579702108
+aliases: [ /docs/workshop/* ]
 ---
 
 OpenTelemetry, también conocido como OTel, es un framework de código abierto
