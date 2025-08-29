@@ -1,16 +1,15 @@
 ---
-title: 運用担当者のための入門
+title: Getting started for Ops
 linkTitle: Ops
-default_lang_commit: d2368c7e90e6abeb4580193aa305dfabd21ed4f7
 ---
 
-あなたが以下のいずれかに当てはまれば、このページはあなたのための[入門](..)ページです。
+This is the [getting-started](..) page for you if:
 
 - 本番環境で一連のアプリケーションを実行している
 - あなたの目的は、コードに触れることなく、テレメトリーを取得することだ
 - 複数のサービスからトレース、メトリクス、ログを収集し、それらをオブザーバビリティバックエンドに送信したい
 
-OpenTelemetryが役に立ちます！
+OpenTelemetry can help you! OpenTelemetryが役に立ちます！
 アプリケーションのコードに触れることなくテレメトリーを取得するという目的を達成するためには、以下を学ぶことをおすすめします。
 
 - [OpenTelemetryとは](../../what-is-opentelemetry/)
