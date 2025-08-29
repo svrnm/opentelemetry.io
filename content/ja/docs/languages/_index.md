@@ -2,15 +2,17 @@
 title: 言語API & SDK
 description: OpenTelemetryのコード計装は、多くの一般的なプログラミング言語でサポートされています。
 weight: 250
-aliases: [/docs/instrumentation]
-default_lang_commit: d0a90db560d4f15934bdb43d994eabcfd91c515a
+aliases: [ /docs/instrumentation ]
 redirects:
+  - { from: /docs/instrumentation/*, to: ':splat' } # Only for `en`
   - { from: 'net/*', to: 'dotnet/:splat' }
 ---
 
 OpenTelemetryのコード[計装][instrumentation]は、以下の[ステータスとリリース](#status-and-releases)の表に記載されている言語でサポートされています。
 [その他の言語](/docs/languages/other)向けの非公式な実装も利用可能です。
-それらは[レジストリ](/ecosystem/registry/)で確認できます。
+それらは[レジストリ](/ecosystem/registry/)で確認できます。 Unofficial
+implementations for [other languages](/docs/languages/other) are available as
+well. You can find them in the [registry](/ecosystem/registry/).
 
 Go、.NET、PHP、Python、Java、JavaScriptでは、[ゼロコードソリューション](/docs/zero-code)を使用することで、コードを変更せずにアプリケーションに計装を追加できます。
 
@@ -35,7 +37,8 @@ APIやSDKのステータスに関わらず、使用している計装が[セマ�
 ## APIリファレンス {#api-references}
 
 特定の言語でOpenTelemetryのAPIおよびSDKを実装するSpecial Interest Group(SIG)は、開発者向けにAPIリファレンスも公開しています。
-以下のリファレンスが利用できます。
+以下のリファレンスが利用できます。 The following
+references are available:
 
 {{% apidocs %}}
 
