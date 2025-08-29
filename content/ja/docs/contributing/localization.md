@@ -1,15 +1,16 @@
 ---
 title: サイトのローカリゼーション
 description: 非英語ローカリゼーションのサイトページの作成と管理
-linkTitle: ローカリゼーション
+linkTitle: Localization
 weight: 25
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
 cSpell:ignore: shortcodes
 ---
 
 OTel のウェブサイトは、ページのローカリゼーションをサポートするために、Hugo の [multilingual framework] をサポートしています。
 デフォルトの言語は英語であり、米国英語がデフォルト（暗黙の）ローカリゼーションとして設定されています。
-対応する言語の数は増えており、トップナビゲーションの言語ドロップダウンメニューから確認できます。
+対応する言語の数は増えており、トップナビゲーションの言語ドロップダウンメニューから確認できます。 English is the default language, with US English as the default
+(implicit) localization. A growing number of other localizations are supported,
+as can be seen from the languages dropdown menu in the top nav.
 
 ## 翻訳のガイド {#translation-guidance}
 
@@ -27,10 +28,10 @@ OTel のウェブサイトは、ページのローカリゼーションをサポ
     - コードスニペット内のコメント（オプション）
   - [フロントマター][front matter] 内の `title`、 `linkTitle`、 `description` のフィールド値
   - 特別な指示がない場合、ページ内の **すべての** コンテンツとフロントマターの内容
-- 原文の _内容_、 _意味_、 _スタイル_ を **変更しないこと**
+- **Preserve** the _content_, _meaning_, and _style_ of the original text
 - もしなにか疑問等があれば、以下の方法で [メンテナー][maintainers] に **質問すること**
   - [Slack] の `#otel-docs-localization` か `#otel-comms` の各チャンネル
-  - [Discussion]やイシュー、あるいはPRコメント
+  - [Discussion], issue, or PR comment
 
 [Discussion]: https://github.com/open-telemetry/opentelemetry.io/discussions?discussions_q=is%3Aopen+label%3Ai18n
 
@@ -45,7 +46,8 @@ OTel のウェブサイトは、ページのローカリゼーションをサポ
   - [見出しID](#headings) を含む [リンク](#links) [^*]
   - `inline code-spans` のようなインラインコードスパン
   - `notranslate`（CSSクラスとして）でマークされたMarkdown の要素、特に[見出し](#headings)に対して
-  - [すべきこと](#do) で指示されていない [フロントマター][front matter] のフィールド。特に、`aliases` は翻訳しないこと。よくわからない場合はメンテナーに質問すること。
+  - [Front matter][] fields other than those listed in [Do](#do). In particular,
+    do not translate `aliases`. When in doubt, ask maintainers.
   - ソースコード
 - [画像内のテキストを翻訳する](#images) 場合以外で **画像ファイルのコピー** をすること。
 - 新規に追加したり変更すること
@@ -58,33 +60,39 @@ OTel のウェブサイトは、ページのローカリゼーションをサポ
 
 ### 見出しID {#headings}
 
-見出しを翻訳する際に、見出しアンカーのターゲットをローカリゼーション全体で統一するために、以下に従ってください。
+To ensure that heading anchor targets are uniform across localizations, when
+translating headings:
 
-- 見出しに明示的な ID がある場合は、それを保持する。[見出し ID の記法][Heading ID syntax] は `{ #some-id }` のように、見出しテキストの後に記述されます。
+- Preserve the heading's explicit ID if it has one. 見出しに明示的な ID がある場合は、それを保持する。[見出し ID の記法][Heading ID syntax] は `{ #some-id }` のように、見出しテキストの後に記述されます。
 - そうでない場合は、元の英語の見出しに対して自動生成された ID に対応する明示的な ID を宣言する。
 
 [Heading ID syntax]: https://github.com/yuin/goldmark/blob/master/README.md#headings
 
 ### リンク {#links}
 
-リンク参照を **翻訳しないで** ください。
+Do **not** translate link references. リンク参照を **翻訳しないで** ください。
 これは外部リンク、ウェブサイトのページへのパス、[画像](#images)のようなセクションローカルのリソースにも当てはまります。
 
 唯一の例外は、外部ページ（<https://en.wikipedia.org>など）へのリンクで、あなたのロケール固有のバージョンがある場合です。
-多くの場合、これはURLの`en`をあなたのロケールの言語コードに置き換えることを意味します。
+多くの場合、これはURLの`en`をあなたのロケールの言語コードに置き換えることを意味します。 Often
+this means replacing the `en` in the URL by your locale's language code.
 
 {{% alert title="Note" %}}
 
 OTelウェブサイトのリポジトリには、Hugoがドキュメントページを参照する絶対リンクパスを変換するために使用するカスタムの render-link フックがあります。
 **`/docs/some-page` 形式のリンク** は、リンクをレンダリングするときに、パスの先頭にページの言語コードを付けることで、 **ロケール固有になります** 。
-たとえば、先ほどのサンプルのパスは、日本語のページからレンダリングされた場合には `/ja/docs/some-page` となります。
+たとえば、先ほどのサンプルのパスは、日本語のページからレンダリングされた場合には `/ja/docs/some-page` となります。 **Links of the
+form `/docs/some-page` are made locale specific** by prefixing the path with the
+page language code when rendering the link. For example, the previous sample
+path would become `/ja/docs/some-page` when rendered from a Japanese page.
 
 {{% /alert %}}
 
 ### リンク定義ラベル {#link-labels}
 
 ロケールの著者は、Markdownの[リンク定義][link definitions]の[ラベル][labels]を翻訳するかしないかを選択できます。
-英語のラベルを保持することを選択した場合は、このセクションのガイダンスに従ってください。
+英語のラベルを保持することを選択した場合は、このセクションのガイダンスに従ってください。 If you choose to keep the English label, then follow the
+guidance given in this section.
 
 たとえば、次の Markdown を考えてみます。
 
@@ -113,9 +121,9 @@ OTelウェブサイトのリポジトリには、Hugoがドキュメントペー
 
 [Mermaid][] ダイアグラム内のテキストは **翻訳して** ください。
 
-[^shared-images]:
-    Hugoは、サイトのローカライゼーション間で共有される画像ファイルをレンダリングする方法についてスマートです。
-    つまり、Hugoは _単一の_ 画像ファイルを出力し、それをロケール間で共有します。
+[^shared-images]: Hugoは、サイトのローカライゼーション間で共有される画像ファイルをレンダリングする方法についてスマートです。
+    つまり、Hugoは _単一の_ 画像ファイルを出力し、それをロケール間で共有します。 That is, Hugo will output a _single_ image file
+    and share it across locales.
 
 [Mermaid]: https://mermaid.js.org
 
@@ -132,23 +140,27 @@ OTelウェブサイトのリポジトリには、Hugoがドキュメントペー
 {{% /alert %}}
 
 一部の基本ショートコードには英語のテキストが含まれており、ローカリゼーションが必要になる場合があります。
-特に、[layouts/_shortcodes/docs] に含まれるものについては、その傾向が強いです。
+特に、[layouts/\_shortcodes/docs][layouts/_shortcodes/docs] に含まれるものについては、その傾向が強いです。
 
 ローカリゼーションしたショートコードを作成する必要がある場合は、`layouts/_shortcodes/xx` に配置してください。
 ここで `xx` はローカリゼーション対象の言語コードを指します。
-その際、元の基本ショートコードと同じ相対パスを使用してください。
+その際、元の基本ショートコードと同じ相対パスを使用してください。 From
+there, use the same relative path as the original base shortcode.
 
 [layouts/_shortcodes/docs]: https://github.com/open-telemetry/opentelemetry.io/tree/main/layouts/_shortcodes/docs
 
 ## ローカリゼーションページの乖離を追跡する {#track-changes}
 
 ローカリゼーションページを維持する上で主な課題の 1 つは、対応する英語のページが更新されたタイミングを特定することです。
-本セクションでは、どのように対処するのかを説明します。
+本セクションでは、どのように対処するのかを説明します。 This section
+explains how we handle this.
 
 ### `default_lang_commit` フロントマターフィールド {#the-default_lang_commit-front-matter-field}
 
 `content/zh/<some-path>/page.md` のようなローカリゼーションページが書かれた際に、この翻訳は `content/en/<some-path>/page.md` にある対応する英語版のページの特定の [`main` ブランチのコミット][main] に基づいています。
-このリポジトリでは、それぞれのローカリゼーションページが対応する英語ページのコミットを以下のようにローカリゼーションページのフロントマターで識別します。
+このリポジトリでは、それぞれのローカリゼーションページが対応する英語ページのコミットを以下のようにローカリゼーションページのフロントマターで識別します。 In this repository, every localized page
+identifies the English page commit in the localized page's front matter as
+follows:
 
 ```markdown
 ---
@@ -159,7 +171,9 @@ default_lang_commit: <デフォルト言語の最新コミットハッシュ値>
 ```
 
 上述のフロントマターは `content/zh/<some-path>/page.md` です。
-このコミットは、`main` における `content/en/<some-path>/page.md` の最新コミットに対応します。
+このコミットは、`main` における `content/en/<some-path>/page.md` の最新コミットに対応します。 The commit
+hash would correspond to the latest commit of `content/en/<some-path>/page.md`
+from the `main` branch.
 
 ### 英語ページの変更を追跡する {#tracking-changes-to-english-pages}
 
@@ -180,7 +194,7 @@ npm run check:i18n -- content/zh
 ### 変更の詳細をみる {#viewing-change-details}
 
 更新が必要なローカリゼーションページについて、`-d` フラグとローカリゼーションページへのパスを追加して差分を見るか、パスを省略して対応するページのすべての差分を見ることができます。
-たとえば、以下のようになります。
+たとえば、以下のようになります。 For example:
 
 ```console
 $ npm run check:i18n -- -d content/zh/docs/platforms/kubernetes
@@ -204,7 +218,8 @@ index 3592df5d..c7980653 100644
 
 翻訳ページが`main` における `<hash>` 時点の英語ページに基づいている場合、以下のコマンドを実行すると、`default_lang_commit` をコミット `<hash>` の値で自動的にページのフロントマターに追加できます。
 ページが `main` の `HEAD` に同期している場合、引数として `Head` を指定できます。
-たとえば、以下のように実行します。
+たとえば、以下のように実行します。 You can specify `HEAD` as an
+argument if your pages are now synced with `main` at `HEAD`. For example:
 
 ```sh
 npm run check:i18n -- -n -c 1ca30b4d content/ja
@@ -237,20 +252,23 @@ npm run check:i18n -- -c HEAD <PATH-TO-YOUR-NEW-FILES>
 {{% alert title="重要" %}}
 
 `HEAD` をハッシュ指定子として使用すると、スクリプトは**ローカル環境**における `main` の HEAD のハッシュを使用します。
-`main` を GitHub 上の HEAD に対応したい場合、必ず `main` のフェッチとプルをしてください。
+`main` を GitHub 上の HEAD に対応したい場合、必ず `main` のフェッチとプルをしてください。 Make sure that you fetch and pull `main`,
+if you want HEAD to correspond to `main` in GitHub.
 
 {{% /alert %}}
 
 ### 乖離の状況 {#drift-status}
 
 `npm run fix:i18n:status` を実行して、ローカライズ対象ページが原文から乖離した場合にフロントマターフィールド `drifted_from_default` を追加します。
-このフィールドは近いうちに、英語版のページと比較してドリフトしたページの上部にバナーを表示するために使われるようになります。
+このフィールドは近いうちに、英語版のページと比較してドリフトしたページの上部にバナーを表示するために使われるようになります。 This field will soon be
+used to display a banner at the top of pages that have drifted relative to their
+English counterparts.
 
 ### スクリプトのヘルプ {#script-help}
 
 スクリプトの詳細は、`npm run check:i18n -- -h` を実行してください。
 
-## 新しいローカリゼーション {#new-localizations}
+## New localizations
 
 ### 新しいローカリゼーションチーム {#new-localization-team}
 
@@ -270,8 +288,10 @@ OpenTelemetry ウェブサイトの新しい言語のローカリゼーション
 2. メンターと潜在的なコントリビューターのGitHubハンドルを追加してください。
 
 3. 追加したい言語の公式[ISO 639-1 コード][ISO 639-1 code]を調べてください。このセクションの残りの部分では、この言語コードを`LANG_ID`と呼びます。
+   We'll refer to this language code as `LANG_ID` in the remainder of this
+   section.
 
-4. イシューの冒頭コメントに以下のタスクリストを追加してください。
+4. Add the following task list to your issue's opening comment:
 
    ```markdown
    - [ ] Language info:
@@ -293,6 +313,9 @@ OpenTelemetry ウェブサイトの新しい言語のローカリゼーション
    ```
 
 5. ウェブサイトの[ホームページ][homepage]の翻訳を含む[プルリクエストを送信](../pull-requests/)してください。翻訳するのは`content/LANG_ID/_index.md`ファイルだけにしてください。メンテナーがPRを編集するために必要な権限があることを確認してください。彼らはローカリゼーションプロジェクトを開始するために必要な追加変更をPRに加えます。
+   Ensure that maintainers have the necessary permissions to edit your PR, since
+   they will add additional changes to your PR that are required to get your
+   localization project started.
 
 [ISO 639-1 code]: https://en.wikipedia.org/wiki/ISO_639-1
 [homepage]: https://github.com/open-telemetry/opentelemetry.io/blob/main/content/en/_index.md
@@ -301,10 +324,16 @@ OpenTelemetry ウェブサイトの新しい言語のローカリゼーション
 
 {{% alert title="Note" %}}
 
-新しいローカリゼーションを始めるのに、OpenTelemetry プロジェクトの既存のコントリビューターである必要はありません。
+You don't have to be an existing contributor to the OpenTelemetry project, to
+start a new localization. However, you will not be added as a member of the
+[OpenTelemetry GitHub organization](https://github.com/open-telemetry/) or as a
+member of the approvers group for your localization. 新しいローカリゼーションを始めるのに、OpenTelemetry プロジェクトの既存のコントリビューターである必要はありません。
 しかし、[OpenTelemetry GitHub 組織](https://github.com/open-telemetry/)のメンバーまたはローカリゼーションの承認者グループのメンバーとして追加されることはありません。
 確立されたメンバーおよび承認者になるための要件を満たす必要があります。これは[メンバーシップガイドライン](https://github.com/open-telemetry/community/blob/main/guides/contributor/membership.md)に概説されています。
 ローカリゼーションプロジェクトを開始する際、メンテナーはあなたがすでに承認者であるかのようにあなたのレビューを扱います。
+
+When starting the localization project, maintainers will treat your reviews as
+if you are an approver already.
 
 {{% /alert %}}
 
@@ -312,18 +341,20 @@ OpenTelemetry ウェブサイトの新しい言語のローカリゼーション
 
 #### Hugo {#hugo}
 
-`hugo.yaml`を更新します。`LANG_ID`の適切なエントリを以下に追加します。
+Update `hugo.yaml`. `hugo.yaml`を更新します。`LANG_ID`の適切なエントリを以下に追加します。
 
 - `languages`
-- `module.mounts`。最低限、`content`用の単一の`source`-`target`エントリを追加します。ロケールに十分なコンテンツがある場合にのみ、`en`フォールバックページのエントリの追加を検討してください。
+- `module.mounts`. At a minimum, add a single `source`-`target` entry for
+  `content`. `module.mounts`。最低限、`content`用の単一の`source`-`target`エントリを追加します。ロケールに十分なコンテンツがある場合にのみ、`en`フォールバックページのエントリの追加を検討してください。
 
-#### スペルチェック {#spelling}
+#### Spelling
 
-NPMパッケージ[@cspell/dict-LANG_ID][]として利用可能な[cSpell辞書][cSpell dictionaries]を探します。
-方言や地域に辞書がない場合は、最も近い地域のものを選んでください。
+NPMパッケージ[@cspell/dict-LANG\_ID][@cspell/dict-LANG_ID]として利用可能な[cSpell辞書][cSpell dictionaries]を探します。
+方言や地域に辞書がない場合は、最も近い地域のものを選んでください。 If a dictionary isn't available for your dialect or
+region, choose the closest region.
 
 辞書が利用できない場合は、このサブセクションの残りをスキップします。
-それ以外の場合は以下を実施してください。
+それ以外の場合は以下を実施してください。 Otherwise:
 
 - 開発依存関係としてNPMパッケージを追加します。例：`npm install --save-dev @cspell/dict-bn`
 - `.cspell/LANG_ID-words.txt`を作成して、`LANG_ID`用のサイトローカル辞書単語を保存します。
@@ -343,18 +374,23 @@ NPMパッケージ[@cspell/dict-LANG_ID][]として利用可能な[cSpell辞書]
 
 ### 意味的な変更を含むPRは複数のロケールにまたがるべきではない {#prs-should-not-span-locales}
 
-承認者は、ドキュメントページに**意味的な**変更を加えるPRが複数のロケールにまたがらないようにする必要があります。
-意味的な変更とは、ページコンテンツの _意味_ に影響を与える変更です。
-私たちのドキュメントの[ローカリゼーションプロセス](.)により、ロケールの承認者は、時期を見て、英語の編集内容を確認し、その変更がそのロケールに適切かどうか、およびそのロケールにどのように組み込むのが最善かを判断します。
-変更が必要な場合、ロケールの承認者は独自のロケール固有のPRを通じて変更を行います。
+Approvers should ensure that PRs making **semantic** changes to doc pages do not
+span multiple locales. A semantic change is one that impacts the _meaning_ of
+the page content. Our docs [localization process](.) ensures that locale
+approvers will, in time, review the English-language edits to determine if the
+changes are appropriate for their locale, and how best to incorporate them into
+their locale. If changes are necessary, the locale approvers will make them via
+their own locale-specific PRs.
 
 ### ロケール間での純粋に編集上の変更は問題ない {#patch-locale-links}
 
 壊れたリンクパスの修正などの**純粋に編集上の**ページ更新は、ロケールにまたがることができます。
-純粋に編集上の変更とは、ページコンテンツの意味に影響を**与えない**変更です。
+純粋に編集上の変更とは、ページコンテンツの意味に影響を**与えない**変更です。 A purely editorial change is one that **does not** impact the meaning
+of the page content.
 
 たとえば、英語のドキュメントへの変更により、非英語のロケールでリンクチェックの失敗が発生することがあります。
-これはドキュメントページが移動または削除された場合に発生します。
+これはドキュメントページが移動または削除された場合に発生します。 This happens when documentation
+pages are moved or deleted.
 
 このような状況では、リンクチェックに失敗するパスを持つ各非英語ページに対して以下の更新を行います。
 
