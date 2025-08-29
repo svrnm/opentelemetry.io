@@ -5,7 +5,6 @@ aliases:
   - /docs/languages/go/using_instrumentation_libraries
   - /docs/languages/go/automatic_instrumentation
 weight: 40
-default_lang_commit: adc4264c2926e3d767b6a56affb19fb4ae3f2a22
 ---
 
 {{% docs/languages/libraries-intro "go" %}}
@@ -18,7 +17,8 @@ default_lang_commit: adc4264c2926e3d767b6a56affb19fb4ae3f2a22
 
 ## セットアップ {#setup}
 
-各計装ライブラリはパッケージです。一般的に、これは適切なパッケージを`go get`する必要があることを意味します。
+Each instrumentation library is a package. In general, this means you need to
+`go get` the appropriate package. 各計装ライブラリはパッケージです。一般的に、これは適切なパッケージを`go get`する必要があることを意味します。
 たとえば、[Contribリポジトリ](https://github.com/open-telemetry/opentelemetry-go-contrib)で維持されている計装ライブラリを取得するには、以下を実行します。
 
 ```sh
@@ -38,4 +38,6 @@ go get go.opentelemetry.io/contrib/instrumentation/{import-path}/otel{package-na
 計装ライブラリは、インバウンドおよびアウトバウンドHTTPリクエストのテレメトリーデータを生成するなどのことができますが、実際のアプリケーションを計装化することはありません。
 
 [カスタムインストルメンテーション](../instrumentation/)をコードに統合して、テレメトリーデータを充実させてください。
-これは標準ライブラリのテレメトリーを補完し、実行中のアプリケーションへのより深い洞察を提供できます。
+これは標準ライブラリのテレメトリーを補完し、実行中のアプリケーションへのより深い洞察を提供できます。 This supplements
+the standard library telemetry, and can offer deeper insights into your running
+application.
