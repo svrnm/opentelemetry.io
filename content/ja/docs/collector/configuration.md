@@ -2,7 +2,6 @@
 title: 設定
 weight: 20
 description: ニーズに合わせてコレクターを設定する方法を確認してください
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 # prettier-ignore
 cSpell:ignore: cfssl cfssljson fluentforward gencert genkey hostmetrics initca oidc otlphttp pprof prodevent prometheusremotewrite spanevents upsert zpages
 ---
@@ -11,6 +10,8 @@ cSpell:ignore: cfssl cfssljson fluentforward gencert genkey hostmetrics initca o
 
 観測のニーズに合わせて OpenTelemetry Collector を設定できます。
 コレクターの設定方法を学ぶ前に、以下の内容を理解してください。
+Before you learn how Collector configuration works, familiarize yourself with
+the following content:
 
 - [データ収集の概念][dcc]、OpenTelemetry コレクターに適用可能なリポジトリを理解します。
 - [エンドユーザー向けセキュリティガイダンス](/docs/security/config-best-practices/)
@@ -22,7 +23,8 @@ cSpell:ignore: cfssl cfssljson fluentforward gencert genkey hostmetrics initca o
 ここで、 `<otel-directory>` はコレクターのバージョンや使っているコレクターのディストリビューションによって `otelcol` 、 `otelcol-contrib` あるいは他の値となります。
 
 `--config` オプションを使用して、1つまたは複数の設定を指定できます。
-たとえば次のように行います。
+たとえば次のように行います。 For
+example:
 
 ```shell
 otelcol --config=customconfig.yaml
@@ -31,14 +33,18 @@ otelcol --config=customconfig.yaml
 また、異なるパスにある複数のファイルを使用して、複数の設定を提供できます。
 各ファイルは完全な構成でも部分的な構成でもよく、ファイルは互いのコンポーネントを参照できます。
 ファイルの結合が完全な設定を構成しない場合、必要なコンポーネントがデフォルトで追加されないため、エラーとなります。
-コマンドラインで次のように複数のファイルパスを渡します。
+コマンドラインで次のように複数のファイルパスを渡します。 Each file can be a full or partial configuration, and the files can
+reference components from each other. If the merger of files does not constitute
+a complete configuration, the user receives an error since required components
+are not added by default. Pass in multiple file paths at the command line as
+follows:
 
 ```shell
 otelcol --config=file:/path/to/first/file --config=file:/path/to/second/file
 ```
 
 環境変数、HTTP URI、YAMLパスを使って設定を提供することもできます。
-たとえば次のように行います。
+たとえば次のように行います。 For example:
 
 ```shell
 otelcol --config=env:MY_CONFIG_IN_AN_ENVVAR --config=https://server/config.yaml
@@ -48,12 +54,13 @@ otelcol --config="yaml:exporters::debug::verbosity: normal"
 {{% alert title="Tip" %}}
 
 YAML パスでネストされたキーを参照するとき、ドットを含む名前空間との混乱を避けるために、必ずダブルコロン (::) を使います。
-たとえば `receivers::docker_stats::metrics::container.cpu.utilization::enabled: false` などです。
+たとえば `receivers::docker_stats::metrics::container.cpu.utilization::enabled: false` などです。 For example:
+`receivers::docker_stats::metrics::container.cpu.utilization::enabled: false`.
 
 {{% /alert %}}
 
 設定ファイルを検証するには、 `validate` コマンドを使用します。
-たとえば次のような形です。
+たとえば次のような形です。 For example:
 
 ```shell
 otelcol validate --config=customconfig.yaml
@@ -72,15 +79,19 @@ otelcol validate --config=customconfig.yaml
 
 パイプラインコンポーネントの他に、[拡張機能](#extensions)を設定することもできます。
 [拡張機能](#extensions)は、診断ツールなど、コレクターに追加できる機能を提供します。
-拡張機能はテレメトリーデータに直接アクセスする必要はなく、[service](#service) 節で有効にできます。
+拡張機能はテレメトリーデータに直接アクセスする必要はなく、[service](#service) 節で有効にできます。 Extensions don't require direct access to telemetry data and
+are enabled through the [service](#service) section.
 
 <a id="endpoint-0.0.0.0-warning"></a>以下は、レシーバー、プロセッサー、エクスポーター、3つの拡張機能を持つコレクターの設定例です。
 
 {{% alert title="Important" color="warning" %}}
 
-一般に、すべてのクライアントがローカルの場合、エンドポイントを `localhost` にバインドするのが望ましいですが、この例の構成では便宜上「未指定」アドレス `0.0.0.0` を使用しています。
-コレクターのデフォルトは現在 `0.0.0.0` ですが、近い将来 `localhost` に変更される予定です。
-エンドポイント設定値としてのこれらの選択肢の詳細については、[サービス拒否攻撃への対策][Safeguards against denial of service attacks]を参照してください。
+While it is generally preferable to bind endpoints to `localhost` when all
+clients are local, our example configurations use the "unspecified" address
+`0.0.0.0` as a convenience. The Collector currently defaults to `0.0.0.0`, but
+the default will be changed to `localhost` in the near future. For details
+concerning either of these choices as endpoint configuration value, see
+[Safeguards against denial of service attacks].
 
 [Safeguards against denial of service attacks]: https://github.com/open-telemetry/opentelemetry-collector/blob/main/docs/security-best-practices.md#safeguards-against-denial-of-service-attacks
 
@@ -123,10 +134,10 @@ service:
       exporters: [otlp]
 ```
 
-レシーバー、プロセッサー、エクスポーター、パイプラインは、`type[/name]` 形式にしたがうコンポーネント識別子で定義されることに注意してください。
-たとえば `otlp` や `otlp/2` というような形です。
-識別子が一意である限り、指定されたタイプのコンポーネントを複数回定義できます。
-以下に例を載せます。
+Note that receivers, processors, exporters and pipelines are defined through
+component identifiers following the `type[/name]` format, for example `otlp` or
+`otlp/2`. You can define components of a given type more than once as long as
+the identifiers are unique. For example:
 
 ```yaml
 receivers:
@@ -228,19 +239,20 @@ service:
 
 ## レシーバー <img width="35" class="img-initial" alt="" src="/img/logos/32x32/Receivers.svg"> {#receivers}
 
-レシーバーは1つ以上のソースからテレメトリーを収集します。
-プルベースでもプッシュベースでもよく、1つ以上の[データソース](/docs/concepts/signals/)をサポートすることができます。
+Receivers collect telemetry from one or more sources. They can be pull or push
+based, and may support one or more [data sources](/docs/concepts/signals/).
 
-レシーバーは `receivers` セクションで設定します。
-多くのレシーバーにはデフォルト設定が付属しており、レシーバー名を指定するだけで設定できます。
-レシーバーの設定が必要な場合やデフォルト設定を変更したい場合は、このセクションで行うことができます。
-指定した設定がデフォルト値より優先されます。
+Receivers are configured in the `receivers` section. Many receivers come with
+default settings, so that specifying the name of the receiver is enough to
+configure it. If you need to configure a receiver or want to change the default
+configuration, you can do so in this section. Any setting you specify overrides
+the default values, if present.
 
-> レシーバーを設定しても、有効になるわけではありません。
-> レシーバーは、[service](#service)セクション内の適切なパイプラインに追加することで有効になります。
+> Configuring a receiver does not enable it. Receivers are enabled by adding
+> them to the appropriate pipelines within the [service](#service) section.
 
-コレクターには1つ以上のレシーバーが必要です。
-以下の例では、同じ構成ファイルにさまざまなレシーバーが含まれています。
+The Collector requires one or more receivers. The following example shows
+various receivers in the same configuration file:
 
 ```yaml
 receivers:
@@ -305,19 +317,24 @@ receivers:
 
 ## プロセッサー <img width="35" class="img-initial" alt="" src="/img/logos/32x32/Processors.svg"> {#processors}
 
-プロセッサーは、レシーバーによって収集されたデータを、エクスポーターに送信する前に修正または変換します。
-データ処理は、各プロセッサーに定義されたルールまたは設定にしたがって行われ、フィルタリング、ドロップ、名前の変更、テレメトリーの再計算などの処理が含まれます。
-パイプライン内のプロセッサーの順序は、コレクターがシグナルに適用する処理操作の順序を決定します。
+Processors take the data collected by receivers and modify or transform it
+before sending it to the exporters. Data processing happens according to rules
+or settings defined for each processor, which might include filtering, dropping,
+renaming, or recalculating telemetry, among other operations. The order of the
+processors in a pipeline determines the order of the processing operations that
+the Collector applies to the signal.
 
 プロセッサーはオプションですが、いくつかは[推奨](https://github.com/open-telemetry/opentelemetry-collector/tree/main/processor#recommended-processors)です。
 
 コレクター構成ファイルの `processors` セクションを使用してプロセッサーを構成できます。
-指定した設定は、デフォルト値がある場合はそれを上書きします。
+指定した設定は、デフォルト値がある場合はそれを上書きします。 Any setting you specify overrides the default values, if
+present.
 
-> プロセッサーを設定しても、そのプロセッサーが有効になるわけではありません。
+> Configuring a processor does not enable it. プロセッサーを設定しても、そのプロセッサーが有効になるわけではありません。
 > プロセッサーは、[service](#service)セクション内の適切なパイプラインに追加することで有効になります。
 
-以下の例では、同じ設定ファイルの中にデフォルトのプロセッサーをいくつか示しています。
+The following example shows several default processors in the same configuration
+file. 以下の例では、同じ設定ファイルの中にデフォルトのプロセッサーをいくつか示しています。
 [opentelemetry-collector-contrib](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor)のリストと[opentelemetry-collector](https://github.com/open-telemetry/opentelemetry-collector/tree/main/processor)のリストを組み合わせることで、プロセッサーの完全なリストを見つけられます。
 
 ```yaml
@@ -397,20 +414,23 @@ processors:
 ## エクスポーター <img width="35" class="img-initial" alt="" src="/img/logos/32x32/Exporters.svg"> {#exporters}
 
 エクスポーターはデータを1つ以上のバックエンドや宛先に送信します。
-また、1つ以上の[データソース](/docs/concepts/signals/)をサポートすることもあります。
+また、1つ以上の[データソース](/docs/concepts/signals/)をサポートすることもあります。 Exporters can be
+pull or push based, and may support one or more
+[data sources](/docs/concepts/signals/).
 
 `exporters` セクション内の各キーはエクスポーターインスタンスを定義します。
 キーは `type/name` の形式にしたがい、`type` はエクスポータータイプを指定します(例: `otlp`、 `kafka`、`prometheus`)。
 また、`name` （オプション）を追加して、同じタイプの複数のインスタンスに対して一意の名前を指定することもできます。
 
-ほとんどのエクスポーターは、少なくとも宛先を指定する設定と、認証トークンやTLS証明書などのセキュリティ設定を必要とします。
-指定した設定は、デフォルト値がある場合はそれを上書きします。
+Most exporters require configuration to specify at least the destination, as
+well as security settings, like authentication tokens or TLS certificates. Any
+setting you specify overrides the default values, if present.
 
-> エクスポーターを設定しても、それが有効になるわけではありません。
+> Configuring an exporter does not enable it. エクスポーターを設定しても、それが有効になるわけではありません。
 > エクスポート機能は、[service](#service)セクション内の適切なパイプラインに追加することで有効になります。
 
-コレクターには1つ以上のエクスポーターが必要です。
-以下の例では、同じ構成ファイルにさまざまなエクスポーターが含まれています。
+The Collector requires one or more exporters. The following example shows
+various exporters in the same configuration file:
 
 ```yaml
 exporters:
@@ -473,19 +493,23 @@ exporters:
 
 ## コネクター <img width="32" class="img-initial" alt="" src="/img/logos/32x32/Load_Balancer.svg"> {#connectors}
 
-コネクターは2つのパイプラインを結合し、エクスポーターとレシーバーの両方の役割を果たします。
-コネクターは、あるパイプラインの終端でエクスポーターとしてデータを消費し、別のパイプラインの始端でレシーバーとしてデータを放出します。
-消費されるデータと排出されるデータは、同じデータ型である場合もあれば、異なるデータ型である場合もあります。
-コネクターを使用して、消費されたデータを要約したり、複製したり、ルーティングしたりできます。
+Connectors join two pipelines, acting as both exporter and receiver. A connector
+consumes data as an exporter at the end of one pipeline and emits data as a
+receiver at the beginning of another pipeline. The data consumed and emitted may
+be of the same type or of different data types. You can use connectors to
+summarize consumed data, replicate it, or route it.
 
 コレクター構成ファイルの `connectors` セクションを使用して、1つまたは複数のコネクターを構成できます。
 デフォルトでは、コネクターは構成されていません。
-コネクターの各タイプは、1つまたは複数のデータ型のペアで動作するように設計されており、パイプラインの接続にのみ使用できます。
+コネクターの各タイプは、1つまたは複数のデータ型のペアで動作するように設計されており、パイプラインの接続にのみ使用できます。 By default, no connectors are configured. Each
+type of connector is designed to work with one or more pairs of data types and
+may only be used to connect pipelines accordingly.
 
-> コネクターは[service](#service)セクション内のパイプラインを通じて有効になります。
+> Configuring a connector doesn't enable it. コネクターは[service](#service)セクション内のパイプラインを通じて有効になります。
 
 次の例は、`count` コネクターと、`pipelines` 節での設定方法を示しています。
-このコネクターは、トレースのエクスポーターとして、またメトリクスのレシーバーとして機能し、両方のパイプラインを接続していることに注意してください。
+このコネクターは、トレースのエクスポーターとして、またメトリクスのレシーバーとして機能し、両方のパイプラインを接続していることに注意してください。 Notice that the connector acts as an exporter for traces
+and as a receiver for metrics, connecting both pipelines:
 
 ```yaml
 receivers:
@@ -515,20 +539,25 @@ service:
 
 > コネクターの詳細な設定については、[コネクターのREADME](https://github.com/open-telemetry/opentelemetry-collector/blob/main/connector/README.md)を参照。
 
-## 拡張機能 {#extensions}
+## Extensions <img width="32" class="img-initial" alt="" src="/img/logos/32x32/Extensions.svg"> {#extensions}
 
 拡張機能は、コレクターの機能を拡張して、テレメトリーデータの処理に直接関係しないタスクを実行するオプションのコンポーネントです。
-たとえば、コレクターのヘルス監視、サービスディスカバリ、データ転送などの拡張機能を追加できます。
+たとえば、コレクターのヘルス監視、サービスディスカバリ、データ転送などの拡張機能を追加できます。 For
+example, you can add extensions for Collector health monitoring, service
+discovery, or data forwarding, among others.
 
 コレクター設定ファイルの `extensions` セクションで拡張機能を設定できます。
 ほとんどの拡張機能にはデフォルトの設定が付属しているため、拡張機能の名前を指定するだけで設定できます。
-指定した設定は、デフォルト値がある場合はそれを上書きします。
+指定した設定は、デフォルト値がある場合はそれを上書きします。 Most extensions come with default settings, so you can
+configure them just by specifying the name of the extension. Any setting you
+specify overrides the default values, if present.
 
-> 拡張機能を設定しても有効にはなりません。
+> Configuring an extension doesn't enable it. 拡張機能を設定しても有効にはなりません。
 > 拡張機能は[service](#service)セクションで有効になります。
 
 デフォルトでは、拡張機能は設定されていません。
-次の例では、同じファイルに複数の拡張機能が設定されています。
+次の例では、同じファイルに複数の拡張機能が設定されています。 The following example shows several
+extensions configured in the same file:
 
 ```yaml
 extensions:
@@ -541,7 +570,9 @@ extensions:
 
 ## サービスセクション {#service}
 
-`service` セクションは、レシーバー、プロセッサー、エクスポーター、および拡張機能のセクションの構成に基づいて、コレクターで有効になるコンポーネントを構成するために使用されます。
+The `service` section is used to configure what components are enabled in the
+Collector based on the configuration found in the receivers, processors,
+exporters, and extensions sections. `service` セクションは、レシーバー、プロセッサー、エクスポーター、および拡張機能のセクションの構成に基づいて、コレクターで有効になるコンポーネントを構成するために使用されます。
 コンポーネントが設定されているけれど、`service` セクションで定義されていない場合、そのコンポーネントは有効になりません。
 
 サービス部門は3つのサブ節で構成されています。
@@ -553,7 +584,7 @@ extensions:
 ### 拡張機能 {#service-extensions}
 
 `extensions` サブセクションは、有効にする拡張のリストで構成されます。
-たとえば次のようになります。
+たとえば次のようになります。 For example:
 
 ```yaml
 service:
@@ -562,20 +593,24 @@ service:
 
 ### パイプライン {#pipelines}
 
-`pipelines` サブセクションは、パイプラインを設定する場所です。
+The `pipelines` subsection is where the pipelines are configured, which can be
+of the following types:
 
 - `traces:` トレースデータの収集と処理を行います
 - `metrics:` メトリクスデータの収集と処理を行います
 - `logs:` ログデータの収集と処理を行います
 
-パイプラインは、レシーバー、プロセッサー、エクスポーターのセットで構成されます。
-パイプラインにレシーバー、プロセッサー、エクスポーターを含める前に、適切な節で設定を定義してください。
+A pipeline consists of a set of receivers, processors and exporters. Before
+including a receiver, processor, or exporter in a pipeline, make sure to define
+its configuration in the appropriate section.
 
 同じレシーバー、プロセッサー、エクスポーターを複数のパイプラインで使用できます。
 プロセッサーが複数のパイプラインで参照される場合、各パイプラインはプロセッサーの個別のインスタンスを取得します。
+When a processor is referenced in multiple pipelines, each pipeline gets a
+separate instance of the processor.
 
-以下はパイプラインの構成例です。
-プロセッサーの順番によって、データの処理順が決まることに注意してください。
+The following is an example of pipeline configuration. Note that the order of
+processors dictates the order in which data is processed:
 
 ```yaml
 service:
@@ -591,7 +626,7 @@ service:
 ```
 
 コンポーネントと同様に、`type[/name]` 構文を使用して、指定したタイプのパイプラインを追加作成します。
-前述の設定を拡張した例を示します。
+前述の設定を拡張した例を示します。 Here is an example extending the previous configuration:
 
 ```yaml
 service:
@@ -607,7 +642,8 @@ service:
 
 ### テレメトリー {#telemetry}
 
-`telemetry` 設定セクションでは、コレクター自体のオブザーバビリティを設定します。
+The `telemetry` config section is where you can set up observability for the
+Collector itself. It consists of two subsections: `logs` and `metrics`. `telemetry` 設定セクションでは、コレクター自体のオブザーバビリティを設定します。
 これは2つのサブセクションで構成されます。
 `logs` および `metrics` です。
 これらのシグナルの設定方法については、[コレクター内部のテレメトリーを有効にする](/docs/collector/internal-telemetry#activate-internal-telemetry-in-the-collector) を参照してください。
@@ -616,7 +652,8 @@ service:
 
 ### 環境変数 {#environment-variables}
 
-コレクター設定では、環境変数の使用と拡張がサポートされています。
+The use and expansion of environment variables is supported in the Collector
+configuration. コレクター設定では、環境変数の使用と拡張がサポートされています。
 たとえば、`DB_KEY` および `OPERATION` 環境変数に格納されている値を使用するには、以下のように記述します。
 
 ```yaml
@@ -627,8 +664,20 @@ processors:
         action: ${env:OPERATION}
 ```
 
+You can pass defaults to an environment variable using the bash syntax:
+`${env:DB_KEY:-some-default-var}`
+
+```yaml
+processors:
+  attributes/example:
+    actions:
+      - key: ${env:DB_KEY:-mydefault}
+        action: ${env:OPERATION:-}
+```
+
 リテラル `$` を示すには `$$` を使用します。
-たとえば、`$DataVisualization` 使うときは、次のようになります。
+たとえば、`$DataVisualization` 使うときは、次のようになります。 For example, representing
+`$DataVisualization` would look like the following:
 
 ```yaml
 exporters:
@@ -650,16 +699,20 @@ exporters:
 ### 認証 {#authentication}
 
 HTTPまたはgRPCポートを公開しているほとんどのレシーバーは、コレクターの認証メカニズムを使用して保護できます。
-同様に、HTTP または gRPC クライアントを使用するほとんどのエクスポーターは、送信リクエストに認証を追加できます。
+同様に、HTTP または gRPC クライアントを使用するほとんどのエクスポーターは、送信リクエストに認証を追加できます。 Similarly, most exporters using HTTP or
+gRPC clients can add authentication to outgoing requests.
 
 コレクターの認証メカニズムは拡張メカニズムを使用しており、カスタム認証機能をコレクターディストリビューションにプラグインできます。
 各認証拡張機能には2つの使用法があります。
+Each authentication extension has two possible usages:
 
 - エクスポーターのクライアント認証機能として、送信リクエストに認証データを追加します。
 - レシーバーのサーバー認証機能として、着信接続を認証します。
 
 既知の認証機能のリストについては、[レジストリ](/ecosystem/registry/?s=authenticator&component=extension)を参照してください。
-カスタムの認証機能を開発したい場合は、[認証機能の拡張を開発する](../building/authenticator-extension) を参照してください。
+カスタムの認証機能を開発したい場合は、[認証機能の拡張を開発する](../building/authenticator-extension) を参照してください。 If you're
+interested in developing a custom authenticator, see
+[Building an authenticator extension](../building/authenticator-extension).
 
 コレクターのレシーバーにサーバー認証機能を追加するには、以下の手順にしたがいます。
 
@@ -668,40 +721,6 @@ HTTPまたはgRPCポートを公開しているほとんどのレシーバーは
 3. `.receivers.<your-receiver>.<http-or-grpc-config>.auth` に認証子への参照を追加します。
 
 以下の例では、レシーバー側でOIDC認証を使用しているため、エージェントとして動作する OpenTelemetryコレクターからデータを受信するリモート コレクターに適しています。
-
-```yaml
-extensions:
-  oidc:
-    issuer_url: http://localhost:8080/auth/realms/opentelemetry
-    audience: collector
-
-receivers:
-  otlp/auth:
-    protocols:
-      grpc:
-        endpoint: 0.0.0.0:4317
-        auth:
-          authenticator: oidc
-
-processors:
-
-exporters:
-  # NOTE: v0.86.0 以前では `debug` ではなく `logging` を使うこと
-  debug:
-
-service:
-  extensions:
-    - oidc
-  pipelines:
-    traces:
-      receivers:
-        - otlp/auth
-      processors: []
-      exporters:
-        - debug
-```
-
-エージェント側では、OTLPエクスポーターにOIDCトークンを取得させ、リモートコレクターへのすべてのRPCに追加する例です。
 
 ```yaml
 extensions:
@@ -736,11 +755,47 @@ service:
         - otlp/auth
 ```
 
+エージェント側では、OTLPエクスポーターにOIDCトークンを取得させ、リモートコレクターへのすべてのRPCに追加する例です。
+
+```yaml
+extensions:
+  oidc:
+    issuer_url: http://localhost:8080/auth/realms/opentelemetry
+    audience: collector
+
+receivers:
+  otlp/auth:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+        auth:
+          authenticator: oidc
+
+processors:
+
+exporters:
+  # NOTE: v0.86.0 以前では `debug` ではなく `logging` を使うこと
+  debug:
+
+service:
+  extensions:
+    - oidc
+  pipelines:
+    traces:
+      receivers:
+        - otlp/auth
+      processors: []
+      exporters:
+        - debug
+```
+
 ### 証明書の設定 {#setting-up-certificates}
 
 本番環境では、セキュアな通信にTLS証明書を使用するか、相互認証にmTLSを使用します。
 以下の手順にしたがって、この例のように自己署名証明書を生成します。
-現在使用している証明書のプロビジョニング手順を使用して、本番環境で使用する証明書を調達するといいでしょう。
+現在使用している証明書のプロビジョニング手順を使用して、本番環境で使用する証明書を調達するといいでしょう。 Follow these steps to generate self-signed
+certificates as in this example. You might want to use your current cert
+provisioning procedures to procure a certificate for production usage.
 
 [`cfssl`](https://github.com/cloudflare/cfssl)をインストールし、以下の `csr.json` ファイルを作成します。
 
@@ -776,7 +831,9 @@ cfssl gencert -ca ca.pem -ca-key ca-key.pem csr.json | cfssljson -bare cert
 ## 設定を上書きする {#override-settings}
 
 `--set` オプションを使用してコレクター設定をオーバーライドできます。
-この方法で定義した設定は、すべての `--config` ソースが解決されてマージされた後に最終的な設定にマージされます。
+この方法で定義した設定は、すべての `--config` ソースが解決されてマージされた後に最終的な設定にマージされます。 The settings you
+define with this method are merged into the final configuration after all
+`--config` sources are resolved and merged.
 
 以下の例では、ネストされた節の内部で設定を上書きする方法を示します。
 
