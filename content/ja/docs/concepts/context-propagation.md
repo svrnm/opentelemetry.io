@@ -2,35 +2,36 @@
 title: コンテキスト伝搬
 weight: 10
 description: 分散トレーシングを可能にする概念について学ぶ
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
 ---
 
-コンテキスト伝搬により、[シグナル](../signals/)は、それらが生成された場所に関係なく、互いを相関させられます。
-トレースに限ったことではありませんが、コンテキスト伝搬によって、[トレース](../signals/traces/)は、プロセスやネットワークの境界を越えて任意に分散しているサービス間で、システムに関する因果情報を構築できます。
+With context propagation, [signals](../signals/) can be correlated with each
+other, regardless of where they are generated. Although not limited to tracing,
+context propagation allows [traces](../signals/traces/) to build causal
+information about a system across services that are arbitrarily distributed
+across process and network boundaries.
 
-<!-- prettier-ignore-start -->
 コンテキストの伝搬を理解するには、コンテキストと伝搬（プロパゲーション）という、2つの別々の概念を理解する必要があります。
-<!-- prettier-ignore-end -->
 
 ## コンテキスト {#context}
 
 コンテキストは、送受信サービスまたは[実行ユニット](/docs/specs/otel/glossary/#execution-unit)が、あるシグナルと別のシグナルを関連付けるための情報を含むオブジェクトです。
 
-サービスAがサービスBを呼び出すとき、トレースIDとスパンIDをコンテキストの一部として含めます。
-サービスBはこれらの値を使用して同じトレースに属する新しいスパンを作成し、サービスAのスパンを親として設定します。
-これにより、サービスの境界を越えてリクエストの完全なフローの追跡が可能になります。
+When Service A calls Service B, it includes a trace ID and a span ID as part of
+the context. Service B uses these values to create a new span that belongs to
+the same trace, setting the span from Service A as its parent. This makes it
+possible to track the full flow of a request across service boundaries.
 
-<!-- prettier-ignore-start -->
-## 伝搬（プロパゲーション） {#propagation}
-<!-- prettier-ignore-end -->
+## Propagation
 
+Propagation is the mechanism that moves context between services and processes.
 伝搬は、サービスとプロセス間でコンテキストを移動させる仕組みです。
 コンテキストオブジェクトをシリアライズまたはデシリアライズし、あるサービスから別のサービスに伝搬される関連情報を提供します。
 
-伝搬は通常、計装ライブラリによって処理され、ユーザーには透過的です。
+Propagation is usually handled by instrumentation libraries and is transparent
+to the user. 伝搬は通常、計装ライブラリによって処理され、ユーザーには透過的です。
 手動でコンテキストを伝搬する必要がある場合は、[伝搬API](/docs/specs/otel/context/api-propagators/)を使用できます。
 
-OpenTelemetryはいくつかの公式プロパゲーターを保守しています。
+OpenTelemetry maintains several official propagators. OpenTelemetryはいくつかの公式プロパゲーターを保守しています。
 デフォルトのプロパゲーターは[W3C TraceContext](https://www.w3.org/TR/trace-context/)仕様で指定されたヘッダーを使用しています。
 
 ## 仕様
