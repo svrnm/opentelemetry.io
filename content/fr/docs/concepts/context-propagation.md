@@ -2,8 +2,6 @@
 title: Propagation du contexte
 weight: 10
 description: Présentation du concept permettant le traçage distribué.
-default_lang_commit: 71833a5f8b84110dadf1e98604b87a900724ac33
-drifted_from_default: true
 ---
 
 La propagation du contexte permet de mettre en corrélation les
@@ -23,16 +21,16 @@ service émetteur et le service récepteur, ou
 [unité d'exécution](/docs/specs/otel/glossary/#execution-unit), puissent mettre
 en corrélation un signal avec un autre.
 
-Prenons l'exemple d'un service A qui appelle un service B. Un span du service A,
-dont l'ID est inclus dans le contexte, sera utilisé comme span parent pour le
-prochain span créé par le service B. De plus, l'ID de trace inclus dans le
-contexte sera également utilisé pour le prochain span créé dans le service B, ce
-qui signifie que ce span fera partie de la même trace que le span du service A.
+When Service A calls Service B, it includes a trace ID and a span ID as part of
+the context. Service B uses these values to create a new span that belongs to
+the same trace, setting the span from Service A as its parent. This makes it
+possible to track the full flow of a request across service boundaries.
 
 ## Propagation {#propagation}
 
 La propagation est le mécanisme permettant de transmettre le contexte entre
-services et processus. Elle sérialise et désérialise le contexte et fournit les
+services et processus.
+Elle sérialise et désérialise le contexte et fournit les
 informations nécessaires d'un service à l'autre.
 
 La propagation étant généralement gérée automatiquement par les librairies
