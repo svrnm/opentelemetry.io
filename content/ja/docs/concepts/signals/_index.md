@@ -1,14 +1,21 @@
 ---
 title: シグナル
 description: OpenTelemetryがサポートするテレメトリーのカテゴリについて学ぶ
+aliases: [ data-sources, otel-concepts ]
 weight: 11
-default_lang_commit: 43ecc19b51fd86d5b2f30c638f6d734ee8b94932
 ---
 
 OpenTelemetryの目的は、**[シグナル][signals]** を収集、処理、エクスポートすることです。
 シグナルは、オペレーティングシステムやプラットフォーム上で動作しているアプリケーションの基本的な活動を記述するシステム出力です。
 シグナルは、温度やメモリ使用量のような特定の時点で測定したいもの、またはあなたが追跡したい分散システムのコンポーネントを通過するイベントです。
 異なるシグナルをグループ化して、同じテクノロジーの内部動作を異なる角度から観察することもできる。
+Signals are system outputs that describe the underlying activity of the
+operating system and applications running on a platform. A signal can be
+something you want to measure at a specific point in time, like temperature or
+memory usage, or an event that goes through the components of your distributed
+system that you'd like to trace. You can group different signals together to
+observe the inner workings of the same piece of technology under different
+angles.
 
 OpenTelemetry は現在、下記をサポートしています。
 
