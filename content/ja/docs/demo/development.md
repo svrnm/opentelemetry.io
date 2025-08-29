@@ -1,20 +1,23 @@
 ---
 title: 開発環境
-default_lang_commit: cd90ab77550fb2e92ca37cb3c753ec2d8bb7d8dc
 cSpell:ignore: grpcio intellij libcurl libprotobuf nlohmann openssl protoc
 ---
 
 [OpenTelemetry デモ GitHub リポジトリ](https://github.com/open-telemetry/opentelemetry-demo)
 
-このデモの開発には、複数のプログラミング言語のツールが必要です。
-最小要件バージョンについては可能な範囲で明示されていますが、最新版の利用を推奨しています。
-OpenTelemetryデモチームは、可能な限り依存関係やツールを最新版に保つよう努めています。
+Development for this demo requires tooling in several programming languages.
+Minimum required versions will be noted where possible, but it is recommended to
+update to the latest version for all tooling. The OpenTelemetry demo team will
+attempt to keep the services in this repository up to date with the latest
+version for dependencies and tooling when possible.
 
 ## Protocol Buffers ファイルの生成 {#generate-protobuf-files}
 
 すべてのサービスに対応する protobuf ファイルを生成するための `make generate-protobuf` コマンドが提供されています。
 このコマンドにより、（Dockerを使用せず）ローカルでのコードのコンパイルを行うことができ、IntelliJやVS CodeなどのIDEからのヒントを確認することができます。
-ファイル生成前にフロントエンドのソースフォルダで `npm install` の実行が必要な場合があります。
+ファイル生成前にフロントエンドのソースフォルダで `npm install` の実行が必要な場合があります。 This can be used to compile code locally (without Docker) and
+receive hints from IDEs such as IntelliJ or VS Code. It may be necessary to run
+`npm install` within the frontend source folder before generating the files.
 
 ## 必要な開発ツール {#development-tooling-requirements}
 
