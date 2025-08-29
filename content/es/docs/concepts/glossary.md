@@ -1,10 +1,7 @@
 ---
 title: Glosario
-description:
-  Definiciones y convenciones para términos de telemetría tal como se usan en
-  OpenTelemetry.
+description: Definiciones y convenciones para términos de telemetría tal como se usan en OpenTelemetry.
 weight: 200
-default_lang_commit: 530c8fd130c93dd95e9638c8919518dbbc9c6b0a
 ---
 
 Este glosario define términos y [conceptos](/docs/concepts/) que son nuevos para
@@ -25,22 +22,13 @@ la ejecución de un programa. Usado por la [Métrica](#metric)
 
 ### API
 
-Interfaz de Programación de Aplicaciones (_Application Programming Interface_).
-En el proyecto OpenTelemetry, se utiliza para definir cómo se generan los datos
+Interfaz de Programación de Aplicaciones (_Application Programming Interface_). En el proyecto OpenTelemetry, se utiliza para definir cómo se generan los datos
 de telemetría por cada [Fuente de datos](#data-source).
 
 ### Aplicación {#application}
 
 Uno o más [Servicios](#service) diseñados para usuarios finales u otras
 aplicaciones.
-
-### Aplicación cliente {#client-side-app}
-
-Un componente de una [Aplicación](#application) que no se ejecuta dentro de una
-infraestructura privada y que es típicamente utilizada directamente por los
-usuarios finales. Ejemplos de aplicaciones cliente son aplicaciones de
-navegador, aplicaciones móviles y aplicaciones que se ejecutan en dispositivos
-IoT.
 
 ### APM
 
@@ -56,51 +44,18 @@ clave-valor a la entidad que produce telemetría. Se utiliza en
 [Señales](#signal) y [Recursos](#resource). Ver [especificación de
 atributos][attribute].
 
-### Backend de observabilidad {#observability-backend}
+### Instrumentación automática {#automatic-instrumentation}
 
-El componente de una plataforma de observabilidad que es responsable de recibir,
-procesar, almacenar y consultar datos de telemetría. Ejemplos incluyen
-herramientas de código abierto herramientas de código abierto como [Jaeger] y
-[Prometheus], así como ofertas comerciales. OpenTelemetry no es un backend de
-observabilidad.
+Se refiere a métodos de recopilación de telemetría que no requieren que el
+usuario final modifique el código fuente de la aplicación. Los métodos varían
+según el lenguaje de programación, e incluyen ejemplos como inyección de
+_bytecode_ o _monkey patching_.
 
 ### Baggage
 
 Un mecanismo para propagar [Metadatos](#metadata) para ayudar a establecer una
 relación causal entre eventos y servicios. Ver [especificación de
 baggage][baggage].
-
-### Biblioteca {#library}
-
-Una colección de comportamiento específica de un lenguaje invocada por una
-interfaz.
-
-### Biblioteca cliente {#client-library}
-
-Ver [Biblioteca instrumentada](#instrumented-library).
-
-### Biblioteca de instrumentación {#instrumentation-library}
-
-Se refiere a la [Biblioteca](#library) que proporciona la instrumentación para
-una [Biblioteca instrumentada](#instrumented-library).
-[Biblioteca instrumentada](#instrumented-library) y
-[Biblioteca de instrumentación](#instrumentation-library) pueden ser la misma
-[Biblioteca](#library) si tiene instrumentación OpenTelemetry incorporada. Ver
-la [especificación de la biblioteca][spec-instrumentation-lib].
-
-### Biblioteca instrumentada {#instrumented-library}
-
-Se refiere a la [Biblioteca](#library) para la cual se recopilan las señales de
-telemetría ([Trazas](#trace), [Métricas](#metric), [Logs](#log)). Ver
-[Biblioteca instrumentada][instrumented library].
-
-### Campo {#field}
-
-Un término utilizado específicamente por [Registros de Log](#log-record).
-[Metadatos](#metadata) pueden ser añadidos a través de campos definidos,
-incluyendo [Atributos](#attribute) y [Recursos](#resource). Otros campos también
-pueden ser considerados `Metadatos`, incluyendo información de severidad y
-traza. Ver la [especificación de campos][field].
 
 ### Cardinalidad {#cardinality}
 
@@ -110,6 +65,18 @@ afectar el rendimiento y los requisitos de almacenamiento de los _backends_ de
 telemetría. Por ejemplo, un atributo `user_id` tendría alta cardinalidad,
 mientras que un atributo `status_code` con valores como "200", "404", "500"
 tendría baja cardinalidad.
+
+### Biblioteca {#library}
+
+Ver [Biblioteca instrumentada](#instrumented-library).
+
+### Aplicación cliente {#client-side-app}
+
+Un componente de una [Aplicación](#application) que no se ejecuta dentro de una
+infraestructura privada y que es típicamente utilizada directamente por los
+usuarios finales. Ejemplos de aplicaciones cliente son aplicaciones de
+navegador, aplicaciones móviles y aplicaciones que se ejecutan en dispositivos
+IoT.
 
 ### Collector
 
@@ -130,41 +97,39 @@ Varias [Bibliotecas de instrumentación](#instrumentation-library) y el
 repositorio dedicado para capacidades no incluidas en el núcleo, incluyendo
 _Exporters_ de proveedores.
 
-### Convenciones semánticas {#semantic-conventions}
+### Propagación de contexto {#context-propagation}
 
-Define nombres y valores estándar de [Metadatos](#metadata) para proporcionar
-datos de telemetría independientes del proveedor.
+Permite que todas las [Fuentes de datos](#data-source) compartan un mecanismo de
+contexto subyacente para almacenar estado y acceder a datos durante la vida útil
+de una [Transacción](#transaction). Ver [especificación de propagación de
+contexto][context propagation].
 
 ### DAG
 
 [_Directed Acyclic Graph_][dag].
+
+### Fuente de datos {#data-source}
+
+Ver [Señal](#signal)
 
 ### Dimensión {#dimension}
 
 Un término utilizado específicamente por [Métricas](#metric). Ver
 [Atributo](#attribute).
 
+### Trazas distribuídas {#distributed-tracing}
+
+Rastrea el progreso de una sola [Solicitud](#request), llamada [Traza](#trace),
+a medida que es manejada por [Servicios](#service) que forman parte de una
+[Aplicación](#application). Una [Traza distribuída](#distributed-tracing)
+atraviesa límites de proceso, red y seguridad.
+
+Ver [Trazas distribuídas](#distributed-tracing).
+
 ### Distribución {#distribution}
 
 Una distribución es un contenedor alrededor de un repositorio OpenTelemetry
 superior con algunas personalizaciones. Ver [Distribuciones][distributions].
-
-### Enlace de Span {#span-link}
-
-Un enlace de span es un enlace entre spans causalmente relacionados. Para más
-detalles, ver
-[Enlaces entre spans](/docs/specs/otel/overview#links-between-spans) y
-[Especificar Enlaces](/docs/specs/otel/trace/api#specifying-links).
-
-### Especificación {#specification}
-
-Describe los requisitos y expectativas cruzados de todos los implementaciones.
-Ver [Especificación][specification].
-
-### Estado {#status}
-
-El resultado de la operación. Normalmente se utiliza para indicar si ocurrió un
-error. Ver [Estado][status].
 
 ### Evento {#event}
 
@@ -178,16 +143,12 @@ una estructura común.
 Proporciona funcionalidad para emitir telemetría a consumidores. Los _Exporters_
 pueden ser push- o pull-based.
 
-### Frontend de observabilidad {#observability-frontend}
+### Campo {#field}
 
-El componente de una plataforma de observabilidad que proporciona interfaces de
-usuario para visualizar y analizar datos de telemetría. A menudo es parte de un
-backend de observabilidad, particularmente cuando se consideran ofertas
-comerciales.
-
-### Fuente de datos {#data-source}
-
-Ver [Señal](#signal)
+Un término utilizado específicamente por [Registros de Log](#log-record). [Metadatos](#metadata) pueden ser añadidos a través de campos definidos,
+incluyendo [Atributos](#attribute) y [Recursos](#resource). Otros campos también
+pueden ser considerados `Metadatos`, incluyendo información de severidad y
+traza. Ver la [especificación de campos][field].
 
 ### gRPC
 
@@ -198,12 +159,20 @@ Un framework universal de [RPC](#rpc) de código abierto de alto rendimiento. Ve
 
 Abreviatura para [Hypertext Transfer Protocol][http].
 
-### Instrumentación automática {#automatic-instrumentation}
+### Biblioteca instrumentada {#instrumented-library}
 
-Se refiere a métodos de recopilación de telemetría que no requieren que el
-usuario final modifique el código fuente de la aplicación. Los métodos varían
-según el lenguaje de programación, e incluyen ejemplos como inyección de
-_bytecode_ o _monkey patching_.
+Se refiere a la [Biblioteca](#library) para la cual se recopilan las señales de
+telemetría ([Trazas](#trace), [Métricas](#metric), [Logs](#log)). Ver
+[Biblioteca instrumentada][instrumented library].
+
+### Biblioteca de instrumentación {#instrumentation-library}
+
+Se refiere a la [Biblioteca](#library) que proporciona la instrumentación para
+una [Biblioteca instrumentada](#instrumented-library).
+[Biblioteca instrumentada](#instrumented-library) y
+[Biblioteca de instrumentación](#instrumentation-library) pueden ser la misma
+[Biblioteca](#library) si tiene instrumentación OpenTelemetry incorporada. Ver
+la [especificación de la biblioteca][spec-instrumentation-lib].
 
 ### JSON
 
@@ -218,6 +187,11 @@ Un término utilizado específicamente por [Métricas](#metric). Ver
 
 Lenguaje de programación.
 
+### Biblioteca cliente {#client-library}
+
+Una colección de comportamiento específica de un lenguaje invocada por una
+interfaz.
+
 ### Log
 
 A veces se utiliza para referirse a una colección de
@@ -225,6 +199,12 @@ A veces se utiliza para referirse a una colección de
 [Log](#log) para referirse a un solo [Registro de Log](#log-record). Donde la
 ambigüedad es posible, se utilizan cuantificadores adicionales, por ejemplo,
 `Registro de Log`. Ver [Log].
+
+### Registro de Log {#log-record}
+
+Un registro de datos con una marca de tiempo y una severidad. También puede
+tener un [ID de Traza](#trace) y un [ID de Span](#span) cuando está
+correlacionado con una traza. Ver [Registro de Log][log record].
 
 ### Metadatos {#metadata}
 
@@ -239,15 +219,25 @@ Registra un punto de datos, ya sea mediciones sin procesar o agregación
 predefinida, como una serie de tiempo con [Metadatos](#metadata). Ver
 [Métrica][metric].
 
-### Muestreo {#sampling}
-
-Un mecanismo para controlar la cantidad de datos exportados. Más comúnmente
-utilizado con la [Traza](#trace) [Fuente de datos](#data-source). Ver
-[Muestreo][sampling].
-
 ### OC
 
 Abreviatura para [OpenCensus](#opencensus).
+
+### Backend de observabilidad {#observability-backend}
+
+El componente de una plataforma de observabilidad que es responsable de recibir,
+procesar, almacenar y consultar datos de telemetría. Ejemplos incluyen
+herramientas de código abierto herramientas de código abierto como [Jaeger] y
+[Prometheus], así como ofertas comerciales.
+OpenTelemetry no es un backend de
+observabilidad.
+
+### Frontend de observabilidad {#observability-frontend}
+
+El componente de una plataforma de observabilidad que proporciona interfaces de
+usuario para visualizar y analizar datos de telemetría. A menudo es parte de un
+backend de observabilidad, particularmente cuando se consideran ofertas
+comerciales.
 
 ### OpAMP
 
@@ -289,14 +279,14 @@ Abreviatura para [OpenTracing](#opentracing).
 
 ### OTel
 
-Abreviatura para [OpenTelemetry](/docs/what-is-opentelemetry/).
+Abreviatura para [OpenTelemetry Collector](#collector).
 
 > **Ortografía**: Escribe OTel, no `OTEL` ni `otel` en descripciones o
 > instrucciones.
 
 ### OTelCol
 
-Abreviatura para [OpenTelemetry Collector](#collector).
+Abreviatura para [OpenTelemetry](/docs/what-is-opentelemetry/).
 
 ### OTEP
 
@@ -305,19 +295,11 @@ Abreviatura para [OpenTelemetry Enhancement Proposal].
 > **Ortografía**: Escribe "OTEPs" como forma plural. No escribas `OTep` ni
 > `otep` en descriptions.
 
-[OpenTelemetry Enhancement Proposal]:
-  https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/README.md
+[OpenTelemetry Enhancement Proposal]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/README.md
 
 ### OTLP
 
 Abreviatura para [OpenTelemetry Protocol](/docs/specs/otlp/).
-
-### Propagación de contexto {#context-propagation}
-
-Permite que todas las [Fuentes de datos](#data-source) compartan un mecanismo de
-contexto subyacente para almacenar estado y acceder a datos durante la vida útil
-de una [Transacción](#transaction). Ver [especificación de propagación de
-contexto][context propagation].
 
 ### Propagadores {#propagators}
 
@@ -333,22 +315,18 @@ Tipos de interfaz independientes del lenguaje. Ver [opentelemetry-proto].
 
 El término utilizado por el
 [Collector](/docs/collector/configuration/#receivers) para definir cómo se
-reciben los datos de telemetría. Los receptores pueden ser push- o pull-based.
-Ver [Receptor][receiver].
+reciben los datos de telemetría. Los receptores pueden ser push- o pull-based. Ver [Receptor][receiver].
+
+### Solicitud {#request}
+
+Ver [Trazas distribuídas](#distributed-tracing).
 
 ### Recurso {#resource}
 
 Captura información sobre la entidad que produce telemetría como
 [Atributos](#attribute). Por ejemplo, un proceso que produce telemetría que se
 está ejecutando en un contenedor en Kubernetes tiene un nombre de proceso, un
-nombre de pod, un espacio de nombres y posiblemente un nombre de despliegue.
-Todos estos atributos pueden ser incluidos en el `Recurso`.
-
-### Registro de Log {#log-record}
-
-Un registro de datos con una marca de tiempo y una severidad. También puede
-tener un [ID de Traza](#trace) y un [ID de Span](#span) cuando está
-correlacionado con una traza. Ver [Registro de Log][log record].
+nombre de pod, un espacio de nombres y posiblemente un nombre de despliegue. Todos estos atributos pueden ser incluidos en el `Recurso`.
 
 ### REST
 
@@ -358,11 +336,22 @@ Abreviatura para [Representational State Transfer][rest].
 
 Abreviatura para [Remote Procedure Call][rpc].
 
+### Sampling
+
+Un mecanismo para controlar la cantidad de datos exportados. Más comúnmente
+utilizado con la [Traza](#trace) [Fuente de datos](#data-source). Ver
+[Muestreo][sampling].
+
 ### SDK
 
 Abreviatura para Software Development Kit. Se refiere a un SDK de telemetría que
 denota una [Biblioteca](#library) que implementa la [API](#api) de
 OpenTelemetry.
+
+### Convenciones semánticas {#semantic-conventions}
+
+Define nombres y valores estándar de [Metadatos](#metadata) para proporcionar
+datos de telemetría independientes del proveedor.
 
 ### Servicio {#service}
 
@@ -376,37 +365,40 @@ ubicaciones.
 Uno de [Trazas](#trace), [Métricas](#metric) o [Logs](#log). Ver
 [Señales][signals].
 
-### Solicitud {#request}
-
-Ver [Trazas distribuídas](#distributed-tracing).
-
 ### Span
 
 Representa una sola operación dentro de una [Traza](#trace). Ver [Span][span].
 
+### Enlace de Span {#span-link}
+
+Un enlace de span es un enlace entre spans causalmente relacionados. Para más
+detalles, ver
+[Enlaces entre spans](/docs/specs/otel/overview#links-between-spans) y
+[Especificar Enlaces](/docs/specs/otel/trace/api#specifying-links).
+
+### Especificación {#specification}
+
+Describe los requisitos y expectativas cruzados de todos los implementaciones. Ver [Especificación][specification].
+
+### Estado {#status}
+
+El resultado de la operación. Normalmente se utiliza para indicar si ocurrió un
+error. Ver [Estado][status].
+
 ### Tag
 
 Ver [Metadatos](#metadata).
-
-### Tracer
-
-Responsable de crear [Spans](#span). Ver [Tracer][tracer].
-
-### Transacción {#transaction}
-
-Ver [Trazas distribuídas](#distributed-tracing).
 
 ### Traza {#trace}
 
 Un [DAG](#dag) de [Spans](#span), donde los bordes entre [Spans](#span) están
 definidos como relación padre-hijo. Ver [Trazas][traces].
 
-### Trazas distribuídas {#distributed-tracing}
+### Tracer
 
-Rastrea el progreso de una sola [Solicitud](#request), llamada [Traza](#trace),
-a medida que es manejada por [Servicios](#service) que forman parte de una
-[Aplicación](#application). Una [Traza distribuída](#distributed-tracing)
-atraviesa límites de proceso, red y seguridad.
+Responsable de crear [Spans](#span). Ver [Tracer][tracer].
+
+### Transacción {#transaction}
 
 Ver [Trazas distribuídas][distributed tracing].
 
@@ -444,5 +436,4 @@ datos se sirven en páginas web cuando se solicitan. Ver [zPages][zpages].
 [status]: /docs/specs/otel/trace/api#set-status
 [tracer]: /docs/specs/otel/trace/api#tracer
 [traces]: /docs/specs/otel/overview#traces
-[zpages]:
-  https://github.com/open-telemetry/opentelemetry-specification/blob/main/development/trace/zpages.md
+[zpages]: https://github.com/open-telemetry/opentelemetry-specification/blob/main/development/trace/zpages.md
