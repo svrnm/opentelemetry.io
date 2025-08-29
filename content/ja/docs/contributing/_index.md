@@ -1,18 +1,18 @@
 ---
-title: コントリビューション
-aliases: [/docs/contribution-guidelines]
+title: Contributing
+aliases: [ /docs/contribution-guidelines ]
 weight: 980
-default_lang_commit: 24146bd1368e4c6082c7d6077efd29dba0d51055
 ---
 
 OpenTelemetry のドキュメントとWebサイトのコントリビューションに興味を持っていただきありがとうございます。
 
-## 今すぐ飛び込んでみよう! {#jump-right-in}
+## 今すぐ飛び込んでみよう!
 
 何がしたいですか?
 
 - タイプミスやその他の簡単な修正を行う場合は、[GitHub を利用したコンテンツの提出](pull-requests/#changes-using-github)を確認してください
-- より重要なコントリビューションを行う場合は、このセクション内の以下のページからお読みください。
+- For more significant contributions, read the pages in this section starting
+  with:
   - [前提条件][Prerequisites]
   - [イシュー][Issues]
   - [コンテンツの提出][Submitting content]
@@ -27,7 +27,7 @@ OpenTelemetry のドキュメントとWebサイトのコントリビューショ
 
 {{% /alert %}}
 
-## 何にコントリビュートできる? {#what-can-i-contribute-to}
+## What can I contribute to?
 
 OpenTelemetryドキュメントコントリビューターは以下を行ないます。
 
@@ -38,8 +38,10 @@ OpenTelemetryドキュメントコントリビューターは以下を行ない�
 
 このページの本セクションは、OpenTelemetry **ドキュメント**へのコントリビュート方法について説明します。
 
-OpenTelemetryプロジェクトへの一般的なコントリビュートの手引には、[OpenTelemetryコントリビューターガイド]を参照ください。
-すべての言語の実装、コレクター、規約の[リポジトリ][org]は独自のコントリビュートの手引があります。
+For guidance on how to contribute to the OpenTelemetry project in general, see
+the community [OpenTelemetry New Contributor Guide]. Every [OTel
+repository][org] for language implementations, the Collector, and conventions
+have their own project-specific contributing guides.
 
-[OpenTelemetryコントリビューターガイド]: https://github.com/open-telemetry/community/blob/main/guides/contributor
+[OpenTelemetry New Contributor Guide]: https://github.com/open-telemetry/community/blob/main/guides/contributor
 [org]: https://github.com/open-telemetry
