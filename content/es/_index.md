@@ -2,11 +2,13 @@
 title: OpenTelemetry
 description: >-
   Telemetría portable, ubicua, y de alta calidad para una observabilidad eficaz
-developer_note:
-  La macro para los bloques/portada usa como imagen de fondo cualquier archivo
-  de imagen que contenga la palabra "background" en su nombre.
+outputs:
+  - HTML
+  # Include the following for `content/en` ONLY
+  - REDIRECTS
+  - RSS
+developer_note: La macro para los bloques/portada usa como imagen de fondo cualquier archivo de imagen que contenga la palabra "background" en su nombre.
 show_banner: true
-default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 ---
 
 <div class="d-none"><a rel="me" href="https://fosstodon.org/@opentelemetry"></a></div>
@@ -14,10 +16,12 @@ default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 {{< blocks/cover image_anchor="top" height="max" color="primary" >}}
 
 <!-- prettier-ignore -->
+
 ![OpenTelemetry](/img/logos/opentelemetry-horizontal-color.svg)
 {.otel-logo}
 
 <!-- prettier-ignore -->
+
 {{% param description %}}
 {.display-6}
 
@@ -28,8 +32,7 @@ default_lang_commit: c0a5eea5d720b0e075efa87f99dcf58c89106268
 
 </div>
 
-<div class="h3 mt-4">
-<a class="text-secondary" href="docs/getting-started/">Tutorial de inicio rápido</a> basado en tu rol
+<div class="h3 mt-4"><a class="text-secondary" href="docs/getting-started/">Tutorial de inicio rápido</a> basado en tu rol
 </div>
 <div class="l-get-started-buttons">
 
@@ -63,21 +66,21 @@ reenvía los datos a una amplia variedad de herramientas de análisis.
 
 {{% blocks/feature icon="fas fa-magic" title="Instrumentación & Integraciones listas para usar"%}}
 
-OpenTelemetry [se integra] con muchas librerías y frameworks populares, y admite
-la [instrumentación] _manual y sin código_.
+OpenTelemetry \[se integra] con muchas librerías y frameworks populares, y admite
+la \[instrumentación] _manual y sin código_.
 
-[instrumentación]: /docs/concepts/instrumentation/
-[se integra]: /ecosystem/integrations/
+[instrumentation]: /docs/concepts/instrumentation/
+[integrates]: /ecosystem/integrations/
 
 {{% /blocks/feature %}}
 
 {{% blocks/feature icon="fab fa-github" title="Código abierto, Independiente de proveedores" %}}
 
-100% gratuito y de código abierto, OpenTelemetry es [adoptado] y respaldado por
-[empresas líderes] en el sector de la observabilidad.
+100% gratuito y de código abierto, OpenTelemetry es \[adoptado] y respaldado por
+\[empresas líderes] en el sector de la observabilidad.
 
-[adoptado]: /ecosystem/adopters/
-[empresas líderes]: /ecosystem/vendors/
+[adopted]: /ecosystem/adopters/
+[industry leaders]: /ecosystem/vendors/
 
 {{% /blocks/feature %}}
 
@@ -85,13 +88,13 @@ la [instrumentación] _manual y sin código_.
 
 {{% blocks/section color="secondary" type="cncf" %}}
 
-**OpenTelemetry es un proyecto [CNCF][] [en incubación][]**.<br> Se formó a
+**OpenTelemetry es un proyecto [CNCF][] \[en incubación]\[]**.<br> Se formó a
 partir de la fusión de los proyectos OpenTracing y OpenCensus.
 
 [![CNCF logo][]][cncf]
 
 [cncf]: https://cncf.io
 [cncf logo]: /img/logos/cncf-white.svg
-[en incubación]: https://www.cncf.io/projects/
+[incubating]: https://www.cncf.io/projects/
 
 {{% /blocks/section %}}
