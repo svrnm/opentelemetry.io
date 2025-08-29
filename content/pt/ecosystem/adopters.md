@@ -1,7 +1,6 @@
 ---
 title: Adotantes
 description: Organizações que usam OpenTelemetry
-default_lang_commit: b6ddba1118d07bc3c8d1d07b293f227686d0290e
 ---
 
 A missão do OpenTelemetry é possibilitar uma observabilidade eficaz para todos
@@ -16,7 +15,7 @@ OpenTelemetry para [Observabilidade](/docs/concepts/observability-primer/).
 ## Adicionando sua organização como adotante {#how-to-add}
 
 Para que sua organização seja listada, envie um PR com uma entrada adicionada à
-[lista de adotantes]. A entrada deve incluir:
+\[lista de adotantes]. A entrada deve incluir:
 
 - Link para uma publicação em blog ou outro recurso que descreva como sua
   organização utiliza o OpenTelemetry
@@ -37,5 +36,4 @@ fornecer **Observabilidade aos usuários finais**, consulte
 
 {{% include keep-up-to-date.md adotantes %}}
 
-[lista de adotantes]:
-  https://github.com/open-telemetry/opentelemetry.io/tree/main/data/ecosystem/adopters.yaml
+[adopters list]: https://github.com/open-telemetry/opentelemetry.io/tree/main/data/ecosystem/adopters.yaml
