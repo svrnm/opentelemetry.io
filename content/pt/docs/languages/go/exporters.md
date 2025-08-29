@@ -1,8 +1,7 @@
 ---
 title: Exporters
-aliases: [exporting_data]
+aliases: [ exporting_data ]
 weight: 50
-default_lang_commit: 351727ae36f706eb80583ada2b589de263aa72c2
 # prettier-ignore
 cSpell:ignore: otlplog otlploggrpc otlploghttp otlpmetric otlpmetricgrpc otlpmetrichttp otlptrace otlptracegrpc otlptracehttp stdoutlog stdouttrace
 ---
@@ -14,7 +13,7 @@ cSpell:ignore: otlplog otlploggrpc otlploghttp otlpmetric otlpmetricgrpc otlpmet
 O exportador do console é útil para tarefas de desenvolvimento e depuração, e é
 o mais simples de configurar.
 
-### Rastros no Console {#console-traces}
+### Console traces
 
 O pacote
 [`go.opentelemetry.io/otel/exporters/stdout/stdouttrace`](https://pkg.go.dev/go.opentelemetry.io/otel/exporters/stdout/stdouttrace)
