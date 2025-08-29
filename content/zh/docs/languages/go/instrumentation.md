@@ -1,11 +1,10 @@
 ---
-title: 手动插桩
+title: Instrumentation
 aliases:
   - manual
   - manual_instrumentation
 weight: 30
 description: 在 OpenTelemetry Go 中实现手动插桩
-default_lang_commit: 369126d9f754c248c11e82046cbcb633c17e594c
 cSpell:ignore: fatalf logr logrus otlplog otlploghttp sdktrace sighup
 ---
 
@@ -13,7 +12,7 @@ cSpell:ignore: fatalf logr logrus otlplog otlploghttp sdktrace sighup
 
 ## 配置{#setup}
 
-## 链路追踪{#traces}
+## Traces
 
 ### 获取一个 Tracer{#getting-a-tracer}
 
@@ -95,11 +94,13 @@ func main() {
 
 ### 创建 span{#creating-spans}
 
-Span 是由 tracer 创建的，所以在此之前，你需要先初始化 tracer。
+Spans are created by tracers. If you don't have one initialized, you'll need to
+do that.
 
 创建一个 span 时，还需要一个 `context.Context` 实例的句柄。
-在实际应用中，这个上下文对象通常来自比如请求的对象之类的地方，并且可能已经包含了来自[插桩库][]所创建的父
-span。
+在实际应用中，这个上下文对象通常来自比如请求的对象之类的地方，并且可能已经包含了来自\[插桩库]\[]所创建的父
+span。 These will typically come from things like a request object and may
+already contain a parent span from an [instrumentation library][].
 
 ```go
 func httpHandler(w http.ResponseWriter, r *http.Request) {
@@ -110,8 +111,9 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-在 Go 里面，`context` 包用于存储活跃的 span。当你启动一个新的 span 时，你不仅会获得新创建的 span 的句柄，
-还会返回一个包含它的新的 context 的句柄。
+In Go, the `context` package is used to store the active span. When you start a
+span, you'll get a handle on not only the span that's created, but the modified
+context that contains it.
 
 需要注意的是，一旦一个 span 已经完成，他就是不可变的，不能再被修改。
 
@@ -134,7 +136,7 @@ span := trace.SpanFromContext(ctx)
 你可以创建嵌套的 span 来追踪某个嵌套操作中的工作。
 
 如果当前你已经有包含一个 span 的 `context.Context` 的句柄，那么使用这个句柄新创建的
-span 会自动变成嵌套 span，比如说：
+span 会自动变成嵌套 span，比如说： For example:
 
 ```go
 func parentFunction(ctx context.Context) {
@@ -160,7 +162,10 @@ func childFunction(ctx context.Context) {
 
 ### Span 属性{#span-attributes}
 
-属性（Attributes）是附加在 Span 上的键值对元数据，通常用于对追踪数据进行聚合，过滤和分组。你可以在创建 Span 时添加属性，也可以在其任意生命周期内添加属性，只要这个 Span 还没有结束。
+Attributes are keys and values that are applied as metadata to your spans and
+are useful for aggregating, filtering, and grouping traces. Attributes can be
+added at span creation, or at any other time during the lifecycle of a span
+before it has completed.
 
 ```go
 // 创建 Span 时设置属性
@@ -178,15 +183,20 @@ span.SetAttributes(myKey.String("a value"))
 
 #### 语义属性（Semantic Attributes）{#semantic-attributes}
 
-语义属性是由 [OpenTelemetry 规范][]
+语义属性是由 \[OpenTelemetry 规范]\[]
 定义的一组标准属性键，是用于统一多个语言，框架和运行时对常见概念（比如 HTTP 方法，状态码，User-agent
-等）的表达，这些属性都在`go.opentelemetry.io/otel/semconv/v1.32.0` 包中实现。
+等）的表达，这些属性都在`go.opentelemetry.io/otel/semconv/v1.32.0` 包中实现。 These attributes are available in
+the `go.opentelemetry.io/otel/semconv/v1.34.0` package.
 
-详见 [Trace 语义约定][].
+详见 \[Trace 语义约定]\[].
 
 ### 事件（Events）{#events}
 
-事件是附加在 Span 上的可读信息，用于表示其在生命周期中“某件事情发生了”。例如，如果某个函数需要对互斥资源进行独占访问，可以在尝试获取锁以及成功获取锁这两个时间点上添加事件：
+An event is a human-readable message on a span that represents "something
+happening" during it's lifetime. For example, imagine a function that requires
+exclusive access to a resource that is under a mutex. An event could be created
+at two points - once, when we try to gain access to the resource, and another
+when we acquire the mutex.
 
 ```go
 span.AddEvent("Acquiring lock")
@@ -226,7 +236,8 @@ if err != nil {
 
 ### 记录错误{#record-errors}
 
-如果你希望在某个操作失败的时候去记录它所产生的错误，可以使用 `RecordError` 方法将该错误附加到当前的 span 上。
+If you have an operation that failed and you wish to capture the error it
+produced, you can record that error.
 
 ```go
 import (
@@ -244,11 +255,13 @@ if err != nil {
 }
 ```
 
-强烈建议在使用 `RecordError` 时，也将 Span 的状态设置为 `Error`，除非你有意不将这个 span 视为错误的追踪单元。需要注意的是，调用 `RecordError` 方法**不会**自动设置 span 的状态，因此你必须手动调用 SetStatus。
+强烈建议在使用 `RecordError` 时，也将 Span 的状态设置为 `Error`，除非你有意不将这个 span 视为错误的追踪单元。需要注意的是，调用 `RecordError` 方法**不会**自动设置 span 的状态，因此你必须手动调用 SetStatus。 The `RecordError` function does **not**
+automatically set a span status when called.
 
 ### 上下文传播（Propagators and Context）{#propagators-and-context}
 
-Trace（链路）可以跨越多个进程执行。要实现这一点，就需要 **上下文传播（context propagation）**，也就是将 Trace 的标识符传递给远程进程的机制。
+Traces can extend beyond a single process. This requires _context propagation_,
+a mechanism where identifiers for a trace are sent to remote processes.
 
 为了在网络中传播 Trace 上下文，必须要在 OpenTelemetry API 中注册一个传播器（Propagator）。
 
@@ -268,7 +281,9 @@ otel.SetTextMapPropagator(propagation.TraceContext{})
 
 ## 指标（Metrics）{#metrics}
 
-要开始产出 [指标](/docs/concepts/signals/metrics)，你需要初始化一个 `MeterProvider`，然后通过它创建 `Meter`。 Meter 用来创建各种类型的指标的仪器（instrument）。OpenTelemetry Go 当前支持以下几种仪器：
+要开始产出 [指标](/docs/concepts/signals/metrics)，你需要初始化一个 `MeterProvider`，然后通过它创建 `Meter`。 Meter 用来创建各种类型的指标的仪器（instrument）。OpenTelemetry Go 当前支持以下几种仪器： Meters let
+you create instruments that you can use to create different kinds of metrics.
+OpenTelemetry Go currently supports the following instruments:
 
 - Counter：同步计数器，仅支持非负递增。
 - Asynchronous Counter：异步计数器，同样仅支持非负递增。
@@ -290,13 +305,15 @@ otel.SetTextMapPropagator(propagation.TraceContext{})
 
 ### 初始化指标（Metrics）{#initialize-metrics}
 
-{{% alert %}} 如果你是在为某个库添加插桩，可以跳过此步骤。 {{% /alert %}}
+{{% alert %}} If you’re instrumenting a library, skip this step. {{% /alert %}}
 
 要在应用程序中启用[指标](/docs/concepts/signals/metrics/)，你需要先初始化一个
 [`MeterProvider`](/docs/concepts/signals/metrics/#meter-provider)，它可以让你创建一个
 [`Meter`](/docs/concepts/signals/metrics/#meter).
 
-如果 `MeterProvider` 还没有创建，OpenTelemetry 的指标 API 会使用空操作（no-op）实现，无法产出任何数据。因此，你需要在源码里加入以下 SDK 初始化代码，并确保引入这些包：
+如果 `MeterProvider` 还没有创建，OpenTelemetry 的指标 API 会使用空操作（no-op）实现，无法产出任何数据。因此，你需要在源码里加入以下 SDK 初始化代码，并确保引入这些包： Therefore, you have to modify
+the source code to include the SDK initialization code using the following
+packages:
 
 - [`go.opentelemetry.io/otel`][]
 - [`go.opentelemetry.io/otel/sdk/metric`][]
@@ -386,7 +403,7 @@ func newMeterProvider(res *resource.Resource) (*metric.MeterProvider, error) {
 
 在应用程序中，只要你需要对代码进行手动插桩，都可以通过调用
 [`otel.Meter`](https://pkg.go.dev/go.opentelemetry.io/otel#Meter)
-来获取一个 meter 实例。示例如下：
+来获取一个 meter 实例。示例如下： For example:
 
 ```go
 import "go.opentelemetry.io/otel"
@@ -398,13 +415,18 @@ var meter = otel.Meter("example.io/package/name")
 
 OpenTelemetry 的仪器分为同步和异步（可观测）两类.
 
-同步仪器在被调用时立即记录一次测量。该测量与程序中其他函数调用一样，在执行期间直接完成。配置好的导出器会按周期导出这些测量的聚合结果。由于测量与导出解耦，某一次导出周期内可能包含零次或多次聚合后的测量。
+Synchronous instruments take a measurement when they are called. The measurement
+is done as another call during program execution, just like any other function
+call. Periodically, the aggregation of these measurements is exported by a
+configured exporter. Because measurements are decoupled from exporting values,
+an export cycle may contain zero or multiple aggregated measurements.
 
-异步仪器则是根据 SDK 的请求进行测量的。每次 SDK 想要导出数据时，会调用在创建仪器时提供的回调函数。
-这个回调函数会为 SDK 返回一个测量值，并进行导出。
-所有的异步仪表测量都会在每次导出周期中执行一次，也就是说，每次导出时才会进行测量，而不是持续不断地进行测量。
+Asynchronous instruments, on the other hand, provide a measurement at the
+request of the SDK. When the SDK exports, a callback that was provided to the
+instrument on creation is invoked. This callback provides the SDK with a
+measurement that is immediately exported. 同步仪器在被调用时立即记录一次测量。该测量与程序中其他函数调用一样，在执行期间直接完成。配置好的导出器会按周期导出这些测量的聚合结果。由于测量与导出解耦，某一次导出周期内可能包含零次或多次聚合后的测量。
 
-异步仪器适用于以下场景：
+Asynchronous instruments are useful in several circumstances, such as:
 
 - 更新计数器的开销较大，不希望当前执行线程因记录测量而阻塞。
 - 观测程序的频率与程序执行无关，即当与请求生命周期相关联的时候，无法准确的去测量。
@@ -574,7 +596,8 @@ func init() {
 
 ### 使用 Observable（Async） Counter{#using-observable-async-counters}
 
-Observable counter 用于测量只增不减的累积值。
+Observable counters can be used to measure an additive, non-negative,
+monotonically increasing value.
 
 下面的示例展示了如何上报应用程序自启动以来经过的时间：
 
@@ -604,7 +627,8 @@ func init() {
 
 ### 使用 Observable (Async) UpDown Counters{#using-observable-async-updown-counters}
 
-Observable UpDown counters 可增可减，适合测量来回波动的累积值。
+Observable UpDown counters can increment and decrement, allowing you to measure
+an additive, non-negative, non-monotonically increasing cumulative value.
 
 下面的示例，展示了如何上报数据库的一些指标：
 
@@ -656,7 +680,7 @@ func registerDBMetrics(db *sql.DB, meter metric.Meter, poolName string) (metric.
 
 ### 使用 Observable (Async) Gauges{#using-observable-async-gauges}
 
-Observable Gauges 用于记录非累加型的快照值（例如当前内存占用，CPU 使用率）
+Observable counter 用于测量只增不减的累积值。
 
 下面的例子展示了如何上报当前堆内存的占用情况：
 
@@ -724,10 +748,16 @@ func init() {
 ### 注册视图（Registering Views）{#registering-views}
 
 视图让 SDK 的用户可以灵活地自定义输出的指标（metric）。你可以决定哪些指标仪器需要被处理或者忽略。
-你还可以自定义聚合方式以及自定义在指标中上报哪些属性。
+你还可以自定义聚合方式以及自定义在指标中上报哪些属性。 You can customize which metric instruments are to be processed or
+ignored. You can also customize aggregation and what attributes you want to
+report on metrics.
 
-每个仪器都有一个默认视图，保持原有名称，描述和属性，并根据仪器类型使用默认聚合方式。
-当注册的视图与某个仪器匹配时，默认视图就会被替换，如果由多个视图同时匹配，那么同一个仪器就会导出多个指标（metrics）。
+Every instrument has a default view, which retains the original name,
+description, and attributes, and has a default aggregation that is based on the
+type of instrument. When a registered view matches an instrument, the default
+view is replaced by the registered view. Additional registered views that match
+the instrument are additive, and result in multiple exported metrics for the
+instrument.
 
 你可以使用
 [`NewView`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric#NewView)
@@ -774,7 +804,9 @@ meterProvider := metric.NewMeterProvider(
 )
 ```
 
-SDK 会在导出前对指标和属性做过滤。比如，你可以通过使用视图来降低高基数指标的内存占用或者删除可能包含敏感数据的属性。
+The SDK filters metrics and attributes before exporting metrics. For example,
+you can use views to reduce memory usage of high cardinality metrics or drop
+attributes that might contain sensitive data.
 
 下面的例子展示了如何创建一个视图，并删除 `http` 插桩库中名叫 `latency` 的仪器
 
@@ -808,7 +840,10 @@ meterProvider := metric.NewMeterProvider(
 )
 ```
 
-`Name` 字段支持通配符模式匹配。`*` 表示匹配零个或多个字符，而 `?` 表示精确匹配一个字符。例如，`*` 会匹配所有仪器的名称。
+The `Name` field of criteria supports wildcard pattern matching. The `*`
+wildcard is recognized as matching zero or more characters, and `?` is
+recognized as matching exactly one character. For example, a pattern of `*`
+matches all instrument names.
 
 下面的例子展示了如何创建一个视图，并将所有名称后缀为 `.ms` 的仪器的单位设置为毫秒：
 
@@ -823,7 +858,7 @@ meterProvider := metric.NewMeterProvider(
 )
 ```
 
-`NewView` 方法为创建视图提供了一个便捷的方式。如果 `NewView` 无法满足你的需求，你可以直接自己实现一个
+The `NewView` function provides a convenient way of creating views. `NewView` 方法为创建视图提供了一个便捷的方式。如果 `NewView` 无法满足你的需求，你可以直接自己实现一个
 [`View`](https://pkg.go.dev/go.opentelemetry.io/otel/sdk/metric#View)。
 
 下面的例子向你展示了如何创建一个视图，并使用正则表达式匹配来确保所有数据流名称都带有他们单位的后缀。
@@ -856,19 +891,26 @@ meterProvider := metric.NewMeterProvider(
 ## 日志（Logs）{#logs}
 
 日志与指标和链路追踪不同，**OpenTelemetry 没有面向用户的日志 API**。目前主流的做法是通过日志桥（Log Bridge）将主流日志库（如slog，logrus，zap，logr）接入到 OpenTelemetry 生态。
-对于采取这样设计的原因，请参阅[日志规范](/docs/specs/otel/logs/).
+对于采取这样设计的原因，请参阅[日志规范](/docs/specs/otel/logs/). Instead, there is tooling to bridge logs from existing
+popular log packages (such as slog, logrus, zap, logr) into the OpenTelemetry
+ecosystem. For rationale behind this design decision, see
+[Logging specification](/docs/specs/otel/logs/).
 
 下面介绍的两种典型工作流适用于不同的应用场景。
 
-### 直接发送给 Colletcor{#direct-to-collector}
+### Direct-to-Collector
 
 **状态**： [Experimental](/docs/specs/otel/document-status/)
 
-在此工作流中，应用通过网络协议（如 OTLP）直接将日志从应用程序发送给
-Collector，优点是部署简单，而无需额外的日志转发组件，还能天然生成符合[日志数据模型][log data model]
-的结构化日志。缺点是应用需要承担将日志排队并将日志导出到网络位置的额外开销，对于一些性能敏感的场景可能并不适合。
+In the direct-to-Collector workflow, logs are emitted directly from an
+application to a collector using a network protocol (e.g. OTLP). 在这种工作流中，应用将日志写入文件或标准输出（stdout）。另一个组件（如 FluentBit）负责读取/跟随这些日志，
+将其解析为结构化格式转发给目标（例如 Collector）。如果当应用无法承担[直接发送给 Collector](#direct-to-collector)
+带来的额外开销时，那么该方案更为合适。但是它要求所有下游需要的日志字段必须已被编码到日志中，
+并且读取日志的组件必须把数据解析成[日志数据模型][log data model]，而日志转发组件的安装与配置超出了本文档的范围。 However, the overhead required
+for applications to queue and export logs to a network location may not be
+suitable for all applications.
 
-使用步骤：
+To use this workflow:
 
 - 配置 OpenTelemetry [Log SDK](#logs-sdk) 将日志导出到
   [collector][opentelemetry collector] 或其他目标。
@@ -876,7 +918,8 @@ Collector，优点是部署简单，而无需额外的日志转发组件，还�
 
 #### 日志 SDK{#logs-sdk}
 
-仅在
+The logs SDK dictates how logs are processed when using the
+[direct-to-Collector](#direct-to-collector) workflow. 仅在
 [直接发送给 Collector](#direct-to-collector) 工作流中才需要日志 SDK。如果采取后文提到的
 [日志转发](#via-file-or-stdout) 工作流则无需日志 SDK。
 
@@ -886,14 +929,16 @@ Collector，优点是部署简单，而无需额外的日志转发组件，还�
 [`LoggerProvider`](/docs/concepts/signals/logs/#logger-provider)
 从而可以使用 [日志桥](#log-bridge)。
 
-如果没有创建 `LoggerProvider`，则日志的 OpenTelemetry API 会退化为 no-op，无法产生任何数据，因此，你需要使用以下包来修改源代码，来确保包含 SDK 初始化代码：
+如果没有创建 `LoggerProvider`，则日志的 OpenTelemetry API 会退化为 no-op，无法产生任何数据，因此，你需要使用以下包来修改源代码，来确保包含 SDK 初始化代码： Therefore, you have to modify
+the source code to include the SDK initialization code using the following
+packages:
 
 - [`go.opentelemetry.io/otel`][]
 - [`go.opentelemetry.io/otel/sdk/log`][]
 - [`go.opentelemetry.io/otel/sdk/resource`][]
 - [`go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp`][]
 
-安装依赖：
+Ensure you have the right Go modules installed:
 
 ```sh
 go get go.opentelemetry.io/otel \
@@ -982,18 +1027,24 @@ OpenTelemetry 的[日志 SDK](#logs-sdk)。
 
 ### 通过文件或 stdout 转发{#via-file-or-stdout}
 
-在这种工作流中，应用将日志写入文件或标准输出（stdout）。另一个组件（如 FluentBit）负责读取/跟随这些日志，
-将其解析为结构化格式转发给目标（例如 Collector）。如果当应用无法承担[直接发送给 Collector](#direct-to-collector)
-带来的额外开销时，那么该方案更为合适。但是它要求所有下游需要的日志字段必须已被编码到日志中，
-并且读取日志的组件必须把数据解析成[日志数据模型][log data model]，而日志转发组件的安装与配置超出了本文档的范围。
+In the file or stdout workflow, logs are written to files or standout output.
+Another component (e.g. FluentBit) is responsible for reading / tailing the
+logs, parsing them to more structured format, and forwarding them a target, such
+as the collector. This workflow may be preferable in situations where
+application requirements do not permit additional overhead from
+[direct-to-Collector](#direct-to-collector). However, it requires that all log
+fields required down stream are encoded into the logs, and that the component
+reading the logs parse the data into the [log data model][log data model]. The
+installation and configuration of log forwarding components is outside the scope
+of this document.
 
 ## 后续步骤{#next-steps}
 
 你还需要配置一个合适的导出器（exporter）[将你的遥测数据导出](/docs/languages/go/exporters)到一个或多个后端。
 
-[opentelemetry 规范]: /docs/specs/otel/
-[trace 语义约定]: /docs/specs/semconv/general/trace/
-[插桩库]: ../libraries/
+[opentelemetry specification]: /docs/specs/otel/
+[trace semantic conventions]: /docs/specs/semconv/general/trace/
+[instrumentation library]: ../libraries/
 [opentelemetry collector]: https://github.com/open-telemetry/opentelemetry-collector
 [logs bridge API]: /docs/specs/otel/logs/api/
 [log data model]: /docs/specs/otel/logs/data-model
