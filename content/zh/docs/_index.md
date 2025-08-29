@@ -1,12 +1,8 @@
 ---
 title: 文档
+linkTitle: Docs
 menu: { main: { weight: 10 } }
-htmltest:
-  IgnoreDirs:
-    # TODO drop next lines after https://github.com/open-telemetry/opentelemetry.io/issues/5555 is fixed for these pages:
-    - ^zh/docs/concepts/signals/baggage/
-    - ^zh/docs/zero-code/php/
-default_lang_commit: 7caeb2b26915ad05f4f36099ac3e4fe8d8b3c9f0
+aliases: [ /docs/workshop/* ]
 ---
 
 OpenTelemetry 也被称为 OTel，是一个供应商中立的、开源的[可观测性](concepts/observability-primer/#what-is-observability)框架，
