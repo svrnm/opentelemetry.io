@@ -1,13 +1,12 @@
 ---
-title: Primeiros Passos
+title: Getting Started
 weight: 10
-default_lang_commit: dc20c29a4c79ad0424c0fcc3271216af7e035d9b
-drifted_from_default: true
 # prettier-ignore
 cSpell:ignore: chan fatalln funcs intn itoa khtml otelhttp rolldice stdouttrace strconv
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/go/dice"?>
 
 Esta página mostrará como começar a utilizar o OpenTelemetry em Go.
@@ -142,7 +141,9 @@ qualquer aplicação que exporte telemetria.
 Crie um arquivo `otel.go` com o código de inicialização do SDK OpenTelemetry:
 
 <!-- prettier-ignore-start -->
+
 <!-- code-excerpt "otel.go" from="package main"?-->
+
 ```go
 package main
 
@@ -266,6 +267,7 @@ func newLoggerProvider() (*log.LoggerProvider, error) {
 	return loggerProvider, nil
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 Caso você esteja utilizando apenas rastros ou métricas, você pode omitir o
@@ -281,7 +283,9 @@ OpenTelemetry e instrumenta o servidor HTTP utilizando a biblioteca de
 instrumentação `otelhttp`:
 
 <!-- prettier-ignore-start -->
-<--?code-excerpt "main.go" from="package main"?-->
+
+<!--?code-excerpt "main.go" from="package main"?-->
+
 ```go
 package main
 
@@ -368,6 +372,7 @@ func newHTTPHandler() http.Handler {
 	return handler
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Adicionar instrumentação personalizada {#add-custom-instrumentation}
@@ -382,7 +387,9 @@ Modifique o arquivo `rolldice.go` para incluir instrumentação personalizada
 usando a API do OpenTelemetry:
 
 <!-- prettier-ignore-start -->
+
 <!--?code-excerpt "rolldice.go" from="package main"?-->
+
 ```go
 package main
 
@@ -443,6 +450,7 @@ func rolldice(w http.ResponseWriter, r *http.Request) {
 	}
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 Observe que caso você esteja utilizando apenas rastros ou métricas, poderá
@@ -461,12 +469,12 @@ go run .
 
 Abra <http://localhost:8080/rolldice/Alice> no seu navegador. Ao enviar uma
 solicitação para o servidor, você verá dois trechos no rastro emitido no
-console. O trecho gerado pela biblioteca de instrumentação rastreia a duração da
+console.
+O trecho gerado pela biblioteca de instrumentação rastreia a duração da
 solicitação para a rota `/rolldice/{player}`. O trecho chamado `roll` é criado
 manualmente e é um filho do trecho mencionado anteriormente.
 
-<details>
-<summary>Visualizar exemplo de saída</summary>
+<details><summary>Visualizar exemplo de saída</summary>
 
 ```json
 {
@@ -707,8 +715,7 @@ manualmente e é um filho do trecho mencionado anteriormente.
 
 Junto com o rastro, mensagens de log são emitidas no console.
 
-<details>
-<summary>Visualizar exemplo de saída</summary>
+<details><summary>Visualizar exemplo de saída</summary>
 
 ```json
 {
@@ -786,8 +793,7 @@ métricas como na saída do console. Você verá a métrica `dice.rolls` emitida
 console, com contagens distintas para cada valor obtido, bem como as métricas
 HTTP geradas pela biblioteca de instrumentação.
 
-<details>
-<summary>Visualizar exemplo de saída</summary>
+<details><summary>Visualizar exemplo de saída</summary>
 
 ```json
 {
