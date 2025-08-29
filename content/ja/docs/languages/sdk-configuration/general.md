@@ -1,14 +1,13 @@
 ---
 title: 一般的なSDK設定
-linkTitle: 一般
-aliases: [general-sdk-configuration]
-default_lang_commit: 9b427bf25703c33a2c6e05c2a7b58e0f768f7bad
+linkTitle: General
+aliases: [ general-sdk-configuration ]
 cSpell:ignore: ottrace
 ---
 
 {{% alert title="Note" %}}
 
-環境変数のサポートはオプションです。
+Support for environment variables is optional. 環境変数のサポートはオプションです。
 各言語の実装がどの環境変数をサポートしているかの詳細については、[実装準拠マトリックス](https://github.com/open-telemetry/opentelemetry-specification/blob/main/spec-compliance-matrix.md#environment-variables)を参照してください。
 
 {{% /alert %}}
@@ -21,20 +20,20 @@ cSpell:ignore: ottrace
 
 `OTEL_RESOURCE_ATTRIBUTES` に `service.name` も指定されている場合は、`OTEL_SERVICE_NAME` が優先されます。
 
-**例:**
+**Example:**
 
 `export OTEL_SERVICE_NAME="your-service-name"`
 
 ## `OTEL_RESOURCE_ATTRIBUTES`
 
-リソース属性として使用されるキーと値のペア。
+Key-value pairs to be used as resource attributes. リソース属性として使用されるキーと値のペア。
 詳細は[リソースSDK](/docs/specs/otel/resource/sdk#specifying-resource-information-via-an-environment-variable)を参照してください。
 
 **デフォルト値:** 空
 
 一般的なリソースタイプで従うべきセマンティック規約については、[リソースのセマンティック規約](/docs/specs/semconv/resource/#semantic-attributes-with-sdk-provided-default-value)を参照してください。
 
-**例:**
+**Example:**
 
 `export OTEL_RESOURCE_ATTRIBUTES="key1=value1,key2=value2"`
 
@@ -44,7 +43,7 @@ SDKによるトレースのサンプリングに使用するサンプラーを�
 
 **デフォルト値:** `"parentbased_always_on"`
 
-**例:**
+**Example:**
 
 `export OTEL_TRACES_SAMPLER="traceidratio"`
 
@@ -67,11 +66,13 @@ SDKによるトレースのサンプリングに使用するサンプラーを�
 `OTEL_TRACES_SAMPLER` で定義されているサンプラーの引数を指定します。
 指定した値は `OTEL_TRACES_SAMPLER` が設定されている場合にのみ使用されます。
 各サンプラータイプは、期待される入力があれば、それを定義します。
-無効な入力や認識できない入力はエラーとしてログに記録されます。
+無効な入力や認識できない入力はエラーとしてログに記録されます。 The specified value will only be used if
+`OTEL_TRACES_SAMPLER` is set. Each Sampler type defines its own expected input,
+if any. Invalid or unrecognized input is logged as an error.
 
 **デフォルト値:** 空
 
-**例:**
+**Example:**
 
 ```shell
 export OTEL_TRACES_SAMPLER="traceidratio"
@@ -80,13 +81,16 @@ export OTEL_TRACES_SAMPLER_ARG="0.5"
 
 `OTEL_TRACES_SAMPLER` の値によって、`OTEL_TRACES_SAMPLER_ARG` は以下のように設定されます。
 
-- `traceidratio` と `parentbased_traceidratio` サンプラーの場合: サンプリング確率。[0..1]の範囲で指定します。未設定の場合、デフォルトは1.0。
+- `traceidratio` と `parentbased_traceidratio` サンプラーの場合: サンプリング確率。[0..1]の範囲で指定します。未設定の場合、デフォルトは1.0。 Default is 1.0 if
+  unset.
 - `jaeger_remote` と `parentbased_jaeger_remote` の場合: 値はカンマ区切りのリストです。
   - 例:
     `"endpoint=http://localhost:14250,pollingIntervalMs=5000,initialSamplingRate=0.25"`
   - `endpoint`: サービスのサンプリング戦略を提供する gRPC サーバの `scheme://host:port` 形式のエンドポイント ([sampling.proto](https://github.com/jaegertracing/jaeger-idl/blob/main/proto/api_v2/sampling.proto)).
   - `pollingIntervalMs`: サンプラーがサンプリング戦略の更新のためにバックエンドをポーリングする頻度をミリ秒単位で指定します。
-  - `initialSamplingRate`: [0..1]の範囲で、サンプリング戦略を取得するためにバックエンドに到達できない場合のサンプリング確率として使用されます。サンプリング戦略の取得に成功すると、この値は意味を持たなくなり、新しいアップデートが取得されるまでリモート戦略が使用されるようになります。
+  - `initialSamplingRate`: [0..1]の範囲で、サンプリング戦略を取得するためにバックエンドに到達できない場合のサンプリング確率として使用されます。サンプリング戦略の取得に成功すると、この値は意味を持たなくなり、新しいアップデートが取得されるまでリモート戦略が使用されるようになります。 This value stops having an effect once a sampling strategy is
+    retrieved successfully, as the remote strategy will be used until a new
+    update is retrieved.
 
 ## `OTEL_PROPAGATORS`
 
@@ -116,16 +120,16 @@ export OTEL_TRACES_SAMPLER_ARG="0.5"
 
 ## `OTEL_TRACES_EXPORTER`
 
-トレースに使用するエクスポーターを指定します。
-実装によっては、カンマ区切りのリストになります。
+Specifies which exporter is used for traces. Depending on the implementation it
+may be a comma-separated list.
 
 **デフォルト値:** `"otlp"`
 
-**例:**
+**Example:**
 
 `export OTEL_TRACES_EXPORTER="jaeger"`
 
-指定できる値の一覧は以下です。
+Accepted values for are:
 
 - `"otlp"`: [OTLP][]
 - `"jaeger"`: Jaegerデータモデルでのエクスポート
@@ -135,12 +139,12 @@ export OTEL_TRACES_SAMPLER_ARG="0.5"
 
 ## `OTEL_METRICS_EXPORTER`
 
-メトリクスに使用するエクスポーターを指定します。
-実装によっては、カンマ区切りのリストになります。
+Specifies which exporter is used for metrics. Depending on the implementation it
+may be a comma-separated list.
 
 **デフォルト値:** `"otlp"`
 
-**例:**
+**Example:**
 
 `export OTEL_METRICS_EXPORTER="prometheus"`
 
@@ -154,12 +158,12 @@ export OTEL_TRACES_SAMPLER_ARG="0.5"
 
 ## `OTEL_LOGS_EXPORTER`
 
-ログにどのエクスポーターを使用するかを指定します。
-実装によっては、カンマ区切りのリストになります。
+Specifies which exporter is used for logs. Depending on the implementation it
+may be a comma-separated list.
 
 **デフォルト値:** `"otlp"`
 
-**例:**
+**Example:**
 
 `export OTEL_LOGS_EXPORTER="otlp"`
 
