@@ -1,17 +1,15 @@
 ---
 title: Práticas do SIG para aprovadores e mantenedores
 linkTitle: Práticas do SIG
-description:
-  Saiba como aprovadores e mantenedores gerenciam issues e contribuições.
+description: Saiba como aprovadores e mantenedores gerenciam issues e contribuições.
 weight: 999
-default_lang_commit: 9ed7149e924a9fb6b1c83862aad8b9858c0ebb06
 cSpell:ignore: branch chalin Comms docsy mergeados
 ---
 
 Esta página inclui diretrizes e algumas práticas comuns utilizadas por
 aprovadores e mantenedores.
 
-## Integração {#onboarding}
+## Onboarding
 
 Quando uma pessoa colaboradora assume um papel com mais responsabilidade na
 documentação (como aprovador ou mantenedor), será integrada pelos aprovadores e
@@ -51,7 +49,8 @@ Outros recursos valiosos para revisão:
 ## Colaboração {#collaboration}
 
 - Aprovadores e mantenedores têm horários e circunstâncias de trabalho
-  diferentes. Por isso, toda comunicação é considerada assíncrona. Eles não
+  diferentes.
+  Por isso, toda comunicação é considerada assíncrona. Eles não
   devem se sentir obrigados a responder fora de seu horário normal.
 - Quando um aprovador ou mantenedor não puder contribuir por um período
   prolongado (mais do que alguns dias ou uma semana), deve comunicar isso pelo
@@ -71,7 +70,8 @@ Outros recursos valiosos para revisão:
 
 - Se a _branch_ do PR estiver "desatualizada com a _branch_ base" (_out-of-date
   with the base branch_), não é necessário atualizá-la continuamente: toda
-  atualização dispara novamente os testes de CI! Geralmente, é suficiente
+  atualização dispara novamente os testes de CI!
+  Geralmente, é suficiente
   atualizar antes de fazer o _merge_.
 - PRs de pessoas que não são mantenedoras **nunca** devem atualizar _submódulos_
   git. Isso pode acontecer por engano. Informe ao autor que não há problema, que
@@ -95,6 +95,7 @@ _docs_ e outra de aprovador do SIG:
 - Após revisar e aprovar, o aprovador de _docs_ pode adicionar o _label_
   [`sig-approval-missing`](https://github.com/open-telemetry/opentelemetry.io/labels/sig-approval-missing),
   sinalizando ao SIG que ele deve revisar o PR.
+  This signals to the SIG that they need to handle the PR.
 - Se não houver aprovação do SIG dentro de um prazo razoável (geralmente duas
   semanas, podendo ser menor em casos urgentes), o mantenedor da documentação
   pode usar seu próprio julgamento para fazer o _merge_.
@@ -120,14 +121,13 @@ PRs com mudanças em traduções devem ter duas aprovações: uma de aprovador d
 _docs_ e outra de aprovador de tradução. As mesmas práticas sugeridas para PRs
 co-gerenciados se aplicam aqui.
 
-### Fazendo merge dos PRs {#merging-prs}
+### Merging PRs
 
 Mantenedores podem seguir este fluxo para dar _merge_ nos PRs:
 
 - Verifique se o PR tem todas as aprovações e todos os testes de CI passaram.
 - Se a _branch_ estiver desatualizada, atualize via UI do GitHub.
-- A atualização disparará os testes de CI para serem executados novamente.
-  Aguarde que todos os testes passem ou use o seguinte comando para rodar os
+- A atualização disparará os testes de CI para serem executados novamente. Aguarde que todos os testes passem ou use o seguinte comando para rodar os
   testes e dar merge em segundo plano:
 
   ```shell
