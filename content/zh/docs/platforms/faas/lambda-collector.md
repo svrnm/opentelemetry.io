@@ -3,13 +3,14 @@ title: Lambda Collector 配置
 linkTitle: Lambda Collector 配置
 weight: 11
 description: 向你的 Lambda 添加并配置 Collector Lambda 层
-default_lang_commit: f35b3300574b428f94dfeeca970d93c5a6ddbf35
 cSpell:ignore: ADOT awsxray confmap
 ---
 
 OpenTelemetry 社区将 Collector 作为独立的 Lambda 层提供，与插桩层分开，
 为用户提供了最大的灵活性。这与当前的 AWS OpenTelemetry 发行版（ADOT）不同，
-后者将插桩和 Collector 打包在一起。
+后者将插桩和 Collector 打包在一起。 This is different
+than the current AWS Distribution of OpenTelemetry (ADOT) implementation which
+bundles instrumentation and the Collector together.
 
 ### 添加 OTel Collector Lambda 层的 ARN {#add-the-arn-of-the-otel-collector-lambda-layer}
 
@@ -19,7 +20,9 @@ OpenTelemetry 社区将 Collector 作为独立的 Lambda 层提供，与插桩�
 将其中的 ARN 中的 `<region>` 标签替换为你的 Lambda 所在区域。
 
 注意：Lambda 层是区域性资源，仅能在其发布所在的 AWS 区域中使用。请确保使用与你的
-Lambda 功能相同区域的层。社区会在所有可用区域中发布这些层。
+Lambda 功能相同区域的层。社区会在所有可用区域中发布这些层。 Make sure to use the layer in
+the same region as your Lambda functions. The community publishes layers in all
+available regions.
 
 ### 配置 OTel Collector {#configure-the-otel-collector}
 
@@ -34,7 +37,8 @@ OTel Collector Lambda 层的配置遵循 OpenTelemetry 标准。
 #### 更新默认的导出器配置 {#update-the-default-exporters}
 
 在你的 `config.yaml` 文件中添加所需的导出器，如果默认中尚未包含。
-使用前一步中设置的环境变量来配置导出器。
+使用前一步中设置的环境变量来配置导出器。 Configure your exporter(s) using the environment variables you
+set for your access tokens in the previous step.
 
 **如果没有为导出器设置环境变量，默认配置仅支持使用 debug 导出器输出数据。**
 默认配置如下所示：
@@ -72,12 +76,14 @@ service:
 
 ### 高级 OTel Collector 配置 {#advanced-otel-collector-configuration}
 
-你可以通过自定义配置启用更多组件。若需调试 Collector，
-可在配置文件中设置日志级别为 debug。如下所示。
+Please find the list of available components supported for custom configuration
+here. 你可以通过自定义配置启用更多组件。若需调试 Collector，
+可在配置文件中设置日志级别为 debug。如下所示。 See the example below.
 
 #### 选择所用的 Confmap 提供程序 {#choose-your-preferred-confmap-provider}
 
-OTel Lambda 层支持以下类型的配置映射提供程序：
+The OTel Lambda Layers supports the following types of confmap providers:
+`file`, `env`, `yaml`, `http`, `https`, and `s3`. OTel Lambda 层支持以下类型的配置映射提供程序：
 `file`、`env`、`yaml`、`http`、`https` 和 `s3`。
 要使用不同的 Confmap 提供程序来自定义 Collector 配置，请参考
 [Amazon OpenTelemetry 发行版的 Confmap 提供程序文档](https://aws-otel.github.io/docs/components/confmap-providers#confmap-providers-supported-by-the-adot-collector)。
@@ -120,7 +126,9 @@ service:
 
 配置完成后，在 Lambda 功能上设置环境变量 `OPENTELEMETRY_COLLECTOR_CONFIG_URI`，
 值为配置文件的路径（取决于 Confmap 提供程序）。例如，若使用文件 Confmap 提供程序，
-应将其值设置为 `/var/task/<路径>/<文件名>`。该变量告知扩展从哪里加载 Collector 配置。
+应将其值设置为 `/var/task/<路径>/<文件名>`。该变量告知扩展从哪里加载 Collector 配置。 for e.g, if you are using a file configmap
+provider, set its value to `/var/task/<path>/<to>/<filename>`. This will tell
+the extension where to find the collector configuration.
 
 ##### 通过 CLI 设置自定义配置路径 {#custom-collector-configuration-using-the-cli}
 
