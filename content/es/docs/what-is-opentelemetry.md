@@ -1,31 +1,54 @@
 ---
 title: ¿Qué es OpenTelemetry?
 description: Qué es y qué no es OpenTelemetry, una breve explicación
+aliases:
+  [
+    /about,
+    "Un framework de
+
+      [observabilidad](/docs/concepts/observability-primer/#what-is-observability) y
+
+      \  un conjunto de herramientas diseñado para crear y gestionar datos de
+
+      \  telemetría tales como [trazas](/docs/concepts/signals/traces/),
+
+      [métricas](/docs/concepts/signals/metrics/) y
+
+      [logs](/docs/concepts/signals/logs/).",
+    /otel
+  ]
 weight: 150
-default_lang_commit: 13c2d415e935fac3014344e67c6c61556779fd6f
-drifted_from_default: true
-cSpell:ignore: extensibilidad microservicios
+cSpell:ignore: youtube
 ---
 
 OpenTelemetry es:
 
-- Un framework de
-  [observabilidad](/docs/concepts/observability-primer/#what-is-observability) y
-  un conjunto de herramientas diseñado para crear y gestionar datos de
-  telemetría tales como [trazas](/docs/concepts/signals/traces/),
-  [métricas](/docs/concepts/signals/metrics/) y
-  [logs](/docs/concepts/signals/logs/).
-- Independiente de proveedores y herramientas, lo que significa que puede usarse
-  con una amplia variedad de backends de observabilidad, incluyendo
-  [Jaeger](https://www.jaegertracing.io/) y
-  [Prometheus](https://prometheus.io/), así como soluciones comerciales.
-- No es un backend de observabilidad como Jaeger, Prometheus, o productos
-  comerciales de terceros.
-- Enfocado en la generación, recopilación, gestión y exportación de telemetría.
-  Uno de los objetivos principales de OpenTelemetry es que puedas instrumentar
-  fácilmente tus aplicaciones o sistemas, sin importar el lenguaje de
-  programación, infraestructura o entorno de ejecución. El almacenamiento y
-  visualización de la telemetría se deja intencionadamente a otras herramientas.
+- An **[observability] framework and toolkit** designed to facilitate the
+
+  - [Generation][instr]
+  - Export
+  - [Collection](../concepts/components/#collector)
+
+  of [telemetry data][] such as [traces], [metrics], and [logs].
+
+- **Open source**, as well as **vendor- and tool-agnostic**, meaning that it can
+  be used with a broad variety of observability backends, including open source
+  tools like [Jaeger] and [Prometheus], as well as commercial offerings.
+  OpenTelemetry is **not** an observability backend itself.
+
+Uno de los objetivos principales de OpenTelemetry es que puedas instrumentar
+fácilmente tus aplicaciones o sistemas, sin importar el lenguaje de
+programación, infraestructura o entorno de ejecución.
+
+El almacenamiento y
+visualización de la telemetría se deja intencionadamente a otras herramientas.
+
+<div class="td-max-width-on-larger-screens">
+{{< youtube iEEIabOha8U >}}
+</div>
+
+For more videos in this series and additional resources, see
+[What next?](#what-next)
 
 ## ¿Qué es la observabilidad?
 
@@ -39,7 +62,8 @@ Para que un sistema sea observable, debe ser
 [instrumentado](/docs/concepts/instrumentation), esto es, su código debe emitir
 [trazas](/docs/concepts/signals/traces/),
 [métricas](/docs/concepts/signals/metrics/) o
-[logs](/docs/concepts/signals/logs/). Los datos instrumentados tienen que ser
+[logs](/docs/concepts/signals/logs/). That is, the code
+must emit [traces], [metrics], or [logs]. Los datos instrumentados tienen que ser
 enviados luego a un backend de observabilidad.
 
 ## ¿Por qué OpenTelemetry?
@@ -127,7 +151,25 @@ solución única.
 Si usas OpenTracing u OpenCensus, aprende cómo migrar a OpenTelemetry en la
 [guía de migración](/docs/migration/).
 
-## Pasos siguientes
+[merger]: https://www.cncf.io/blog/2019/05/21/a-brief-history-of-opentelemetry-so-far/
 
-- [Tutorial de inicio rápido](/docs/getting-started/): ¡lánzate de inmediato!
+## What next?
+
+- [Getting started](../getting-started/) &mdash; jump right in!
 - Conoce los [conceptos fundamentales de OpenTelemetry](/docs/concepts/).
+- [Watch videos][] from the [OTel for beginners][] or other [playlists].
+- Sign up for [training](/training), including the **free course**
+  [Getting started with OpenTelemetry](/training/#courses).
+
+[Cloud Native Computing Foundation]: https://www.cncf.io
+[instr]: ../concepts/instrumentation
+[Jaeger]: https://www.jaegertracing.io/
+[logs]: ../concepts/signals/logs/
+[metrics]: ../concepts/signals/metrics/
+[observability]: ../concepts/observability-primer/#what-is-observability
+[OTel for beginners]: https://www.youtube.com/playlist?list=PLVYDBkQ1TdyyWjeWJSjXYUaJFVhplRtvN
+[playlists]: https://www.youtube.com/@otel-official/playlists
+[Prometheus]: https://prometheus.io/
+[telemetry data]: ../concepts/signals/
+[traces]: ../concepts/signals/traces/
+[Watch videos]: https://www.youtube.com/@otel-official
