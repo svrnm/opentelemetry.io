@@ -5,14 +5,12 @@ date: 2025-08-11
 author: >-
   [Juraci Paixão Kröhling](https://github.com/jpkrohling) (OllyGarden)
 canonical_url: https://blog.olly.garden/how-to-name-your-spans
-default_lang_commit: 79619e1eba717a87f893989b5d016c3ddb4fb4e9
 cSpell:ignore: Agregable cardinalidad jpkrohling OllyGarden SemConv
 ---
 
 Uno de los aspectos más fundamentales - y a menudo pasados por alto - de una
 buena instrumentación es la nomenclatura. Esta publicación es la primera de una
-serie dedicada al arte y la ciencia de nombrar cosas en OpenTelemetry.
-Comenzaremos con los spans, los bloques de construcción de una traza
+serie dedicada al arte y la ciencia de nombrar cosas en OpenTelemetry. Comenzaremos con los spans, los bloques de construcción de una traza
 distribuida, y te daremos desde el inicio la conclusión más importante: cómo
 nombrar los spans que describen tu lógica de negocio única.
 
@@ -25,7 +23,8 @@ personalizados que agregas a tu propia lógica de negocio. Estas son las
 operaciones únicas de tu dominio de aplicación.
 
 Para estos spans personalizados, recomendamos un patrón inspirado en la
-gramática básica. Las oraciones simples y claras suelen seguir una estructura
+gramática básica.
+Las oraciones simples y claras suelen seguir una estructura
 sujeto -> verbo -> objeto directo. El "sujeto" (el servicio que realiza el
 trabajo) ya forma parte del contexto de la traza. Podemos usar el resto de esa
 estructura para el nombre del span:
@@ -43,13 +42,13 @@ veremos más adelante.
 
 Veamos algunos ejemplos:
 
-| Nombre incorrecto                                | Nombre de span recomendado | Por qué es mejor                                                                             |
-| :----------------------------------------------- | :------------------------- | :------------------------------------------------------------------------------------------- |
-| procesar_pago_para_usuario_jane_doe              | procesar pago              | El verbo y el objeto son claros. El ID de usuario debe ir en un atributo.                    |
-| enviar*factura*#98765                            | enviar factura             | Agregable. Es fácil encontrar la latencia P95 para el envío de todas las facturas.           |
-| renderizar_anuncio_para_campaña_verano_de_ventas | renderizar anuncio         | La campaña específica es un detalle, no la operación principal. Ponlo en un atributo.        |
-| calcular_envío_para_zip_90210                    | calcular envío             | La operación es consistente. El código postal es un parámetro, no parte del nombre.          |
-| validación_fallida                               | validar entrada_usuario    | Focalizarse en la operación, no en el resultado. El resultado debe ir en el estado del span. |
+| Nombre incorrecto                                                                                                                                                              | Nombre de span recomendado                   | Por qué es mejor                                                                                                             |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
+| procesar_pago_para_usuario_jane_doe                                   | procesar pago                                | El verbo y el objeto son claros. El ID de usuario debe ir en un atributo.                    |
+| enviar_factura_#98765                                                                                                                                                          | enviar factura                               | Agregable. Es fácil encontrar la latencia P95 para el envío de todas las facturas.           |
+| renderizar_anuncio_para_campaña_verano_de_ventas | renderizar anuncio                           | La campaña específica es un detalle, no la operación principal. Ponlo en un atributo.        |
+| calcular_envío_para_zip_90210                                                              | calcular envío                               | La operación es consistente. El código postal es un parámetro, no parte del nombre.          |
+| validación_fallida                                                                                                                                        | validar entrada_usuario | Focalizarse en la operación, no en el resultado. El resultado debe ir en el estado del span. |
 
 Al seguir el formato `{verbo} {objeto}`, creas un vocabulario claro y
 consistente para tus operaciones de negocio. Esto hace que tus trazas sean
@@ -59,11 +58,9 @@ por esos spans y obtener una respuesta.
 
 ## Por qué este patrón funciona {#why-this-pattern-works}
 
-Entonces, ¿por qué `procesar pago` es bueno y `procesar_factura_#98765` es malo?
-La razón es la **cardinalidad**.
+Entonces, ¿por qué `procesar pago` es bueno y `procesar_factura_#98765` es malo? La razón es la **cardinalidad**.
 
-La cardinalidad se refiere al número de valores únicos que un dato puede tener.
-El nombre de un span debe tener **baja cardinalidad**. Si incluye
+La cardinalidad se refiere al número de valores únicos que un dato puede tener. El nombre de un span debe tener **baja cardinalidad**. Si incluye
 identificadores únicos como un ID de usuario o un número de factura en el nombre
 del span, crearás un nombre distinto para cada operación. Esto sobrecarga tu
 _backend_ de observabilidad, dificulta el agrupamiento y análisis de operaciones
@@ -114,8 +111,7 @@ Para _Remote Procedure Calls (RPC)_, la convención es
 `{rpc.system}/{rpc.method}`.
 
 - **Ejemplo:** `com.example.UserService/GetUser`
-- **Análisis:** Aunque el formato es diferente, el principio es el mismo.
-  Describe un método (`GetUser`), que es un verbo, dentro de un servicio
+- **Análisis:** Aunque el formato es diferente, el principio es el mismo. Describe un método (`GetUser`), que es un verbo, dentro de un servicio
   (`com.example.UserService`), que es el objeto o recurso.
 
 La idea clave es que al usar `{verbo} {objeto}`, hablas el mismo "idioma" que el
@@ -129,8 +125,7 @@ patrón claro y consistente como `{verbo} {objeto}` para tus spans específicos 
 negocio, puedes transformar tus datos de telemetría de un enredo confuso a un
 jardín bien cuidado.
 
-Un span bien nombrado es un regalo para tu yo del futuro y para tu equipo.
-Aporta claridad durante incidentes estresantes, permite análisis de rendimiento
+Un span bien nombrado es un regalo para tu yo del futuro y para tu equipo. Aporta claridad durante incidentes estresantes, permite análisis de rendimiento
 potentes y, en última instancia, te ayuda a construir software mejor y más
 confiable.
 
