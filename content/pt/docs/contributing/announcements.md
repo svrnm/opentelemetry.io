@@ -2,7 +2,6 @@
 title: Anúncios
 description: Crie anúncios ou banners para eventos especiais.
 weight: 50
-default_lang_commit: 645760e1961cb45d9ce6b291887c74ce4efa0398
 ---
 
 Um anúncio é uma _regular page_ do Hugo, contida no diretório `announcements` de
@@ -67,5 +66,4 @@ Ao criar uma nova _issue_, inclua um título curto e significativo e uma
 descrição clara. Adicione o máximo de informações relevantes possível e, se
 possível, um caso de teste.
 
-[new-issue]:
-  https://github.com/open-telemetry/opentelemetry.io/issues/new/choose
+[new-issue]: https://github.com/open-telemetry/opentelemetry.io/issues/new/choose
