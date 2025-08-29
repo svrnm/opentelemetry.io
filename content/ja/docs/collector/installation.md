@@ -1,12 +1,12 @@
 ---
 title: コレクターのインストール
 weight: 2
-default_lang_commit: fd7da211d5bc37ca93112a494aaf6a94445e2e28
 cSpell:ignore: darwin dpkg journalctl kubectl otelcorecol pprof tlsv zpages
 ---
 
 OpenTelemetryコレクターはさまざまなオペレーティングシステムやアーキテクチャにデプロイできます。
-以下の手順は、コレクターの最新の安定版をダウンロードしてインストールする方法を示しています。
+以下の手順は、コレクターの最新の安定版をダウンロードしてインストールする方法を示しています。 The following instructions show how to download and
+install the latest stable version of the Collector.
 
 OpenTelemetryコレクターに適用可能なデプロイメントモデル、コンポーネント、リポジトリについてよく知らない場合は、まず[データ収集][Data Collection]と[デプロイ方法][Deployment Methods]のページを確認してください。
 
@@ -14,6 +14,7 @@ OpenTelemetryコレクターに適用可能なデプロイメントモデル、�
 
 以下のコマンドはDockerイメージをプルし、コレクターをコンテナ内で実行します。
 `{{% param vers %}}` を実行したいコレクターのバージョンに置き換えてください。
+Replace `{{% param vers %}}` with the version of the Collector you want to run.
 
 {{< tabpane text=true >}} {{% tab DockerHub %}}
 
@@ -74,8 +75,9 @@ otel-collector:
 kubectl apply -f https://raw.githubusercontent.com/open-telemetry/opentelemetry-collector/v{{% param vers %}}/examples/k8s/otel-config.yaml
 ```
 
-先ほどの例は、本番環境で使う前に拡張したりカスタマイズしたりするための、出発点としてのものです。
-本番環境でのカスタマイズとインストールについては、[OpenTelemetry Helm Charts][] を参照してください。
+The previous example is meant to serve as a starting point, to be extended and
+customized before actual production usage. For production-ready customization
+and installation, see [OpenTelemetry Helm Charts][].
 
 また、[OpenTelemetry Operator][] を使って、OpenTelemetryコレクターインスタンスのプロビジョニングとメンテナンスを行えます。
 この機能には、自動アップグレード処理、OpenTelemetry コンフィギュレーションに基づいた `Service` コンフィギュレーション、デプロイメントへの自動サイドカーインジェクションなどがあります。
@@ -88,8 +90,9 @@ Kubernetesでコレクターを使用する方法については、[Kubernetes�
 
 ## Linux
 
-すべてのコレクターのリリースには、Linux amd64/arm64/i386システム用のAPK、DEB、RPMパッケージが含まれています。
-インストール後のデフォルト設定は `/etc/otelcol/config.yaml` にあります。
+Every Collector release includes APK, DEB and RPM packaging for Linux
+amd64/arm64/i386 systems. You can find the default configuration in
+`/etc/otelcol/config.yaml` after installation.
 
 > Note: サービスの自動設定には `systemd` が必要です。
 
@@ -161,8 +164,8 @@ sudo rpm -ivh otelcol_{{% param vers %}}_linux_386.rpm
 
 ### 手動でのLinuxへのインストール
 
-Linux向けの[リリース][releases]は、さまざまなアーキテクチャに対応しています。
-バイナリを含むファイルをダウンロードし、あなたのマシンに手動でインストールしてください。
+Linux [releases][] are available for various architectures. You can download the
+file containing the binary and install it on your machine manually:
 
 {{< tabpane text=true >}} {{% tab AMD64 %}}
 
@@ -200,7 +203,9 @@ tar -xvf otelcol_{{% param vers %}}_linux_ppc64le.tar.gz
 
 別の設定を使うには、`/etc/otelcol/otelcol.conf` systemd 環境ファイルにある `OTELCOL_OPTIONS` 変数を適切なコマンドラインオプションに設定します。
 `/usr/bin/otelcol --help` を実行すると、利用可能なすべてのオプションを確認できます。
-このファイルに追加の環境変数を追加して `otelcol` サービスに渡せます。
+このファイルに追加の環境変数を追加して `otelcol` サービスに渡せます。 You can run `/usr/bin/otelcol --help` to see all available
+options. You can pass additional environment variables to the `otelcol` service
+by adding them to this file.
 
 コレクターの設定ファイルまたは `/etc/otelcol/otelcol.conf` を変更した場合は、`otelcol` サービスを再起動して変更を適用します。
 
@@ -218,7 +223,9 @@ sudo journalctl -u otelcol
 
 macOS向けの [リリース][releases] は Intel および ARM システムで利用可能です。
 リリースはgzip圧縮されたtarball (`.tar.gz`) としてパッケージ化されています。
-解凍するには、以下のコマンドを実行してください。
+解凍するには、以下のコマンドを実行してください。 The releases are
+packaged as gzipped tarballs (`.tar.gz`). To unpack them, run the following
+commands:
 
 {{< tabpane text=true >}} {{% tab Intel %}}
 
@@ -240,8 +247,26 @@ tar -xvf otelcol_{{% param vers %}}_darwin_arm64.tar.gz
 
 ## Windows
 
-Windows向けの [リリース][releases] は gzip された tarball (`.tar.gz`) としてパッケージ化されています。
-すべてのコレクターのリリースには、解凍後に実行できる `otelcol.exe` 実行ファイルが含まれています。
+Windows [releases][] are available as MSI installers and gzipped tarballs
+(`.tar.gz`). The MSI installs the Collector as a Windows service named after the
+distribution, with the display name "OpenTelemetry Collector", and registers an
+Application Event Log source with the distribution name.
+
+### MSI installation
+
+```powershell
+msiexec /i "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v{{% param vers %}}/otelcol_{{% param vers %}}_windows_x64.msi"
+```
+
+### Manual installation
+
+```powershell
+Invoke-WebRequest -Uri "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v{{% param vers %}}/otelcol_{{% param vers %}}_windows_amd64.tar.gz" -OutFile "otelcol_{{% param vers %}}_windows_amd64.tar.gz"
+tar -xvzf otelcol_{{% param vers %}}_windows_amd64.tar.gz
+```
+
+Every release includes the Collector executable that you can run after
+installation.
 
 ## ソースからビルドする
 
