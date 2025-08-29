@@ -1,10 +1,8 @@
 ---
 title: Distribuciones
 description: >-
-  Una distribución, que no debe confundirse con un fork, es una versión
-  personalizada de un componente de OpenTelemetry.
+  Una distribución, que no debe confundirse con un fork, es una versión personalizada de un componente de OpenTelemetry.
 weight: 190
-default_lang_commit: 55f9c9d07ba35c241048ffc0d756d67843d68805
 ---
 
 Los proyectos de OpenTelemetry consisten en múltiples
@@ -17,10 +15,9 @@ implementación de referencia de OpenTelemetry está disponible como:
 Cualquier implementación de referencia puede ser personalizada como una
 distribución.
 
-## ¿Qué es una distribución? {#what-is-a-distribution}
+## ¿Qué es una distribución?
 
-Una distribución es una versión personalizada de un componente de OpenTelemetry.
-Una distribución es un envoltorio alrededor de un repositorio upstream de
+Una distribución es una versión personalizada de un componente de OpenTelemetry. Una distribución es un envoltorio alrededor de un repositorio upstream de
 OpenTelemetry con algunas personalizaciones. Las distribuciones no deben
 confundirse con _forks_.
 
@@ -54,7 +51,7 @@ Las distribuciones en general caen en las siguientes categorías:
   pueden ser proporcionadas para aumentar las consideraciones de soporte y
   seguridad.
 
-## ¿Quién puede crear una distribución? {#who-can-create-a-distribution}
+## ¿Quién puede crear una distribución?
 
 Cualquiera puede crear una distribución. Hoy en día, varios
 [proveedores](/ecosystem/vendors/) ofrecen
@@ -63,7 +60,7 @@ considerar crear una distribución si desean utilizar componentes en el
 [Registro](/ecosystem/registry/) que no han sido integrados al proyecto de
 OpenTelemetry.
 
-## ¿Contribución o distribución? {#contribution-or-distribution}
+## ¿Contribución o distribución?
 
 Antes de seguir leyendo y aprender cómo crear tu propia distribución, pregúntate
 si tus aportes sobre un componente de OpenTelemetry serían beneficiosas para
@@ -111,5 +108,4 @@ usar la distribución no resulte en un bloqueo con el proveedor.
 > Cualquier soporte para una distribución proviene de los autores de la
 > distribución y no de los autores de OpenTelemetry.
 
-[guidelines]:
-  https://github.com/open-telemetry/community/blob/main/marketing-guidelines.md
+[guidelines]: https://github.com/open-telemetry/community/blob/main/marketing-guidelines.md
