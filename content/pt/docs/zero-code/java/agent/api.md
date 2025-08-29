@@ -1,11 +1,8 @@
 ---
 title: Estendendo instrumentações com a API
 linkTitle: Estender com a API
-description:
-  Use a API do OpenTelemetry em combinação com o Java agent para estender a
-  telemetria gerada automaticamente com spans e métricas personalizadas.
+description: Use a API do OpenTelemetry em combinação com o Java agent para estender a telemetria gerada automaticamente com spans e métricas personalizadas.
 weight: 21
-default_lang_commit: c392c714849921cd56aca8ca99ab11e0e4cb16f4
 ---
 
 ## Introdução {#introduction}
@@ -46,7 +43,7 @@ O Java agent é um caso especial onde `GlobalOpenTelemetry` é definido pelo
 agente. Simplesmente chame a função `GlobalOpenTelemetry.get()` para acessar a
 instância `OpenTelemetry`.
 
-## Trecho {#span}
+## Span
 
 {{% alert title="Note" %}}
 
@@ -83,5 +80,4 @@ seção de [medidores](/docs/languages/java/api/#meter).
 Um exemplo completo pode ser encontrado no [repositório de
 exemplos][example repository].
 
-[example repository]:
-  https://github.com/open-telemetry/opentelemetry-java-examples/tree/main/javaagent
+[example repository]: https://github.com/open-telemetry/opentelemetry-java-examples/tree/main/javaagent
