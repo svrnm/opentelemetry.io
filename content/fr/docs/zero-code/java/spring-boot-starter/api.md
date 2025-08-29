@@ -1,12 +1,8 @@
 ---
 title: Étendre les instrumentations avec l'API
 linkTitle: Étendre avec l'API
-description:
-  Utilisez l'API OpenTelemetry en combinaison avec le Spring Boot starter pour
-  étendre la télémétrie générée automatiquement avec des spans et des métriques
-  personnalisés
+description: Utilisez l'API OpenTelemetry en combinaison avec le Spring Boot starter pour étendre la télémétrie générée automatiquement avec des spans et des métriques personnalisés
 weight: 21
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 ---
 
 ## Introduction {#introduction}
@@ -53,7 +49,7 @@ public class MyController {
 Utilisez le `Tracer` pour créer un span comme expliqué dans la section
 [Span](/docs/languages/java/api/#span).
 
-Un exemple complet peut être trouvé dans le [dépôt d'exemples].
+Un exemple complet peut être trouvé dans le \[dépôt d'exemples].
 
 ## Meter {#meter}
 
@@ -74,7 +70,6 @@ public class MyController {
 Utilisez le `Meter` pour créer un compteur, une jauge ou un histogramme comme
 expliqué dans la section [Meter](/docs/languages/java/api/#meter).
 
-Un exemple complet peut être trouvé dans le [dépôt d'exemples].
+Un exemple complet peut être trouvé dans le \[dépôt d'exemples].
 
-[dépôt d'exemples]:
-  https://github.com/open-telemetry/opentelemetry-java-examples/tree/main/spring-native
+[example repository]: https://github.com/open-telemetry/opentelemetry-java-examples/tree/main/spring-native
