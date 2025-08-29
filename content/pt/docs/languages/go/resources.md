@@ -1,7 +1,6 @@
 ---
 title: Recursos
 weight: 70
-default_lang_commit: 12f31f62fcc466532513f6ebccb060c9ea5b9fe4
 cSpell:ignore: sdktrace thirdparty
 ---
 
