@@ -1,12 +1,10 @@
 ---
 title: Collector（收集器）
 description: 提供厂商中立的遥测数据接收、处理和导出功能。
-aliases: [./about]
+aliases: [ ./about ]
 cascade:
   vers: 0.128.0
 weight: 270
-default_lang_commit: b13d5dd3a9f288ab64d2af98c0b4ec1694499ef3
-drifted_from_default: true
 ---
 
 ![集成 Jaeger、OTLP 和 Prometheus 的 OpenTelemetry Collector 示意图](img/otel-collector.svg)
@@ -15,11 +13,15 @@ drifted_from_default: true
 
 OpenTelemetry Collector 提供了一种与厂商中立的实现方式，用于接收、处理和导出遥测数据。
 它省去了运行、操作和维护多个代理/收集器的需要。这种方式具有更好的可扩展性，
-并支持开源可观测性数据格式（例如 Jaeger、Prometheus、Fluent Bit 等），可将数据发送到一个或多个开源或商业后端。
+并支持开源可观测性数据格式（例如 Jaeger、Prometheus、Fluent Bit 等），可将数据发送到一个或多个开源或商业后端。 It removes the need to run, operate,
+and maintain multiple agents/collectors. This works with improved scalability
+and supports open source observability data formats (e.g. Jaeger, Prometheus,
+Fluent Bit, etc.) sending to one or more open source or commercial backends.
 
 ## 目标 {#objectives}
 
-- **可用性**：合理的默认配置，支持主流协议，开箱即用地运行和采集数据。
+- _Usability_: Reasonable default configuration, supports popular protocols,
+  runs and collects out of the box.
 - **性能**：在不同负载和配置下都具有高度稳定性和高性能。
 - **可观测性**：作为可观测服务的典范。
 - **可扩展性**：可在不修改核心代码的前提下进行自定义。
@@ -27,12 +29,15 @@ OpenTelemetry Collector 提供了一种与厂商中立的实现方式，用于�
 
 ## 何时使用 Collector {#when-to-use-a-collector}
 
-对于大多数编程语言的特定插桩库来说，你已经拥有用于主流后端和 OTLP 的导出器。你可能会问：
+For most language specific instrumentation libraries you have exporters for
+popular backends and OTLP. You might wonder,
 
 > 在什么情况下应该使用 Collector 来发送数据，而不是让每个服务直接发送到后端？
 
 在尝试或入门 OpenTelemetry 时，直接将数据发送到后端是快速获取价值的好方法。
-同样地，在开发或小规模环境中，即使不使用 Collector 也能获得不错的效果。
+同样地，在开发或小规模环境中，即使不使用 Collector 也能获得不错的效果。 Also, in a
+development or small-scale environment you can get decent results without a
+collector.
 
 然而，通常我们建议你在服务旁边使用一个 Collector，因为它能让服务快速卸载数据，而
 Collector 可以处理如重试、批处理、加密甚至敏感数据过滤等额外操作。
@@ -49,12 +54,15 @@ OTLP 导出器都假定 Collector 在本地运行，因此只要你启动 Collec
 **Collector** 的当前状态为：[混合][mixed]，因为核心 Collector
 组件当前具有不同的[稳定性等级][stability levels]。
 
-**Collector 组件**的成熟度水平不同。每个组件的稳定性在其 `README.md` 文件中有说明。
-你可以在[组件镜像仓库][registry]中找到所有可用的 Collector 组件列表。
+**Collector components** differ in their maturity levels. Each component has its
+stability documented in its `README.md`. You can find a list of all available
+Collector components in the [registry][].
 
-Collector 软件构件的支持在一段时间内有保障，具体取决于该构件的目标用户。
-这种支持至少包括关键 Bug 和安全问题的修复。
-更多细节参阅[支持策略](https://github.com/open-telemetry/opentelemetry-collector/blob/main/VERSIONING.md)。
+Support is guaranteed for Collector software artifacts for a certain time period
+based on the artifact's intended audience. This support includes, at minimum,
+fixes for critical bugs and security issues. See the
+[support policies](https://github.com/open-telemetry/opentelemetry-collector/blob/main/VERSIONING.md)
+for more details.
 
 ## 发行版与发布版本 {#releases}
 
