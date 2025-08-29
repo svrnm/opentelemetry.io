@@ -2,8 +2,7 @@
 title: Exemple d'auto-instrumentation des journaux
 linkTitle: Exemple de journaux
 weight: 20
-aliases: [/docs/languages/python/automatic/logs-example]
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
+aliases: [ /docs/languages/python/automatic/logs-example ]
 cSpell:ignore: distro mkdir virtualenv
 ---
 
@@ -14,16 +13,17 @@ Contrairement aux traces et aux métriques, il n'y a pas d'API équivalente pour
 les journaux. Il n'y a qu'un SDK. Pour Python, vous utiliserez la bibliothèque
 `logger` de Python, puis le SDK OTel qui attachera un gestionnaire OTLP au
 logger racine, transformant le logger Python en logger OTLP. Une façon
-d'accomplir cela est documentée dans l'exemple "logs" du [dépôt OpenTelemetry
-Python][].
+d'accomplir cela est documentée dans l'exemple "logs" du \[dépôt OpenTelemetry
+Python]\[].
 
 Une autre façon de le faire est via le support de Python pour
 l'auto-instrumentation des journaux. L'exemple ci-dessous est basé sur l'exemple
-"logs" du [dépôt OpenTelemetry Python][].
+"logs" du \[dépôt OpenTelemetry Python]\[].
 
 > Il existe une API qui fait le pont pour les journaux ; cependant, elle est
 > différente de l'API des traces et des métriques, car elle n'est pas utilisée
-> par les développeurs d'applications pour créer des journaux. Au lieu de cela,
+> par les développeurs d'applications pour créer des journaux.
+> Au lieu de cela,
 > ils peuvent utiliser cette API pour configurer des appenders de journaux dans
 > les bibliothèques de journalisation standard spécifiques au langage. Pour plus
 > d'informations, voir [API des journaux](/docs/specs/otel/logs/api/).
@@ -95,7 +95,7 @@ télémétrie à d'autres destinations, comme un Collecteur OpenTelemetry.
 > renoncer à l'agent et importer le SDK OpenTelemetry et les bibliothèques
 > d'instrumentation dans votre code et les configurer dans votre code. Vous
 > pouvez également étendre l'instrumentation automatique en important l'API
-> OpenTelemetry. Pour plus de détails, voir la [référence de l'API][].
+> OpenTelemetry. Pour plus de détails, voir la \[référence de l'API]\[].
 
 ## Exécution {#execute}
 
@@ -174,7 +174,5 @@ Notez que l'événement de Span et le journal ont tous deux le même SpanID
 tous les événements journalisés pour améliorer la capacité à corréler la
 télémétrie.
 
-[référence de l'API]:
-  https://opentelemetry-python.readthedocs.io/en/latest/index.html
-[dépôt OpenTelemetry Python]:
-  https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples/logs
+[api reference]: https://opentelemetry-python.readthedocs.io/en/latest/index.html
+[OpenTelemetry Python repository]: https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples/logs
