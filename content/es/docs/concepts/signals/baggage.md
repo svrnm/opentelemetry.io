@@ -2,8 +2,6 @@
 title: Baggage
 weight: 4
 description: Información contextual que se pasa entre señales.
-default_lang_commit: 7c0e4db0b6c39b0ca0e7efb17df5610d1b77b8a3
-cSpell:ignore: embedidas
 ---
 
 En OpenTelemetry, el `Baggage` es información contextual que viaja con el
@@ -22,8 +20,7 @@ adicionales entre servicios.
 
 Por ejemplo, imagina que tienes un `clientId` al inicio de una petición, pero te
 gustaría que ese ID estuviera disponible en todos los spans de una traza, en
-algunas métricas en otro servicio y en algunos logs a lo largo del camino.
-Debido a que la traza puede abarcar múltiples servicios, necesitas alguna forma
+algunas métricas en otro servicio y en algunos logs a lo largo del camino. Debido a que la traza puede abarcar múltiples servicios, necesitas alguna forma
 de propagar esos datos sin necesidad de copiar el `clientId` en diversos lugares
 de tu código.
 
@@ -34,7 +31,7 @@ instrumentaciones se encargan de propagar automáticamente el `Baggage` por ti.
 
 ![Baggage en OpenTelemetry](../otel-baggage.svg)
 
-## ¿Para qué debes usar el `Baggage` de OTel? {#what-should-otel-baggage-be-used-for}
+## ¿Para qué debes usar el `Baggage` de OTel?
 
 El `Baggage` se usa típicamente para incluir información que sólo está
 disponible al inicio de una solicitud en los servicios posteriores. Por ejemplo,
