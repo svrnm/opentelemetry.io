@@ -3,8 +3,6 @@ title: Localização do site
 description: Criando e mantendo páginas do site em localizações não inglesas.
 linkTitle: Localização
 weight: 25
-default_lang_commit: b089f21094014118017cf32ffeea6b50afc3579f
-drifted_from_default: true
 cSpell:ignore: merge ptbr shortcodes
 ---
 
@@ -39,8 +37,7 @@ nesta seção.
     ou `#otel-comms`
   - [Discussões][Discussion], _issue_, ou comentário de PR
 
-[Discussion]:
-  https://github.com/open-telemetry/opentelemetry.io/discussions?discussions_q=is%3Aopen+label%3Ai18n
+[Discussion]: https://github.com/open-telemetry/opentelemetry.io/discussions?discussions_q=is%3Aopen+label%3Ai18n
 
 </div>
 
@@ -74,14 +71,13 @@ nesta seção.
 Para garantir que os alvos das âncoras dos cabeçalhos estejam padronizados entre
 as localizações, ao traduzir cabeçalhos:
 
-- Preserve o ID explícito do cabeçalho, se ele tiver um. A [sintaxe de ID de
-  cabeçalho][] é escrita após o texto do cabeçalho usando sintaxe como
+- Preserve o ID explícito do cabeçalho, se ele tiver um. A \[sintaxe de ID de
+  cabeçalho]\[] é escrita após o texto do cabeçalho usando sintaxe como
   `{ #some-id }`.
 - Caso contrário, declare explicitamente um ID de cabeçalho correspondente ao ID
   autogerado do cabeçalho inglês original.
 
-[sintaxe de ID de cabeçalho]:
-  https://github.com/yuin/goldmark/blob/master/README.md#headings
+[Heading ID syntax]: https://github.com/yuin/goldmark/blob/master/README.md#headings
 
 ### Links {#links}
 
@@ -99,7 +95,9 @@ O repositório do site do OTel tem um hook render-link customizado que o Hugo us
 para converter caminhos de links absolutos referindo-se a páginas de
 documentação. **Links da forma `/docs/some-page` são tornados específicos da
 localização** prefixando o caminho com o código do idioma da página ao
-renderizar o link. Por exemplo, o caminho de exemplo anterior se tornaria
+renderizar o link. **Links of the
+form `/docs/some-page` are made locale specific** by prefixing the path with the
+page language code when rendering the link. Por exemplo, o caminho de exemplo anterior se tornaria
 `/pt/docs/some-page` quando renderizado de uma página em português.
 
 {{% /alert %}}
@@ -129,8 +127,7 @@ Isso seria traduzido em português como:
 ```
 
 [labels]: https://spec.commonmark.org/0.31.2/#link-label
-[link definitions]:
-  https://spec.commonmark.org/0.31.2/#link-reference-definitions
+[link definitions]: https://spec.commonmark.org/0.31.2/#link-reference-definitions
 
 ### Imagens e diagramas {#images}
 
@@ -139,8 +136,7 @@ própria imagem[^shared-images].
 
 **Traduza** texto em diagramas [Mermaid][].
 
-[^shared-images]:
-    Hugo é inteligente sobre a forma como renderiza arquivos de imagem que são
+[^shared-images]: Hugo é inteligente sobre a forma como renderiza arquivos de imagem que são
     compartilhados entre localizações do site. Ou seja, Hugo produzirá um
     _único_ arquivo de imagem e o compartilhará entre localizações.
 
@@ -162,14 +158,13 @@ compartilhado de página.
 {{% /alert %}}
 
 Alguns dos _shortcodes_ base contêm texto em inglês que você pode precisar
-localizar -- especialmente para aqueles contidos em [layouts/_shortcodes/docs].
+localizar -- especialmente para aqueles contidos em [layouts/\_shortcodes/docs][layouts/_shortcodes/docs].
 
 Se você precisar criar uma versão localizada de um _shortcode_, coloque-o em
 `layouts/_shortcodes/pt`, onde `pt` é o código do idioma da sua localização. A
 partir daí, use o mesmo caminho relativo do _shortcode_ base original.
 
-[layouts/_shortcodes/docs]:
-  https://github.com/open-telemetry/opentelemetry.io/tree/main/layouts/_shortcodes/docs
+[layouts/_shortcodes/docs]: https://github.com/open-telemetry/opentelemetry.io/tree/main/layouts/_shortcodes/docs
 
 ## Acompanhando inconsistências em páginas localizadas {#track-changes}
 
@@ -181,8 +176,7 @@ lidamos com isso.
 
 Quando uma página localizada é escrita, como `content/pt/<some-path>/page.md`,
 esta tradução é baseada em um _commit_ específico da [_branch_ `main`][main] da
-versão correspondente em inglês da página em `content/en/<some-path>/page.md`.
-Neste repositório, toda página localizada identifica o _commit_ da página em
+versão correspondente em inglês da página em `content/en/<some-path>/page.md`. Neste repositório, toda página localizada identifica o _commit_ da página em
 inglês no _front matter_ da página localizada da seguinte forma:
 
 ```markdown
@@ -332,7 +326,8 @@ Uma vez que você estiver pronto:
    contribuidores.
 
 3. Procure o [código ISO 639-1][ISO 639-1 code] oficial para o idioma que você
-   quer adicionar. Vamos nos referir a este código de idioma como `LANG_ID` no
+   quer adicionar.
+   Vamos nos referir a este código de idioma como `LANG_ID` no
    restante desta seção.
 
 4. Adicione a seguinte lista de tarefas ao comentário de abertura da sua
@@ -359,14 +354,14 @@ Uma vez que você estiver pronto:
 
 5. [Submeta um _pull request_](../pull-requests/) com uma tradução da [página
    inicial][homepage] do site, e _nada mais_, no arquivo
-   `content/LANG_ID/_index.md`. Certifique-se de que os mantenedores tenham as
+   `content/LANG_ID/_index.md`.
+   Certifique-se de que os mantenedores tenham as
    permissões necessárias para editar seu PR, já que eles adicionarão mudanças
    adicionais ao seu PR que são necessárias para iniciar seu projeto de
    localização.
 
 [ISO 639-1 code]: https://en.wikipedia.org/wiki/ISO_639-1
-[homepage]:
-  https://github.com/open-telemetry/opentelemetry.io/blob/main/content/en/_index.md
+[homepage]: https://github.com/open-telemetry/opentelemetry.io/blob/main/content/en/_index.md
 
 Após o _merge_ do seu primeiro PR, os mantenedores configurarão o rótulo
 _(label)_ da _issue_, o grupo de nível organizacional e os responsáveis pelo
@@ -400,7 +395,7 @@ Atualize o arquivo `hugo.yaml`. Adicione entradas apropriadas para `LANG_ID` em:
 #### Ortografia {#spelling}
 
 Procure por [dicionários cSpell][cSpell dictionaries] disponíveis como pacotes
-NPM [@cspell/dict-LANG_ID][]. Caso um dicionário não esteja disponível para seu
+NPM [@cspell/dict-LANG\_ID][@cspell/dict-LANG_ID]. Caso um dicionário não esteja disponível para seu
 dialeto ou região, escolha a região mais próxima.
 
 Se nenhum dicionário estiver disponível, então pule o resto desta subseção. Caso
