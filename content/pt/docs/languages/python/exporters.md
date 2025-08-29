@@ -2,8 +2,6 @@
 title: Exporters
 weight: 50
 description: Processar e exportar seus dados de telemetria
-default_lang_commit: dc20c29a4c79ad0424c0fcc3271216af7e035d9b
-drifted_from_default: true
 cSpell:ignore: LOWMEMORY
 ---
 
@@ -231,7 +229,8 @@ metrics.set_meter_provider(provider)
 ```
 
 Com o código acima, você pode acessar suas métricas em
-<http://localhost:9464/metrics>. O Prometheus ou um OpenTelemetry Collector com
+<http://localhost:9464/metrics>.
+O Prometheus ou um OpenTelemetry Collector com
 o receptor Prometheus pode extrair as métricas deste endpoint.
 
 {{% include "exporters/zipkin-setup.md" %}}
