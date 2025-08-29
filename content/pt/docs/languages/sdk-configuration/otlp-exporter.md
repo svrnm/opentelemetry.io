@@ -1,8 +1,7 @@
 ---
 title: Configurações do Exporter OTLP
 linkTitle: OTLP Exporter
-aliases: [otlp-exporter-configuration]
-default_lang_commit: fe0c3f68902aeb6e7584ffc32c6c8964d7a89e6e
+aliases: [ otlp-exporter-configuration ]
 ---
 
 ## Configurações de rota {#endpoint-configuration}
@@ -39,7 +38,8 @@ exemplo acima:
 ### `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT`
 
 URL da rota apenas para dados de rastros, com um número de porta especificado
-opcionalmente. Normalmente termina com `v1/traces` ao utilizar OTLP/HTTP.
+opcionalmente.
+Normalmente termina com `v1/traces` ao utilizar OTLP/HTTP.
 
 **Valor padrão:**
 
@@ -56,7 +56,8 @@ opcionalmente. Normalmente termina com `v1/traces` ao utilizar OTLP/HTTP.
 ### `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`
 
 URL da rota apenas para dados de métricas, com um número de porta especificado
-opcionalmente. Normalmente termina com `v1/metrics` ao utilizar OTLP/HTTP.
+opcionalmente.
+Normalmente termina com `v1/metrics` ao utilizar OTLP/HTTP.
 
 **Valor padrão:**
 
@@ -73,7 +74,8 @@ opcionalmente. Normalmente termina com `v1/metrics` ao utilizar OTLP/HTTP.
 ### `OTEL_EXPORTER_OTLP_LOGS_ENDPOINT`
 
 URL da rota apenas para dados de logs, com um número de porta especificado
-opcionalmente. Normalmente termina com `v1/logs` ao utilizar OTLP/HTTP.
+opcionalmente.
+Normalmente termina com `v1/logs` ao utilizar OTLP/HTTP.
 
 **Valor padrão:**
 
