@@ -3,7 +3,6 @@ title: Comunidad
 menu: { main: { weight: 40 } }
 cascade:
   type: docs
-default_lang_commit: f9a0439ac56dba1515283e1a1cb6d6a90634a20f
 ---
 
 {{% community-lists %}}
@@ -20,7 +19,8 @@ usuarios de OpenTelemetry? Entonces revisa nuestros
 Organizamos la comunidad en
 [Grupos de Interés Especial (SIGs)](https://github.com/open-telemetry/community#special-interest-groups)
 con el fin de mejorar nuestro flujo de trabajo y gestionar más fácilmente un
-proyecto comunitario. Lee más en nuestro
+proyecto comunitario.
+Lee más en nuestro
 [repositorio de la comunidad](https://github.com/open-telemetry/community).
 
 ## Ecosistema
