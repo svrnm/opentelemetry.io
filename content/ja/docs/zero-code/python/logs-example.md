@@ -2,22 +2,29 @@
 title: ログ自動計装の例
 linkTitle: Logs Example
 weight: 20
-default_lang_commit: 3d737b777f7bfa070f7f14835570add916d4dcb0
+aliases: [ /docs/languages/python/automatic/logs-example ]
+cSpell:ignore: distro mkdir virtualenv
 ---
 
 このページでは、OpenTelemetry で Python ログを自動計装する方法を説明します。
 
-トレースやメトリクスとは異なり、同等のLogs APIはありません。
+Unlike Traces and Metrics, there is no equivalent Logs API. There is only an
+SDK. トレースやメトリクスとは異なり、同等のLogs APIはありません。
 あるのはSDKだけです。
 Python の場合は、Python の `logger` ライブラリを使用し、OTel SDK がルートロガーに OTLP ハンドラーをアタッチし、Python ロガーを OTLP ロガーに変えます。
-これを実現する1つの方法は、[OpenTelemetry Python リポジトリ][OpenTelemetry Python repository]のログの例で文書化されています。
-
-これを実現するもう1つの方法は、Pythonがログの自動計装をサポートすることです。
+これを実現する1つの方法は、[OpenTelemetry Python リポジトリ][OpenTelemetry Python repository]のログの例で文書化されています。 これを実現するもう1つの方法は、Pythonがログの自動計装をサポートすることです。
 以下の例は、[OpenTelemetry Python リポジトリ][OpenTelemetry Python repository]のログの例に基づいています。
+
+Another way this is accomplished is through Python's support for
+auto-instrumentation of logs. The example below is based on the logs example in
+[OpenTelemetry Python repository][].
 
 > しかし、アプリケーション開発者がログを作成するために使用するものではないので、トレースおよびメトリクスAPIとは異なります。
 > かわりに、このブリッジAPIを使用して、標準の言語固有のロギングライブラリでログアペンダーをセットアップします。
 > 詳細については、[Logs API](/docs/specs/otel/logs/api/) を参照のこと。
+> Instead, they would use this bridge API to setup log appenders in the standard
+> language-specific logging libraries. For more information, see
+> [Logs API](/docs/specs/otel/logs/api/).
 
 まずexamplesディレクトリとexample Pythonファイルを作成します。
 
@@ -48,9 +55,8 @@ with tracer.start_as_current_span("foo"):
 
 ## 準備 {#prepare}
 
-以下の例を実行します。
-その際、仮想環境を使用することを推奨します。
-以下のコマンドを実行し、ログの自動計装の準備をします。
+Execute the following example, we recommend using a virtual environment to do
+so. Run the following commands to prepare for logs auto-instrumentation:
 
 ```sh
 mkdir python_logs_example
@@ -60,7 +66,7 @@ source python_logs_example/bin/activate
 
 ## インストール {#install}
 
-以下のコマンドは適切なパッケージをインストールします。
+The following commands install the appropriate packages. 以下のコマンドは適切なパッケージをインストールします。
 `opentelemetry-distro` パッケージは、独自のコードをカスタム計装するための `opentelemetry-sdk` や、プログラムを自動的に計装するためのいくつかのコマンドを提供する `opentelemetry-instrumentation` など、他のいくつかのパッケージに依存しています。
 
 ```sh
@@ -68,15 +74,20 @@ pip install opentelemetry-distro
 pip install opentelemetry-exporter-otlp
 ```
 
-この後の例では、計装結果をコンソールに送信します。
+The examples that follow send instrumentation results to the console. この後の例では、計装結果をコンソールに送信します。
 コレクターのような他の送信先にテレメトリーを送信するための [OpenTelemetry Distro](/docs/languages/python/distro) のインストールと設定については、ドキュメントを参照してください。
 
-> **注**: `opentelemetry-instrument`による自動計装を使用するには、
+> **Note**: To use automatic instrumentation through `opentelemetry-instrument`,
+> you must configure it via environment variables or the command line. The agent
+> creates a telemetry pipeline that cannot be modified other than through these
+> means. **注**: `opentelemetry-instrument`による自動計装を使用するには、
 > 環境変数またはコマンドラインで設定する必要があります。
 > エージェントはテレメトリーパイプラインを作成するので、これらの手段以外では変更できません。
 > テレメトリーパイプラインのカスタマイズが必要な場合は、エージェントを使用せず、 OpenTelemetry SDK と計装ライブラリをコードにインポートし、そこで設定する必要があります。
 > また、OpenTelemetry API をインポートすることで > 自動計装を拡張することもできます。
-> 詳細については、[API リファレンス][API reference] を参照してください。
+> 詳細については、[API リファレンス][API reference] を参照してください。 You may also extend
+> automatic instrumentation by importing the OpenTelemetry API. For more
+> details, see the [API reference][].
 
 ## 実行 {#execute}
 
@@ -150,7 +161,8 @@ Span ID: f318281c4654edc5
 ```
 
 Span イベントとログの両方が同じ SpanID（`f318281c4654edc5`）を持つことに注意してください。
-ロギングSDKは、テレメトリーを相関させる能力を向上させるために、ログに記録されたイベントに現在のスパンのSpanIDを追加します。
+ロギングSDKは、テレメトリーを相関させる能力を向上させるために、ログに記録されたイベントに現在のスパンのSpanIDを追加します。 The logging SDK appends the SpanID of the current Span to
+any logged events to improve the ability to correlate telemetry.
 
 [api reference]: https://opentelemetry-python.readthedocs.io/en/latest/index.html
 [OpenTelemetry Python repository]: https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples/logs
