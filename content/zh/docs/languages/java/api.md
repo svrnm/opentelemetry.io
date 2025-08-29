@@ -3,21 +3,23 @@ title: 通过 API 记录遥测数据
 weight: 11
 aliases:
   - /docs/languages/java/api-components/
-default_lang_commit: 5b82e8f9c057d4d4961d41091a4bc75fc9b5b37c
-logBridgeWarning: >
-  虽然 `LoggerProvider` 、 `Logger` API 在结构上与对应的链路和指标 API 相似，
-  但它们的使用场景不同。目前，`LoggerProvider` 、 `Logger` 及相关类代表的是[日志桥接 API](/docs/specs/otel/logs/api/)，
-  其存在的目的是编写日志附加器（log appenders），以便将通过其他日志 API、框架记录的日志桥接到 OpenTelemetry 中。
-  它们并非供终端用户用作 Log4j、SLF4J、Logback 等日志框架的替代品。
+logBridgeWarning: |
+  While the `LoggerProvider` / `Logger` APIs are structurally similar to the equivalent trace and metric APIs, they serve a different use case. 虽然 `LoggerProvider` 、 `Logger` API 在结构上与对应的链路和指标 API 相似， 但它们的使用场景不同。目前，`LoggerProvider` 、 `Logger` 及相关类代表的是[日志桥接 API](/docs/specs/otel/logs/api/)， 其存在的目的是编写日志附加器（log appenders），以便将通过其他日志 API、框架记录的日志桥接到 OpenTelemetry 中。 它们并非供终端用户用作 Log4j、SLF4J、Logback 等日志框架的替代品。
+   They are not intended for end user use as a replacement for Log4j / SLF4J / Logback / etc.
 cSpell:ignore: Dotel kotlint Logback updowncounter
 ---
 
 <!-- markdownlint-disable blanks-around-fences -->
+
 <?code-excerpt path-base="examples/java/api"?>
 
 API 是一组类和接口，用于跨关键可观测性信号记录遥测数据。[SDK](../sdk/) 是 API 的内置参考实现，
 [配置](../configuration/)可用于处理和导出遥测数据。本页面是对该 API 的概念性概述，
-包括相关描述、指向相关 Javadoc 的链接、构件（artifact）坐标以及 API 使用示例。
+包括相关描述、指向相关 Javadoc 的链接、构件（artifact）坐标以及 API 使用示例。 The [SDK](../sdk/) is the built-in reference
+implementation of the API, [configured](../configuration/) to process and export
+telemetry. This page is a conceptual overview of the API, including
+descriptions, links to relevant Javadocs, artifact coordinates, and sample API
+usage.
 
 该 API 由以下顶级组件构成：
 
@@ -27,21 +29,30 @@ API 是一组类和接口，用于跨关键可观测性信号记录遥测数据�
 - [LoggerProvider](#loggerprovider)：日志功能的 API 入口点。
 - [OpenTelemetry](#opentelemetry)：顶级 API 组件（即 `TracerProvider`、`MeterProvider`、`LoggerProvider`、`ContextPropagators`）的持有者，便于将这些组件传递给插桩（instrumentation）。
 
-该 API 在设计上支持多种实现方式。OpenTelemetry 官方提供了以下两种实现：
+The API is designed to support multiple implementations. 该 API 在设计上支持多种实现方式。OpenTelemetry 官方提供了以下两种实现：
 
-- [SDK](../sdk/) 参考实现：这是大多数用户的理想选择。
-- [Noop](#noop-implementation) 实现：一种极简的零依赖实现，当用户未安装实例时，插桩工具（instrumentations）会默认使用该实现。
+- [SDK](../sdk/) reference implementation. This is the right choice for most
+  users.
+- [Noop](#noop-implementation) 实现：一种极简的零依赖实现，当用户未安装实例时，插桩工具（instrumentations）会默认使用该实现。 A minimalist, zero-dependency
+  implementation for instrumentations to use by default when the user doesn't
+  install an instance.
 
-该 API 被设计为可供库、框架及应用所有者直接依赖使用。它具备 [强大的向后兼容性保证](https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#compatibility-requirements)，零传递依赖，且 [支持 Java 8 及更高版本](https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#language-version-compatibility)。库和框架应仅依赖于该 API 并仅调用 API 中的方法，同时指导应用程序、终端用户添加对 SDK 的依赖并安装一个已配置的实例。
+The API is designed to be taken as a direct dependency by libraries, frameworks,
+and application owners. 该 API 被设计为可供库、框架及应用所有者直接依赖使用。它具备 [强大的向后兼容性保证](https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#compatibility-requirements)，零传递依赖，且 [支持 Java 8 及更高版本](https://github.com/open-telemetry/opentelemetry-java/blob/main/VERSIONING.md#language-version-compatibility)。库和框架应仅依赖于该 API 并仅调用 API 中的方法，同时指导应用程序、终端用户添加对 SDK 的依赖并安装一个已配置的实例。
+Libraries and frameworks should depend only on the API and only call methods
+from the API, and instruct applications / end users to add a dependency on the
+SDK and install a configured instance.
 
 {{% alert title=Javadoc %}}
 关于所有 OpenTelemetry Java 组件的 Javadoc 参考文档，
 请参见 [javadoc.io/doc/io.opentelemetry](https://javadoc.io/doc/io.opentelemetry)。
 {{% /alert %}}
+{{% /alert %}}
 
 ## API 组件 {#api-components}
 
-以下章节将对 OpenTelemetry API 进行介绍。每个组件章节均包含以下内容：
+以下章节将对 OpenTelemetry API 进行介绍。每个组件章节均包含以下内容： Each component section
+includes:
 
 - 简要说明,包含该 Javadoc 类型参考文档的链接；
 - 用于理解 API 方法及参数的相关资源链接；
@@ -65,7 +76,9 @@ API 是一组类和接口，用于跨关键可观测性信号记录遥测数据�
 
 [Context](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-context/latest/io/opentelemetry/context/Context.html)
 是一个不可变的键值对集合，附带在应用程序内及跨线程间进行隐式传播的工具。
-隐式传播意味着无需将 Context 作为参数显式传递即可对其进行访问。Context 是 OpenTelemetry API 中一个反复出现的概念：
+隐式传播意味着无需将 Context 作为参数显式传递即可对其进行访问。Context 是 OpenTelemetry API 中一个反复出现的概念： Implicit propagation
+means that the context can be accessed without explicitly passing it as an
+argument. Context is a recurring concept in the OpenTelemetry API:
 
 - 当前活跃的 [Span](#span) 存储在上下文中，默认情况下，一个 Span 的父级会被指定为当前上下文中的任意 Span。
 - 记录到[指标插桩](#meter)的测量值会接收一个上下文参数，该参数用于通过[示例](/docs/specs/otel/metrics/data-model/#exemplars)将测量值与 Span 关联，
@@ -75,7 +88,9 @@ API 是一组类和接口，用于跨关键可观测性信号记录遥测数据�
 以下代码片段展示了 `Context` API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -167,6 +182,7 @@ public class ContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### ContextStorage {#contextstorage}
@@ -180,14 +196,18 @@ public class ContextUsage {
 
 [ContextPropagators](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-context/latest/io/opentelemetry/context/propagation/ContextPropagators.html)
 是一个已注册传播器的容器，用于跨应用程序边界传播 `Context`。当离开应用程序时（例如，发出一个出站 HTTP 请求），上下文会被注入到一个载体中, 且当进入应用程序时
-（例如，处理一个传入的 HTTP 请求），会从载体中提取上下文。
+（例如，处理一个传入的 HTTP 请求），会从载体中提取上下文。 Context is injected into a carrier when leaving an
+application (i.e. an outbound HTTP request), and extracted from a carrier when
+entering an application (i.e. serving an HTTP request).
 
 有关传播器的实现，请参见 [SDK TextMapPropagators](../sdk/#textmappropagator)。
 
 以下代码片段展示了用于注入操作的 `ContextPropagators` API：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/InjectContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -236,12 +256,15 @@ public class InjectContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 以下代码片段展示了用于提取操作的 `ContextPropagators` API：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ExtractContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -326,6 +349,7 @@ public class ExtractContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ## OpenTelemetry API {#opentelemetry-api}
@@ -333,13 +357,12 @@ public class ExtractContextUsage {
 `io.opentelemetry:opentelemetry-api:{{% param vers.otel %}}` 构件包含 OpenTelemetry API，包括链路、
 指标、日志、空操作（noop）实现、 Baggage 数据、关键的 `TextMapPropagator` 实现，
 
-以及对[上下文 API 的依赖](#context-api)。
-
 ### Provider 和 Scope {#providers-and-scopes}
 
-在 OpenTelemetry API 中，提供器（Provider）与作用域（Scope）是反复出现的概念。
-作用域是应用程序内的一个逻辑单元，遥测数据与之关联。
-提供器用于提供与特定作用域相关的遥测记录组件：
+Providers and scopes are recurring concepts in the OpenTelemetry API. A scope is
+a logical unit within the application which telemetry is associated with. A
+provider provides components for recording telemetry relative to a particular
+scope:
 
 - [TracerProvider](#tracerprovider) 提供带作用域的追踪器 [Tracer](#tracer)，用于记录 Span 数据。
 - [MeterProvider](#meterprovider) 提供带作用域的 [Meter](#meter)，用于记录指标数据。
@@ -347,16 +370,19 @@ public class ExtractContextUsage {
 
 {{% alert %}} {{% param logBridgeWarning %}} {{% /alert %}}
 
-作用域（Scope）由三元组（name, version, schemaUrl）进行标识。
-需注意确保作用域标识的唯一性，避免不同逻辑单元的遥测数据产生混淆。
-一种典型方法是将作用域名称（scope name）设置为包名或完全限定的类名，并将作用域版本设置为库版本。
-如果为多个信号（即指标和链路）生成遥测数据，应使用相同的作用域。
-详情请参见 [instrumentation scope](/docs/concepts/instrumentation-scope/)。
+A scope is identified by the triplet (name, version, schemaUrl). Care must be
+taken to ensure the scope identity is unique. A typical approach is to set the
+scope name to the package name or fully qualified class name, and to set the
+scope version to the library version. If emitting telemetry for multiple signals
+(i.e. metrics and traces), the same scope should be used. See
+[instrumentation scope](/docs/concepts/instrumentation-scope/) for details.
 
 以下是关于 Provider 和 Scope API 使用的代码示例：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/ProvidersAndScopes.java"?>
+
 ```java
 package otel;
 
@@ -409,13 +435,13 @@ public class ProvidersAndScopes {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Attributes {#attributes}
 
 [Attributes](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/common/Attributes.html)
 是一组键值对，代表[标准属性定义](/docs/specs/otel/common/#standard-attribute)。
-
 `Attributes` 是 OpenTelemetry API 中一个反复出现的概念：
 
 - [Span](#span)， Span 事件，以及 Span 链接包含属性。
@@ -429,8 +455,10 @@ public class ProvidersAndScopes {
 以下是 `Attributes` API 的使用示例代码：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AttributesUsage.java"?>
-```javamingm
+
+```java
 package otel;
 
 import io.opentelemetry.api.common.AttributeKey;
@@ -509,15 +537,18 @@ public class AttributesUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### OpenTelemetry {##opentelemetry}
 
 {{% alert title="Spring Boot 启动器" %}}
 Spring Boot 启动器是一种特殊情况，其中 `OpenTelemetry` 可作为 Spring bean 使用。
-只需将 `OpenTelemetry` 注入到你的 Spring 组件中即可。
+只需将 `OpenTelemetry` 注入到你的 Spring 组件中即可。 Simply inject
+`OpenTelemetry` into your Spring components.
 
 了解更多关于 [使用自定义手动插桩扩展 Spring Boot 启动器](/docs/zero-code/java/spring-boot-starter/api/) 的信息
+{{% /alert %}}
 {{% /alert %}}
 
 [OpenTelemetry](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/OpenTelemetry.html)
@@ -533,7 +564,9 @@ Spring Boot 启动器是一种特殊情况，其中 `OpenTelemetry` 可作为 Sp
 以下代码片段展示了 OpenTelemetry API 的用法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/OpenTelemetryUsage.java"?>
+
 ```java
 package otel;
 
@@ -556,38 +589,51 @@ public class OpenTelemetryUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### GlobalOpenTelemetry {#globalopentelemetry}
 
-{{% alert title="Java agent" %}} Java agent 是一种特殊情况，其中 `GlobalOpenTelemetry` 由 agent 进行设置。
-只需调用 `GlobalOpenTelemetry.get()` 即可访问 `OpenTelemetry` 实例。
+{{% alert title="Java agent" %}} The Java agent is a special case where
+`GlobalOpenTelemetry` is set by the agent. [GlobalOpenTelemetry](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/GlobalOpenTelemetry.html)
+持有一个全局单例的 [OpenTelemetry](#opentelemetry) 实例。
 
 了解更多关于[使用自定义手动插桩扩展 Java agent] 的信息(/docs/zero-code/Java/agent/api/)。
 {{% /alert %}}
+{{% /alert %}}
 
-[GlobalOpenTelemetry](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/GlobalOpenTelemetry.html)
-持有一个全局单例的 [OpenTelemetry](#opentelemetry) 实例。
+{{% alert title="Java agent" %}} Java agent 是一种特殊情况，其中 `GlobalOpenTelemetry` 由 agent 进行设置。
+只需调用 `GlobalOpenTelemetry.get()` 即可访问 `OpenTelemetry` 实例。
 
-插桩（instrumentation）应该避免使用`GlobalOpenTelemetry`.
-相反，应将 `OpenTelemetry` 作为初始化参数接收，如果未设置，则默认使用 [Noop 实现](#noop-implementation)。
-此规则有一个例外情况：由 [Java agent](/docs/zero-code/java/agent/) 安装的 `OpenTelemetry` 实例可通过 `GlobalOpenTelemetry` 获取。
-建议需要额外手动插桩（instrumentation）的用户通过 `GlobalOpenTelemetry.get()` 来访问它。
+Instrumentation should avoid using `GlobalOpenTelemetry`. Instead, accept
+`OpenTelemetry` as an initialization argument and default to the
+[Noop implementation](#noop-implementation) if not set. There is an exception to
+this rule: the `OpenTelemetry` instance installed by the
+[Java agent](/docs/zero-code/java/agent/) is available via
+`GlobalOpenTelemetry`. Users with additional manual instrumentation are
+encouraged to access it via `GlobalOpenTelemetry.get()`.
 
-`GlobalOpenTelemetry.get()` 能确保始终返回相同的结果。
+`GlobalOpenTelemetry.get()` is guaranteed to always return the same result. `GlobalOpenTelemetry.get()` 能确保始终返回相同的结果。
 如果在调用 `GlobalOpenTelemetry.set(..)` 之前调用 `GlobalOpenTelemetry.get()`，则 `GlobalOpenTelemetry` 会被设置为 noop 实现，
 且后续对 `GlobalOpenTelemetry.set(..)` 的调用会抛出异常。
 因此，务必在应用程序生命周期中尽早调用 `GlobalOpenTelemetry.set(..)`，并且要在任何插桩（instrumentation）调用 `GlobalOpenTelemetry.get()` 之前执行。
-这种保证会暴露初始化顺序问题：过晚调用 `GlobalOpenTelemetry.set()`（即，在插桩（instrumentation）已经调用 `GlobalOpenTelemetry.get()` 之后）会触发异常，而非静默失败。
+这种保证会暴露初始化顺序问题：过晚调用 `GlobalOpenTelemetry.set()`（即，在插桩（instrumentation）已经调用 `GlobalOpenTelemetry.get()` 之后）会触发异常，而非静默失败。 Therefore, it's critical to
+call `GlobalOpenTelemetry.set(..)` as early in the application lifecycle as
+possible, and before `GlobalOpenTelemetry.get()` is called by any
+instrumentation. This guarantee surfaces initialization ordering issues: calling
+`GlobalOpenTelemetry.set()` too late (i.e. after instrumentation has called
+`GlobalOpenTelemetry.get()`) triggers an exception rather than silently failing.
 
-如果存在[自动配置](../configuration/#zero-code-sdk-autoconfigure)，则可以通过设置 `-Dotel.java.global-autoconfigure.enabled=true`
-（或通过环境变量 `export OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED=true`）来自动初始化 `GlobalOpenTelemetry`。
-启用后，首次调用 `GlobalOpenTelemetry.get()` 会触发自动配置，并使用生成的 `OpenTelemetry` 实例调用 `GlobalOpenTelemetry.set(..)`。
+插桩（instrumentation）应该避免使用`GlobalOpenTelemetry`. 相反，应将 `OpenTelemetry` 作为初始化参数接收，如果未设置，则默认使用 [Noop 实现](#noop-implementation)。
+此规则有一个例外情况：由 [Java agent](/docs/zero-code/java/agent/) 安装的 `OpenTelemetry` 实例可通过 `GlobalOpenTelemetry` 获取。
+建议需要额外手动插桩（instrumentation）的用户通过 `GlobalOpenTelemetry.get()` 来访问它。
 
 以下代码片段展示了 `GlobalOpenTelemetry` API 的上下文传播用法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/GlobalOpenTelemetryUsage.java"?>
+
 ```java
 package otel;
 
@@ -606,33 +652,42 @@ public class GlobalOpenTelemetryUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
-### TracerProvider {#tracerprovider}
+### Tracer {#tracer}
 
 [TracerProvider](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/TracerProvider.html)
-是链路的 API 入口点，用于提供 [Tracer](#tracer)。有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。
+是链路的 API 入口点，用于提供 [Tracer](#tracer)。有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
-#### Tracer {#tracer}
-
-[Tracer](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/Tracer.html)
-用于为插桩（instrumentation）作用域[记录 Span](#span)。有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。
-
-#### Span {#span}
+#### TracerProvider {#tracerprovider}
 
 [SpanBuilder](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/SpanBuilder.html)
 和
 [Span](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/Span.html)
-用于构建和记录数据到 Span
+用于构建和记录数据到 Span See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
-`SpanBuilder` 用于在通过调用 `Span startSpan()` 启动 Span 之前，向其添加数据。
+#### Span {#span}
+
+[Tracer](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/Tracer.html)
+用于为插桩（instrumentation）作用域[记录 Span](#span)。有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。
+
+`SpanBuilder` is used to add data to a span before starting it by calling
+`Span startSpan()`. Data can be added / updated after starting by calling
+various `Span` update methods. `SpanBuilder` 用于在通过调用 `Span startSpan()` 启动 Span 之前，向其添加数据。
 启动后，可以通过调用 `Span` 的各种更新方法来添加、更新数据。
 启动前提供给 `SpanBuilder` 的数据会作为[采样器（Samplers）](../sdk/#sampler)的输入。
 
 以下是 `SpanBuilder`、`Span` API 的使用示例代码：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SpanUsage.java"?>
+
 ```java
 package otel;
 
@@ -720,14 +775,18 @@ public class SpanUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
-Span 父子关系是链路追踪中的一个重要方面。每个 Span 都可以有一个可选的父级。
-通过收集一个链路中的所有 Span 并追踪每个 Span 的父级，我们可以构建出一个层级结构。
-Span API 构建在 [Context](#context) 之上，这使得 Span 上下文能够在应用程序内部以及跨线程间被隐式传递。
-当创建一个 Span 时，其父级会被设置为 `Context.current()` 中存在的任何 Span，除非没有 Span 或者上下文被显式覆盖。
+Span parenting is an important aspect of tracing. Each span has an optional
+parent. By collecting all the spans in a trace and following each span's parent,
+we can construct a hierarchy. The span APIs are built on top of
+[context](#context), which allows span context to be implicitly passed around an
+application and across threads. When a span is created, its parent is set to the
+whatever span is present in `Context.current()` unless there is no span or the
+context is explicitly overridden.
 
-大多数 Context API 的使用指南也适用于 Span。
+Most of the context API usage guidance applies to spans. 大多数 Context API 的使用指南也适用于 Span。
 Span 上下文通过 [W3CTraceContextPropagator](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/trace/propagation/W3CTraceContextPropagator.html)
 和其他 [TextMapPropagators](../sdk/#textmappropagator)
 在应用程序边界之间进行传播。
@@ -735,7 +794,9 @@ Span 上下文通过 [W3CTraceContextPropagator](https://www.javadoc.io/doc/io.o
 以下代码片段展示了 `Span` API 的上下文传播用法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SpanAndContextUsage.java"?>
+
 ```java
 package otel;
 
@@ -789,37 +850,47 @@ public class SpanAndContextUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### MeterProvider {#meterprovider}
 
 [MeterProvider](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/metrics/MeterProvider.html)
-是指标的 API 入口点，并提供 [Meter](#meter)。有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。
+是指标的 API 入口点，并提供 [Meter](#meter)。有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 #### Meter {#meter}
 
 [Meter](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/metrics/Meter.html)
-用于为特定的 [插桩作用域](#providers-and-scopes) 获取插桩。有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。
-插桩包含多种类型，每种类型在 SDK 中都具有不同的语义和默认行为。
-针对每个特定的使用场景选择合适的插桩，这一点至关重要。
+is used to obtain instruments for a particular
+[instrumentation scope](#providers-and-scopes). See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes. There are a variety of instruments, each with different semantics and
+default behavior in the SDK. It's important to choose the right instrument for
+each particular use case:
 
-| 插桩                                        | 同步或异步 | 描述                                             | 示例                           | 默认 SDK 集合                                                                                  |
-| ------------------------------------------- | ---------- | ------------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------------------------------- |
-| [Counter](#counter)                         | 同步       | 记录单调递增（正值）的数值。                     | 记录用户登录次数               | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                          |
-| [Async Counter](#async-counter)             | 异步       | 观测单调递增的总和。                             | 观测 JVM 中已加载的类数量      | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                          |
-| [UpDownCounter](#updowncounter)             | 同步       | 记录非单调递增（正值和负值）的数值。             | 记录队列中元素的添加与移除事件 | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                         |
-| [Async UpDownCounter](#async-updowncounter) | 异步       | 观测非单调递增（正值和负值）的总和。             | 观测 JVM 内存池使用情况        | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)                         |
-| [Histogram](#histogram)                     | 同步       | 当分布很重要的场景，记录单调递增（正值）的数值。 | 记录服务器处理 HTTP 请求的耗时 | [ExplicitBucketHistogram](/docs/specs/otel/metrics/sdk/#explicit-bucket-histogram-aggregation) |
-| [Gauge](#gauge)                             | 同步       | 当空间再聚合 **[1]**无意义的场景，记录最新值.    | 记录温度                       | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
-| [Async Gauge](#async-gauge)                 | 异步       | 当空间再聚合 **[1]**无意义的场景，观测最新值.    | 观测 CPU 使用情况              | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
+| Instrument                                  | 同步或异步 | 描述                                                                                                  | 示例                 | 默认 SDK 集合                                                                                      |
+| ------------------------------------------- | ----- | --------------------------------------------------------------------------------------------------- | ------------------ | ---------------------------------------------------------------------------------------------- |
+| [Counter](#counter)                         | 同步    | 记录单调递增（正值）的数值。                                                                                      | 记录用户登录次数           | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)       |
+| [Async Counter](#async-counter)             | 异步    | Observe monotonic sums.                                                             | 观测 JVM 中已加载的类数量    | [sum (monotonic=true)](/docs/specs/otel/metrics/sdk/#sum-aggregation)       |
+| [UpDownCounter](#updowncounter)             | 同步    | 记录非单调递增（正值和负值）的数值。                                                                                  | 记录队列中元素的添加与移除事件    | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)      |
+| [Async UpDownCounter](#async-updowncounter) | 异步    | 观测非单调递增（正值和负值）的总和。                                                                                  | 观测 JVM 内存池使用情况     | [sum (monotonic=false)](/docs/specs/otel/metrics/sdk/#sum-aggregation)      |
+| [Histogram](#histogram)                     | 同步    | 当分布很重要的场景，记录单调递增（正值）的数值。                                                                            | 记录服务器处理 HTTP 请求的耗时 | [ExplicitBucketHistogram](/docs/specs/otel/metrics/sdk/#explicit-bucket-histogram-aggregation) |
+| [Gauge](#gauge)                             | 同步    | 当空间再聚合 \*\*[1]\*\*无意义的场景，记录最新值. | 记录温度               | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
+| [Async Gauge](#async-gauge)                 | 异步    | 当空间再聚合 \*\*[1]\*\*无意义的场景，观测最新值. | 观测 CPU 使用情况        | [LastValue](/docs/specs/otel/metrics/sdk/#last-value-aggregation)                              |
 
-**[1]**: 空间再聚合是指通过剔除不需要的属性，从而合并属性流的过程。
-例如，现有两组带有属性的序列：`{"color": "red", "shape": "square"}` 和 `{"color": "blue", "shape": "square"}`，
-你可以通过剔除 `color` 属性来执行空间再聚合，当剔除 `color` 后的剩余属性完全一致后，将这两组序列合并。
-大多数聚合操作都具备实用的空间聚合合并功能（例如，求和操作会将数值进行累加），但通过 `LastValue` 聚合方式得到的计量指标（Gauge）是个例外。
-例如，假设前文提及的指标序列正在追踪装置（widget）的温度。
-当去掉 `color` 属性时，该如何合并这些指标序列呢？
-除了抛硬币随机选值之外，没有更好的解决办法。
+**[1]**: Spatial re-aggregation is the process of merging attribute streams by
+dropping attributes which are not needed. For example, given series with
+attributes `{"color": "red", "shape": "square"}`,
+`{"color": "blue", "shape": "square"}`, you can perform spatial re-aggregation
+by dropping the `color` attribute, and merging the series where the attributes
+are equal after dropping `color`. Most aggregations have a useful spatial
+aggregation merge function (i.e. sums are summed together), but gauges
+aggregated by the `LastValue` aggregation are the exception. For example,
+suppose the series mentioned previously are tracking the temperature of widgets.
+How do you merge the series when you drop the `color` attribute? There is no
+good answer besides flipping a coin and selecting a random value.
 
 插桩 API 共通的多种功能特性：
 
@@ -827,6 +898,15 @@ public class SpanAndContextUsage {
 - 指标名称（instrument name）为必填项。
 - 单位（unit）和描述（description）为可选项。
 - 记录的值（value）类型为 `long` 或 `double`，可通过构建器（builder）配置。
+
+[语义约定](/docs/specs/semconv/) 规定了如何以标准化的方式收集常见操作的观测数据。
+这其中包含一个[属性注册表](/docs/specs/semconv/registry/attributes/)，该注册表按领域（domain）分类，列出了所有在语义约定中引用的属性定义。
+[semantic-conventions-java](https://github.com/open-telemetry/semantic-conventions-java)
+项目根据语义约定生成常量，这些常量可用于帮助插桩（instrumentation）遵循：
+
+See
+[guidelines for instrumentation library authors](/docs/specs/otel/metrics/supplementary-guidelines/#guidelines-for-instrumentation-library-authors)
+for additional guidance on instrument selection.
 
 #### Counter {#counter}
 
@@ -838,7 +918,9 @@ public class SpanAndContextUsage {
 以下代码片段展示了 Counter API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/CounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -882,6 +964,7 @@ public class CounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Async Counter {#async-counter}
@@ -894,7 +977,9 @@ public class CounterUsage {
 以下代码片段展示了异步计数器（async counter） API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AsyncCounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -947,6 +1032,7 @@ public class AsyncCounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### UpDownCounter {#updowncounter}
@@ -959,7 +1045,9 @@ public class AsyncCounterUsage {
 以下代码片段展示了上下计数器 API（UpDownCounter API）的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/UpDownCounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -1004,6 +1092,7 @@ public class UpDownCounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Async UpDownCounter {#async-updowncounter}
@@ -1016,7 +1105,9 @@ public class UpDownCounterUsage {
 以下代码片段展示了异步上下计数器 API（async updowncounter API）的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AsyncUpDownCounterUsage.java"?>
+
 ```java
 package otel;
 
@@ -1067,6 +1158,7 @@ public class AsyncUpDownCounterUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Histogram {#histogram}
@@ -1079,7 +1171,9 @@ public class AsyncUpDownCounterUsage {
 以下代码片段展示了直方图 API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/HistogramUsage.java"?>
+
 ```java
 package otel;
 
@@ -1125,6 +1219,7 @@ public class HistogramUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Gauge {#gauge}
@@ -1137,7 +1232,9 @@ public class HistogramUsage {
 以下代码片段展示了仪表 API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/GaugeUsage.java"?>
+
 ```java
 package otel;
 
@@ -1182,6 +1279,7 @@ public class GaugeUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 #### Async Gauge {#async-gauge}
@@ -1194,7 +1292,9 @@ public class GaugeUsage {
 以下代码片段展示了异步仪表 API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/AsyncGaugeUsage.java"?>
+
 ```java
 package otel;
 
@@ -1245,13 +1345,16 @@ public class AsyncGaugeUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### LoggerProvider {#loggerprovider}
 
 [LoggerProvider](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/logs/LoggerProvider.html)
 这是日志的 API 入口点，并提供了[日志记录器（Loggers）](#logger)。
-有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。
+有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 {{% alert %}} {{% param logBridgeWarning %}} {{% /alert %}}
 
@@ -1259,7 +1362,9 @@ public class AsyncGaugeUsage {
 
 [Logger](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/logs/Logger.html)
 用于为[插桩作用域](#providers-and-scopes) [输出日志记录](#logrecordbuilder)。
-有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。
+有关提供器（providers）和作用域（scopes）的信息，请参见[提供器与作用域](#providers-and-scopes)。 See
+[providers and scopes](#providers-and-scopes) for information on providers and
+scopes.
 
 #### LogRecordBuilder {#logrecordbuilder}
 
@@ -1269,7 +1374,9 @@ public class AsyncGaugeUsage {
 以下代码片段展示了 `LogRecordBuilder` API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/LogRecordUsage.java"?>
+
 ```java
 package otel;
 
@@ -1333,6 +1440,7 @@ public class LogRecordUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Noop 实现 {#noop-implementation}
@@ -1340,12 +1448,20 @@ public class LogRecordUsage {
 `OpenTelemetry#noop()` 方法可用于获取 [OpenTelemetry](#opentelemetry) 及其所提供的所有 API 组件的空操作（noop）实现。
 顾名思义，该空操作实现不会执行任何实际功能，其设计目标是不对性能产生任何影响。
 即使使用了空操作（noop）实现，若插桩代码（Instrumentation）仍在计算 / 分配属性值，或为记录可观测数据（telemetry）准备其他必要数据，仍可能对性能造成影响。
-当用户尚未配置并安装具体的实现，如 [SDK](../sdk/) 时，此空操作可作为 OpenTelemetry 的一个实用默认实例。
+当用户尚未配置并安装具体的实现，如 [SDK](../sdk/) 时，此空操作可作为 OpenTelemetry 的一个实用默认实例。 As
+the name suggests, the noop implementation does nothing and is designed to have
+no impact on performance. Instrumentation may see impact on performance even
+when the noop is used if it is computing / allocating attribute values and other
+data required to record the telemetry. The noop is a useful default instance of
+`OpenTelemetry` when a user has not configured and installed a concrete
+implementation such as the [SDK](../sdk/).
 
 以下代码片段展示了 `OpenTelemetry#noop()` API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/NoopUsage.java"?>
+
 ```java
 package otel;
 
@@ -1421,17 +1537,22 @@ public class NoopUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### 语义属性 {#semantic-attributes}
 
-[语义约定](/docs/specs/semconv/) 规定了如何以标准化的方式收集常见操作的观测数据。
-这其中包含一个[属性注册表](/docs/specs/semconv/registry/attributes/)，该注册表按领域（domain）分类，列出了所有在语义约定中引用的属性定义。
+The [semantic conventions](/docs/specs/semconv/) describe how to collect
+telemetry in a standardized way for common operations. This includes an
+[attribute registry](/docs/specs/semconv/registry/attributes/), which enumerates
+definitions for all attributes referenced in the conventions, organized by
+domain. The
 [semantic-conventions-java](https://github.com/open-telemetry/semantic-conventions-java)
-项目根据语义约定生成常量，这些常量可用于帮助插桩（instrumentation）遵循：
+project generates constants from the semantic conventions, which can be used to
+help instrumentation conform:
 
-| 描述                   | Artifact                                                                                     |
-| ---------------------- | -------------------------------------------------------------------------------------------- |
+| 描述          | Artifact                                                                                     |
+| ----------- | -------------------------------------------------------------------------------------------- |
 | 生成的稳定语义约定代码 | `io.opentelemetry.semconv:opentelemetry-semconv:{{% param vers.semconv %}}-alpha`            |
 | 生成的孵化语义约定代码 | `io.opentelemetry.semconv:opentelemetry-semconv-incubating:{{% param vers.semconv %}}-alpha` |
 
@@ -1439,13 +1560,19 @@ public class NoopUsage {
 且可能会有不兼容的变更，但目的是让 `opentelemetry-semconv` 逐步稳定下来，而 `opentelemetry-semconv-incubating` 则会永久保留 `-alpha` 后缀。
 库可以使用 `opentelemetry-semconv-incubating` 进行测试，但不应将其作为依赖项引入：
 由于版本和版本间的属性可能会来回变化，将其作为依赖项可能会在出现传递性版本冲突时，导致最终用户遭遇运行时错误。{{% /alert %}}
+Libraries can use `opentelemetry-semconv-incubating` for testing, but should not
+include it as a dependency: since attributes may come and go from version to
+version, including it as a dependency may expose end users to runtime errors
+when transitive version conflicts occur. {{% /alert %}}
 
 从语义约定生成的属性常量是 `AttributeKey<T>` 的实例，可在任何 OpenTelemetry API 接受属性的地方使用。
 
 以下代码片段展示了语义约定属性 API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/SemanticAttributesUsage.java"?>
+
 ```java
 package otel;
 
@@ -1474,6 +1601,7 @@ public class SemanticAttributesUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ### Baggage {#baggage}
@@ -1483,7 +1611,13 @@ public class SemanticAttributesUsage {
 Baggage 的键和值均为字符串类型，且值可以附带可选的字符串元数据。
 通过配置 [SDK](../sdk/) ，将其条目作为属性添加到 Span、指标和日志记录中，可丰富观测数据的信息。
 Baggage API 构建在 [Context](#context) 之上，这使得 Span 上下文能够在应用程序内部以及跨线程间进行隐式传递。
-大部分 Context API 的使用指南适用于 Baggage。
+大部分 Context API 的使用指南适用于 Baggage。 Baggage keys and values are strings, and values
+have optional string metadata. Telemetry can be enriched with data from baggage
+by configuring the [SDK](../sdk/) to add entries as attributes to spans,
+metrics, and log records. The baggage API is built on top of
+[context](#context), which allows span context to be implicitly passed around an
+application and across threads. Most of the context API usage guidance applies
+to baggage.
 
 Baggage 会通过 [W3CBaggagePropagator](https://www.javadoc.io/doc/io.opentelemetry/opentelemetry-api/latest/io/opentelemetry/api/baggage/propagation/W3CBaggagePropagator.html)
 在应用程序边界之间进行传播。
@@ -1492,7 +1626,9 @@ Baggage 会通过 [W3CBaggagePropagator](https://www.javadoc.io/doc/io.opentelem
 以下代码片段展示了 `Baggage` API 的使用方法：
 
 <!-- prettier-ignore-start -->
+
 <?code-excerpt "src/main/java/otel/BaggageUsage.java"?>
+
 ```java
 package otel;
 
@@ -1568,15 +1704,18 @@ public class BaggageUsage {
   }
 }
 ```
+
 <!-- prettier-ignore-end -->
 
 ## 孵化中的 API {#incubating-apis}
 
-`io.opentelemetry:opentelemetry-api-incubator:{{% param vers.otel %}}-alpha`
-这个构件包含了实验性的链路、指标、日志和上下文 API。
-孵化中 API 在次版本（minor releases）更新中可能会出现破坏性 API 变更。
-通常，这些代表着实验性的规范功能或 API 设计，我们希望在正式确定前通过用户反馈来验证其合理性。
-我们鼓励用户试用这些 API，并就任何反馈（正面的或负面的）提出问题。
-但库不应依赖于孵化中 API，因为当出现传递性版本冲突时，用户可能会遇到运行时错误。
+The `io.opentelemetry:opentelemetry-api-incubator:{{% param vers.otel %}}-alpha`
+artifact contains experimental trace, metric, log, and context APIs which.
+Incubating APIs may have breaking API changes in minor releases. Often, these
+represent experimental specification features or API designs we want to vet with
+user feedback before committing to. We encourage users to try these APIs and
+open issues with any feedback (positive or negative). Libraries should not
+depend on the incubating APIs, since users may be exposed to runtime errors when
+transitive version conflicts occur.
 
 有关可用的 API 及使用示例，请参见 [incubator README](https://github.com/open-telemetry/opentelemetry-java/tree/main/api/incubator)。
