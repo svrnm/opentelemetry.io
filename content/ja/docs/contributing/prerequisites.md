@@ -1,9 +1,8 @@
 ---
 title: 前提条件
 description: コントリビュートするために、 以下の技術とツールに精通している必要があります。
-aliases: [requirements]
+aliases: [ requirements ]
 weight: 1
-default_lang_commit: 8eda3ad35e6fbeea601a033023f694c8750fd1b9
 ---
 
 このリポジトリにコントリビュートするために、 以下の技術とツールに精通している必要があります。
@@ -19,7 +18,8 @@ default_lang_commit: 8eda3ad35e6fbeea601a033023f694c8750fd1b9
 
 すべての OpenTelemetry コントリビューターは Linux Foundation [Contributor License Agreement (CLA)][CLA] に署名しなければいけません。
 
-CLA への署名を終えていないコントリビューターからのプルリクエストは自動テストが失敗します。
+Pull requests from contributors who haven't signed the CLA fail the automated
+tests. CLA への署名を終えていないコントリビューターからのプルリクエストは自動テストが失敗します。
 指定する名前とメールアドレスは `git config` で見つかったものと一致している必要があり、git 名とメールアドレスは CNCF で利用するものと一致している必要があります。
 
 ## 行動規範 {#code-of-conduct}
