@@ -1,8 +1,5 @@
----
-default_lang_commit: 3574925e7c75e789f1405db04a285323679b0fd9
----
-
-アプリを開発する際、作業を加速するためにサードパーティのライブラリやフレームワークを使用することがあるでしょう。
+When you develop an app, you might use third-party libraries and frameworks to
+accelerate your work. アプリを開発する際、作業を加速するためにサードパーティのライブラリやフレームワークを使用することがあるでしょう。
 OpenTelemetryを使用してアプリを計装する場合、使用するサードパーティのライブラリやフレームワークにトレース、ログ、メトリクスを手動で追加するために時間を費やすことを避けたいことがあります。
 
 多くのライブラリやフレームワークはすでにOpenTelemetryをサポートしているか、OpenTelemetryの[計装](/docs/concepts/instrumentation/libraries/)を介してサポートされているため、テレメトリーを生成してオブザーバビリティバックエンドにエクスポートできます。
@@ -15,3 +12,4 @@ OpenTelemetryを使用してアプリを計装する場合、使用するサー�
 
 ライブラリによっては、計装のために追加の構成が必要な場合があります。
 詳細はライブラリごとのドキュメントをご覧ください。
+Go to the documentation for that library to learn more.
