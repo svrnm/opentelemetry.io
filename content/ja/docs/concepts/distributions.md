@@ -1,12 +1,13 @@
 ---
 title: ディストリビューション
-description: フォークと混同されがちですが、ディストリビューションは、OpenTelemetryコンポーネントのカスタマイズバージョンです。
+description: >-
+  フォークと混同されがちですが、ディストリビューションは、OpenTelemetryコンポーネントのカスタマイズバージョンです。
 weight: 190
-default_lang_commit: 548e5e29f574fddc3ca683989a458e9a6800242f
 ---
 
 OpenTelemetryプロジェクトは、複数の[シグナル](../signals)をサポートする複数の[コンポーネント](../components)から構成されています。
-OpenTelemetryの参照実装は以下の通りです。
+OpenTelemetryの参照実装は以下の通りです。 The reference implementation of
+OpenTelemetry is available as:
 
 - [言語固有の計装ライブラリ](../instrumentation)
 - [コレクターのバイナリ](/docs/concepts/components/#collector)
@@ -15,11 +16,11 @@ OpenTelemetryの参照実装は以下の通りです。
 
 ## ディストリビューションとは何か {#what-is-a-distribution}
 
-ディストリビューションとは、OpenTelemetryコンポーネントのカスタマイズバージョンです。
+A distribution is a customized version of an OpenTelemetry component. ディストリビューションとは、OpenTelemetryコンポーネントのカスタマイズバージョンです。
 ディストリビューションは、アップストリームのOpenTelemetryリポジトリに、いくつかのカスタマイズを施したラッパーです。
-ディストリビューションをフォークと混同しないでください。
+ディストリビューションをフォークと混同しないでください。 Distributions are not to be confused with forks.
 
-ディストリビューションのカスタマイズには、以下のようなものがあります。
+Customizations in a distribution may include:
 
 - 特定のバックエンドやベンダーの使用を容易にしたり、カスタマイズしたりするスクリプト
 - バックエンド、ベンダー、エンドユーザーに必要なデフォルト設定の変更
@@ -30,20 +31,25 @@ OpenTelemetryの参照実装は以下の通りです。
 
 ディストリビューションは大まかに以下のカテゴリーに分類されます。
 
-- **"ピュア（Pure）":** これらのディストリビューションは、アップストリームと同じ機能を提供し、100％互換性があります。
-  カスタマイズは通常、使いやすさやパッケージングを向上させる形で行われます。
-  これらのカスタマイズは、バックエンド、ベンダー、またはエンドユーザー固有のものです。
+- **"Pure":** These distributions provide the same functionality as upstream and
+  are 100% compatible. Customizations typically enhance the ease of use or
+  packaging. These customizations may be backend, vendor, or end-user specific.
 - **"プラス（Plus）":** これらのディストリビューションは、アップストリームの上に、追加コンポーネントによって追加機能を提供します。
-  例としては、OpenTelemetryプロジェクトにアップストリームで提供して計装ライブラリやベンダーのエクスポーターなどがあります。
-- **"マイナス（Minus）":** これらのディストリビューションは、アップストリームからの機能のサブセットを提供します。
-  この例としては、OpenTelemetryコレクタープロジェクトにある計装ライブラリやレシーバー、プロセッサー、エクスポーター、拡張機能の削除などがあります。
-  このようなディストリビューションは、サポートとセキュリティへの配慮を高めるために提供されることがあります。
+  例としては、OpenTelemetryプロジェクトにアップストリームで提供して計装ライブラリやベンダーのエクスポーターなどがあります。 Examples include instrumentation
+  libraries or vendor exporters not upstreamed to the OpenTelemetry project.
+- **"Minus":** These distributions provide a subset of functionality from
+  upstream. Examples of this include the removal of instrumentation libraries or
+  receivers, processors, exporters, or extensions found in the OpenTelemetry
+  Collector project. These distributions may be provided to increase
+  supportability and security considerations.
 
 ## 誰がディストリビューションを作成できますか {#who-can-create-a-distribution}
 
-誰でもディストリビューションを作成できます。
-今日、いくつかの[ベンダー](/ecosystem/vendors/)が[ディストリビューション](/ecosystem/distributions/)を提供しています。
-くわえて、エンドユーザーは[レジストリ](/ecosystem/registry/)にあるコンポーネントのうち、OpenTelemetryプロジェクトにアップストリームされていないものを使いたい場合、ディストリビューションの作成を検討できます。
+Anyone can create a distribution. Today, several [vendors](/ecosystem/vendors/)
+offer [distributions](/ecosystem/distributions/). In addition, end-users can
+consider creating a distribution if they want to use components in the
+[Registry](/ecosystem/registry/) that are not upstreamed to the OpenTelemetry
+project.
 
 ## コントリビューターかディストリビューションか {#contribution-or-distribution}
 
@@ -75,7 +81,10 @@ OpenTelemetryの参照実装は以下の通りです。
 
 OpenTelemetryプロジェクトは現時点ではディストリビューションを認証していません。
 将来、OpenTelemetryはKubernetesプロジェクトと同様にディストリビューションやパートナーを認証するかもしれません。
-ディストリビューションを評価する際には、そのディストリビューションを使用することがベンダーロックインにならないことを確認してください。
+ディストリビューションを評価する際には、そのディストリビューションを使用することがベンダーロックインにならないことを確認してください。 In the
+future, OpenTelemetry may certify distributions and partners similarly to the
+Kubernetes project. When evaluating a distribution, ensure using the
+distribution does not result in vendor lock-in.
 
 > ディストリビューションのサポートは、OpenTelemetryの作者ではなく、ディストリビューションの作者から提供されます。
 
