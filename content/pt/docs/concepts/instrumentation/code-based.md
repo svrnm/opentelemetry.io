@@ -1,9 +1,9 @@
 ---
-title: Manual
-description: >-
-  Aprenda as etapas essenciais na configuração da instrumentação manual
+title: Code-based
+description: Aprenda as etapas essenciais na configuração da instrumentação manual
 weight: 20
-default_lang_commit: fe0c3f68902aeb6e7584ffc32c6c8964d7a89e6e
+aliases: [ Manual ]
+cSpell:ignore: proxying
 ---
 
 ## Importe a API e o SDK do OpenTelemetry
@@ -33,7 +33,8 @@ versão atual da sua biblioteca ou serviço.
 
 Se você está desenvolvendo um serviço, também precisará configurar o SDK com as
 opções adequadas para exportar seus dados de telemetria para um _backend_ de
-análise. Recomendamos que esta configuração seja feita programaticamente por
+análise.
+Recomendamos que esta configuração seja feita programaticamente por
 meio de um arquivo de configuração ou outro mecanismo. Além disso, existem
 opções de ajuste específicas para cada linguagem de programação que você pode
 utilizar.
@@ -41,15 +42,15 @@ utilizar.
 ## Crie dados de telemetria
 
 Depois de configurar a API e o SDK, você estará pronto para criar eventos de
-rastros e métricas usando os objetos _tracer_ e _meter_ obtidos do _provider_.
-Utilize bibliotecas de instrumentação para suas dependências -- confira o
+rastros e métricas usando os objetos _tracer_ e _meter_ obtidos do _provider_. Utilize bibliotecas de instrumentação para suas dependências -- confira o
 [OpenTelemetry Registry](/ecosystem/registry/) ou o repositório da sua linguagem
 de programação para mais informações sobre essas bibliotecas.
 
 ## Exporte dados
 
 Depois de criar os dados de telemetria, você vai querer enviá-los para algum
-lugar. O OpenTelemetry oferece suporte a dois métodos principais de exportação
+lugar.
+O OpenTelemetry oferece suporte a dois métodos principais de exportação
 de dados do seu processo para um _backend_ de análise: diretamente da sua
 aplicação ou por meio de um proxy através do
 [OpenTelemetry Collector](/docs/collector).
