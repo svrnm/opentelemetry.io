@@ -1,16 +1,14 @@
 ---
 title: Node.js
 description: Obtenha telemetria para sua aplicação em menos de 5 minutos!
-aliases: [/docs/js/getting_started/nodejs]
+aliases: [ /docs/js/getting_started/nodejs ]
 weight: 10
-default_lang_commit: 1f6a173c26d1e194696ba77e95b6c3af40234952
-drifted_from_default: true
 cSpell:ignore: autoinstrumentations KHTML rolldice
 ---
 
 Esta página mostrará como começar a usar o OpenTelemetry no Node.js.
 
-Você aprenderá como instrumentar [rastros][] e [métricas][] e exibi-los no
+Você aprenderá como instrumentar \[rastros]\[] e \[métricas]\[] e exibi-los no
 console.
 
 {{% alert title="Nota" %}} A biblioteca para logs do OpenTelemetry para Node.js
@@ -180,6 +178,10 @@ Crie um arquivo chamado `instrumentation.ts` (ou `instrumentation.js`, caso não
 esteja utilizando TypeScript), que deverá conter o código de configuração de
 instrumentação.
 
+{{% alert title="Note" %}} The following examples using
+`--import instrumentation.ts` (TypeScript) require Node.js v.20 or later. If you
+are using Node.js v.18, please use the JavaScript example. {{% /alert %}}
+
 {{< tabpane text=true >}} {{% tab TypeScript %}}
 
 ```ts
@@ -234,8 +236,7 @@ sdk.start();
 ## Execute a aplicação instrumentada {#run-the-instrumented-app}
 
 Agora você poderá executar a aplicação normalmente, mas poderá usar a _flag_
-`--require` para carregar a instrumentação antes do código da aplicação.
-Certifique-se de que não haja conflitos na utilização da _flag_ `--require`,
+`--require` para carregar a instrumentação antes do código da aplicação. Certifique-se de que não haja conflitos na utilização da _flag_ `--require`,
 como, por exemplo, a variável de ambiente `NODE_OPTIONS` já possuir algo como
 `--require @opentelemetry/auto-instrumentations-node/register`.
 
@@ -259,10 +260,9 @@ Acesse <http://localhost:8080/rolldice> no seu navegador e recarregue a página
 algumas vezes. Depois de um tempo, você deverá ver os trechos exibidos no
 console pelo `ConsoleSpanExporter`.
 
-<details>
-<summary>Ver exemplo de saída</summary>
+<details><summary>Ver exemplo de saída</summary>
 
-```json
+```js
 {
   "traceId": "3f1fe6256ea46d19ec3ca97b3409ad6d",
   "parentId": "f0b7b340dd6e08a7",
@@ -349,8 +349,7 @@ O trecho gerado rastreia o tempo de vida de uma requisição para a rota
 Envie mais algumas requisições para esta rota. Depois de um tempo, você poderá
 visualizar métricas na saída do console, como as seguintes:
 
-<details>
-<summary>Ver exemplo de saída</summary>
+<details><summary>Ver exemplo de saída</summary>
 
 ```yaml
 {
@@ -524,5 +523,5 @@ diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
 
 {{% /tab %}} {{< /tabpane >}}
 
-[rastros]: /docs/concepts/signals/traces/
-[métricas]: /docs/concepts/signals/metrics/
+[traces]: /docs/concepts/signals/traces/
+[metrics]: /docs/concepts/signals/metrics/
