@@ -3,12 +3,13 @@ title: Lambdaコレクター設定
 linkTitle: Lambdaコレクター設定
 weight: 11
 description: コレクターLambdaレイヤーをあなたのLambdaに追加して設定する
-default_lang_commit: 9ba98f4fded66ec78bfafa189ab2d15d66df2309
 cSpell:ignore: ADOT awsxray configmap confmap
 ---
 
 OpenTelemetry コミュニティは、ユーザーに最大限の柔軟性を与えるために、コレクターを計装レイヤーとは別のLambdaレイヤーで提供しています。
-これは、計装とコレクターをバンドルしている現在の AWS Distribution of OpenTelemetry (ADOT) の実装とは異なります。
+これは、計装とコレクターをバンドルしている現在の AWS Distribution of OpenTelemetry (ADOT) の実装とは異なります。 This is different
+than the current AWS Distribution of OpenTelemetry (ADOT) implementation which
+bundles instrumentation and the Collector together.
 
 ### OTelコレクターLambdaレイヤーのARNを追加する {#add-the-arn-of-the-otel-collector-lambda-layer}
 
@@ -17,7 +18,9 @@ OpenTelemetry コミュニティは、ユーザーに最大限の柔軟性を与
 [最新のコレクターレイヤーリリース](https://github.com/open-telemetry/opentelemetry-lambda/releases)を見つけ、そのARNを使用します。
 `<region>`タグをラムダがいるリージョンに変更します。
 
-注意: ラムダレイヤーはリージョンで分かれたリソースであり、公開されているリージョンでのみ使用できます。Lambda関数と同じリージョンでレイヤーを使用するようにしてください。コミュニティは、利用可能なすべてのリージョンでレイヤーを公開しています。
+注意: ラムダレイヤーはリージョンで分かれたリソースであり、公開されているリージョンでのみ使用できます。Lambda関数と同じリージョンでレイヤーを使用するようにしてください。コミュニティは、利用可能なすべてのリージョンでレイヤーを公開しています。 Make sure to use the layer in
+the same region as your Lambda functions. The community publishes layers in all
+available regions.
 
 ### OTelコレクターの設定 {#configure-the-otel-collector}
 
@@ -31,8 +34,9 @@ Lambda環境変数の設定で、認証トークンを格納する新しい変�
 
 #### デフォルトエクスポーターを更新する {#update-the-default-exporters}
 
-もしまだ存在していなければ、`config.yaml` ファイルに好みのエクスポーターを追加します。
-前のステップでアクセストークンのために設定した環境変数を使用して、エクスポーターを設定します。
+In your `config.yaml` file add your preferred exporter(s) if they are not
+already present. Configure your exporter(s) using the environment variables you
+set for your access tokens in the previous step.
 
 **エクスポーターに環境変数が設定されていない場合、デフォルトの設定は、デバッグエクスポーターを使用したデータ送信のみをサポートします**
 以下はデフォルトの設定です。
@@ -70,14 +74,18 @@ Lambdaの新しいバージョンをパブリッシュして、行った変更�
 
 ### 高度な OTel コレクターの設定 {#advanced-otel-collector-configuration}
 
-カスタム構成でサポートされる利用可能なコンポーネントのリストは、こちらをご覧ください。
+Please find the list of available components supported for custom configuration
+here. カスタム構成でサポートされる利用可能なコンポーネントのリストは、こちらをご覧ください。
 デバッグを有効にするには、設定ファイルを使ってログレベルをデバッグに設定します。
-以下の例を参照してください。
+以下の例を参照してください。 See the example below.
 
 #### 希望のConfmapプロバイダーを選択する {#choose-your-preferred-confmap-provider}
 
-OTel Lambdaレイヤーは `file`、`env`、`yaml`、`http`、`https`、`s3` といった種類の Confmap プロバイダーをサポートしています。
-異なる Confmap プロバイダーを使用して OTel コレクターの設定をカスタマイズするには、[Amazon Distribution of OpenTelemetry Confmap providers document](https://aws-otel.github.io/docs/components/confmap-providers#confmap-providers-supported-by-the-adot-collector) を参照してください。
+The OTel Lambda Layers supports the following types of confmap providers:
+`file`, `env`, `yaml`, `http`, `https`, and `s3`. To customize the OTel
+collector configuration using different Confmap providers, Please refer to
+[Amazon Distribution of OpenTelemetry Confmap providers document](https://aws-otel.github.io/docs/components/confmap-providers#confmap-providers-supported-by-the-adot-collector)
+for more information.
 
 #### カスタム設定ファイルの作成 {#create-a-custom-configuration-file}
 
@@ -117,7 +125,9 @@ service:
 
 confmapプロバイダーを通してコレクターを設定したら、Lambda関数に環境変数 `OPENTELEMETRY_COLLECTOR_CONFIG_URI` を作成し、その値としてconfmapプロバイダーの設定のパスを設定します。
 たとえば、ファイルconfigmapプロバイダーを使用している場合は、その値を `/var/task/<path>/<to>/<filename>` に設定します。
-これにより、拡張モジュールにコレクターの設定がどこにあるかを伝えます。
+これにより、拡張モジュールにコレクターの設定がどこにあるかを伝えます。 for e.g, if you are using a file configmap
+provider, set its value to `/var/task/<path>/<to>/<filename>`. This will tell
+the extension where to find the collector configuration.
 
 ##### CLIを使用したカスタムコレクター設定 {#custom-collector-configuration-using-the-cli}
 
