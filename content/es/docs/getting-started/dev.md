@@ -1,10 +1,9 @@
 ---
 title: Introducción para desarrolladores
 linkTitle: Dev
-default_lang_commit: f1ccafef4b5070f26ce63a3dc19fcafc8a00fb8f
 ---
 
-Esta es tu página de [introducción](..) si:
+This is the [getting-started](..) page for you if:
 
 - Desarrollas software.
 - Tu objetivo es obtener observabilidad escribiendo código.
@@ -23,6 +22,9 @@ dependencias dentro de otro software, te recomendamos aprender cómo puedes
 proporcionar telemetría de forma nativa:
 
 - [¿Cómo puedo agregar instrumentación nativa a mi librería?](../../concepts/instrumentation/libraries/)
+
+If you are looking for a set of applications to try things out, you will find
+our official [OpenTelemetry demo](/ecosystem/demo/) useful.
 
 A continuación, puedes profundizar en la documentación del
 [lenguaje de programación](../../languages/) que estés utilizando:
