@@ -1,12 +1,13 @@
 ---
 title: テスト
-default_lang_commit: fd7da211d5bc37ca93112a494aaf6a94445e2e28
 cSpell:ignore: Tracetest
 ---
 
-現在、このリポジトリにはフロントエンドとバックエンドの両サービスのE2Eテストが含まれています。
-フロントエンドでは、[Cypress](https://www.cypress.io/)を使用しており、Webストアの各フローを実行します。
-一方、バックエンドサービスでは、統合テストのメインテストフレームワークとして[AVA](https://avajs.dev)を使用しており、トレースベースのテストには[Tracetest](https://tracetest.io/)を使用しています。
+Currently, the repository includes E2E tests for both the frontend and backend
+services. For the Frontend we are using [Cypress](https://www.cypress.io/) to
+execute the different flows in the web store. While the backend services use
+[AVA](https://avajs.dev) as the main testing framework for integration tests and
+[Tracetest](https://tracetest.io/) for trace-based tests.
 
 すべてのテストを実行する場合は、ルートディレクトリから `make run-tests` を実行します。
 
