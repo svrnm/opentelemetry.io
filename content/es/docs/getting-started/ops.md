@@ -1,10 +1,9 @@
 ---
-title: Introducción para Operaciones
+title: Getting started for Ops
 linkTitle: Ops
-default_lang_commit: 99a39c5e4e51daba968bfbb3eb078be4a14ad363
 ---
 
-Esta es tu página de [introducción](..) si:
+This is the [getting-started](..) page for you if:
 
 - Ejecutas un conjunto de aplicaciones en producción.
 - Tu objetivo es obtener telemetría de ellas sin tocar su código.
