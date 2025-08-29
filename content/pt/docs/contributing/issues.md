@@ -1,12 +1,10 @@
 ---
 title: Issues
-description:
-  Como corrigir um problema existente ou relatar um bug, risco de segurança ou
-  possível melhoria.
+description: Como corrigir um problema existente ou relatar um bug, risco de segurança ou possível melhoria.
 weight: 10
 _issues: https://github.com/open-telemetry/opentelemetry.io/issues
 _issue: https://github.com/open-telemetry/opentelemetry.io/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A
-default_lang_commit: 0930994d5be6f01b05d0caca0550c468d2f3e829
+cSpell:ignore: prepopulated
 ---
 
 <style>
@@ -37,28 +35,33 @@ Uma das melhores formas de contribuir para a melhoria da documentação do OTel 
 corrigir um problema já existente.
 
 1. Navegue pela lista de [_issues_]({{% param _issues %}}).
+
 2. Selecione uma issue com a qual você gostaria de contribuir, de preferência
    uma que possa ser resolvida em pouco tempo. <a name="first-issue"></a>
    {{% alert title="É sua primeira contribuição?" color="primary alert--first-timer" %}}
 
    Procure por _issues_ com os seguintes _labels_ (rótulos):
+
    - [Good first issue](<{{% param _issue %}}%22good+first-issue%22>)
+
    - [Help wanted](<{{% param _issue %}}%3A%22help+wanted%22>)
 
    > **NOTA**: nós **_não atribuímos issues_** a quem ainda não contribuiu com a
-   > organização [OpenTelemetry][org], exceto quando fizer parte de um processo
-   > de tutoria ou de _onboarding_.
    >
    > [org]: https://github.com/open-telemetry
 
    {{% /alert %}}
 
 3. Leia os comentários existentes na _issue_, se houver.
+
 4. Pergunte aos mantenedores se a _issue_ ainda é relevante e esclareça
    eventuais dúvidas comentando na própria _issue_.
+
 5. Declare sua intenção de trabalhar na _issue_ adicionando um comentário.
+
 6. Trabalhe na correção do problema. Caso enfrente dificuldades, avise os
    mantenedores.
+
 7. Quando estiver pronto,
    [submeta seu trabalho via _pull request_](../pull-requests) (PR).
 
@@ -88,17 +91,15 @@ possível relatar bugs ou vulnerabilidades de segurança.
 1. Acesse a aba de
    [_Issues_ no GitHub](https://github.com/open-telemetry/opentelemetry.io/issues/new/).
 
-2. Clique em **New issue**.
+2. Escolha o tipo de _issue_ mais apropriado para sua sugestão ou dúvida.
 
-3. Escolha o tipo de _issue_ mais apropriado para sua sugestão ou dúvida.
+3. Fill out the template.
 
-4. Preencha o modelo.
-
-5. Envie a _issue_.
+4. Submit the issue.
 
 ### Como enviar boas _issues_ {#how-to-file-great-issues}
 
-Ao criar uma _issue_, considere as seguintes boas práticas:
+Keep the following in mind when filing an issue:
 
 - Forneça uma descrição clara do problema. Explique exatamente o que está
   incorreto, desatualizado, ausente ou pode ser melhorado.
@@ -111,7 +112,7 @@ Ao criar uma _issue_, considere as seguintes boas práticas:
   semelhante a sua nova _issue_.
 - Se a nova _issue_ estiver relacionada a outra _issue_ ou _pull request_, faça
   referência usando a URL completa ou o número precedido por `#`, por exemplo:
-  `Introduzido por #987654`.
+  `Introduzido por #987654`. For example, `Introduced by #987654`.
 - Siga o
   [Código de Conduta](https://github.com/open-telemetry/community/blob/main/code-of-conduct.md).
   Respeite os demais colaboradores. Comentários como "A documentação está
