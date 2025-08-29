@@ -1,9 +1,8 @@
 ---
 title: Annotations
 description: Utilisation des annotations d'instrumentation avec un agent Java.
-aliases: [/docs/instrumentation/java/annotations]
+aliases: [ /docs/instrumentation/java/annotations ]
 weight: 20
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: Flowable javac reactivestreams reactivex
 ---
 
@@ -87,11 +86,11 @@ termine.
 L'attribut `@WithSpan` supporte les paramètres optionnels suivants pour
 permettre la personnalisation des spans :
 
-| nom              | type              | défaut     | description                                                                                                                                 |
-| ---------------- | ----------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value`          | `String`          | `""`       | Le nom du span. Si non spécifié, le défaut `<className>.<methodName>` est utilisé.                                                          |
-| `kind`           | `SpanKind` (enum) | `INTERNAL` | Le [type de span](/docs/specs/otel/trace/api/#spankind).                                                                                    |
-| `inheritContext` | `boolean`         | `true`     | Depuis 2.14.0. Contrôle si le nouveau span sera ou non parent dans le contexte existant (actuel). Si `false`, un nouveau contexte est créé. |
+| nom              | type                                 | défaut     | description                                                                                                                                                                                                                                    |
+| ---------------- | ------------------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`          | `String`                             | `""`       | Le nom du span. Si non spécifié, le défaut `<className>.<methodName>` est utilisé.                                                                                                                             |
+| `kind`           | `SpanKind` (enum) | `INTERNAL` | Le [type de span](/docs/specs/otel/trace/api/#spankind).                                                                                                                                                                       |
+| `inheritContext` | `boolean`                            | `true`     | Depuis 2.14.0. Contrôle si le nouveau span sera ou non parent dans le contexte existant (actuel). Si `false`, un nouveau contexte est créé. |
 
 Exemple d'utilisation des paramètres :
 
@@ -140,7 +139,7 @@ utilisant `@WithSpan` et que vous voulez en supprimer certains sans modifier le
 code.
 
 {{% config_option
-  name="otel.instrumentation.opentelemetry-instrumentation-annotations.exclude-methods" %}} Supprimer
+name="otel.instrumentation.opentelemetry-instrumentation-annotations.exclude-methods" %}} Supprimer
 l'instrumentation `@WithSpan` pour des méthodes spécifiques. Le format est
 `my.package.MyClass1[method1,method2];my.package.MyClass2[method3]`.
 {{% /config_option %}}
@@ -152,8 +151,7 @@ configurer l'agent Java pour capturer des spans autour de méthodes spécifiques
 
 {{% config_option name="otel.instrumentation.methods.include" %}} Ajouter
 l'instrumentation pour des méthodes spécifiques à la place de `@WithSpan`. Le
-format est `my.package.MyClass1[method1,method2];my.package.MyClass2[method3]`.
-{{%
+format est `my.package.MyClass1[method1,method2];my.package.MyClass2[method3]`. {{%
 /config_option %}}
 
 Si une méthode est surchargée (apparaît plus d'une fois sur la même classe avec
