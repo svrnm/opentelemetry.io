@@ -3,7 +3,6 @@ title: Getting Started（入門）
 description: あなたの役割に応じてOpenTelemetryを始めてみましょう。
 no_list: true
 weight: 160
-default_lang_commit: e7a6289
 ---
 
 まずは役割[^1]を選択してください。
@@ -23,7 +22,7 @@ default_lang_commit: e7a6289
 
 </div>
 
-[^1]: これらの役割のどれにも当てはまらない場合は、[教えて下さい][]。
+[^1]: これらの役割のどれにも当てはまらない場合は、\[教えて下さい]\[]。
 
 [demo]: /ecosystem/demo/
-[教えて下さい]: https://github.com/open-telemetry/opentelemetry.io/issues/new?title=Add%20a%20new%20persona:%20My%20Persona&body=Provide%20a%20description%20of%20your%20role%20and%20responsibilities%20and%20what%20your%20observability%20goals%20are
+[let us know]: https://github.com/open-telemetry/opentelemetry.io/issues/new?title=Add%20a%20new%20persona:%20My%20Persona&body=Provide%20a%20description%20of%20your%20role%20and%20responsibilities%20and%20what%20your%20observability%20goals%20are
