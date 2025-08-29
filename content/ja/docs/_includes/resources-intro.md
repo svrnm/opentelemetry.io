@@ -1,12 +1,16 @@
 ---
-default_lang_commit: ba402271eeb1bd5e83c37f2fadc3b50e89aca66b
 params:
   aResource: プロセス
 ---
 
 [リソース]({{ $resourceHRef }})は、リソース属性としてテレメトリーを生成するエンティティを表します。
 たとえば、Kubernetes上のコンテナで実行されているテレメトリーを生成する{{ $aResource }}は、{{ $aResource }}名、ポッド名、ネームスペース、および場合によってはデプロイメント名を持ちます。
-これらの4つの属性すべてをリソースに含まれることができます。
+これらの4つの属性すべてをリソースに含まれることができます。 For example, {{ $aResource }} producing telemetry that is
+running in a container on Kubernetes has {{ $aResource }} name, a pod name, a
+namespace, and possibly a deployment name. All four of these attributes can be
+included in the resource.
 
-オブザーバビリティバックエンドでは、リソース情報を使用して興味深い動作をより詳細に調査できます。
-たとえば、トレースまたはメトリクスデータがシステムのレイテンシーを示している場合、それを特定のコンテナ、ポッド、またはKubernetesデプロイメントに絞り込むことができます。
+In your observability backend, you can use resource information to better
+investigate interesting behavior. For example, if your trace or metrics data
+indicate latency in your system, you can narrow it down to a specific container,
+pod, or Kubernetes deployment.
