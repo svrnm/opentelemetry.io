@@ -7,7 +7,6 @@ aliases:
   - /docs/getting-started/demo
   - /docs/opentelemetry-demo
 weight: 10
-default_lang_commit: b13d5dd3a9f288ab64d2af98c0b4ec1694499ef3
 ---
 
 [OpenTelemetry 演示](/docs/demo/)具备以下功能：
