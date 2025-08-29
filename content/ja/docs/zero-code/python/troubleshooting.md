@@ -2,7 +2,6 @@
 title: Pythonの自動計装に関する問題のトラブルシューティング
 linkTitle: Troubleshooting
 weight: 40
-default_lang_commit: 3d737b777f7bfa070f7f14835570add916d4dcb0
 ---
 
 ## インストールに関する問題 {#installation-issues}
@@ -36,7 +35,9 @@ apk add build-base
 
 {{% /tab %}} {{< /tabpane >}}
 
-### uv を使ったブートストラップ {#bootstrap-using-uv}
+uv を使ったブートストラップ {#bootstrap-using-uv}
+
+### `uv sync` を実行したり、既存のパッケージを更新したりするたびに、自動計装を再インストールする必要があることに注意してください。&#xA;そのため、ビルドパイプラインの一部としてインストールを行うことを推奨します。
 
 [uv](https://docs.astral.sh/uv/)パッケージマネージャを使用しているときに `opentelemetry-bootstrap -a install` を実行すると、依存関係の設定がエラーになったり、予期しない結果になったりすることがあります。
 
@@ -60,8 +61,9 @@ uv run opentelemetry-bootstrap -a requirements | uv pip install --requirement -
 uv run opentelemetry-instrument python myapp.py
 ```
 
-`uv sync` を実行したり、既存のパッケージを更新したりするたびに、自動計装を再インストールする必要があることに注意してください。
-そのため、ビルドパイプラインの一部としてインストールを行うことを推奨します。
+Please note that you have to reinstall the auto instrumentation every time you
+run `uv sync` or update existing packages. It is therefore recommended to make
+the installation part of your build pipeline.
 
 ## 計装の問題 {#instrumentation-issues}
 
@@ -74,7 +76,8 @@ if __name__ == "__main__":
     app.run(port=8082, debug=True)
 ```
 
-デバッグモードはリローダを有効にするため、計装を中断させることがあります。
+The debug mode can break instrumentation from happening because it enables a
+reloader. デバッグモードはリローダを有効にするため、計装を中断させることがあります。
 デバッグモードが有効なときに計装を実行するには、 `use_reloader` オプションを `False` に設定します。
 
 ```python
