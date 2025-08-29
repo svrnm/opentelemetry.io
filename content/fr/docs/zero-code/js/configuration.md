@@ -1,13 +1,11 @@
 ---
 title: Configuration de l'instrumentation Zero-Code
 linkTitle: Configuration
-description:
-  Apprenez comment configurer l'instrumentation Zero-Code pour Node.js
+description: Apprenez comment configurer l'instrumentation Zero-Code pour Node.js
 aliases:
   - /docs/languages/js/automatic/configuration
   - /docs/languages/js/automatic/module-config
 weight: 10
-default_lang_commit: 3d179dbe1270b83aafff0d3b6aa3311afd482649
 cSpell:ignore: serviceinstance
 ---
 
