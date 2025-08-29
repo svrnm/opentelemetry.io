@@ -4,35 +4,35 @@ linkTitle: ডেমো
 cascade:
   repo: https://github.com/open-telemetry/opentelemetry-demo
 weight: 180
-default_lang_commit: 2571ec5a1e17744982e8dc6efe1fdf3115d0ebbc
 ---
 
 [OpenTelemetry ডেমো](/ecosystem/demo/) ডকুমেন্টেশনে স্বাগতম, যেখানে ডেমো কীভাবে ইনস্টল ও চালাতে হয় এবং কিছু সিনারিও দেখানো হয়েছে, যার মাধ্যমে আপনি OpenTelemetry-কে অ্যাকশনে দেখতে পারবেন।
 
 ## ডেমো চালানো {#running-the-demo}
 
-ডেমোটি ডিপ্লয় করে অ্যাকশনে দেখতে চান? এখান থেকে শুরু করুন।
+Want to deploy the demo and see it in action? Start here.
 
 - [ডকার](docker-deployment/)
 - [কুবারনেটিস](kubernetes-deployment/)
 
 ## ল্যাঙ্গুয়েজ ফিচার রেফারেন্স {#language-feature-reference}
 
-কোনো নির্দিষ্ট ল্যাঙ্গুয়েজ ইনস্ট্রুমেন্টেশন কীভাবে কাজ করে জানতে চান? এখান থেকে শুরু করুন।
+Want to understand how a particular language's instrumentation works? Start
+here.
 
-| ল্যাঙ্গুয়েজ        | স্বয়ংক্রিয় ইনস্ট্রুমেন্টেশন                        | ইনস্ট্রুমেন্টেশন লাইব্রেরি                                                                  | ম্যানুয়াল ইনস্ট্রুমেন্টেশন                                                                 |
-| ----------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| .NET        | [অ্যাকাউন্টিং সার্ভিস](services/accounting/)         | [কার্ট সার্ভিস](services/cart/)                                                             | [কার্ট সার্ভিস](services/cart/)                                                               |
-| C++         |                                                      |                                                                                            | [কারেন্সি সার্ভিস](services/currency/)                                                       |
-| Go          |                                                      | [চেকআউট সার্ভিস](services/checkout/), [প্রোডাক্ট ক্যাটালগ সার্ভিস](services/product-catalog/) | [চেকআউট সার্ভিস](services/checkout/), [প্রোডাক্ট ক্যাটালগ সার্ভিস](services/product-catalog/) |
-| Java        | [অ্যাড সার্ভিস](services/ad/)                        |                                                                                            | [অ্যাড সার্ভিস](services/ad/)                                                                 |
-| JavaScript  |                                                      |                                                                                            | [পেমেন্ট সার্ভিস](services/payment/)                                                         |
-| TypeScript  |                                                      | [ফ্রন্টএন্ড](services/frontend/), [রিঅ্যাক্ট নেটিভ অ্যাপ](services/react-native-app/)       | [ফ্রন্টএন্ড](services/frontend/)                                                             |
-| Kotlin      |                                                      | [ফ্রড ডিটেকশন সার্ভিস](services/fraud-detection/)                                           |                                                                                              |
-| PHP         |                                                      | [কোট সার্ভিস](services/quote/)                                                              | [কোট সার্ভিস](services/quote/)                                                               |
-| Python      | [রিকমেন্ডেশন সার্ভিস](services/recommendation/)      |                                                                                            | [রিকমেন্ডেশন সার্ভিস](services/recommendation/)                                             |
-| Ruby        |                                                      | [ইমেইল সার্ভিস](services/email/)                                                           | [ইমেইল সার্ভিস](services/email/)                                                             |
-| Rust        |                                                      | [শিপিং সার্ভিস](services/shipping/)                                                         | [শিপিং সার্ভিস](services/shipping/)                                                          |
+| ল্যাঙ্গুয়েজ          | স্বয়ংক্রিয় ইনস্ট্রুমেন্টেশন                   | ইনস্ট্রুমেন্টেশন লাইব্রেরি                                                                    | ম্যানুয়াল ইনস্ট্রুমেন্টেশন                                                                   |
+| -------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| .NET | [অ্যাকাউন্টিং সার্ভিস](services/accounting/)    | [কার্ট সার্ভিস](services/cart/)                                                               | [কার্ট সার্ভিস](services/cart/)                                                               |
+| C++                  |                                                 |                                                                                               | [কারেন্সি সার্ভিস](services/currency/)                                                        |
+| Go                   |                                                 | [চেকআউট সার্ভিস](services/checkout/), [প্রোডাক্ট ক্যাটালগ সার্ভিস](services/product-catalog/) | [চেকআউট সার্ভিস](services/checkout/), [প্রোডাক্ট ক্যাটালগ সার্ভিস](services/product-catalog/) |
+| Java                 | [অ্যাড সার্ভিস](services/ad/)                   |                                                                                               | [অ্যাড সার্ভিস](services/ad/)                                                                 |
+| JavaScript           |                                                 |                                                                                               | [পেমেন্ট সার্ভিস](services/payment/)                                                          |
+| TypeScript           |                                                 | [ফ্রন্টএন্ড](services/frontend/), [রিঅ্যাক্ট নেটিভ অ্যাপ](services/react-native-app/)         | [ফ্রন্টএন্ড](services/frontend/)                                                              |
+| Kotlin               |                                                 | [ফ্রড ডিটেকশন সার্ভিস](services/fraud-detection/)                                             |                                                                                               |
+| PHP                  |                                                 | [কোট সার্ভিস](services/quote/)                                                                | [কোট সার্ভিস](services/quote/)                                                                |
+| Python               | [রিকমেন্ডেশন সার্ভিস](services/recommendation/) |                                                                                               | [রিকমেন্ডেশন সার্ভিস](services/recommendation/)                                               |
+| Ruby                 |                                                 | [ইমেইল সার্ভিস](services/email/)                                                              | [ইমেইল সার্ভিস](services/email/)                                                              |
+| Rust                 |                                                 | [শিপিং সার্ভিস](services/shipping/)                                                           | [শিপিং সার্ভিস](services/shipping/)                                                           |
 
 ## সার্ভিস ডকুমেন্টেশন {#service-documentation}
 
@@ -55,7 +55,10 @@ default_lang_commit: 2571ec5a1e17744982e8dc6efe1fdf3115d0ebbc
 
 ## ফিচার ফ্ল্যাগ সিনারিও {#feature-flag-scenarios}
 
-OpenTelemetry দিয়ে কীভাবে সমস্যা সমাধান করবেন? এই [ফিচার ফ্ল্যাগ এনাবল্ড সিনারিও](feature-flags/) আপনাকে কিছু pre-configured সমস্যা দেখাবে এবং কীভাবে OpenTelemetry ডেটা বিশ্লেষণ করে সমাধান করতে হয়, তা শেখাবে।
+How can you solve problems with OpenTelemetry? These
+[feature flag enabled scenarios](feature-flags/) walk you through some
+pre-configured problems and show you how to interpret OpenTelemetry data to
+solve them.
 
 ## রেফারেন্স {#reference}
 
