@@ -4,8 +4,6 @@ linkTitle: Demo
 cascade:
   repo: https://github.com/open-telemetry/opentelemetry-demo
 weight: 180
-default_lang_commit: 2571ec5a1e17744982e8dc6efe1fdf3115d0ebbc
-cSpell:ignore: preconfigurados
 ---
 
 Aquí tienes la documentación de la [Demo de OpenTelemetry](/ecosystem/demo/),
@@ -21,22 +19,21 @@ escenarios que puedes usar para ver OpenTelemetry en acción.
 
 ## Referencia de funciones del lenguaje de programación
 
-¿Quieres entender cómo funciona la instrumentación de un lenguaje en particular?
-Comienza aquí.
+¿Quieres entender cómo funciona la instrumentación de un lenguaje en particular? Comienza aquí.
 
-| Lenguaje   | Instrumentación automática                              | Bibliotecas de instrumentación                                                                         | Instrumentación manual                                                                                 |
-| ---------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| .NET       | [Servicio de Contabilidad](services/accounting/)        | [Servicio de Carrito](services/cart/)                                                                  | [Servicio de Carrito](services/cart/)                                                                  |
-| C++        |                                                         |                                                                                                        | [Servicio de Moneda](services/currency/)                                                               |
-| Go         |                                                         | [Servicio de Pago](services/checkout/), [Servicio de Catálogo de Productos](services/product-catalog/) | [Servicio de Pago](services/checkout/), [Servicio de Catálogo de Productos](services/product-catalog/) |
-| Java       | [Servicio de Publicidad](services/ad/)                  |                                                                                                        | [Servicio de Publicidad](services/ad/)                                                                 |
-| JavaScript |                                                         |                                                                                                        | [Servicio de Pagos](services/payment/)                                                                 |
-| TypeScript |                                                         | [Frontend](services/frontend/), [Aplicación React Native](services/react-native-app/)                  | [Frontend](services/frontend/)                                                                         |
-| Kotlin     |                                                         | [Servicio de Detección de Fraude](services/fraud-detection/)                                           |                                                                                                        |
-| PHP        |                                                         | [Servicio de Cotizaciones](services/quote/)                                                            | [Servicio de Cotizaciones](services/quote/)                                                            |
-| Python     | [Servicio de Recomendaciones](services/recommendation/) |                                                                                                        | [Servicio de Recomendaciones](services/recommendation/)                                                |
-| Ruby       |                                                         | [Servicio de Correo Electrónico](services/email/)                                                      | [Servicio de Correo Electrónico](services/email/)                                                      |
-| Rust       |                                                         | [Servicio de Envío](services/shipping/)                                                                | [Servicio de Envío](services/shipping/)                                                                |
+| Lenguaje             | Instrumentación automática                              | Bibliotecas de instrumentación                                                                         | Instrumentación manual                                                                                 |
+| -------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| .NET | [Servicio de Contabilidad](services/accounting/)        | [Servicio de Carrito](services/cart/)                                                                  | [Servicio de Carrito](services/cart/)                                                                  |
+| C++                  |                                                         |                                                                                                        | [Servicio de Moneda](services/currency/)                                                               |
+| Go                   |                                                         | [Servicio de Pago](services/checkout/), [Servicio de Catálogo de Productos](services/product-catalog/) | [Servicio de Pago](services/checkout/), [Servicio de Catálogo de Productos](services/product-catalog/) |
+| Java                 | [Servicio de Publicidad](services/ad/)                  |                                                                                                        | [Servicio de Publicidad](services/ad/)                                                                 |
+| JavaScript           |                                                         |                                                                                                        | [Servicio de Pagos](services/payment/)                                                                 |
+| TypeScript           |                                                         | [Frontend](services/frontend/), [Aplicación React Native](services/react-native-app/)                  | [Frontend](services/frontend/)                                                                         |
+| Kotlin               |                                                         | [Servicio de Detección de Fraude](services/fraud-detection/)                                           |                                                                                                        |
+| PHP                  |                                                         | [Servicio de Cotizaciones](services/quote/)                                                            | [Servicio de Cotizaciones](services/quote/)                                                            |
+| Python               | [Servicio de Recomendaciones](services/recommendation/) |                                                                                                        | [Servicio de Recomendaciones](services/recommendation/)                                                |
+| Ruby                 |                                                         | [Servicio de Correo Electrónico](services/email/)                                                      | [Servicio de Correo Electrónico](services/email/)                                                      |
+| Rust                 |                                                         | [Servicio de Envío](services/shipping/)                                                                | [Servicio de Envío](services/shipping/)                                                                |
 
 ## Documentación de los servicios
 
