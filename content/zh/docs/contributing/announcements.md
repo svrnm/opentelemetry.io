@@ -2,14 +2,15 @@
 title: 公告
 description: 为特别活动创建公告或横幅。
 weight: 50
-default_lang_commit: adc4264c2926e3d767b6a56affb19fb4ae3f2a22
 ---
 
-公告是本地化目录中 `announcements` 部分下的一个**常规 Hugo 页面**。
+An announcement is a _regular Hugo page_ contained under the `announcements`
+section of a locale. 公告是本地化目录中 `announcements` 部分下的一个**常规 Hugo 页面**。
 这意味着我们可以利用 Hugo 内置功能来处理（未来或过期的）页面日期、国际化等功能，
 这样可以根据构建日期自动显示或隐藏网站的横幅，确定横幅的排序，处理回退到英文横幅等情况。
 
-> 目前，公告仅作为横幅使用。将来我们**可能**会支持更通用的公告形式。
+> 目前，公告仅作为横幅使用。将来我们**可能**会支持更通用的公告形式。 We _might_ eventually
+> support slightly more general announcements as well.
 
 ### 创建公告 {#creating-an-announcement}
 
@@ -19,7 +20,8 @@ default_lang_commit: adc4264c2926e3d767b6a56affb19fb4ae3f2a22
 hugo new --kind announcement content/YOUR-LOCALE/announcements/announcement-file-name.md
 ```
 
-根据你想要的语言区域和文件名进行调整。将公告内容添加为页面的正文。
+Adjust according to your desired locale and file name. Add the announcement text
+as the body of the page.
 
 > 对于横幅来说，公告正文必须是简短的文字。
 
@@ -32,11 +34,15 @@ hugo new --kind announcement content/YOUR-LOCALE/announcements/announcement-file
 ### 公告列表 {#announcement-list}
 
 当构建日期位于公告的 `date` 和 `expiryDate` 字段之间时，所有提供的公告会出现在站点构建中。
-如果这些字段缺失，则分别默认为 “now” 和 “forever”。
+如果这些字段缺失，则分别默认为 “now” 和 “forever”。 When those
+fields are missing they are assumed to be "now" and "forever", respectively.
 
 公告将按照 Hugo 的[常规页面](https://gohugo.io/methods/site/regularpages/)功能确定的标准页面顺序出现。
 也就是说，`weight` 值最小（“最轻”的）公告会优先显示；
-当多个公告的权重相同或未指定时，最新日期的公告将优先显示，依此类推。
+当多个公告的权重相同或未指定时，最新日期的公告将优先显示，依此类推。 That is,
+the "lightest" announcements (by `weight`) will appear first; when weights are
+the same or unspecified, the most recent announcements (by `date`) will appear
+first, etc.
 
 因此，如果你希望将某条公告置顶，可以在 front matter 中将 `weight` 设为负数。
 
@@ -50,6 +56,7 @@ hugo new --kind announcement content/YOUR-LOCALE/announcements/announcement-file
 确认该问题尚未被报告或已被修复。
 
 在创建新的 Issue 时，标题要简短而有意义，并提供清晰的描述。
-请尽可能提供相关信息，如有可能，还应附上测试用例。
+请尽可能提供相关信息，如有可能，还应附上测试用例。 Add as much relevant information as you can, and, if possible, a
+test case.
 
 [new-issue]: https://github.com/open-telemetry/opentelemetry.io/issues/new/choose
