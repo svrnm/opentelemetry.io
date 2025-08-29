@@ -5,7 +5,6 @@ aliases:
   - /docs/languages/go/using_instrumentation_libraries
   - /docs/languages/go/automatic_instrumentation
 weight: 40
-default_lang_commit: 825010e3cfece195ae4dfd019eff080ef8eb6365
 ---
 
 {{% docs/languages/libraries-intro "go" %}}
