@@ -2,8 +2,6 @@
 title: Métricas
 weight: 2
 description: Uma medição capturada em tempo de execução.
-default_lang_commit: 7c0e4db0b6c39b0ca0e7efb17df5610d1b77b8a3
-drifted_from_default: true
 ---
 
 Uma métrica é uma medição de um serviço capturada em tempo de execução. O
@@ -24,7 +22,8 @@ lista de componentes que farão parte da instrumentação do nosso código.
 ## Meter Provider
 
 Um Meter Provider (às vezes chamado de `MeterProvider`) é uma fábrica de
-`medidores`. Na maioria das aplicações, um meter provider é inicializado uma vez
+`medidores`.
+Na maioria das aplicações, um meter provider é inicializado uma vez
 e seu ciclo de vida corresponde ao ciclo de vida da aplicação. A inicialização
 do meter provider também inclui a inicialização do resource e do exporter. Esse
 é tipicamente o primeiro passo para metrificar com o OpenTelemetry. Em alguns
@@ -33,8 +32,7 @@ SDKs, um meter provider global já é inicializado para sua aplicação.
 ## Medidor {#meter}
 
 Um medidor cria [instrumentos de métrica](#metric-instruments), que serão
-responsáveis por capturar dados e medir um serviço em tempo de execução.
-Métricas são criadas a partir de Meter Providers (Medidores).
+responsáveis por capturar dados e medir um serviço em tempo de execução. Métricas são criadas a partir de Meter Providers (Medidores).
 
 ## Metric Exporter
 
@@ -76,7 +74,8 @@ O tipo de instrumento deve ser um dos seguintes:
 - **Asynchronous Gauge**: Assim como o **Gauge**, porém é coletado uma vez a
   cada exportação. Pode ser usado em casos onde você não tenha acesso às
   mudanças contínuas, mas apenas ao valor agregado.
-- **Histogram**: Uma agregação de valores, tal como latências de requisições. Um
+- **Histogram**: Uma agregação de valores, tal como latências de requisições.
+  Um
   histograma é uma boa escolha se você está interessado em valores de
   estatísticas. Por exemplo: Quantas requisições estão levando menos de 1s?
 
